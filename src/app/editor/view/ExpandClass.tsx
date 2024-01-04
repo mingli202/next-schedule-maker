@@ -1,0 +1,162 @@
+"use client";
+
+import { Class, SharedCurrentClasses } from "@/types";
+import { Button } from "@/ui";
+import { faClock, faCompress, faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Variants, motion } from "framer-motion";
+import { useContext } from "react";
+import { ScheduleDispatchContext } from "../ScheduleContext";
+import { cn } from "@/lib";
+
+type MergedClass = Class & SharedCurrentClasses;
+
+const ExpandClass = ({
+  cl,
+  setExpand,
+}: {
+  cl: MergedClass;
+  setExpand: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const dispatch = useContext(ScheduleDispatchContext);
+
+  const expandVariants: Variants = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+    },
+  };
+
+  const cardVariants: Variants = {
+    initial: {
+      scale: 0.9,
+    },
+    animate: {
+      scale: 1,
+    },
+  };
+
+  return (
+    <motion.div
+      className="absolute left-0 top-0 z-30 flex h-full w-full items-center justify-center rounded-md bg-white/30 backdrop-blur-md backdrop-filter"
+      initial="initial"
+      animate="animate"
+      exit="initial"
+      variants={expandVariants}
+      onClick={() => {
+        setExpand(false);
+      }}
+    >
+      <motion.div
+        className="flex w-4/5 flex-col rounded-md p-1 shadow-xl"
+        style={{
+          backgroundColor: cl.bgColor,
+          color: cl.textColor,
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        variants={cardVariants}
+      >
+        <div className="flex w-full items-center justify-between">
+          <Button
+            variant="basic"
+            className="p-1 italic"
+            onClick={() => {
+              setExpand(false);
+              dispatch({ type: "delete", id: cl.id });
+            }}
+          >
+            Remove Class
+          </Button>
+          <Button
+            variant="basic"
+            onClick={() => setExpand(false)}
+            className="p-1"
+            title="minimize"
+          >
+            <FontAwesomeIcon icon={faCompress} />
+          </Button>
+        </div>
+
+        <div className="text-md flex flex-col p-1">
+          <h2 className="">
+            {cl.program}: {cl.course} {cl.code}
+          </h2>
+
+          <h1 className="font-heading text-2xl font-bold">
+            {cl.section} {cl.lecture.title}
+          </h1>
+
+          <div
+            className={cn("mt-2 rounded-md p-2", {
+              "bg-black/10": cl.textColor === "#000",
+              "bg-white/10": cl.textColor === "#FFF",
+            })}
+          >
+            <h4 className="italic">Lecture</h4>
+
+            <p className="flex items-center gap-2">
+              <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
+              {cl.lecture.prof}
+              <span className="font-bold">{cl.lecture.rating.score}</span>
+            </p>
+
+            {Object.entries(cl.lecture)
+              .filter((i) => !["title", "prof", "rating"].includes(i[0]))
+              .map((j, index) => {
+                return (
+                  <p className="flex items-center gap-2" key={index}>
+                    <FontAwesomeIcon
+                      icon={faClock}
+                      className="h-4 opacity-50"
+                    />
+                    {j[0]}
+                    <span>{j[1] as string}</span>
+                  </p>
+                );
+              })}
+          </div>
+
+          {"prof" in cl.lab && (
+            <div
+              className={cn("mt-2 rounded-md p-2", {
+                "bg-black/10": cl.textColor === "#000",
+                "bg-white/10": cl.textColor === "#FFF",
+              })}
+            >
+              <h4 className="italic">Lab</h4>
+
+              <p className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
+                {cl.lab.prof}
+                <span className="font-bold">{cl.lab.rating.score}</span>
+              </p>
+
+              {Object.entries(cl.lab)
+                .filter((i) => !["title", "prof", "rating"].includes(i[0]))
+                .map((j, index) => {
+                  return (
+                    <p className="flex items-center gap-2" key={index}>
+                      <FontAwesomeIcon
+                        icon={faClock}
+                        className="h-4 opacity-50"
+                      />
+                      {j[0]}
+                      <span>{j[1] as string}</span>
+                    </p>
+                  );
+                })}
+            </div>
+          )}
+
+          {cl.more !== "" && <p className="mt-2 opacity-70">{cl.more}</p>}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+export default ExpandClass;
