@@ -1,17 +1,17 @@
 "use client";
 
 import { app } from "@/backend";
-import { Class, Saved } from "@/types";
+import { Saved } from "@/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import { useEffect, useState } from "react";
 import LoggedOut from "./LoggedOut";
 
-type Props = {
-  allClasses: Record<string, Class>;
-};
+// type Props = {
+//   allClasses: Record<string, Class>;
+// };
 
-const SavedSchedules = ({ allClasses }: Props) => {
+const SavedSchedules = () => {
   const [savedSchedules, setSavedSchedules] = useState<Saved[] | null>([]);
 
   useEffect(() => {

@@ -1,14 +1,14 @@
-import { getLocalJsonData } from "@/lib";
+// import { getLocalJsonData } from "@/lib";
 import SavedSchedules from "./SavedShedules";
-import { Class } from "@/types";
+// import { Class } from "@/types";
 
 const Saved = async () => {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("fall-classes");
+  // const allClasses: Record<string, Class> =
+  //   await getLocalJsonData("fall-classes");
 
   return (
     <>
-      <SavedSchedules allClasses={allClasses} />
+      <SavedSchedules />
     </>
   );
 };
