@@ -5,8 +5,6 @@ type Props = {
 };
 
 const MenuLayout = ({ children }: Props) => {
-  console.log("menu");
-
   return (
     <div className="flex h-full min-w-[20rem] flex-col gap-2 overflow-hidden rounded-md">
       <MenuNavBar className="shrink-0" />

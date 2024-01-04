@@ -8,7 +8,10 @@ const nextConfig = {
     return config;
   },
   env: {
-    URL: process.env.NODE_ENV === "development" ? "http://localhost:3000" : "",
+    URL:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://github.com/Nanoscience202/next-schedule-maker",
   },
   experimental: {
     // windowHistorySupport: true,
