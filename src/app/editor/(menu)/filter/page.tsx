@@ -4,7 +4,7 @@ import { getLocalJsonData } from "@/lib";
 
 const Filter = async () => {
   const allClasses: Record<string, Class> =
-    await getLocalJsonData("fall-classes");
+    await getLocalJsonData("allClasses");
 
   return <Form allClasses={allClasses} />;
 };
