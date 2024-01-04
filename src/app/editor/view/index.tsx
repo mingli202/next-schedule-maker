@@ -34,7 +34,7 @@ const Hours = () => {
 
 const View = async ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
   const allClasses: Record<string, Class> =
-    await getLocalJsonData("fall-classes");
+    await getLocalJsonData("allClasses");
 
   return (
     <div

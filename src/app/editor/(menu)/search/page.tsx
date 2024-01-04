@@ -4,10 +4,9 @@ import SearchedClasses from "./SearchedClasses";
 import { Class } from "@/types";
 
 const Search = async () => {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("fall-classes");
+  const allClasses: Record<string, Class> = await getLocalJsonData("classes");
 
-  const professors: string[] = await getLocalJsonData("fall-professors");
+  const professors: string[] = await getLocalJsonData("professors");
 
   const colors: string[] = await getLocalJsonData("colors");
 

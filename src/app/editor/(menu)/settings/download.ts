@@ -5,7 +5,7 @@ import FileSaver from "file-saver";
 
 const download = async (currentSchedule: SharedCurrentClasses[]) => {
   const allClasses: Record<string, Class> =
-    await getLocalJsonData("fall-classes");
+    await getLocalJsonData("allClasses");
   const workbook = new ExcelJS.Workbook();
 
   workbook.creator = "Unknown";
