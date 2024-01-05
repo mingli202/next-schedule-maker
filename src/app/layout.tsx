@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { fraunces, poppins } from "./fonts";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "JAC Dream Schedule Builder",
@@ -32,6 +33,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         className={`${fraunces.variable} ${poppins.variable} bg-bgPrimary font-body text-text antialiased`}
       >
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
