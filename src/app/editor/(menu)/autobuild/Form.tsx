@@ -40,7 +40,7 @@ const Form = ({ allClasses, codes, setCodes }: Props) => {
     const newInput = formdata.get("extraCode");
     if (!newInput) return;
     if (!codesDatalist.includes(newInput.toString())) {
-      alert("This code does not exist");
+      alert("Invlid code");
       return;
     }
 

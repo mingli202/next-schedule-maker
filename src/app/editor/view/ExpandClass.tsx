@@ -98,10 +98,44 @@ const ExpandClass = ({
           >
             <h4 className="italic">Lecture</h4>
 
-            <p className="flex items-center gap-2">
+            <p className="relative flex items-center gap-2">
               <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
               {cl.lecture.prof}
-              <span className="font-bold">{cl.lecture.rating.score}</span>
+              <p className="group relative flex cursor-default font-bold">
+                <p>{cl.lecture.rating.score}</p>
+                <div className="absolute top-0 hidden w-[12rem] -translate-y-1/2 translate-x-12 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block">
+                  <p>
+                    Rating:{" "}
+                    {cl.lecture.rating.avg === 0
+                      ? "N/A"
+                      : `${cl.lecture.rating.avg}/5`}
+                  </p>
+                  <p>
+                    Difficulty:{" "}
+                    {cl.lecture.rating.difficulty === 0
+                      ? "N/A"
+                      : `${cl.lecture.rating.difficulty}/5`}
+                  </p>
+                  <p>
+                    Raters:{" "}
+                    {cl.lecture.rating.nRating === 0
+                      ? "N/A"
+                      : `${cl.lecture.rating.nRating} raters`}
+                  </p>
+                  <p>
+                    Take again:{" "}
+                    {cl.lecture.rating.takeAgain === 0
+                      ? "N/A"
+                      : `${cl.lecture.rating.takeAgain}%`}
+                  </p>
+                  <p className="font-bold">
+                    Overall Score:{" "}
+                    {cl.lecture.rating.score === 0
+                      ? "N/A"
+                      : `${cl.lecture.rating.score}/100`}
+                  </p>
+                </div>
+              </p>
             </p>
 
             {Object.entries(cl.lecture)

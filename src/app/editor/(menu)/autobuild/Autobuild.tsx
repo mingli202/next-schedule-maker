@@ -24,40 +24,42 @@ const Autobuild = ({ allClasses, colors }: Props) => {
   >([]);
 
   return (
-    <div className="box-border flex w-full flex-col items-center gap-2 overflow-y-auto overflow-x-hidden p-2">
+    <div className="relative box-border flex h-full w-full flex-col items-center gap-2 overflow-hidden p-2">
       {isBuilding === "form" && (
         <>
-          <div>
-            <h1 className="text-center font-heading text-xl">Auto Builder</h1>
-            <p className="text-center">
-              Input additional course codes and generate all possible schedules
-              based on the current schedule displayed.
-            </p>
-            <p className="text-center">
-              This is done by brute force. It is recommended to already have at
-              least 2 courses in the current schedule, otherwise it will take an
-              absurd amount of time to compute all possibilities.
-            </p>
-          </div>
-          <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-2">
-            {codes.map((code) => (
-              <p
-                key={code}
-                className="flex cursor-pointer items-center rounded-md bg-bgSecondary p-2 transition hover:bg-secondary"
-                onClick={() => setCodes(codes.filter((c) => c !== code))}
-                title="remove"
-              >
-                {code}
+          <div className="flex h-full flex-col gap-2">
+            <div>
+              <h1 className="text-center font-heading text-xl">Auto Builder</h1>
+              <p className="text-center">
+                Input additional course codes and generate all possible
+                schedules based on the current schedule displayed.
               </p>
-            ))}
-            <Form
-              allClasses={allClasses}
-              codes={codes}
-              setCodes={setCodes}
-              setIsBuilding={setIsBuilding}
-            />
+              <p className="text-center">
+                This is done by brute force. It is recommended to already have
+                at least 2 courses in the current schedule, otherwise it will
+                take an absurd amount of time to compute all possibilities.
+              </p>
+            </div>
+            <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-2">
+              {codes.map((code) => (
+                <p
+                  key={code}
+                  className="flex cursor-pointer items-center rounded-md bg-bgSecondary p-2 transition hover:bg-secondary"
+                  onClick={() => setCodes(codes.filter((c) => c !== code))}
+                  title="remove"
+                >
+                  {code}
+                </p>
+              ))}
+              <Form
+                allClasses={allClasses}
+                codes={codes}
+                setCodes={setCodes}
+                setIsBuilding={setIsBuilding}
+              />
+            </div>
           </div>
-          <div className="fixed bottom-0 z-10 flex items-center justify-center bg-bgPrimary p-2">
+          <div className="relative bottom-0 z-10 flex items-center justify-center bg-bgPrimary">
             <Button
               variant="special"
               className="w-fit"
@@ -77,11 +79,24 @@ const Autobuild = ({ allClasses, colors }: Props) => {
         />
       )}
       {isBuilding === "complete" && (
-        <Results
-          setIsBuilding={setIsBuilding}
-          generatedSchedules={generatedSchedules}
-          allClasses={allClasses}
-        />
+        <>
+          <div className="flex h-full w-full flex-col gap-2 overflow-y-auto overflow-x-hidden rounded-md">
+            <Results
+              setIsBuilding={setIsBuilding}
+              generatedSchedules={generatedSchedules}
+              allClasses={allClasses}
+            />
+          </div>
+          <div className="z-10 flex w-full items-center justify-center bg-bgPrimary">
+            <Button
+              variant="special"
+              className="w-fit"
+              onClick={() => setIsBuilding("form")}
+            >
+              Return
+            </Button>
+          </div>
+        </>
       )}
     </div>
   );
