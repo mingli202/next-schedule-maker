@@ -36,7 +36,7 @@ const Autobuild = ({ allClasses, colors }: Props) => {
             <p className="text-center">
               This is done by brute force. It is recommended to already have
               some classes in the current schedule, otherwise it will take an
-              absurd amount of time to compute all possibility.
+              absurd amount of time to compute all possibilities.
             </p>
           </div>
           <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-2">
