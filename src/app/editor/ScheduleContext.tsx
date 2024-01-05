@@ -23,6 +23,9 @@ const reducer = (
     case "delete": {
       return currentClasses.filter((cl) => cl.id !== action.id);
     }
+    case "set": {
+      return action.schedule;
+    }
   }
 };
 

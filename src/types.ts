@@ -24,6 +24,10 @@ export type ActionType =
   | {
       type: "delete";
       id: string;
+    }
+  | {
+      type: "set";
+      schedule: SharedCurrentClasses[];
     };
 
 export type UserType = {

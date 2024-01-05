@@ -138,7 +138,6 @@ const filterByQuery = (
   const keywords = query.split(",");
 
   for (const keyword of keywords) {
-    console.log({ keyword });
     // check if code
     if (keyword.match(codeReg)) {
       for (const k of keyword.split(" ")) {

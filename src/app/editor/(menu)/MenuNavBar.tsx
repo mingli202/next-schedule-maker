@@ -7,6 +7,7 @@ import {
   faFilter,
   faGear,
   faSearch,
+  faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -38,6 +39,23 @@ const MenuNavBar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
           className="flex w-full justify-center rounded-md p-1 opacity-100"
         >
           <FontAwesomeIcon icon={faSearch} className="h-4" />
+        </Button>
+      </Link>
+
+      <Link
+        href={`/editor/autobuild?${searchParams}`}
+        className={cn(
+          "w-full",
+          { "opacity-50": path !== "/editor/autobuild" },
+          "transition hover:opacity-100",
+        )}
+        title="autobuild"
+      >
+        <Button
+          variant="basic"
+          className="flex w-full justify-center rounded-md p-1 opacity-100"
+        >
+          <FontAwesomeIcon icon={faStar} className="h-4" />
         </Button>
       </Link>
 

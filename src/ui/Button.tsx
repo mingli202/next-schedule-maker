@@ -60,8 +60,8 @@ function Button({
       };
 
       const offset = bounds.width / 2;
-      const x = e.clientX - bounds.left - offset;
-      const y = e.clientY - bounds.top - offset;
+      const x = e.pageX - bounds.left - offset;
+      const y = e.pageY - bounds.top - offset;
 
       await animate(
         scope.current,

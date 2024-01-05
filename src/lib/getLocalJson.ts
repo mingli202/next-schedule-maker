@@ -1,5 +1,4 @@
 const getLocalJsonData = async <T>(name: string): Promise<T> => {
-  // const url = process.env.URL + `/json?file=${name}`;
   const url = `https://raw.githubusercontent.com/Nanoscience202/next-schedule-maker/main/public/json/${name}.json`;
 
   const res = await fetch(url);
