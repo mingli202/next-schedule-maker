@@ -34,8 +34,8 @@ const Autobuild = ({ allClasses, colors }: Props) => {
               based on the current schedule displayed.
             </p>
             <p className="text-center">
-              This is done by brute force. It is recommended to already have
-              some classes in the current schedule, otherwise it will take an
+              This is done by brute force. It is recommended to already have at
+              least 2 courses in the current schedule, otherwise it will take an
               absurd amount of time to compute all possibilities.
             </p>
           </div>
