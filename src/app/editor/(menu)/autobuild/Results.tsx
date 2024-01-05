@@ -19,9 +19,13 @@ const Results = ({ setIsBuilding, generatedSchedules, allClasses }: Props) => {
 
   return (
     <>
-      {generatedSchedules.map((schedule, i) => (
-        <Schedule key={i} schedule={schedule} allClasses={allClasses} />
-      ))}
+      {generatedSchedules.length === 0 ? (
+        <p>No schedule can be made.</p>
+      ) : (
+        generatedSchedules.map((schedule, i) => (
+          <Schedule key={i} schedule={schedule} allClasses={allClasses} />
+        ))
+      )}
     </>
   );
 };
