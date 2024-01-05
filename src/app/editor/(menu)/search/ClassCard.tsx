@@ -43,10 +43,10 @@ const ClassCard = ({ id, cl, allClasses, colors, currentClasses }: Props) => {
       <div className="mt-2 rounded-md bg-secondary p-2">
         <h4 className="italic">Lecture</h4>
 
-        <p className="relative flex items-center gap-2">
+        <div className="relative flex items-center gap-2">
           <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
           {cl.lecture.prof}
-          <span className="group relative flex cursor-default font-bold">
+          <div className="group relative flex cursor-default font-bold">
             <p>
               {cl.lecture.rating.score === 0 ? "N/A" : cl.lecture.rating.score}
             </p>
@@ -82,8 +82,8 @@ const ClassCard = ({ id, cl, allClasses, colors, currentClasses }: Props) => {
                   : `${cl.lecture.rating.score}/100`}
               </p>
             </div>
-          </span>
-        </p>
+          </div>
+        </div>
 
         {Object.entries(cl.lecture)
           .filter((i) => !["title", "prof", "rating"].includes(i[0]))
@@ -102,10 +102,10 @@ const ClassCard = ({ id, cl, allClasses, colors, currentClasses }: Props) => {
         <div className="mt-2 rounded-md bg-secondary p-2">
           <h4 className="italic">Lab</h4>
 
-          <p className="relative flex items-center gap-2">
+          <div className="relative flex items-center gap-2">
             <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
             {cl.lab.prof}
-            <span className="group relative flex cursor-default font-bold">
+            <div className="group relative flex cursor-default font-bold">
               <p>{cl.lab.rating.score === 0 ? "N/A" : cl.lab.rating.score}</p>
               <div className="absolute top-0 hidden w-[12rem] -translate-y-1/2 translate-x-12 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block">
                 <p>
@@ -137,8 +137,8 @@ const ClassCard = ({ id, cl, allClasses, colors, currentClasses }: Props) => {
                     : `${cl.lab.rating.score}/100`}
                 </p>
               </div>
-            </span>
-          </p>
+            </div>
+          </div>
 
           {Object.entries(cl.lab)
             .filter((i) => !["title", "prof", "rating"].includes(i[0]))

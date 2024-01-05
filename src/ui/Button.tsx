@@ -1,9 +1,8 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { ButtonHTMLAttributes, useCallback } from "react";
+import { ButtonHTMLAttributes, useCallback, useRef } from "react";
 import { HTMLMotionProps, motion, useAnimate } from "framer-motion";
-import useMeasure from "react-use-measure";
 
 type Props = {
   variant?: "basic" | "special" | "compact";
@@ -36,7 +35,8 @@ function Button({
   diasableBgEffect,
   ...props
 }: Props) {
-  const [ref, bounds] = useMeasure();
+  // const [ref, bounds] = useMeasure();
+  const ref = useRef<HTMLButtonElement>(null!);
   const [scope, animate] = useAnimate();
 
   const expandingCircle = useCallback(
@@ -53,15 +53,16 @@ function Button({
           scale: [0, 3],
         },
         special: {
-          // opacity: out ? [1, 0] : [1, 1],
           scale: out ? [3, 0] : [0, 3],
         },
         compact: {},
       };
 
+      const bounds = ref.current.getBoundingClientRect();
+
       const offset = bounds.width / 2;
-      const x = e.pageX - bounds.left - offset;
-      const y = e.pageY - bounds.top - offset;
+      const x = e.clientX - bounds.x - offset;
+      const y = e.clientY - bounds.y - offset;
 
       await animate(
         scope.current,
@@ -72,7 +73,7 @@ function Button({
         },
       );
     },
-    [animate, bounds, scope, variant],
+    [animate, scope, variant],
   );
 
   return (
