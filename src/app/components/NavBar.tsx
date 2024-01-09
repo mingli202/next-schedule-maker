@@ -1,9 +1,29 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/ui";
 import { twMerge } from "tailwind-merge";
 import Image from "next/image";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { app } from "@/backend";
+import { useEffect, useState } from "react";
 
 function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
+  const [path, setPath] = useState("/login");
+
+  useEffect(() => {
+    const auth = getAuth(app);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setPath("/user");
+      } else {
+        setPath("/login");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div
       className={twMerge(
@@ -29,7 +49,7 @@ function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
           <Button variant="basic">Contact</Button>
         </Link>
 
-        <Link href="/login">
+        <Link href={path}>
           <Button variant="special">Login</Button>
         </Link>
       </div>

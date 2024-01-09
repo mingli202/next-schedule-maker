@@ -13,8 +13,22 @@ const nextConfig = {
         ? "http://localhost:3000"
         : "https://github.com/Nanoscience202/next-schedule-maker",
   },
-  experimental: {
-    // windowHistorySupport: true,
+  async headers() {
+    return [
+      {
+        source: "/login",
+        headers: [
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin-allow-popups",
+          },
+          {
+            key: "Cross-Origin-Embedder-Policy",
+            value: "unsafe-none",
+          },
+        ],
+      },
+    ];
   },
 };
 

@@ -16,7 +16,7 @@ const DragIndicator = () => {
 
   return (
     <motion.div
-      className="z-30 flex h-[calc(100%-1rem)] w-2 cursor-ew-resize items-center justify-center"
+      className="z-30 hidden h-[calc(100%-1rem)] w-2 cursor-ew-resize items-center justify-center md:flex"
       onPan={(_, info) => {
         const x = info.point.x;
         const menuWidth = `${x}px`;

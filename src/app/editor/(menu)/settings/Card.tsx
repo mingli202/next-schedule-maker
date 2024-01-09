@@ -16,7 +16,7 @@ const Card = ({ title, desc, param }: CardProps) => {
   const q = searchParams.get(param);
 
   return (
-    <div className="flex justify-between gap-2 rounded-md bg-bgSecondary p-2">
+    <div className="flex shrink-0 justify-between gap-2 rounded-md bg-bgSecondary p-2">
       <div>
         <h2 className="text-xl font-bold">{title}</h2>
         <p className="opacity-90">{desc}</p>

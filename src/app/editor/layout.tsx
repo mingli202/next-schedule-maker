@@ -35,13 +35,19 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <ScheduleContextProvider>
-      <main className="box-border flex h-screen w-screen overflow-hidden p-2 text-text">
-        <div className="h-full overflow-x-auto overflow-y-hidden" id="menu">
+      <main className="box-border flex w-screen overflow-auto p-2 text-sm text-text max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
+        <div
+          className="overflow-x-auto overflow-y-hidden max-md:order-2 md:h-full"
+          id="menu"
+        >
           {children}
         </div>
         <DragIndicator />
-        <div className="h-full overflow-x-auto overflow-y-hidden" id="view">
-          <View className="h-full min-w-[40rem]" />
+        <div
+          className="overflow-x-auto overflow-y-hidden max-md:order-1 md:h-full"
+          id="view"
+        >
+          <View className="h-[40rem] min-w-[40rem] md:h-full" />
         </div>
       </main>
     </ScheduleContextProvider>

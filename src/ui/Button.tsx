@@ -7,34 +7,35 @@ import { HTMLMotionProps, motion, useAnimate } from "framer-motion";
 type Props = {
   variant?: "basic" | "special" | "compact";
   diasableBgEffect?: boolean;
+  disableScaleEffect?: boolean;
 } & HTMLMotionProps<"button"> &
   ButtonHTMLAttributes<HTMLButtonElement>;
-
-const variants = {
-  // basic animation for non important text
-  basic: {
-    scale: 1.05,
-    opacity: 1,
-    // backgroundColor: "rgba(255, 255, 255, 0.05)",
-  },
-  // for important buttons
-  special: {
-    scale: 1.05,
-    color: "#facc15",
-    outlineColor: "#facc15",
-    boxShadow: "0 0 1rem #facc15",
-  },
-  // for when there is little space
-  compact: {},
-};
 
 function Button({
   className,
   children,
   variant,
   diasableBgEffect,
+  disableScaleEffect,
   ...props
 }: Props) {
+  const variants = {
+    // basic animation for non important text
+    basic: {
+      scale: disableScaleEffect ? 1 : 1.05,
+      opacity: 1,
+      // backgroundColor: "rgba(255, 255, 255, 0.05)",
+    },
+    // for important buttons
+    special: {
+      scale: disableScaleEffect ? 1 : 1.05,
+      color: "#facc15",
+      outlineColor: "#facc15",
+      boxShadow: "0 0 1rem #facc15",
+    },
+    // for when there is little space
+    compact: {},
+  };
   // const [ref, bounds] = useMeasure();
   const ref = useRef<HTMLButtonElement>(null!);
   const [scope, animate] = useAnimate();

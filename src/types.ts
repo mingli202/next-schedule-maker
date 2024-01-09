@@ -79,6 +79,6 @@ export type Time = {
 
 export type Saved = {
   id: number;
-  data: SharedCurrentClasses[];
+  data: Class[];
   name?: string;
 };

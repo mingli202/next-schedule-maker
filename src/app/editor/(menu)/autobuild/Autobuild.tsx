@@ -32,12 +32,9 @@ const Autobuild = ({ allClasses, colors }: Props) => {
               <h1 className="text-center font-heading text-xl">Auto Builder</h1>
               <p className="text-center">
                 Input additional course codes and generate all possible
-                schedules based on the current schedule displayed.
-              </p>
-              <p className="text-center">
-                This is done by brute force. It is recommended to already have
-                at least 2 courses in the current schedule, otherwise it will
-                take an absurd amount of time to compute all possibilities.
+                schedules based on the current schedule displayed. Note that the
+                codes below must be extra courses not present in the current
+                schedule.
               </p>
             </div>
             <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-2">
