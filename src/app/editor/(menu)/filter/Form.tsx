@@ -199,7 +199,7 @@ const Form = ({ allClasses }: Props) => {
         </datalist>
       </label>
 
-      <div className="flex gap-2">
+      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2">
         <div className="group basis-1/2 rounded-md bg-bgSecondary p-2 transition hover:bg-secondary">
           <h2 className="font-bold">Rating /5</h2>
           <div className="flex items-center gap-4">
