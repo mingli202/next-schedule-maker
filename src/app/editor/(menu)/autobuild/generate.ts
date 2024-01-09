@@ -21,7 +21,7 @@ const generate = async (
 
     toReturn = toReturn.flatMap((schedule) => {
       const validClasses = classesForCode.filter(([, cl]) =>
-        isValid(cl, schedule, Object.fromEntries(classes)),
+        isValid(cl, schedule, allClasses),
       );
 
       const v = validClasses.map(([id]) => {

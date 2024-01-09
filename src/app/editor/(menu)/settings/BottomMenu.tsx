@@ -7,7 +7,7 @@ import {
   faList,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Variants, motion } from "framer-motion";
+import { AnimatePresence, Variants, motion } from "framer-motion";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { ScheduleClassesContext } from "../../ScheduleContext";
@@ -19,12 +19,9 @@ const BottomMenu = () => {
   const currentClasses = useContext(ScheduleClassesContext);
 
   const [path, setPath] = useState("/");
-
-  const [vw, setvw] = useState<number>(0);
+  const [expand, setExpand] = useState(false);
 
   useEffect(() => {
-    setvw(window.innerWidth);
-
     const auth = getAuth(app);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -37,22 +34,13 @@ const BottomMenu = () => {
     return () => unsubscribe();
   }, []);
 
-  const menuVariants: Variants = {
-    initial: {
-      opacity: 0.5,
-    },
-    hover: {
-      opacity: 1,
-    },
-  };
-
   const buttonVariants: Variants = {
     initial: {
       x: "100%",
       opacity: 0,
     },
-    hover: {
-      x: "0",
+    animate: {
+      x: "0%",
       opacity: 1,
     },
   };
@@ -63,34 +51,52 @@ const BottomMenu = () => {
         <Button variant="basic">Reset URL</Button>
       </Link>
 
-      <motion.div
-        className="flex shrink-0 items-center gap-4"
-        whileHover={vw > 768 ? "hover" : ""}
-        initial={vw > 768 ? "initial" : ""}
-        variants={menuVariants}
-      >
-        <motion.div
-          variants={buttonVariants}
-          title="download current schedule as Excel"
-          onClick={() => {
-            download(currentClasses);
-          }}
+      <div className="flex shrink-0 items-center gap-4">
+        <AnimatePresence>
+          {expand === true && (
+            <motion.div
+              variants={buttonVariants}
+              initial="initial"
+              animate="animate"
+              exit="initial"
+              title="download current schedule as Excel"
+              onClick={() => {
+                download(currentClasses);
+              }}
+              key="download"
+            >
+              <Button variant="basic" className="p-0" diasableBgEffect>
+                <FontAwesomeIcon icon={faFileDownload} className="h-4" />
+              </Button>
+            </motion.div>
+          )}
+
+          {expand === true && (
+            <motion.div
+              initial="initial"
+              animate="animate"
+              exit="initial"
+              variants={buttonVariants}
+              title="home"
+              key="home"
+            >
+              <Link href={path}>
+                <Button variant="basic" className="p-0" diasableBgEffect>
+                  <FontAwesomeIcon icon={faHome} className="h-4" />
+                </Button>
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <Button
+          variant="basic"
+          className="p-0"
+          onClick={() => setExpand(!expand)}
         >
-          <Button variant="basic" className="p-0" diasableBgEffect>
-            <FontAwesomeIcon icon={faFileDownload} className="h-4" />
-          </Button>
-        </motion.div>
-
-        <motion.div variants={buttonVariants} title="home">
-          <Link href={path}>
-            <Button variant="basic" className="p-0" diasableBgEffect>
-              <FontAwesomeIcon icon={faHome} className="h-4" />
-            </Button>
-          </Link>
-        </motion.div>
-
-        <FontAwesomeIcon icon={faList} className="h-4" />
-      </motion.div>
+          <FontAwesomeIcon icon={faList} className="h-4" />
+        </Button>
+      </div>
     </div>
   );
 };

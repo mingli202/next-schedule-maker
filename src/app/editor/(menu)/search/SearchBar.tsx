@@ -19,7 +19,7 @@ const SearchBar = () => {
   };
 
   return (
-    <form action={search}>
+    <form action={search} autoComplete="off">
       <label htmlFor="search" className="hidden">
         search
       </label>

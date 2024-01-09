@@ -218,20 +218,13 @@ const filterDown = (
   currentClasses: SharedCurrentClasses[],
 ) => {
   if (
-    search.size === 0 ||
-    (search.get("q") === "" &&
-      [
-        "prof",
-        "rating",
-        "score",
-        "code",
-        "time",
-        "title",
-        "course",
-        "day",
-      ].every((k) => !search.has(k)))
-  )
-    return [];
+    !["prof", "rating", "score", "code", "time", "title", "course", "day"].some(
+      (k) => search.has(k),
+    )
+  ) {
+    if (!search.has("q")) return [];
+    if (search.get("q") === "") return [];
+  }
 
   let toReturn = Object.entries(allClasses);
 
