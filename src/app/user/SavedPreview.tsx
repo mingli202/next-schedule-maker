@@ -8,14 +8,14 @@ type Props = {
   colors: string[];
 } & HTMLAttributes<HTMLDivElement>;
 
-const SavedPreview = ({ colors, className, ...props }: Props) => {
+const SavedPreview = ({ className, ...props }: Props) => {
   const schedules = useContext(SchedulesContext);
 
   return (
     <div className={cn(className)} {...props}>
       <h2>My Schedules</h2>
       {schedules ? (
-        schedules.map((sch) => <div>Some schedule</div>)
+        schedules.map((sh, i) => <div key={i}>Some schedule</div>)
       ) : (
         <div>Link to editor</div>
       )}
