@@ -3,7 +3,13 @@
 import { app, db } from "@/backend";
 import { Saved } from "@/types";
 import { Button } from "@/ui";
-import { Unsubscribe, getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  Unsubscribe,
+  getAuth,
+  onAuthStateChanged,
+  sendEmailVerification,
+  signOut,
+} from "firebase/auth";
 import { onValue, ref } from "firebase/database";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -19,7 +25,7 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
   const [friends, setFriends] = useState<string[] | null>(null);
 
   const [loginState, setLoginState] = useState<
-    "loading" | "signedin" | "signedout"
+    "loading" | "signedin" | "signedout" | "emailunverified"
   >("loading");
 
   useEffect(() => {
@@ -29,6 +35,11 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
 
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
+        if (!user.emailVerified) {
+          setLoginState("emailunverified");
+          return;
+        }
+
         detach1 = onValue(
           ref(db, `/users/${user.uid}/schedules`),
           (snapshot) => {
@@ -75,6 +86,26 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
           <Link href="/login">
             <Button variant="special">Go to login page</Button>
           </Link>
+        </div>
+      )}
+      {loginState === "emailunverified" && (
+        <div className="flex h-screen w-screen flex-col items-center justify-center gap-2">
+          <h1 className="font-heading text-3xl">Email Verification</h1>
+          <p>Your email has not been verified.</p>
+          <Button
+            onClick={async () => {
+              const auth = getAuth(app);
+              const user = auth.currentUser;
+
+              if (!user) return;
+
+              await sendEmailVerification(user);
+              await signOut(auth);
+            }}
+            variant="special"
+          >
+            Verify email
+          </Button>
         </div>
       )}
     </main>
