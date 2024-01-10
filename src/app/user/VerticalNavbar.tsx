@@ -1,5 +1,6 @@
 import { Button } from "@/ui";
 import {
+  faDownload,
   faGear,
   faHammer,
   faHome,
@@ -23,6 +24,12 @@ const VerticalNavbar = () => {
         <Link href="/editor" className="shrink-0" title="build">
           <Button variant="basic" className="p-2">
             <FontAwesomeIcon icon={faHammer} className="h-8 w-8" />
+          </Button>
+        </Link>
+
+        <Link href="/user/saved" className="shrink-0" title="saved schedules">
+          <Button variant="basic" className="p-2">
+            <FontAwesomeIcon icon={faDownload} className="h-8 w-8" />
           </Button>
         </Link>
 

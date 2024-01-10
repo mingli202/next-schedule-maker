@@ -1,14 +1,22 @@
 "use client";
 
-import { app } from "@/backend";
+import { app, db } from "@/backend";
+import { Saved } from "@/types";
 import { Button } from "@/ui";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { Unsubscribe, getAuth, onAuthStateChanged } from "firebase/auth";
+import { onValue, ref } from "firebase/database";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+
+export const SchedulesContext = createContext<Saved[] | null>(null);
+export const FriendsContext = createContext<string[] | null>(null);
 
 const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
+
+  const [savedSchedules, setSavedSchedules] = useState<Saved[] | null>(null);
+  const [friends, setFriends] = useState<string[] | null>(null);
 
   const [loginState, setLoginState] = useState<
     "loading" | "signedin" | "signedout"
@@ -16,20 +24,46 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const auth = getAuth(app);
+    let detach1: Unsubscribe;
+    let detach2: Unsubscribe;
+
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
+        detach1 = onValue(
+          ref(db, `/users/${user.uid}/schedules`),
+          (snapshot) => {
+            setSavedSchedules(snapshot.val());
+          },
+        );
+
+        detach2 = onValue(ref(db, `/users/${user.uid}/friends`), (snapshot) =>
+          setFriends(snapshot.val()),
+        );
+
         setLoginState("signedin");
       } else {
         setLoginState("signedout");
       }
     });
 
-    return () => unsub();
+    return () => {
+      unsub();
+
+      if (!detach1 || !detach2) return;
+      detach1();
+      detach2();
+    };
   }, [router]);
 
   return (
     <main className="flex w-screen overflow-y-auto overflow-x-hidden font-body text-text">
-      {loginState === "signedin" && children}
+      {loginState === "signedin" && (
+        <SchedulesContext.Provider value={savedSchedules}>
+          <FriendsContext.Provider value={friends}>
+            {children}
+          </FriendsContext.Provider>
+        </SchedulesContext.Provider>
+      )}
       {loginState === "loading" && (
         <div className="flex h-screen w-screen items-center justify-center">
           Verifying...

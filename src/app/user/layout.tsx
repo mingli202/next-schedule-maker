@@ -1,6 +1,9 @@
 import { Metadata } from "next";
 import LoginStateObserver from "./LoginStateObserver";
 import VerticalNavbar from "./VerticalNavbar";
+import SavedPreview from "./SavedPreview";
+import FriendsPreview from "./FriendsPreview";
+import { getLocalJsonData } from "@/lib";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -28,11 +31,23 @@ export const metadata: Metadata = {
   ],
 };
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+const Layout = async ({ children }: Props) => {
+  const colors: string[] = await getLocalJsonData("colors");
+
   return (
     <LoginStateObserver>
       <VerticalNavbar />
-      {children}
+      <div className="flex w-full flex-col gap-4 p-4">
+        {children}
+        <div className="flex w-full gap-4">
+          <SavedPreview colors={colors} />
+          <FriendsPreview />
+        </div>
+      </div>
     </LoginStateObserver>
   );
 };
