@@ -91,7 +91,7 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
       {loginState === "emailunverified" && (
         <div className="flex h-screen w-screen flex-col items-center justify-center gap-2">
           <h1 className="font-heading text-3xl">Email Verification</h1>
-          <p>
+          <p className="text-center">
             Your email has not been verified. Click to send verification email
             and check your inbox.
           </p>
