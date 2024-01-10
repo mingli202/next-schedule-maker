@@ -14,6 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import isValid from "./checkValid";
 import { useContext } from "react";
 import { ScheduleDispatchContext } from "../../ScheduleContext";
+import { motion } from "framer-motion";
 
 type Props = {
   id: string;
@@ -30,8 +31,31 @@ const ClassCard = ({ id, cl, allClasses, colors, currentClasses }: Props) => {
 
   const dispatch = useContext(ScheduleDispatchContext);
 
+  const handleHoverEnter = () => {
+    if (searchParams.get("previewHover") !== "true") return;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("hoverId", id);
+
+    router.push(`/editor/search?${url.searchParams}`);
+  };
+
+  const handleHoverEnd = () => {
+    if (searchParams.get("previewHover") !== "true") return;
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete("hoverId");
+
+    router.push(`/editor/search?${url.searchParams}`);
+  };
+
   return (
-    <div key={id} className="box-border rounded-md bg-bgSecondary p-2">
+    <motion.div
+      key={id}
+      className="box-border rounded-md bg-bgSecondary p-2"
+      onHoverStart={handleHoverEnter}
+      onHoverEnd={handleHoverEnd}
+    >
       <p className="font-light">
         {cl.program}: {cl.course} {cl.code}
       </p>
@@ -160,22 +184,6 @@ const ClassCard = ({ id, cl, allClasses, colors, currentClasses }: Props) => {
           variant="basic"
           className="flex items-center justify-center"
           title="preview"
-          onHoverStart={() => {
-            if (searchParams.get("previewHover") !== "true") return;
-
-            const url = new URL(window.location.href);
-            url.searchParams.set("hoverId", id);
-
-            router.push(`/editor/search?${url.searchParams}`);
-          }}
-          onHoverEnd={() => {
-            if (searchParams.get("previewHover") !== "true") return;
-
-            const url = new URL(window.location.href);
-            url.searchParams.delete("hoverId");
-
-            router.push(`/editor/search?${url.searchParams}`);
-          }}
           onClick={() => {
             const hover = searchParams.get("previewHover");
 
@@ -203,6 +211,12 @@ const ClassCard = ({ id, cl, allClasses, colors, currentClasses }: Props) => {
             className="flex items-center justify-center"
             title="add"
             onClick={() => {
+              const checkValid = searchParams.get("checkValid");
+
+              if (checkValid === "true") {
+                handleHoverEnd();
+              }
+
               let bgColor = "";
               let textColor = "#000";
               const pickedColors = currentClasses.map((cl) => cl.bgColor);
@@ -245,7 +259,7 @@ const ClassCard = ({ id, cl, allClasses, colors, currentClasses }: Props) => {
           )
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -12,7 +12,7 @@ const Settings = () => {
       />
       <Card
         title="Show Preview"
-        desc="Preview where the class would be in the schedule when hovering above the eye icon. You can also toggle it by clicking the eye icon."
+        desc="Preview where the class would be in the schedule when hovering above it. You can also toggle the preview by clicking the eye icon."
         param="previewHover"
       />
       <Card

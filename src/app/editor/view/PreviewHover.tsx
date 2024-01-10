@@ -22,7 +22,7 @@ const PreviewHover = ({ allClasses }: Props) => {
         return (
           <div
             key={hoverClass.code + d + hoverClass.section + "hover"}
-            className="z-10 overflow-hidden rounded-md bg-white p-2 text-[8px] leading-[10px] text-black opacity-30 md:text-[14px] md:leading-[14px]"
+            className="z-10 overflow-hidden rounded-md bg-white p-2 text-[8px] leading-[10px] text-black opacity-50 md:text-[14px] md:leading-[14px]"
             style={{
               gridColumn: d,
               gridRowStart: start,

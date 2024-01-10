@@ -102,7 +102,11 @@ const ExpandClass = ({
               <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
               {cl.lecture.prof}
               <div className="group relative flex cursor-default font-bold">
-                <p>{cl.lecture.rating.score}</p>
+                <p>
+                  {cl.lecture.rating.score === 0
+                    ? "N/A"
+                    : cl.lecture.rating.score}
+                </p>
                 <div className="absolute top-0 hidden w-[12rem] -translate-y-1/2 translate-x-12 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block">
                   <p>
                     Rating:{" "}

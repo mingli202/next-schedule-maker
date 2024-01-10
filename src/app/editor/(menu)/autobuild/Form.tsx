@@ -44,7 +44,11 @@ const Form = ({ allClasses, codes, setCodes }: Props) => {
       return;
     }
 
-    setCodes([...codes, newInput.toString()]);
+    const updatedCodes = [...codes, newInput.toString()];
+
+    sessionStorage.setItem("autobuild", JSON.stringify(updatedCodes));
+
+    setCodes(updatedCodes);
   };
 
   return (

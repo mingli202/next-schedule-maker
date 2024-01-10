@@ -73,7 +73,7 @@ const Schedule = ({ schedule, allClasses }: Props) => {
           );
         })}
       </div>
-      <div className="flex items-center justify-end">
+      <div className="col-span-full flex items-center justify-end">
         <Button
           variant="basic"
           className="w-fit"

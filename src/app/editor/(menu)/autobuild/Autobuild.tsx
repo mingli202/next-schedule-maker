@@ -1,7 +1,7 @@
 "use client";
 
 import { Class, SharedCurrentClasses } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Form from "./Form";
 import { Button } from "@/ui";
 import Loader from "./Loader";
@@ -18,6 +18,10 @@ const Autobuild = ({ allClasses, colors }: Props) => {
   >("form");
 
   const [codes, setCodes] = useState<string[]>([]);
+
+  useEffect(() => {
+    setCodes(JSON.parse(sessionStorage.getItem("autobuild") ?? "[]"));
+  }, []);
 
   const [generatedSchedules, setGeneratedSchedules] = useState<
     SharedCurrentClasses[][]
@@ -42,7 +46,14 @@ const Autobuild = ({ allClasses, colors }: Props) => {
                 <p
                   key={code}
                   className="flex cursor-pointer items-center rounded-md bg-bgSecondary p-2 transition hover:bg-secondary"
-                  onClick={() => setCodes(codes.filter((c) => c !== code))}
+                  onClick={() => {
+                    const updatedCodes = codes.filter((c) => c !== code);
+                    sessionStorage.setItem(
+                      "autobuild",
+                      JSON.stringify(updatedCodes),
+                    );
+                    setCodes(updatedCodes);
+                  }}
                   title="remove"
                 >
                   {code}
