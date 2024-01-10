@@ -49,7 +49,10 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
       {loginState === "emailunverified" && (
         <div className="flex h-full w-full flex-col items-center justify-center gap-2">
           <h1 className="font-heading text-3xl">Email Verification</h1>
-          <p>Your email has not been verified.</p>
+          <p>
+            Your email has not been verified. Click to send verification email
+            and check your inbox.
+          </p>
           <Button
             onClick={async () => {
               const auth = getAuth(app);
