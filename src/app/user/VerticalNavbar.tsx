@@ -1,3 +1,4 @@
+import { cn } from "@/lib";
 import { Button } from "@/ui";
 import {
   faDownload,
@@ -8,10 +9,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { HTMLAttributes } from "react";
 
-const VerticalNavbar = () => {
+type Props = HTMLAttributes<HTMLDivElement>;
+
+const VerticalNavbar = ({ className, ...props }: Props) => {
   return (
-    <div className="box-border h-screen p-2">
+    <div className={cn("box-border h-full p-2", className)} {...props}>
       <div className="box-border flex h-full flex-col items-center gap-2 rounded-md bg-bgSecondary p-2">
         <Link href="/user" className="shrink-0" title="dashboard">
           <Button className="p-2" variant="basic">
@@ -33,7 +37,7 @@ const VerticalNavbar = () => {
           </Button>
         </Link>
 
-        <Link href="/user/friends" className="shrink-0" title="friends">
+        <Link href="/user/followings" className="shrink-0" title="friends">
           <Button variant="basic" className="p-2">
             <FontAwesomeIcon icon={faUsers} className="h-8 w-8" />
           </Button>

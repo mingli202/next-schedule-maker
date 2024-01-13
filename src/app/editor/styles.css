@@ -5,26 +5,3 @@
 #view {
   flex-basis: 67%;
 }
-
-::-webkit-scrollbar {
-  background: transparent;
-  width: 0.5rem;
-  position: absolute;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #9ccddc53;
-  border-radius: 0.375rem;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #9ccddcaf;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
-}

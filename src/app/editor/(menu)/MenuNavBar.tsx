@@ -43,23 +43,6 @@ const MenuNavBar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
       </Link>
 
       <Link
-        href={`/editor/autobuild?${searchParams}`}
-        className={cn(
-          "w-full",
-          { "opacity-50": path !== "/editor/autobuild" },
-          "transition hover:opacity-100",
-        )}
-        title="autobuild"
-      >
-        <Button
-          variant="basic"
-          className="flex w-full justify-center rounded-md p-1 opacity-100"
-        >
-          <FontAwesomeIcon icon={faStar} className="h-4" />
-        </Button>
-      </Link>
-
-      <Link
         href={`/editor/filter?${searchParams}`}
         className={cn(
           "w-full",
@@ -73,6 +56,23 @@ const MenuNavBar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
           className="flex w-full justify-center rounded-md p-1 opacity-100"
         >
           <FontAwesomeIcon icon={faFilter} className="h-4" />
+        </Button>
+      </Link>
+
+      <Link
+        href={`/editor/autobuild?${searchParams}`}
+        className={cn(
+          "w-full",
+          { "opacity-50": path !== "/editor/autobuild" },
+          "transition hover:opacity-100",
+        )}
+        title="autobuild"
+      >
+        <Button
+          variant="basic"
+          className="flex w-full justify-center rounded-md p-1 opacity-100"
+        >
+          <FontAwesomeIcon icon={faStar} className="h-4" />
         </Button>
       </Link>
 

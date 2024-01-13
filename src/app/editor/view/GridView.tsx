@@ -11,10 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/ui";
 import ExpandClass from "./ExpandClass";
-
-type Props = {
-  allClasses: Record<string, Class>;
-};
+import { CurrentClassesContext } from "@/app/user/Context";
 
 type MergedClass = Class & SharedCurrentClasses;
 
@@ -96,8 +93,16 @@ const ClassBlock = ({ cl }: { cl: MergedClass }) => {
   );
 };
 
-const GridView = ({ allClasses }: Props) => {
-  const currentClasses = useContext(ScheduleClassesContext);
+type Props = {
+  allClasses: Record<string, Class>;
+  readonly?: boolean;
+};
+
+const GridView = ({ allClasses, readonly }: Props) => {
+  const editorClasses = useContext(ScheduleClassesContext);
+  const userClasses = useContext(CurrentClassesContext);
+  const currentClasses = readonly ? userClasses : editorClasses;
+
   const fullClasses: MergedClass[] = currentClasses.map((cl) => {
     const toReturn: MergedClass = { ...allClasses[cl.id], ...cl };
     return toReturn;

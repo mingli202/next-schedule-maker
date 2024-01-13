@@ -32,15 +32,17 @@ const Hours = () => {
   );
 };
 
-const View = async ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
+type Props = React.HTMLAttributes<HTMLDivElement> & { readonly?: boolean };
+
+const View = async ({ className, readonly }: Props) => {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
   return (
     <div
       className={twMerge(
-        className,
         "box-border grid grid-cols-[3rem_repeat(5,1fr)] grid-rows-[repeat(21,1fr)] rounded-md bg-primary p-4 text-bgPrimary",
+        className,
       )}
     >
       <div className="grid-rows-[repeat(20,1fr) col-span-1 row-[span_21/span_21] mr-4 grid grid-cols-1">
@@ -89,7 +91,7 @@ const View = async ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
             })}
         </div>
 
-        <GridView allClasses={allClasses} />
+        <GridView allClasses={allClasses} readonly={readonly} />
         <PreviewHover allClasses={allClasses} />
       </div>
     </div>

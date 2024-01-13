@@ -1,28 +1,22 @@
 "use client";
 
 import { app, db } from "@/backend";
-import { Saved } from "@/types";
+
 import { Button } from "@/ui";
 import {
-  Unsubscribe,
   getAuth,
   onAuthStateChanged,
   sendEmailVerification,
   signOut,
 } from "firebase/auth";
-import { onValue, ref } from "firebase/database";
+import { ref, update } from "firebase/database";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { createContext, useEffect, useState } from "react";
-
-export const SchedulesContext = createContext<Saved[] | null>(null);
-export const FriendsContext = createContext<string[] | null>(null);
+import { useEffect, useState } from "react";
+import ContextProvider from "./Context";
 
 const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-
-  const [savedSchedules, setSavedSchedules] = useState<Saved[] | null>(null);
-  const [friends, setFriends] = useState<string[] | null>(null);
 
   const [loginState, setLoginState] = useState<
     "loading" | "signedin" | "signedout" | "emailunverified"
@@ -30,50 +24,39 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const auth = getAuth(app);
-    let detach1: Unsubscribe;
-    let detach2: Unsubscribe;
 
-    const unsub = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        if (!user.emailVerified) {
-          setLoginState("emailunverified");
-          return;
-        }
-
-        detach1 = onValue(
-          ref(db, `/users/${user.uid}/schedules`),
-          (snapshot) => {
-            setSavedSchedules(snapshot.val());
-          },
-        );
-
-        detach2 = onValue(ref(db, `/users/${user.uid}/friends`), (snapshot) =>
-          setFriends(snapshot.val()),
-        );
-
-        setLoginState("signedin");
-      } else {
-        setLoginState("signedout");
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        return setLoginState("signedout");
       }
+
+      if (!user.emailVerified) {
+        return setLoginState("emailunverified");
+      }
+
+      const dbRef = ref(db, `/users/${user.uid}`);
+
+      await update(dbRef, {
+        lastSignedIn: new Date().toString() + " on Dream Builder",
+        public: {
+          name: user.displayName ?? "User",
+          email: user.email,
+          uid: user.uid,
+        },
+      }).catch(() => alert("Error setting data initial data"));
+
+      setLoginState("signedin");
     });
 
     return () => {
       unsub();
-
-      if (!detach1 || !detach2) return;
-      detach1();
-      detach2();
     };
   }, [router]);
 
   return (
-    <main className="flex w-screen overflow-y-auto overflow-x-hidden font-body text-text">
+    <main className="flex h-screen w-screen overflow-hidden font-body text-text">
       {loginState === "signedin" && (
-        <SchedulesContext.Provider value={savedSchedules}>
-          <FriendsContext.Provider value={friends}>
-            {children}
-          </FriendsContext.Provider>
-        </SchedulesContext.Provider>
+        <ContextProvider>{children}</ContextProvider>
       )}
       {loginState === "loading" && (
         <div className="flex h-screen w-screen items-center justify-center">
@@ -107,7 +90,7 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
             }}
             variant="special"
           >
-            Verify email
+            Send email
           </Button>
         </div>
       )}

@@ -1,21 +1,24 @@
-"use client";
+import { getLocalJsonData } from "@/lib";
+import Banner from "./Banner";
+import FollowingsPreview from "./FollowingsPreview";
+import SavedPreview from "./SavedPreview";
+import { Class } from "@/types";
 
-import { app } from "@/backend";
-import { Button } from "@/ui";
-import { getAuth, signOut } from "firebase/auth";
+const Page = async () => {
+  const colors: string[] = await getLocalJsonData("colors");
+  const allClasses: Record<string, Class> =
+    await getLocalJsonData("allClasses");
 
-const Page = () => {
   return (
-    <div className="flex w-full flex-col gap-4">
-      <div className="flex justify-between">
-        <h1 className="font-heading text-5xl">Dashboard</h1>
-        <Button
-          variant="special"
-          onClick={() => signOut(getAuth(app))}
-          className="h-fit w-fit"
-        >
-          Sign Out
-        </Button>
+    <div className="flex h-full w-full flex-col gap-4 p-4">
+      <Banner className="shrink-0" />
+      <div className="flex w-full basis-full gap-4 overflow-hidden">
+        <SavedPreview
+          colors={colors}
+          className="box-border h-fit max-h-full basis-2/3 rounded-md border border-solid border-third p-4"
+          allClasses={allClasses}
+        />
+        <FollowingsPreview className="box-border h-fit max-h-full basis-1/3 rounded-md border border-solid border-third p-4" />
       </div>
     </div>
   );

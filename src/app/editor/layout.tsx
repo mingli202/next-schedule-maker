@@ -29,7 +29,6 @@ export const metadata: Metadata = {
 };
 type Props = {
   children: React.ReactNode;
-  menu: React.ReactNode;
 };
 
 const Layout = ({ children }: Props) => {

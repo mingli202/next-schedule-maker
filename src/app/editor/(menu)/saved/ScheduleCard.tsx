@@ -15,13 +15,17 @@ import transform from "./transform";
 import { ref, set } from "firebase/database";
 import { db } from "@/backend";
 import { HTMLMotionProps, motion } from "framer-motion";
+import { SetCurrentClassesContext } from "@/app/user/Context";
+import { useRouter } from "next/navigation";
 
 type Props = {
   schedule: Saved;
-  allClasses: Record<string, Class>;
+  allClasses?: Record<string, Class>;
   colors: string[];
   uid: string | null;
   savedSchedules: Saved[];
+  userSaved?: boolean;
+  userPreview?: boolean;
 };
 
 const ScheduleCard = ({
@@ -31,9 +35,14 @@ const ScheduleCard = ({
   colors,
   uid,
   savedSchedules,
+  userSaved,
+  userPreview,
   ...props
 }: Props & HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div">) => {
   const dispatch = useContext(ScheduleDispatchContext);
+  const setCurrentSchedule = useContext(SetCurrentClassesContext);
+  const router = useRouter();
+
   const [editName, setEditName] = useState(false);
 
   return (
@@ -45,9 +54,17 @@ const ScheduleCard = ({
       {...props}
     >
       <div
-        className="col-span-5 row-[span_20/span_20] grid h-20 w-full shrink-0 cursor-pointer grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md bg-slate transition hover:bg-slate/80"
+        className={cn(
+          "col-span-5 row-[span_20/span_20] grid h-20 w-full shrink-0 grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md bg-slate ",
+          {
+            "cursor-pointer transition hover:bg-slate/80":
+              allClasses || userPreview,
+          },
+        )}
         title="select"
         onClick={() => {
+          if (!allClasses) return;
+
           const classes = Object.entries(allClasses);
 
           if (!schedule.data) {
@@ -68,10 +85,17 @@ const ScheduleCard = ({
               };
             });
 
-            dispatch({
-              type: "set",
-              schedule: scheduleToShow,
-            });
+            if (userSaved) {
+              setCurrentSchedule(scheduleToShow);
+              if (userPreview) {
+                router.push("/user/saved");
+              }
+            } else {
+              dispatch({
+                type: "set",
+                schedule: scheduleToShow,
+              });
+            }
           } catch {
             alert("Only Winter 2024 Classes are allowed.");
           }
@@ -109,6 +133,7 @@ const ScheduleCard = ({
           <form
             className="box-border flex basis-full items-center overflow-hidden rounded-md bg-bgPrimary"
             action={async (formdata) => {
+              if (!uid) return;
               const name = formdata.get("name")?.toString() ?? "Untitled";
 
               const dbRef = ref(db, `/users/${uid}/schedules`);

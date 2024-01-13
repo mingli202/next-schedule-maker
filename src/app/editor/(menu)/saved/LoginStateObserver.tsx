@@ -65,7 +65,7 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
             }}
             variant="special"
           >
-            Verify email
+            Send email
           </Button>
         </div>
       )}
