@@ -1,10 +1,7 @@
 "use client";
 
-import { app, db } from "@/backend";
 import { SharedCurrentClasses, ActionType } from "@/types";
-import { getAuth } from "firebase/auth";
-import { ref, update } from "firebase/database";
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 
 export const ScheduleClassesContext = createContext<SharedCurrentClasses[]>([]);
 export const ScheduleDispatchContext = createContext<
@@ -36,14 +33,6 @@ const initalValue: SharedCurrentClasses[] = [];
 
 const ScheduleContextProvider = ({ children }: Props) => {
   const [currentClasses, dispatch] = useReducer(reducer, initalValue);
-
-  useEffect(() => {
-    const user = getAuth(app).currentUser;
-    if (!user) return;
-    update(ref(db, `/users/${user.uid}`), {
-      lastSignedIn: new Date().toString() + " on Dream Builder",
-    }).catch(() => alert("Error setting data."));
-  }, []);
 
   return (
     <ScheduleClassesContext.Provider value={currentClasses}>
