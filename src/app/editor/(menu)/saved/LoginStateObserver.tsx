@@ -1,6 +1,6 @@
 "use client";
 
-import { app, db } from "@/backend";
+import { app } from "@/backend";
 import {
   getAuth,
   onAuthStateChanged,
@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoggedOut from "./LoggedOut";
 import { Button } from "@/ui";
-import { ref, update } from "firebase/database";
 
 const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -33,9 +32,9 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      await update(ref(db, `/users/${user.uid}`), {
-        lastSignedIn: new Date().toString() + " on Dream Builder",
-      }).catch(() => alert("Error setting data."));
+      // await update(ref(db, `/users/${user.uid}`), {
+      //   lastSignedIn: new Date().toString() + " on Dream Builder",
+      // }).catch(() => alert("Error setting data."));
 
       // await update(ref(db, `/public/users/${user.uid}`), {
       //   name: user.displayName ?? "User",
