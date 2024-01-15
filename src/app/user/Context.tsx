@@ -7,6 +7,9 @@ import { createContext, useEffect, useState } from "react";
 import { Saved, SharedCurrentClasses } from "@/types";
 
 export const SchedulesContext = createContext<Saved[] | null>(null);
+export const SetSchedulesContext = createContext<
+  React.Dispatch<React.SetStateAction<Saved[] | null>>
+>(() => {});
 export const FollowingsContext = createContext<string[] | null>(null);
 
 export const CurrentClassesContext = createContext<SharedCurrentClasses[]>([]);
@@ -20,7 +23,7 @@ type Props = {
 
 const ContextProvider = ({ children }: Props) => {
   const [savedSchedules, setSavedSchedules] = useState<Saved[] | null>(null);
-  const [friends, setFriends] = useState<string[] | null>(null);
+  const [followings, setFollowings] = useState<string[] | null>(null);
 
   const [currentClasses, setCurrentClasses] = useState<SharedCurrentClasses[]>(
     [],
@@ -37,8 +40,9 @@ const ContextProvider = ({ children }: Props) => {
       },
     );
 
-    const detach2 = onValue(ref(db, `/users/${user.uid}/friends`), (snapshot) =>
-      setFriends(snapshot.val()),
+    const detach2 = onValue(
+      ref(db, `/users/${user.uid}/followings`),
+      (snapshot) => setFollowings(snapshot.val()),
     );
 
     return () => {
@@ -47,13 +51,16 @@ const ContextProvider = ({ children }: Props) => {
     };
   });
 
+  // thanks react
   return (
     <CurrentClassesContext.Provider value={currentClasses}>
       <SetCurrentClassesContext.Provider value={setCurrentClasses}>
         <SchedulesContext.Provider value={savedSchedules}>
-          <FollowingsContext.Provider value={friends}>
-            {children}
-          </FollowingsContext.Provider>
+          <SetSchedulesContext.Provider value={setSavedSchedules}>
+            <FollowingsContext.Provider value={followings}>
+              {children}
+            </FollowingsContext.Provider>
+          </SetSchedulesContext.Provider>
         </SchedulesContext.Provider>
       </SetCurrentClassesContext.Provider>
     </CurrentClassesContext.Provider>

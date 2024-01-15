@@ -5,6 +5,7 @@ import {
   faGear,
   faHammer,
   faHome,
+  faSearch,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,6 +35,12 @@ const VerticalNavbar = ({ className, ...props }: Props) => {
         <Link href="/user/saved" className="shrink-0" title="saved schedules">
           <Button variant="basic" className="p-2">
             <FontAwesomeIcon icon={faDownload} className="h-8 w-8" />
+          </Button>
+        </Link>
+
+        <Link href="/user/search" className="shrink-0" title="friends">
+          <Button variant="basic" className="p-2">
+            <FontAwesomeIcon icon={faSearch} className="h-8 w-8" />
           </Button>
         </Link>
 

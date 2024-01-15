@@ -1,6 +1,6 @@
 "use client";
 
-import { app } from "@/backend";
+import { app, db } from "@/backend";
 import {
   getAuth,
   onAuthStateChanged,
@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoggedOut from "./LoggedOut";
 import { Button } from "@/ui";
+import { ref, update } from "firebase/database";
 
 const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const auth = getAuth(app);
-    const unsub = onAuthStateChanged(auth, (user) => {
+    const unsub = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         setLoginState("signedout");
         return;
@@ -31,6 +32,16 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
         setLoginState("emailunverified");
         return;
       }
+
+      await update(ref(db, `/users/${user.uid}`), {
+        lastSignedIn: new Date().toString() + " on Dream Builder",
+      }).catch(() => alert("Error setting data."));
+
+      // await update(ref(db, `/public/users/${user.uid}`), {
+      //   name: user.displayName ?? "User",
+      //   email: user.email ?? "User email",
+      //   uid: user.uid,
+      // }).catch(() => alert("Error setting data."));
 
       setLoginState("signedin");
     });

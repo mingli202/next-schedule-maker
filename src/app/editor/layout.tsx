@@ -4,7 +4,6 @@ import { Metadata } from "next";
 import View from "./view";
 import DragIndicator from "./DragIndicator";
 import "./styles.css";
-
 export const metadata: Metadata = {
   title: "Editor",
   description: "Schedule Builder Editor",
@@ -31,7 +30,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: Props) => {
+const Layout = async ({ children }: Props) => {
   return (
     <ScheduleContextProvider>
       <main className="box-border flex w-screen overflow-auto p-2 text-sm text-text max-md:flex-col md:h-screen md:overflow-hidden md:text-base">

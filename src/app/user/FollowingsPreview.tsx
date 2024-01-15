@@ -22,10 +22,12 @@ const FollowingsPreview = ({ className, ...props }: Props) => {
       {followings ? (
         followings.map((usr, i) => <div key={i}>{usr}</div>)
       ) : (
-        <Link href="/user/followings">
-          You don{"'"}t follow any user. Click to find a user!
-          <Button variant="special">Search Users</Button>
-        </Link>
+        <div>
+          <p>You don{"'"}t follow any user. Click to find a user!</p>
+          <Link href="/user/search">
+            <Button variant="special">Search Users</Button>
+          </Link>
+        </div>
       )}
     </div>
   );

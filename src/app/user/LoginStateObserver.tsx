@@ -34,16 +34,15 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
         return setLoginState("emailunverified");
       }
 
-      const dbRef = ref(db, `/users/${user.uid}`);
-
-      await update(dbRef, {
+      await update(ref(db, `/users/${user.uid}`), {
         lastSignedIn: new Date().toString() + " on Dream Builder",
-        public: {
-          name: user.displayName ?? "User",
-          email: user.email,
-          uid: user.uid,
-        },
-      }).catch(() => alert("Error setting data initial data"));
+      }).catch(() => alert("Error setting data."));
+
+      // await update(ref(db, `/public/users/${user.uid}`), {
+      //   name: user.displayName ?? "User",
+      //   email: user.email ?? "User email",
+      //   uid: user.uid,
+      // }).catch(() => alert("Error setting data."));
 
       setLoginState("signedin");
     });

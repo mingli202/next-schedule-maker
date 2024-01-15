@@ -1,14 +1,22 @@
-import { AuthError, UserCredential } from "firebase/auth";
+// import { AuthError, UserCredential } from "firebase/auth";
 
-export type AuthType =
-  | {
-      info: UserCredential;
-      status: "success";
-    }
-  | {
-      info: AuthError;
-      status: "error";
-    };
+// export type AuthType =
+//   | {
+//       info: UserCredential;
+//       status: "success";
+//     }
+//   | {
+//       info: AuthError;
+//       status: "error";
+//     };
+
+export type UserPublic = {
+  email: string;
+  name: string;
+  uid: string;
+  schedules?: Saved[];
+  visible?: boolean;
+};
 
 export type SharedCurrentClasses = {
   id: string;
