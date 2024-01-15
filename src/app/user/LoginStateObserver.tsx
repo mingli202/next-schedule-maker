@@ -38,11 +38,11 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
         lastSignedIn: new Date().toString() + " on Dream Builder",
       }).catch(() => alert("Error setting data."));
 
-      // await update(ref(db, `/public/users/${user.uid}`), {
-      //   name: user.displayName ?? "User",
-      //   email: user.email ?? "User email",
-      //   uid: user.uid,
-      // }).catch(() => alert("Error setting data."));
+      await update(ref(db, `/public/users/${user.uid}`), {
+        name: user.displayName ?? "User",
+        email: user.email ?? "User email",
+        uid: user.uid,
+      }).catch(() => alert("Error setting data."));
 
       setLoginState("signedin");
     });
