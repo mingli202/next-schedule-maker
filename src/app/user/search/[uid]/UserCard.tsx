@@ -125,7 +125,7 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
               <p>{allUsers[uid].email}</p>
               <p>{allUsers[uid].uid}</p>
             </div>
-            <div className="w-full basis-full rounded-md bg-bgPrimary p-2">
+            <div className="flex w-full basis-full flex-col overflow-hidden rounded-md bg-bgPrimary p-2">
               {allUsers[uid].schedules ? (
                 <SavedList
                   savedSchedules={allUsers[uid].schedules ?? {}}
