@@ -5,7 +5,6 @@ import SavedPreview from "./SavedPreview";
 import { Class } from "@/types";
 
 const Page = async () => {
-  const colors: string[] = await getLocalJsonData("colors");
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
@@ -14,7 +13,6 @@ const Page = async () => {
       <Banner className="shrink-0" />
       <div className="flex w-full basis-full gap-4 overflow-hidden">
         <SavedPreview
-          colors={colors}
           className="box-border h-fit max-h-full basis-2/3 rounded-md border border-solid border-third p-4"
           allClasses={allClasses}
         />

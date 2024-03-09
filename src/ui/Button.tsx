@@ -3,10 +3,13 @@
 import { twMerge } from "tailwind-merge";
 import { ButtonHTMLAttributes, useCallback, useRef } from "react";
 import { HTMLMotionProps, motion, useAnimate } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 type Props = {
-  variant?: "basic" | "special" | "compact";
-  diasableBgEffect?: boolean;
+  variant?: "basic" | "special";
+  targetPath?: string;
+} & {
+  disableBgEffect?: boolean;
   disableScaleEffect?: boolean;
 } & HTMLMotionProps<"button"> &
   ButtonHTMLAttributes<HTMLButtonElement>;
@@ -15,35 +18,35 @@ function Button({
   className,
   children,
   variant,
-  diasableBgEffect,
+  disableBgEffect,
   disableScaleEffect,
+  targetPath,
   ...props
 }: Props) {
-  const variants = {
+  const hoverVariants = {
     // basic animation for non important text
     basic: {
-      scale: disableScaleEffect ? 1 : 1.05,
+      scale: disableScaleEffect ? 1 : 1.01,
       opacity: 1,
       // backgroundColor: "rgba(255, 255, 255, 0.05)",
     },
     // for important buttons
     special: {
-      scale: disableScaleEffect ? 1 : 1.05,
+      scale: disableScaleEffect ? 1 : 1.01,
       color: "#facc15",
       outlineColor: "#facc15",
       boxShadow: "0 0 1rem #facc15",
     },
-    // for when there is little space
-    compact: {},
   };
-  // const [ref, bounds] = useMeasure();
+  const currentPath = usePathname();
+
   const ref = useRef<HTMLButtonElement>(null!);
   const [scope, animate] = useAnimate();
 
   const expandingCircle = useCallback(
     async (
       e: React.PointerEvent<HTMLButtonElement>,
-      buttonVariant: "basic" | "special" | "compact",
+      buttonVariant: "basic" | "special",
       out?: boolean,
     ) => {
       if (variant !== buttonVariant) return;
@@ -56,7 +59,7 @@ function Button({
         special: {
           scale: out ? [3, 0] : [0, 3],
         },
-        compact: {},
+        path: {},
       };
 
       const bounds = ref.current.getBoundingClientRect();
@@ -86,22 +89,25 @@ function Button({
         variant === "special" && "z-10 bg-yellow-400 text-bgPrimary",
         className,
       )}
+      animate={{
+        opacity: currentPath === targetPath ? 1 : undefined,
+      }}
       whileHover={variant}
       whileTap={{
         scale: 1,
       }}
-      variants={variants}
+      variants={hoverVariants}
       ref={ref}
       onPointerUp={async (e) => {
-        if (diasableBgEffect) return;
+        if (disableBgEffect) return;
         expandingCircle(e, "basic");
       }}
       onPointerEnter={async (e) => {
-        if (diasableBgEffect) return;
+        if (disableBgEffect) return;
         expandingCircle(e, "special");
       }}
       onPointerLeave={async (e) => {
-        if (diasableBgEffect) return;
+        if (disableBgEffect) return;
         expandingCircle(e, "special", true);
       }}
     >

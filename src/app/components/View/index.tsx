@@ -1,8 +1,9 @@
-import { getLocalJsonData } from "@/lib";
+"use client";
+
 import GridView from "./GridView";
-import { Class } from "@/types";
 import { twMerge } from "tailwind-merge";
 import PreviewHover from "./PreviewHover";
+import { Class, SharedCurrentClasses, StateType } from "@/types";
 
 const Hours = () => {
   const initalMinutes = 8 * 60;
@@ -32,12 +33,20 @@ const Hours = () => {
   );
 };
 
-type Props = React.HTMLAttributes<HTMLDivElement> & { readonly?: boolean };
+type Props = React.HTMLAttributes<HTMLDivElement> & {
+  disableRemove?: boolean;
+  allClasses: Record<string, Class>;
+  stateType: StateType;
+  scheduleClasses: SharedCurrentClasses[];
+};
 
-const View = async ({ className, readonly }: Props) => {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
-
+const View = ({
+  className,
+  disableRemove,
+  allClasses,
+  stateType,
+  scheduleClasses,
+}: Props) => {
   return (
     <div
       className={twMerge(
@@ -91,7 +100,12 @@ const View = async ({ className, readonly }: Props) => {
             })}
         </div>
 
-        <GridView allClasses={allClasses} readonly={readonly} />
+        <GridView
+          allClasses={allClasses}
+          stateType={stateType}
+          disableRemove={disableRemove}
+          scheduleClasses={scheduleClasses}
+        />
         <PreviewHover allClasses={allClasses} />
       </div>
     </div>

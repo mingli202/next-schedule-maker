@@ -1,23 +1,44 @@
 "use client";
 
 import { cn } from "@/lib";
-import { HTMLAttributes, useContext } from "react";
+import { HTMLAttributes, useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/ui";
-import SavedList from "../editor/(menu)/saved/SavedList";
-import { getAuth } from "firebase/auth";
-import { app } from "@/backend";
 
-import { Class } from "@/types";
-import { SchedulesContext } from "./Context";
+import { Class, Saved } from "@/types";
+import { getAuth } from "firebase/auth";
+import { app, db } from "@/backend";
+import { onValue, ref } from "firebase/database";
+import SavedList from "../components/SavedList";
+import { SetScheduleContext } from "./Context";
+import { useRouter } from "next/navigation";
 
 type Props = {
-  colors: string[];
   allClasses: Record<string, Class>;
 } & HTMLAttributes<HTMLDivElement>;
 
-const SavedPreview = ({ className, allClasses, colors, ...props }: Props) => {
-  const schedules = useContext(SchedulesContext);
+const SavedPreview = ({ className, allClasses, ...props }: Props) => {
+  const [schedules, setSchedules] = useState<
+    Record<string, Saved> | null | "loading"
+  >("loading");
+
+  const setCurrentClasses = useContext(SetScheduleContext);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const user = getAuth(app).currentUser;
+    if (!user) return;
+
+    const unsub = onValue(ref(db, `/users/${user.uid}/schedules`), (snap) => {
+      const val = snap.val();
+      setSchedules(val);
+    });
+
+    return () => {
+      unsub();
+    };
+  }, []);
 
   return (
     <div
@@ -28,26 +49,31 @@ const SavedPreview = ({ className, allClasses, colors, ...props }: Props) => {
         <h2 className="text-2xl font-bold">My Schedules</h2>
       </Link>
 
-      {schedules ? (
-        <SavedList
-          savedSchedules={schedules}
-          colors={colors}
-          uid={getAuth(app).currentUser?.uid ?? null}
-          userPreview
-          userSaved
-          allClasses={allClasses}
-        />
-      ) : (
-        <div>
-          <p>
-            You don{"'"}t seem to have any schedule saved. Click to start
-            building!
-          </p>
-          <Link href="/editor">
-            <Button variant="special">Go to editor</Button>
-          </Link>
-        </div>
-      )}
+      {schedules !== "loading" ? (
+        schedules ? (
+          <SavedList
+            savedSchedules={schedules ?? {}}
+            allClasses={allClasses}
+            stateType={{
+              type: "setStateAction",
+              dispatch: setCurrentClasses,
+            }}
+            customSelect={() => {
+              router.push("/user/saved");
+            }}
+          />
+        ) : (
+          <div>
+            <p>
+              You don{"'"}t seem to have any schedule saved. Click to start
+              building!
+            </p>
+            <Link href="/editor">
+              <Button variant="special">Go to editor</Button>
+            </Link>
+          </div>
+        )
+      ) : null}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Navbar, AboutUs, Welcome, Features, Contact } from "./components";
+import { Navbar, Welcome, AboutUs, Features, Contact } from ".";
 
 const LandingPage = () => {
   return (

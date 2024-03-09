@@ -65,7 +65,7 @@ const BottomMenu = () => {
               }}
               key="download"
             >
-              <Button variant="basic" className="p-0" diasableBgEffect>
+              <Button variant="basic" className="p-0" disableBgEffect>
                 <FontAwesomeIcon icon={faFileDownload} className="h-4" />
               </Button>
             </motion.div>
@@ -81,7 +81,7 @@ const BottomMenu = () => {
               key="home"
             >
               <Link href={path}>
-                <Button variant="basic" className="p-0" diasableBgEffect>
+                <Button variant="basic" className="p-0" disableBgEffect>
                   <FontAwesomeIcon icon={faHome} className="h-4" />
                 </Button>
               </Link>

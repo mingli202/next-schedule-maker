@@ -7,11 +7,9 @@ const Saved = async () => {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
-  const colors: string[] = await getLocalJsonData("colors");
-
   return (
     <LoginStateObserver>
-      <SavedSchedules allClasses={allClasses} colors={colors} />
+      <SavedSchedules allClasses={allClasses} />
     </LoginStateObserver>
   );
 };

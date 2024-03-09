@@ -1,22 +1,24 @@
 "use client";
 
-import { Class, SharedCurrentClasses } from "@/types";
-import { Fragment, useContext, useState } from "react";
-import {
-  ScheduleClassesContext,
-  ScheduleDispatchContext,
-} from "../ScheduleContext";
+import { Class, SharedCurrentClasses, StateType } from "@/types";
+import { Fragment, useState } from "react";
 import { AnimatePresence, Variants, motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/ui";
 import ExpandClass from "./ExpandClass";
-import { CurrentClassesContext } from "@/app/user/Context";
 
 type MergedClass = Class & SharedCurrentClasses;
 
-const ClassBlock = ({ cl }: { cl: MergedClass }) => {
-  const dispatch = useContext(ScheduleDispatchContext);
+const ClassBlock = ({
+  cl,
+  disableRemove,
+  stateType,
+}: {
+  cl: MergedClass;
+  disableRemove?: boolean;
+  stateType: StateType;
+}) => {
   const card: Variants = {
     hover: {
       opacity: 1,
@@ -33,7 +35,7 @@ const ClassBlock = ({ cl }: { cl: MergedClass }) => {
         return (
           <motion.div
             key={cl.code + d + cl.section}
-            className="relative z-10 box-border overflow-hidden rounded-md p-2 text-[8px] leading-[10px] md:text-[14px] md:leading-[14px]"
+            className="relative z-10 box-border overflow-hidden rounded-md border-[3px] border-solid border-black/20 p-1 text-[8px] leading-[10px] md:text-[14px] md:leading-[14px]"
             style={{
               gridColumn: d,
               gridRowStart: start,
@@ -48,7 +50,6 @@ const ClassBlock = ({ cl }: { cl: MergedClass }) => {
             variants={card}
             whileHover="hover"
           >
-            <div className="absolute left-0 top-0 box-border h-full w-full rounded-md border-[3px] border-solid border-black bg-transparent opacity-20 mix-blend-darken" />
             <p className="line-clamp-2 font-bold">{cl.lecture.title}</p>
             <p className="mt-1 line-clamp-1">{cl.code}</p>
             <p className="font">{cl.section}</p>
@@ -58,17 +59,27 @@ const ClassBlock = ({ cl }: { cl: MergedClass }) => {
               variants={card}
               initial={{ opacity: 0 }}
             >
+              {!disableRemove ? (
+                <Button
+                  variant="basic"
+                  className="rounded-none p-0"
+                  onClick={() => {
+                    if (disableRemove) return;
+                    if (stateType === "none") return;
+                    if (stateType.type == "dispatch") {
+                      stateType.dispatch({ type: "delete", id: cl.id });
+                    }
+                  }}
+                  title="remove"
+                >
+                  <FontAwesomeIcon icon={faMinus} />
+                </Button>
+              ) : (
+                <div className="basis-full" />
+              )}
               <Button
                 variant="basic"
-                className="rounded-none p-0"
-                onClick={() => dispatch({ type: "delete", id: cl.id })}
-                title="remove"
-              >
-                <FontAwesomeIcon icon={faMinus} />
-              </Button>
-              <Button
-                variant="basic"
-                className="rounded-none p-0"
+                className="shrink-0 rounded-none p-0"
                 onClick={() => {
                   setExpand(true);
                 }}
@@ -86,6 +97,8 @@ const ClassBlock = ({ cl }: { cl: MergedClass }) => {
             cl={cl}
             setExpand={setExpand}
             key={cl.code + cl.section + "expanded"}
+            stateType={stateType}
+            disableRemove={disableRemove}
           />
         )}
       </AnimatePresence>
@@ -95,15 +108,19 @@ const ClassBlock = ({ cl }: { cl: MergedClass }) => {
 
 type Props = {
   allClasses: Record<string, Class>;
-  readonly?: boolean;
+  disableRemove?: boolean;
+} & {
+  stateType: StateType;
+  scheduleClasses: SharedCurrentClasses[];
 };
 
-const GridView = ({ allClasses, readonly }: Props) => {
-  const editorClasses = useContext(ScheduleClassesContext);
-  const userClasses = useContext(CurrentClassesContext);
-  const currentClasses = readonly ? userClasses : editorClasses;
-
-  const fullClasses: MergedClass[] = currentClasses.map((cl) => {
+const GridView = ({
+  allClasses,
+  disableRemove,
+  scheduleClasses,
+  stateType,
+}: Props) => {
+  const fullClasses: MergedClass[] = scheduleClasses.map((cl) => {
     const toReturn: MergedClass = { ...allClasses[cl.id], ...cl };
     return toReturn;
   });
@@ -111,7 +128,12 @@ const GridView = ({ allClasses, readonly }: Props) => {
   return (
     <AnimatePresence>
       {fullClasses.map((cl, index) => (
-        <ClassBlock key={cl.code + cl.section + index} cl={cl} />
+        <ClassBlock
+          key={cl.code + cl.section + index}
+          cl={cl}
+          disableRemove={disableRemove}
+          stateType={stateType}
+        />
       ))}
     </AnimatePresence>
   );

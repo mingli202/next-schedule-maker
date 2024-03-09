@@ -40,7 +40,7 @@ const SignUp = ({
       auth,
       email.toString(),
       password.toString(),
-    ).catch(() => setError("An erorr occured. Try again."));
+    ).catch(() => setError("An error occured. Try again."));
   };
 
   return (

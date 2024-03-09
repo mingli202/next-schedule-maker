@@ -1,6 +1,6 @@
 "use client";
 
-import { app, db } from "@/backend";
+import { app } from "@/backend";
 
 import { Button } from "@/ui";
 import {
@@ -9,7 +9,6 @@ import {
   sendEmailVerification,
   signOut,
 } from "firebase/auth";
-import { ref, update } from "firebase/database";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -33,16 +32,6 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
       if (!user.emailVerified) {
         return setLoginState("emailunverified");
       }
-
-      await update(ref(db, `/users/${user.uid}`), {
-        lastSignedIn: new Date().toString() + " on Dream Builder",
-      }).catch(() => alert("Error setting data."));
-
-      await update(ref(db, `/public/users/${user.uid}`), {
-        name: user.displayName ?? "User",
-        email: user.email ?? "User email",
-        uid: user.uid,
-      }).catch(() => alert("Error setting data."));
 
       setLoginState("signedin");
     });

@@ -1,40 +1,65 @@
 "use client";
 
 import { cn } from "@/lib";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Link from "next/link";
 
-import SavedList from "@/app/editor/(menu)/saved/SavedList";
 import { getAuth } from "firebase/auth";
-import { app } from "@/backend";
-import { Class } from "@/types";
-import { SchedulesContext } from "../Context";
+import { app, db } from "@/backend";
+import { Class, Saved } from "@/types";
 import { Button } from "@/ui";
+import { onValue, ref } from "firebase/database";
+import { SetScheduleContext } from "../Context";
+import SavedList from "@/app/components/SavedList";
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
-  colors: string[];
   allClasses: Record<string, Class>;
 };
 
-const RightNavbar = ({ className, colors, allClasses, ...props }: Props) => {
-  const currentSchedules = useContext(SchedulesContext);
+const RightNavbar = ({ className, allClasses, ...props }: Props) => {
+  const [schedules, setschedules] = useState<
+    Record<string, Saved> | "loading" | undefined
+  >("loading");
+
+  const setCurrentClasses = useContext(SetScheduleContext);
+
+  useEffect(() => {
+    const user = getAuth(app).currentUser;
+    if (!user) return;
+
+    const unsub = onValue(ref(db, `/users/${user.uid}/schedules`), (snap) => {
+      if (!snap.exists()) {
+        setschedules(undefined);
+        return;
+      }
+
+      const val = snap.val();
+      setschedules(val);
+    });
+
+    return () => {
+      unsub();
+    };
+  }, []);
 
   return (
     <div className={cn("flex flex-col gap-2", className)} {...props}>
-      {currentSchedules ? (
-        <SavedList
-          savedSchedules={currentSchedules}
-          colors={colors}
-          uid={getAuth(app).currentUser?.uid ?? null}
-          userSaved
-          allClasses={allClasses}
-        />
-      ) : (
-        <Link href="/editor">
-          <Button variant="special">Go to editor</Button>
-        </Link>
-      )}
+      {schedules !== "loading" &&
+        (schedules ? (
+          <SavedList
+            savedSchedules={schedules}
+            allClasses={allClasses}
+            stateType={{
+              type: "setStateAction",
+              dispatch: setCurrentClasses,
+            }}
+          />
+        ) : (
+          <Link href="/editor">
+            <Button variant="special">Go to editor</Button>
+          </Link>
+        ))}
     </div>
   );
 };

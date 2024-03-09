@@ -5,7 +5,7 @@ import { Class, Saved } from "@/types";
 import { getAuth } from "firebase/auth";
 
 import { useContext, useEffect, useState } from "react";
-import { onValue, ref, set } from "firebase/database";
+import { onValue, push, ref, set } from "firebase/database";
 
 import { Button } from "@/ui";
 import {
@@ -13,64 +13,50 @@ import {
   ScheduleDispatchContext,
 } from "../../ScheduleContext";
 
-import SavedList from "./SavedList";
+import SavedList from "../../../components/SavedList";
 
 type Props = {
   allClasses: Record<string, Class>;
-  colors: string[];
 };
 
-const SavedSchedules = ({ allClasses, colors }: Props) => {
-  const [savedSchedules, setSavedSchedules] = useState<Saved[]>([]);
-  const [uid, setUid] = useState<string | null>(null);
+const SavedSchedules = ({ allClasses }: Props) => {
+  const [savedSchedules, setSavedSchedules] = useState<Record<string, Saved>>();
   const currentClasses = useContext(ScheduleClassesContext);
   const dispatch = useContext(ScheduleDispatchContext);
 
   const handleClick = async () => {
-    if (!savedSchedules || !uid) return;
+    const user = getAuth(app).currentUser;
 
-    let counter = savedSchedules.length ?? 0;
+    if (!user) return;
 
-    do {
-      counter += 1;
-    } while (savedSchedules.map((s) => s.id).includes(counter));
+    const newSchedule = {
+      data: currentClasses,
+      name: `Untitled`,
+      semester: "fall 2024",
+      public: false,
+    } as const;
 
-    const scheduleToSave = currentClasses.map((cl) => allClasses[cl.id]);
-
-    const dbRef = ref(db, `/users/${uid}/schedules`);
-    await set(dbRef, [
-      ...savedSchedules,
-      {
-        id: counter,
-        data: scheduleToSave,
-        name: `Untitled ${counter}`,
-      },
-    ]).catch((err) => console.log(err));
+    await set(push(ref(db, `/users/${user.uid}/schedules`)), newSchedule).catch(
+      (err) => console.log(err),
+    );
   };
 
   useEffect(() => {
-    const local = localStorage.getItem("dream-builder");
-    if (local) {
-      localStorage.removeItem("dream-builder");
-    }
-
     const auth = getAuth(app);
     const user = auth.currentUser;
     if (!user) {
       return;
     }
 
-    setUid(user.uid);
-
     const schedulesRef = ref(db, `/users/${user.uid}/schedules`);
 
     const unsub = onValue(schedulesRef, async (snapshot) => {
       if (!snapshot.exists()) {
-        setSavedSchedules([]);
+        setSavedSchedules(undefined);
         return;
       }
 
-      const value = snapshot.val() as Saved[];
+      const value = snapshot.val() as Record<string, Saved>;
       setSavedSchedules(value);
     });
 
@@ -93,10 +79,12 @@ const SavedSchedules = ({ allClasses, colors }: Props) => {
       </div>
 
       <SavedList
-        savedSchedules={savedSchedules}
-        colors={colors}
+        savedSchedules={savedSchedules ?? {}}
         allClasses={allClasses}
-        uid={uid}
+        stateType={{
+          type: "dispatch",
+          dispatch: dispatch,
+        }}
       />
 
       <div className="shrink-0 basis-1/3 overflow-y-auto overflow-x-hidden">
@@ -106,7 +94,7 @@ const SavedSchedules = ({ allClasses, colors }: Props) => {
 
             <Button
               className="shrink-0 p-0"
-              diasableBgEffect
+              disableBgEffect
               variant="basic"
               onClick={() => {
                 dispatch({ type: "set", schedule: [] });

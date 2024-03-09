@@ -1,12 +1,10 @@
 "use client";
 
-import { Class, SharedCurrentClasses } from "@/types";
+import { Class, SharedCurrentClasses, StateType } from "@/types";
 import { Button } from "@/ui";
 import { faClock, faCompress, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Variants, motion } from "framer-motion";
-import { useContext } from "react";
-import { ScheduleDispatchContext } from "../ScheduleContext";
 import { cn } from "@/lib";
 
 type MergedClass = Class & SharedCurrentClasses;
@@ -14,12 +12,14 @@ type MergedClass = Class & SharedCurrentClasses;
 const ExpandClass = ({
   cl,
   setExpand,
+  stateType,
+  disableRemove,
 }: {
   cl: MergedClass;
   setExpand: React.Dispatch<React.SetStateAction<boolean>>;
+  stateType: StateType;
+  disableRemove?: boolean;
 }) => {
-  const dispatch = useContext(ScheduleDispatchContext);
-
   const expandVariants: Variants = {
     initial: {
       opacity: 0,
@@ -61,16 +61,26 @@ const ExpandClass = ({
         variants={cardVariants}
       >
         <div className="flex w-full items-center justify-between">
-          <Button
-            variant="basic"
-            className="p-1 italic"
-            onClick={() => {
-              setExpand(false);
-              dispatch({ type: "delete", id: cl.id });
-            }}
-          >
-            Remove Class
-          </Button>
+          {!disableRemove && stateType !== "none" ? (
+            <Button
+              variant="basic"
+              className="p-1 italic"
+              onClick={() => {
+                setExpand(false);
+                if (stateType.type === "dispatch") {
+                  stateType.dispatch({ type: "delete", id: cl.id });
+                } else {
+                  stateType.dispatch((sch) =>
+                    sch.filter((s) => s.id !== cl.id),
+                  );
+                }
+              }}
+            >
+              Remove Class
+            </Button>
+          ) : (
+            <div className="invisible bg-transparent" />
+          )}
           <Button
             variant="basic"
             onClick={() => setExpand(false)}
@@ -167,11 +177,47 @@ const ExpandClass = ({
             >
               <h4 className="italic">Lab</h4>
 
-              <p className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
                 {cl.lab.prof}
-                <span className="font-bold">{cl.lab.rating.score}</span>
-              </p>
+                <div className="group relative flex cursor-default font-bold">
+                  <p>
+                    {cl.lab.rating.score === 0 ? "N/A" : cl.lab.rating.score}
+                  </p>
+                  <div className="absolute top-0 hidden w-[12rem] -translate-y-1/2 translate-x-12 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block">
+                    <p>
+                      Rating:{" "}
+                      {cl.lab.rating.avg === 0
+                        ? "N/A"
+                        : `${cl.lab.rating.avg}/5`}
+                    </p>
+                    <p>
+                      Difficulty:{" "}
+                      {cl.lab.rating.difficulty === 0
+                        ? "N/A"
+                        : `${cl.lab.rating.difficulty}/5`}
+                    </p>
+                    <p>
+                      Raters:{" "}
+                      {cl.lab.rating.nRating === 0
+                        ? "N/A"
+                        : `${cl.lab.rating.nRating} raters`}
+                    </p>
+                    <p>
+                      Take again:{" "}
+                      {cl.lab.rating.takeAgain === 0
+                        ? "N/A"
+                        : `${cl.lab.rating.takeAgain}%`}
+                    </p>
+                    <p className="font-bold">
+                      Overall Score:{" "}
+                      {cl.lab.rating.score === 0
+                        ? "N/A"
+                        : `${cl.lab.rating.score}/100`}
+                    </p>
+                  </div>
+                </div>
+              </div>
 
               {Object.entries(cl.lab)
                 .filter((i) => !["title", "prof", "rating"].includes(i[0]))

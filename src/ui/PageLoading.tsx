@@ -41,12 +41,6 @@ const PageLoading = () => {
       </motion.div>
 
       <p>Loading...</p>
-      {/* <Image
-        src="/assets/loading.gif"
-        alt="loading gif"
-        width={150}
-        height={(150 / 133) * 172}
-      /> */}
     </div>
   );
 };

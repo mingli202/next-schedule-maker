@@ -1,20 +1,10 @@
-// import { AuthError, UserCredential } from "firebase/auth";
-
-// export type AuthType =
-//   | {
-//       info: UserCredential;
-//       status: "success";
-//     }
-//   | {
-//       info: AuthError;
-//       status: "error";
-//     };
+import { Dispatch, SetStateAction } from "react";
 
 export type UserPublic = {
   email: string;
   name: string;
   uid: string;
-  schedules?: Saved[];
+  schedules?: Record<string, Saved>;
   visible?: boolean;
 };
 
@@ -23,6 +13,17 @@ export type SharedCurrentClasses = {
   bgColor?: string;
   textColor?: string;
 };
+
+export type StateType =
+  | {
+      type: "dispatch";
+      dispatch: Dispatch<ActionType>;
+    }
+  | {
+      type: "setStateAction";
+      dispatch: Dispatch<SetStateAction<SharedCurrentClasses[]>>;
+    }
+  | "none";
 
 export type ActionType =
   | {
@@ -37,13 +38,6 @@ export type ActionType =
       type: "set";
       schedule: SharedCurrentClasses[];
     };
-
-export type UserType = {
-  email: string;
-  uid: string;
-  name?: string;
-  schedules?: Saved[];
-};
 
 export type Class = {
   count: number;
@@ -86,7 +80,9 @@ export type Time = {
 };
 
 export type Saved = {
-  id: number;
-  data: Class[];
+  id?: string;
+  data?: SharedCurrentClasses[];
   name?: string;
+  semester?: "winter" | "fall";
+  public?: boolean;
 };

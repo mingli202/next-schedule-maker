@@ -11,11 +11,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const MenuNavBar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
-  const path = usePathname();
-
   const searchParams = useSearchParams();
 
   return (
@@ -27,16 +25,13 @@ const MenuNavBar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
     >
       <Link
         href={`/editor/search?${searchParams}`}
-        className={cn(
-          "w-full",
-          { "opacity-50": path !== "/editor/search" },
-          "transition hover:opacity-100",
-        )}
+        className="w-full"
         title="search"
       >
         <Button
           variant="basic"
-          className="flex w-full justify-center rounded-md p-1 opacity-100"
+          className="flex w-full justify-center rounded-md p-1"
+          targetPath="/editor/search"
         >
           <FontAwesomeIcon icon={faSearch} className="h-4" />
         </Button>
@@ -44,16 +39,13 @@ const MenuNavBar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
 
       <Link
         href={`/editor/filter?${searchParams}`}
-        className={cn(
-          "w-full",
-          { "opacity-50": path !== "/editor/filter" },
-          "transition hover:opacity-100",
-        )}
+        className="w-full"
         title="filter"
       >
         <Button
           variant="basic"
-          className="flex w-full justify-center rounded-md p-1 opacity-100"
+          className="flex w-full justify-center rounded-md p-1"
+          targetPath="/editor/filter"
         >
           <FontAwesomeIcon icon={faFilter} className="h-4" />
         </Button>
@@ -61,16 +53,13 @@ const MenuNavBar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
 
       <Link
         href={`/editor/autobuild?${searchParams}`}
-        className={cn(
-          "w-full",
-          { "opacity-50": path !== "/editor/autobuild" },
-          "transition hover:opacity-100",
-        )}
+        className="w-full"
         title="autobuild"
       >
         <Button
           variant="basic"
-          className="flex w-full justify-center rounded-md p-1 opacity-100"
+          className="flex w-full justify-center rounded-md p-1"
+          targetPath="/editor/autobuild"
         >
           <FontAwesomeIcon icon={faStar} className="h-4" />
         </Button>
@@ -78,16 +67,13 @@ const MenuNavBar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
 
       <Link
         href={`/editor/saved?${searchParams}`}
-        className={cn(
-          "w-full",
-          { "opacity-50": path !== "/editor/saved" },
-          "transition hover:opacity-100",
-        )}
+        className="w-full"
         title="saved"
       >
         <Button
           variant="basic"
-          className="flex w-full justify-center rounded-md p-1 opacity-100"
+          className="flex w-full justify-center rounded-md p-1"
+          targetPath="/editor/saved"
         >
           <FontAwesomeIcon icon={faDownload} className="h-4" />
         </Button>
@@ -95,16 +81,13 @@ const MenuNavBar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
 
       <Link
         href={`/editor/settings?${searchParams}`}
-        className={cn(
-          "w-full",
-          { "opacity-50": path !== "/editor/settings" },
-          "transition hover:opacity-100",
-        )}
+        className="w-full"
         title="settings"
       >
         <Button
           variant="basic"
-          className="flex w-full justify-center rounded-md p-1 opacity-100"
+          className="flex w-full justify-center rounded-md p-1"
+          targetPath="/editor/settings"
         >
           <FontAwesomeIcon icon={faGear} className="h-4" />
         </Button>

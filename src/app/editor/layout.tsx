@@ -1,9 +1,12 @@
 import ScheduleContextProvider from "./ScheduleContext";
 
-import { Metadata } from "next";
-import View from "./view";
 import DragIndicator from "./DragIndicator";
 import "./styles.css";
+import ViewWrapper from "./ViewWrapper";
+import { getLocalJsonData } from "@/lib";
+import { Class } from "@/types";
+
+import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Editor",
   description: "Schedule Builder Editor",
@@ -31,6 +34,9 @@ type Props = {
 };
 
 const Layout = async ({ children }: Props) => {
+  const allClasses: Record<string, Class> =
+    await getLocalJsonData("allClasses");
+
   return (
     <ScheduleContextProvider>
       <main className="box-border flex w-screen overflow-auto p-2 text-sm text-text max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
@@ -45,7 +51,7 @@ const Layout = async ({ children }: Props) => {
           className="overflow-x-auto overflow-y-hidden max-md:order-1 md:h-full"
           id="view"
         >
-          <View className="h-[40rem] min-w-[40rem] md:h-full" />
+          <ViewWrapper allClasses={allClasses} />
         </div>
       </main>
     </ScheduleContextProvider>

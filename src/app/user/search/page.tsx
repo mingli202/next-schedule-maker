@@ -1,31 +1,46 @@
-import UserCard from "./UserCard";
-import Search from "./Search";
-import { getLocalJsonData } from "@/lib";
-import { faFrown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+"use client";
 
-const Page = async () => {
-  const colors: string[] = await getLocalJsonData("colors");
-  const disable = true;
+import { db } from "@/backend";
+import { UserPublic } from "@/types";
+
+import { onValue, ref } from "firebase/database";
+import { useEffect, useState } from "react";
+import Search from "./Search";
+import Results from "./Results";
+
+type Props = {
+  searchParams: {
+    q?: string;
+  };
+};
+const Page = ({ searchParams }: Props) => {
+  const [allUsers, setallUsers] = useState<UserPublic[]>([]);
+
+  useEffect(() => {
+    const unsub = onValue(
+      ref(db, "/public/users"),
+      (snap) => {
+        if (!snap.exists()) {
+          setallUsers([]);
+          return;
+        }
+        const val: Record<string, UserPublic> = snap.val();
+
+        setallUsers(Object.values(val));
+      },
+      { onlyOnce: true },
+    );
+
+    return () => {
+      unsub();
+    };
+  }, []);
 
   return (
-    <>
-      {disable ? (
-        <div className="flex h-full w-full items-center justify-center">
-          <p className="max-w-2xl shrink-0 text-center">
-            Regrettably this feature will not be implemented since it would
-            require too many downloads from the database and it would cost money
-            for this otherwise free app.
-          </p>
-          <FontAwesomeIcon icon={faFrown} />
-        </div>
-      ) : (
-        <div className="flex h-full basis-full gap-4 overflow-hidden p-4">
-          <Search className="h-full basis-1/3" />
-          <UserCard className="basis-2/3" colors={colors} />
-        </div>
-      )}
-    </>
+    <div className="relative flex h-full basis-full flex-col gap-4 overflow-hidden p-4">
+      <Search className="w-96" />
+      <Results allUsers={allUsers} q={searchParams.q ?? ""} />
+    </div>
   );
 };
 

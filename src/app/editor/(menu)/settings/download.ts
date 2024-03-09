@@ -25,7 +25,7 @@ const download = async (currentSchedule: SharedCurrentClasses[]) => {
     },
   ];
 
-  const sheet = workbook.addWorksheet("Fall 2023 Schedule");
+  const sheet = workbook.addWorksheet("Fall 2024 Schedule");
 
   sheet.columns = [
     "",
