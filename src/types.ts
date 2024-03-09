@@ -84,5 +84,4 @@ export type Saved = {
   data?: SharedCurrentClasses[];
   name?: string;
   semester?: "winter" | "fall";
-  public?: boolean;
 };

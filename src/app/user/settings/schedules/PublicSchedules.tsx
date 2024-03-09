@@ -55,10 +55,10 @@ const PublicSchedules = ({ allClasses, className, ...props }: Props) => {
   }, []);
 
   return (
-    <div className={cn("flex gap-2", className)} {...props}>
+    <div className={cn("flex gap-2 overflow-hidden", className)} {...props}>
       <div className="flex h-full basis-1/2 flex-col rounded-md bg-bgSecondary p-2">
         <h2 className="shrink-0 text-xl">Public</h2>
-        <div className="flex basis-full flex-col rounded-md bg-bgPrimary p-2">
+        <div className="flex basis-full flex-col overflow-hidden rounded-md bg-bgPrimary p-2">
           <SavedList
             savedSchedules={publicSchedules ?? {}}
             allClasses={allClasses}
@@ -76,7 +76,7 @@ const PublicSchedules = ({ allClasses, className, ...props }: Props) => {
       </div>
       <div className="flex h-full basis-1/2 flex-col rounded-md bg-bgSecondary p-2">
         <h2 className="shrink-0 text-xl">Private</h2>
-        <div className="flex basis-full flex-col rounded-md bg-bgPrimary p-2">
+        <div className="flex basis-full flex-col overflow-hidden rounded-md bg-bgPrimary p-2">
           <SavedList
             savedSchedules={dif(publicSchedules, userSchedules) ?? {}}
             allClasses={allClasses}
@@ -85,8 +85,8 @@ const PublicSchedules = ({ allClasses, className, ...props }: Props) => {
               const user = getAuth(app).currentUser;
               if (!user) return;
               await set(push(ref(db, `/public/users/${user.uid}/schedules`)), {
-                id,
                 ...s,
+                id,
               });
             }}
           />
