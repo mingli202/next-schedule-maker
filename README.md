@@ -1,6 +1,6 @@
 # Dream Schedule Builder
 
-Dream schedule builder is an improved version of my Jac Mock Schedule Maker. It was built with Next.js to enhance performance and usability.
+Dream schedule builder is an improved version of my [Jac Mock Schedule Maker](https://github.com/Nanoscience202/me-schedule-maker). It was built with Next.js to enhance performance and usability.
 
 ## Website goals:
 
@@ -14,3 +14,4 @@ Dream schedule builder is an improved version of my Jac Mock Schedule Maker. It 
 2. Class filtering (by rating, teacher, courses, days, etc.).
 3. Schedule saving (account creation).
 4. Sharing schedules to your friends.
+5. Autobuilder (input codes and generate schedules).
