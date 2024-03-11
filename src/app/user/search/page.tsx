@@ -7,14 +7,11 @@ import { onValue, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import Search from "./Search";
 import Results from "./Results";
+import { useSearchParams } from "next/navigation";
 
-type Props = {
-  searchParams: {
-    q?: string;
-  };
-};
-const Page = ({ searchParams }: Props) => {
+const Page = () => {
   const [allUsers, setallUsers] = useState<UserPublic[]>([]);
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const unsub = onValue(
@@ -39,7 +36,7 @@ const Page = ({ searchParams }: Props) => {
   return (
     <div className="relative flex h-full basis-full flex-col gap-4 overflow-hidden p-4">
       <Search className="w-96" />
-      <Results allUsers={allUsers} q={searchParams.q ?? ""} />
+      <Results allUsers={allUsers} q={searchParams.get("q") ?? ""} />
     </div>
   );
 };
