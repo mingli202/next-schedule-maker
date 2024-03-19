@@ -46,12 +46,6 @@ const VerticalNavbar = ({ className, ...props }: Props) => {
           </Button>
         </Link>
 
-        <Link href="/user/followings" className="shrink-0" title="friends">
-          <Button variant="basic" className="p-2" targetPath="/user/followings">
-            <FontAwesomeIcon icon={faUsers} className="h-8 w-8" />
-          </Button>
-        </Link>
-
         <div className="w-full basis-full" />
 
         <Link href="/user/settings" className="shrink-0" title="settings">
