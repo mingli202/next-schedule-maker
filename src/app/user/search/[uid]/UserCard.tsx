@@ -156,15 +156,12 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
           </div>
         </div>
       ) : (
-        showUser === null && (
-          <div className="text-center">
-            <p>Cannot find User</p>
-            <p>
-              (either the user doesn{"'"}t exist or they set their account to
-              invisible)
-            </p>
-          </div>
-        )
+        <div className="text-center">
+          <p>Cannot find User</p>
+          <p>
+            (either the user doesn{"'"}t exist or their account is invisible)
+          </p>
+        </div>
       )}
     </div>
   );
