@@ -13,7 +13,9 @@ import { UserPublic } from "@/types";
 type Props = HTMLAttributes<HTMLDivElement>;
 
 const FollowingsPreview = ({ className, ...props }: Props) => {
-  const [followings, setfollowings] = useState<string[] | null>(null);
+  const [followings, setfollowings] = useState<string[] | null | "loading">(
+    "loading",
+  );
 
   const [results, setresults] = useState<
     Record<string, UserPublic> | null | "loading"
@@ -21,7 +23,7 @@ const FollowingsPreview = ({ className, ...props }: Props) => {
 
   const unfollow = async (followingId: string) => {
     const user = getAuth(app).currentUser;
-    if (!user || !followings) return;
+    if (!user || !followings || followings === "loading") return;
 
     const toUpdate = followings.filter((f) => f !== followingId);
 
@@ -31,6 +33,8 @@ const FollowingsPreview = ({ className, ...props }: Props) => {
   };
 
   useEffect(() => {
+    if (followings === "loading") return;
+
     const unsub = onValue(
       ref(db, "/public/users"),
       (snap) => {
@@ -54,7 +58,7 @@ const FollowingsPreview = ({ className, ...props }: Props) => {
     );
 
     return () => {
-      unsub();
+      return unsub();
     };
   }, [followings]);
 
