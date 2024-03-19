@@ -28,7 +28,6 @@ function Button({
     basic: {
       scale: disableScaleEffect ? 1 : 1.01,
       opacity: 1,
-      // backgroundColor: "rgba(255, 255, 255, 0.05)",
     },
     // for important buttons
     special: {
