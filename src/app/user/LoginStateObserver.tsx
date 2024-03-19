@@ -42,7 +42,7 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
   }, [router]);
 
   return (
-    <main className="flex h-screen w-screen overflow-hidden font-body text-text">
+    <main className="relative flex h-screen w-screen overflow-hidden font-body text-text max-md:flex-col">
       {loginState === "signedin" && (
         <ContextProvider>{children}</ContextProvider>
       )}

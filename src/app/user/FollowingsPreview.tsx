@@ -82,7 +82,7 @@ const FollowingsPreview = ({ className, ...props }: Props) => {
       {...props}
     >
       <Link href="/user/followings" className="w-full shrink-0">
-        <h2 className="text-2xl font-bold">Followings</h2>
+        <h2 className="text-xl font-bold md:text-2xl">Followings</h2>
       </Link>
       {results !== "loading" ? (
         results ? (

@@ -46,7 +46,7 @@ const SavedPreview = ({ className, allClasses, ...props }: Props) => {
       {...props}
     >
       <Link href="/user/saved" className="w-full shrink-0">
-        <h2 className="text-2xl font-bold">My Schedules</h2>
+        <h2 className="text-xl font-bold md:text-2xl">My Schedules</h2>
       </Link>
 
       {schedules !== "loading" ? (

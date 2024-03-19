@@ -18,10 +18,7 @@ type Props = HTMLAttributes<HTMLDivElement>;
 const VerticalNavbar = ({ className, ...props }: Props) => {
   return (
     <div
-      className={cn(
-        "z-10 box-border p-1 max-md:fixed max-md:bottom-0 md:p-2",
-        className,
-      )}
+      className={cn("z-10 box-border bg-bgPrimary p-1 md:p-2", className)}
       {...props}
     >
       <div className="box-border flex h-full items-center gap-2 rounded-md bg-bgSecondary p-1 max-md:justify-between md:flex-col md:p-2">

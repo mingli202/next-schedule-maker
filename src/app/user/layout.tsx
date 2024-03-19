@@ -35,8 +35,8 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <LoginStateObserver>
-      <VerticalNavbar className="h-fit shrink-0 max-md:w-full md:h-full" />
       {children}
+      <VerticalNavbar className="h-fit shrink-0 max-md:relative max-md:bottom-0 max-md:w-full md:order-first md:h-full" />
     </LoginStateObserver>
   );
 };
