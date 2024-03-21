@@ -123,7 +123,7 @@ const download = async (currentSchedule: SharedCurrentClasses[]) => {
     const filetype =
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const blob = new Blob([buffer], { type: filetype });
-    FileSaver.saveAs(blob, "Fall 2023 Schedule.xlsx");
+    FileSaver.saveAs(blob, "Fall 2024 Schedule.xlsx");
     alert("File downloaed!");
   } catch (err) {
     console.log(err);
