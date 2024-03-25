@@ -30,7 +30,11 @@ type Props = {
 };
 
 const Layout = ({ children }: Props) => {
-  return <div className="h-full w-full">{children}</div>;
+  return (
+    <div className="relative flex h-full basis-full flex-col gap-4 overflow-hidden p-2 md:p-4">
+      {children}
+    </div>
+  );
 };
 
 export default Layout;

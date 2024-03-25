@@ -74,9 +74,9 @@ const Results = ({ allUsers, q }: Props) => {
   };
 
   return (
-    <motion.div
-      className="box-border grid basis-full grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-2
-    overflow-y-auto overflow-x-hidden rounded-md"
+    <div
+      className="box-border flex flex-col gap-2 overflow-y-auto overflow-x-hidden rounded-md
+    max-md:h-full md:grid md:grid-cols-[repeat(auto-fit,minmax(20rem,1fr))]"
     >
       <AnimatePresence>
         {results.map((usr, i) => (
@@ -134,7 +134,7 @@ const Results = ({ allUsers, q }: Props) => {
         ))}
       </AnimatePresence>
       <div className="col-span-full h-0 bg-transparent opacity-0" />
-    </motion.div>
+    </div>
   );
 };
 

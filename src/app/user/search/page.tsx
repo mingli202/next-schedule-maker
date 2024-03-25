@@ -34,10 +34,12 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="relative flex h-full basis-full flex-col gap-4 overflow-hidden p-4">
-      <Search className="w-96" />
-      <Results allUsers={allUsers} q={searchParams.get("q") ?? ""} />
-    </div>
+    <>
+      <Search className="w-full shrink-0 md:w-96" />
+      <div className="basis-full overflow-hidden md:overflow-y-auto">
+        <Results allUsers={allUsers} q={searchParams.get("q") ?? ""} />
+      </div>
+    </>
   );
 };
 
