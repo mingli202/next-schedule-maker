@@ -158,7 +158,10 @@ const ScheduleCard = ({
               autoFocus
             />
             <Button variant="basic" type="submit" className="shrink-0 p-1">
-              <FontAwesomeIcon icon={faCheckCircle} className="h-4 w-4" />
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                className="h-3 w-3 md:h-4 md:w-4"
+              />
             </Button>
 
             <Button
@@ -167,7 +170,10 @@ const ScheduleCard = ({
               onClick={() => setEditName(false)}
               className="shrink-0 p-1"
             >
-              <FontAwesomeIcon icon={faXmarkCircle} className="h-4 w-4" />
+              <FontAwesomeIcon
+                icon={faXmarkCircle}
+                className="h-3 w-3 md:h-4 md:w-4"
+              />
             </Button>
           </form>
         ) : (
@@ -194,7 +200,10 @@ const ScheduleCard = ({
                   await deleteSchedule();
                 }}
               >
-                <FontAwesomeIcon icon={faTrash} className="h-4 w-4" />
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className="h-3 w-3 md:h-4 md:w-4"
+                />
               </Button>
             )}
           </>

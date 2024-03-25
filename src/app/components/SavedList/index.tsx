@@ -25,8 +25,8 @@ const SavedList = ({
   const [highlight, setHighlight] = useState<string>();
 
   return (
-    <div className="basis-full overflow-y-auto overflow-x-hidden">
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-1">
+    <div className="basis-full overflow-y-auto overflow-x-hidden max-md:text-sm">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))] gap-1 md:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
         <AnimatePresence>
           {Object.entries(savedSchedules).map(([id, s]) => {
             return (

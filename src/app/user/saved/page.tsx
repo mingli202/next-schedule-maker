@@ -34,12 +34,17 @@ const Page = async () => {
     await getLocalJsonData("allClasses");
 
   return (
-    <div className="flex h-full w-full gap-4 p-2">
-      <div className="basis-3/4 overflow-x-auto overflow-y-hidden max-md:order-1 md:h-full">
-        <ViewWrapper allClasses={allClasses} />
-      </div>
-      <div className="basis-1/4 overflow-x-auto overflow-y-hidden max-md:order-2 md:h-full">
-        <RightNavbar className="h-full min-w-[10rem]" allClasses={allClasses} />
+    <div className="h-full w-full overflow-hidden p-2">
+      <div className="h-full w-full gap-4 overflow-y-auto md:flex md:h-full md:overflow-hidden">
+        <div className="overflow-x-auto overflow-y-hidden max-md:order-1 md:h-full md:basis-3/4">
+          <ViewWrapper allClasses={allClasses} />
+        </div>
+        <div className="overflow-y-hidden max-md:order-2 md:h-full md:basis-1/4 md:overflow-x-auto">
+          <RightNavbar
+            className="h-full min-w-[10rem]"
+            allClasses={allClasses}
+          />
+        </div>
       </div>
     </div>
   );

@@ -61,7 +61,7 @@ const View = ({
         {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map((day) => (
           <span
             key={day}
-            className="line-clamp-1 flex basis-1/5 items-center justify-center"
+            className="line-clamp-1 flex basis-1/5 items-center justify-center max-md:text-sm"
           >
             {day}
           </span>
