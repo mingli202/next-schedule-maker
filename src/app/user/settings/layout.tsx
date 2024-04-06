@@ -31,10 +31,12 @@ type Props = {
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className="flex h-full w-full justify-center p-2">
-      <div className="flex w-[min(80%,70rem)] gap-2">
-        {children}
-        <RightNavbar className="w-40 shrink-0" />
+    <div className="flex basis-full overflow-hidden p-2 max-md:flex-col md:h-full md:justify-center">
+      <div className="flex h-full w-full gap-2 max-md:flex-col md:w-[min(80%,70rem)]">
+        <RightNavbar className="w-full shrink-0 md:order-last md:w-40" />
+        <div className="h-full w-full basis-full overflow-auto rounded-md bg-black/30 shadow-[rgba(156,205,220,0.24)_0px_3px_8px]">
+          {children}
+        </div>
       </div>
     </div>
   );

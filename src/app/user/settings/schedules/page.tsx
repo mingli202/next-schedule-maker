@@ -1,5 +1,4 @@
-import { getLocalJsonData } from "@/lib";
-import styles from "../styles.module.css";
+import { cn, getLocalJsonData } from "@/lib";
 import PublicSchedules from "./PublicSchedules";
 import { Class } from "@/types";
 
@@ -11,7 +10,7 @@ const Page = async () => {
     <div className="relative flex h-full w-full flex-col gap-2 rounded-md bg-black/30 p-3 shadow-[rgba(156,205,220,0.24)_0px_3px_8px]">
       <div className="shrink-0">
         <h1 className="font-heading text-3xl">Schedule Showcase</h1>
-        <p className={styles.desc}>
+        <p className={cn("text-sm text-text/70")}>
           Click to add schedules that you want to share to others
         </p>
       </div>

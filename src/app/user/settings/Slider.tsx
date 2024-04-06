@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import styles from "./styles.module.css";
 import { onValue, ref, update } from "firebase/database";
 import { app, db } from "@/backend";
 import { getAuth } from "firebase/auth";
 import { AnimatePresence, Variants, motion } from "framer-motion";
+import { cn } from "@/lib";
 
 export const Slider = () => {
   const [isVisible, setIsVisible] = useState<boolean | null>(null);
@@ -41,7 +41,11 @@ export const Slider = () => {
   };
 
   return (
-    <div className={styles.card}>
+    <div
+      className={cn(
+        "flex w-full items-center overflow-hidden rounded-md bg-bgSecondary p-1 md:p-2",
+      )}
+    >
       <div
         className={`relative h-10 w-[min(30%,_15rem)] shrink-0 overflow-x-auto overflow-y-hidden text-primary`}
       >

@@ -21,7 +21,7 @@ const Card = ({
     <Link
       href={href}
       className={cn(
-        "shrink-0 rounded-md p-2 transition",
+        "shrink-0 rounded-md p-1.5 transition max-md:text-sm md:p-2",
         currentPath === href && "bg-secondary font-bold",
       )}
     >
@@ -36,7 +36,10 @@ const RightNavbar = ({ className, ...props }: Props) => {
   const path = usePathname();
 
   return (
-    <div className={cn("flex h-full flex-col p-2", className)} {...props}>
+    <div
+      className={cn("flex h-fit md:h-full md:flex-col md:p-2", className)}
+      {...props}
+    >
       <Card href="/user/settings" currentPath={path}>
         Profile
       </Card>
@@ -48,7 +51,7 @@ const RightNavbar = ({ className, ...props }: Props) => {
 
       <Button
         variant="special"
-        className="shrink-0"
+        className="shrink-0 max-md:p-1.5 max-md:text-sm"
         onClick={async () => {
           const auth = getAuth(app);
           if (!auth) return;
