@@ -55,8 +55,15 @@ const PublicSchedules = ({ allClasses, className, ...props }: Props) => {
   }, []);
 
   return (
-    <div className={cn("flex gap-2 overflow-hidden", className)} {...props}>
-      <div className="flex h-full basis-1/2 flex-col rounded-md bg-bgSecondary p-2">
+    <div
+      className={cn(
+        "flex gap-2 overflow-hidden",
+        ...["flex-col"].map((c) => "max-md:" + c),
+        className,
+      )}
+      {...props}
+    >
+      <div className="flex h-full basis-1/2 flex-col overflow-hidden rounded-md bg-bgSecondary p-2">
         <h2 className="shrink-0 text-xl">Public</h2>
         <div className="flex basis-full flex-col overflow-hidden rounded-md bg-bgPrimary p-2">
           <SavedList
@@ -74,7 +81,7 @@ const PublicSchedules = ({ allClasses, className, ...props }: Props) => {
           />
         </div>
       </div>
-      <div className="flex h-full basis-1/2 flex-col rounded-md bg-bgSecondary p-2">
+      <div className="flex h-full basis-1/2 flex-col overflow-hidden rounded-md bg-bgSecondary p-2">
         <h2 className="shrink-0 text-xl">Private</h2>
         <div className="flex basis-full flex-col overflow-hidden rounded-md bg-bgPrimary p-2">
           <SavedList

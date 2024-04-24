@@ -151,7 +151,7 @@ const Page = () => {
               />
               <div
                 className={cn(
-                  "w-100 flex items-center overflow-hidden rounded-md bg-bgSecondary p-4 max-md:gap-2",
+                  "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-4 max-md:gap-2 md:items-center",
                   ...["w-full", "flex-col", "items-start", "p-3"].map(
                     (c) => "max-md:" + c,
                   ),
@@ -170,7 +170,7 @@ const Page = () => {
 
               <div
                 className={cn(
-                  "w-100 flex items-center overflow-hidden rounded-md bg-bgSecondary p-4 max-md:gap-2",
+                  "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-4 max-md:gap-2 md:items-center",
                   ...["w-full", "flex-col", "items-start", "p-3"].map(
                     (c) => "max-md:" + c,
                   ),
