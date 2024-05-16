@@ -2090,9 +2090,9 @@
     "lecture": {
       "title": "Chemistry of Solutions",
       "TF": "1000-1130",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "rating": {
-        "prof": "Perez Quintana, Germ\u00e1n Miguel",
+        "prof": "Perez Quintana, Germán Miguel",
         "score": 53.3,
         "avg": 3,
         "nRating": 1,
@@ -2104,9 +2104,9 @@
     "lab": {
       "title": "Chemistry of Solutions",
       "M": "0830-1030",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "rating": {
-        "prof": "Perez Quintana, Germ\u00e1n Miguel",
+        "prof": "Perez Quintana, Germán Miguel",
         "score": 53.3,
         "avg": 3,
         "nRating": 1,
@@ -2148,9 +2148,9 @@
     "lecture": {
       "title": "Chemistry of Solutions",
       "TF": "1000-1130",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "rating": {
-        "prof": "Perez Quintana, Germ\u00e1n Miguel",
+        "prof": "Perez Quintana, Germán Miguel",
         "score": 53.3,
         "avg": 3,
         "nRating": 1,
@@ -2162,9 +2162,9 @@
     "lab": {
       "title": "Chemistry of Solutions",
       "M": "1030-1230",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "rating": {
-        "prof": "Perez Quintana, Germ\u00e1n Miguel",
+        "prof": "Perez Quintana, Germán Miguel",
         "score": 53.3,
         "avg": 3,
         "nRating": 1,
@@ -31039,7 +31039,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-ADM-AB",
-    "codeHeader": "602-ADM-AB: Fran\u00e7ais des affaires - Prerequisite 602-101-MQ or 602-102-MQ",
+    "codeHeader": "602-ADM-AB: Français des affaires - Prerequisite 602-101-MQ or 602-102-MQ",
     "section": "00001",
     "disc": "FREN",
     "lecture": {
@@ -31626,7 +31626,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00001",
     "disc": "FREN",
     "lecture": {
@@ -31659,7 +31659,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00002",
     "disc": "FREN",
     "lecture": {
@@ -31692,7 +31692,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00003",
     "disc": "FREN",
     "lecture": {
@@ -31725,7 +31725,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00004",
     "disc": "FREN",
     "lecture": {
@@ -31764,7 +31764,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00005",
     "disc": "FREN",
     "lecture": {
@@ -31795,7 +31795,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00006",
     "disc": "FREN",
     "lecture": {
@@ -31828,7 +31828,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00007",
     "disc": "FREN",
     "lecture": {
@@ -31859,7 +31859,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00008",
     "disc": "FREN",
     "lecture": {
@@ -31892,7 +31892,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00009",
     "disc": "FREN",
     "lecture": {
@@ -31925,7 +31925,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00010",
     "disc": "FREN",
     "lecture": {
@@ -31958,7 +31958,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00011",
     "disc": "FREN",
     "lecture": {
@@ -31991,7 +31991,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00012",
     "disc": "FREN",
     "lecture": {
@@ -32024,7 +32024,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00013",
     "disc": "FREN",
     "lecture": {
@@ -32057,7 +32057,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00014",
     "disc": "FREN",
     "lecture": {
@@ -32090,7 +32090,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
-    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (\u00e9preuve\nuniforme de fran\u00e7ais) in order to complete their DEC.",
+    "codeHeader": "602-UF0-MQ - First of three French preparatory courses for students who must write the French Exit Exam (épreuve\nuniforme de français) in order to complete their DEC.",
     "section": "00015",
     "disc": "FREN",
     "lecture": {
@@ -32115,7 +32115,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00001",
     "disc": "FREN",
     "lecture": {
@@ -32154,7 +32154,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00002",
     "disc": "FREN",
     "lecture": {
@@ -32187,7 +32187,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00003",
     "disc": "FREN",
     "lecture": {
@@ -32220,7 +32220,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00004",
     "disc": "FREN",
     "lecture": {
@@ -32259,7 +32259,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00005",
     "disc": "FREN",
     "lecture": {
@@ -32298,7 +32298,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00006",
     "disc": "FREN",
     "lecture": {
@@ -32331,7 +32331,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00007",
     "disc": "FREN",
     "lecture": {
@@ -32370,7 +32370,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00008",
     "disc": "FREN",
     "lecture": {
@@ -32409,7 +32409,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00009",
     "disc": "FREN",
     "lecture": {
@@ -32448,7 +32448,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00010",
     "disc": "FREN",
     "lecture": {
@@ -32487,7 +32487,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00011",
     "disc": "FREN",
     "lecture": {
@@ -32512,7 +32512,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00012",
     "disc": "FREN",
     "lecture": {
@@ -32551,7 +32551,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00013",
     "disc": "FREN",
     "lecture": {
@@ -32584,7 +32584,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00014",
     "disc": "FREN",
     "lecture": {
@@ -32617,7 +32617,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00015",
     "disc": "FREN",
     "lecture": {
@@ -32650,7 +32650,7 @@
     "program": "French",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
-    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (\u00e9preuve uniforme de fran\u00e7ais) in order to complete their DEC",
+    "codeHeader": "602-UF1-AB - Prerequisite: 602-UF0-AB.  Second of three French preparatory courses for students who must write the\nFrench Exit Exam (épreuve uniforme de français) in order to complete their DEC",
     "section": "00016",
     "disc": "FREN",
     "lecture": {
@@ -33503,7 +33503,7 @@
     "section": "00001",
     "disc": "FREN",
     "lecture": {
-      "title": "\u00c0 la decouverte des Premiers Peuples",
+      "title": "À la decouverte des Premiers Peuples",
       "M": "1430-1730",
       "prof": "Greffard, Catherine",
       "rating": {
@@ -33569,7 +33569,7 @@
     "section": "00003",
     "disc": "FREN",
     "lecture": {
-      "title": "\u00c0 la decouverte des Premiers Peuples",
+      "title": "À la decouverte des Premiers Peuples",
       "T": "1430-1730",
       "prof": "Greffard, Catherine",
       "rating": {
@@ -37742,7 +37742,7 @@
       }
     },
     "lab": {},
-    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 8 classes on campus and 1 weekend trip (May 3-5). Students must provide suitable hiking boots (some pairs available to rent), appropriate outdoor clothing. Some equipment available to rent from college \u2013 tents, stoves, sleeping bags, back packs\u2026(max. $15). ",
+    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 8 classes on campus and 1 weekend trip (May 3-5). Students must provide suitable hiking boots (some pairs available to rent), appropriate outdoor clothing. Some equipment available to rent from college – tents, stoves, sleeping bags, back packs…(max. $15). ",
     "viewData": [
       {
         "1": [
@@ -37775,7 +37775,7 @@
       }
     },
     "lab": {},
-    "more": "ADDITIONAL FEE:       $145.00\nIntensive Course - 8 classes plus one two day trip (May 27-29) to Montagne D'Argent. Students must provide appropriate outdoor clothing and footwear. Climbing equipment provided. Students must provide or rent camping equipment. Some equipment available to rent from college \u2013 e.g. tents, stoves, sleeping bags, back packs (max $15). Climbing shoes are optional and can be rented for $2/class and $8/weekend. ",
+    "more": "ADDITIONAL FEE:       $145.00\nIntensive Course - 8 classes plus one two day trip (May 27-29) to Montagne D'Argent. Students must provide appropriate outdoor clothing and footwear. Climbing equipment provided. Students must provide or rent camping equipment. Some equipment available to rent from college – e.g. tents, stoves, sleeping bags, back packs (max $15). Climbing shoes are optional and can be rented for $2/class and $8/weekend. ",
     "viewData": [
       {
         "3": [
@@ -37808,7 +37808,7 @@
       }
     },
     "lab": {},
-    "more": "ADDITIONAL FEE:       $145.00\nStudents will learn cross-country skiing and waxing techniques. Skis, poles, and boots are provided and students must dress appropriately for weather conditions. There will be one weekend ski to hut trip (Mar. 2 \u2013 3 at the Foret Oureau). Students must provide/rent camping equipment (max $15). ",
+    "more": "ADDITIONAL FEE:       $145.00\nStudents will learn cross-country skiing and waxing techniques. Skis, poles, and boots are provided and students must dress appropriately for weather conditions. There will be one weekend ski to hut trip (Mar. 2 – 3 at the Foret Oureau). Students must provide/rent camping equipment (max $15). ",
     "viewData": [
       {
         "4": [
@@ -38732,7 +38732,7 @@
       }
     },
     "lab": {},
-    "more": "Intensive course. 5 classroom sessions and 3 full days of skiing at Jay Peak Resort, Vermont (March 4\u2013 March 6, 2024)  Must be eligible to enter the USA. Must have own equipment including helmet - Rental Available. transportation, Accommodation and 3 day lift tickets included. (note Travel fee of $550.00) ",
+    "more": "Intensive course. 5 classroom sessions and 3 full days of skiing at Jay Peak Resort, Vermont (March 4– March 6, 2024)  Must be eligible to enter the USA. Must have own equipment including helmet - Rental Available. transportation, Accommodation and 3 day lift tickets included. (note Travel fee of $550.00) ",
     "viewData": [
       {
         "4": [
@@ -38765,7 +38765,7 @@
       }
     },
     "lab": {},
-    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 7 classes on campus and 1 weekend trip (May 27-29) in the Laurentians. Students must provide suitable hiking boots (some pairs available to rent), appropriate outdoor clothing. Some equipment available to rent from college \u2013 tents, stoves, sleeping bags, back packs\u2026(max. $15). ",
+    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 7 classes on campus and 1 weekend trip (May 27-29) in the Laurentians. Students must provide suitable hiking boots (some pairs available to rent), appropriate outdoor clothing. Some equipment available to rent from college – tents, stoves, sleeping bags, back packs…(max. $15). ",
     "viewData": [
       {
         "3": [
@@ -38897,7 +38897,7 @@
       }
     },
     "lab": {},
-    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 8 classes on campus and 1 weekend trip May 10-12 to Saranac Lake, NY. Students must be eligible to enter the U.S.. Must be comfortable in deep water and able to swim 50 meters (with or without a lifejacket). Students must provide suitable hiking boots (some pairs available to rent), and appropriate outdoor clothing. Some equipment available to rent from college \u2013 tents, stoves, sleeping bags, back packs\u2026(max. 15) ",
+    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 8 classes on campus and 1 weekend trip May 10-12 to Saranac Lake, NY. Students must be eligible to enter the U.S.. Must be comfortable in deep water and able to swim 50 meters (with or without a lifejacket). Students must provide suitable hiking boots (some pairs available to rent), and appropriate outdoor clothing. Some equipment available to rent from college – tents, stoves, sleeping bags, back packs…(max. 15) ",
     "viewData": [
       {
         "5": [
@@ -38930,7 +38930,7 @@
       }
     },
     "lab": {},
-    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 8 classes on campus and 1 weekend trip May 24-26, location Adirondacks, NY, USA. Valid Canadian passport or equivalent documentation is required to enter the USA. Students must provide suitable hiking boots (some pairs available to rent), and appropriate outdoor clothing. Some equipment available to rent from college \u2013 tents, stoves, sleeping bags, back packs\u2026(max. $15). ",
+    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 8 classes on campus and 1 weekend trip May 24-26, location Adirondacks, NY, USA. Valid Canadian passport or equivalent documentation is required to enter the USA. Students must provide suitable hiking boots (some pairs available to rent), and appropriate outdoor clothing. Some equipment available to rent from college – tents, stoves, sleeping bags, back packs…(max. $15). ",
     "viewData": [
       {
         "5": [
@@ -39332,7 +39332,7 @@
       }
     },
     "lab": {},
-    "more": "Intensive course. 5 classroom sessions and 3 full days of skiing at Jay Peak Resort , Vermont (March 4\u2013 March 6, 2024)  Must be eligible to enter the USA. Must have own equipment including helmet - Rental Available. transportation, Accommodation and 3 day lift tickets included (note Travel fee of $550.00). ",
+    "more": "Intensive course. 5 classroom sessions and 3 full days of skiing at Jay Peak Resort , Vermont (March 4– March 6, 2024)  Must be eligible to enter the USA. Must have own equipment including helmet - Rental Available. transportation, Accommodation and 3 day lift tickets included (note Travel fee of $550.00). ",
     "viewData": [
       {
         "1": [
