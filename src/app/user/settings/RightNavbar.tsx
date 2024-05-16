@@ -40,11 +40,14 @@ const RightNavbar = ({ className, ...props }: Props) => {
       className={cn("flex h-fit md:h-full md:flex-col md:p-2", className)}
       {...props}
     >
-      <Card href="/user/settings" currentPath={path}>
+      <Card href="/user/settings/profile" currentPath={path}>
         Profile
       </Card>
       <Card href="/user/settings/schedules" currentPath={path}>
         Schedules
+      </Card>
+      <Card href="/user/settings/other" currentPath={path}>
+        Other
       </Card>
 
       <div className="basis-full bg-transparent" />

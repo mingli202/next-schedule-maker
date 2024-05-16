@@ -73,11 +73,15 @@ const VerticalNavbar = ({ className, ...props }: Props) => {
 
         <div className="hidden md:w-full md:basis-full" />
 
-        <Link href="/user/settings" className="shrink-0" title="settings">
+        <Link
+          href="/user/settings/profile"
+          className="shrink-0"
+          title="settings"
+        >
           <Button
             variant="basic"
             className="p-1 max-md:flex max-md:items-center md:p-2"
-            targetPath="/user/settings"
+            targetPath="/user/settings/profile"
           >
             <FontAwesomeIcon icon={faGear} className="h-6 w-6 md:h-8 md:w-8" />
           </Button>
