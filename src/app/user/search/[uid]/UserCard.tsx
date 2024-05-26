@@ -156,7 +156,7 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
           </div>
         </div>
       ) : (
-        <div className="text-center">
+        <div className="flex h-full flex-col justify-center text-center">
           <p>Cannot find User</p>
           <p>
             (either the user doesn{"'"}t exist or their account is invisible)
