@@ -65,7 +65,7 @@ const Form = ({ allClasses }: Props) => {
     if (time.length === 0 || time.some((t) => t === "")) {
       url.searchParams.delete("time");
     } else {
-      url.searchParams.set("time", time.join("-"));
+      url.searchParams.set("time", time.map((t) => t.slice(0, 5)).join("-"));
     }
 
     formData.delete("day");
@@ -292,7 +292,7 @@ const Form = ({ allClasses }: Props) => {
       </div>
 
       <div className="group rounded-md bg-bgSecondary p-2 transition hover:bg-secondary">
-        <p className="font-bold">Days</p>
+        <p className="font-bold">Days (Has class on these days)</p>
         <div className="flex gap-2">
           <label
             htmlFor="M"
@@ -376,10 +376,10 @@ const Form = ({ allClasses }: Props) => {
               id="timeMin"
               className="rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
               type="time"
-              min="08:00:00"
-              max="18:00:00"
+              min="08:00"
+              max="18:00"
               step={`${60 * 30}`}
-              placeholder="08:00:00"
+              placeholder="08:00"
               autoComplete="off"
               defaultValue={searchParams.get("time")?.split("-")[0]}
             />
@@ -391,10 +391,10 @@ const Form = ({ allClasses }: Props) => {
               id="timeMax"
               className="rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
               type="time"
-              min="08:00:00"
-              max="18:00:00"
+              min="08:00"
+              max="18:00"
               step={`${60 * 30}`}
-              placeholder="18:00:00"
+              placeholder="18:00"
               autoComplete="off"
               defaultValue={searchParams.get("time")?.split("-")[1]}
             />
@@ -415,20 +415,31 @@ const Form = ({ allClasses }: Props) => {
           type="reset"
           onClick={() => {
             ["M", "T", "W", "R", "F"].forEach((day) => {
-              const el = document.getElementById(day)! as HTMLInputElement;
+              const el = document.getElementById(day) as HTMLInputElement;
               el.checked = false;
-
-              setCourseName("");
-              setCode("");
-              setTitle("");
-
-              const prof = document.getElementById("prof") as HTMLInputElement;
-              prof.defaultValue = "";
             });
+
+            setCourseName("");
+            setCode("");
+            setTitle("");
+
+            const prof = document.getElementById("prof") as HTMLInputElement;
+            prof.defaultValue = "";
+
+            const timeMin = document.getElementById(
+              "timeMin",
+            ) as HTMLInputElement;
+            timeMin.defaultValue = "";
+
+            const timeMax = document.getElementById(
+              "timeMax",
+            ) as HTMLInputElement;
+            timeMax.defaultValue = "";
           }}
         >
           Clear
         </Button>
+
         <Button variant="special" type="submit">
           Apply
         </Button>

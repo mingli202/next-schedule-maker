@@ -47,17 +47,25 @@ const filterByCode = (arr: ReturnType, code: string) => {
 
 const filterByTime = (arr: ReturnType, time: string) => {
   if (time === "") return [];
-  time = time.replaceAll(/[:h]/g, "").replaceAll(/ ?to ?/g, "-");
-  const re = new RegExp(time, "ig");
+
+  const [start, end] = time.split("-").map((t) => {
+    return Number(t.replaceAll(":", ""));
+  });
 
   const toReturn = arr.filter(([, cl]) => {
-    const tArr = Object.entries(cl.lecture).filter(
-      ([key]) => !["prof", "title", "rating"].includes(key),
-    );
+    const tArr = [
+      ...Object.entries(cl.lecture),
+      ...Object.entries(cl.lab),
+    ].filter(([key]) => !["prof", "title", "rating"].includes(key));
 
-    return tArr.some(([, t]) => {
-      t = t.toString();
-      return t.match(re);
+    return tArr.every(([, t]) => {
+      const [tStart, tEnd] = t
+        .toString()
+        .split("-")
+        .map((t) => Number(t));
+
+      console.log({ tStart, tEnd, start, end });
+      return tStart >= start && tEnd <= end;
     });
   });
 
