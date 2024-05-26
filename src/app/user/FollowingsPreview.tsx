@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib";
 import Link from "next/link";
-import { HTMLAttributes, useEffect, useState } from "react";
+import { HTMLAttributes, useCallback, useEffect, useState } from "react";
 
 import { Button } from "@/ui";
 import { getAuth } from "firebase/auth";
@@ -21,16 +21,19 @@ const FollowingsPreview = ({ className, ...props }: Props) => {
     Record<string, UserPublic> | null | "loading"
   >("loading");
 
-  const unfollow = async (followingId: string) => {
-    const user = getAuth(app).currentUser;
-    if (!user || !followings || followings === "loading") return;
+  const unfollow = useCallback(
+    async (followingId: string) => {
+      const user = getAuth(app).currentUser;
+      if (!user || !followings || followings === "loading") return;
 
-    const toUpdate = followings.filter((f) => f !== followingId);
+      const toUpdate = followings.filter((f) => f !== followingId);
 
-    await update(ref(db, `/users/${user.uid}`), {
-      followings: toUpdate,
-    });
-  };
+      await update(ref(db, `/users/${user.uid}`), {
+        followings: toUpdate,
+      });
+    },
+    [followings],
+  );
 
   useEffect(() => {
     if (followings === "loading") return;
@@ -49,7 +52,11 @@ const FollowingsPreview = ({ className, ...props }: Props) => {
         const res: Record<string, UserPublic> = {};
 
         for (const id of followings) {
-          res[id] = allUsers[id];
+          if (!allUsers[id]) {
+            unfollow(id);
+          } else {
+            res[id] = allUsers[id];
+          }
         }
 
         setresults(res);
@@ -60,7 +67,7 @@ const FollowingsPreview = ({ className, ...props }: Props) => {
     return () => {
       return unsub();
     };
-  }, [followings]);
+  }, [followings, unfollow]);
 
   useEffect(() => {
     const user = getAuth(app).currentUser;
