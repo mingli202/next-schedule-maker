@@ -32,13 +32,15 @@ const Input = ({
   return (
     <div
       className={cn(
-        "w-100 flex items-center overflow-hidden rounded-md bg-bgSecondary p-2",
-        ...["w-full", "flex-col", "items-start"].map((c) => "max-md:" + c),
+        "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-2 md:items-center",
+        ...["w-full", "flex-col", "items-start", "gap-2"].map(
+          (c) => "max-md:" + c,
+        ),
       )}
     >
       <p
         className={cn(
-          "w-[min(30%,15rem)] shrink-0 overflow-x-auto p-2 text-primary",
+          "w-[min(30%,15rem)] shrink-0 overflow-x-auto text-primary md:p-2",
           ...["w-full"].map((c) => "max-md:" + c),
         )}
       >
@@ -46,14 +48,14 @@ const Input = ({
       </p>
       {editName ? (
         <form
-          className="box-border flex items-center overflow-hidden rounded-md bg-bgPrimary"
+          className="box-border flex items-center overflow-hidden rounded-md bg-bgPrimary max-md:w-full"
           action={(f: FormData) => {
             setEditName(false);
             action(f);
           }}
         >
           <input
-            className="w-fit bg-bgPrimary p-2 outline-none"
+            className="bg-bgPrimary p-2 outline-none max-md:basis-full md:w-fit"
             autoFocus
             defaultValue={value}
             name={k}
@@ -72,7 +74,7 @@ const Input = ({
           </Button>
         </form>
       ) : (
-        <div className="flex w-full gap-2 p-2">
+        <div className="flex w-full gap-2 md:p-2">
           <p className={cn("overflow-x-auto")} title="edit">
             {value}
           </p>
@@ -111,22 +113,19 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="flex w-full flex-col gap-2 p-3">
+    <div className="flex w-full flex-col gap-2 p-2 max-md:text-sm md:p-3">
       {user ? (
         <>
           <div>
-            <h1 className="font-heading text-3xl">Profile</h1>
+            <h1 className="font-heading text-xl md:text-3xl">Profile</h1>
             <p className={cn("text-sm text-text/70")}>Manage your profile</p>
           </div>
 
           <div className="h-0.5 w-full rounded-full bg-third/50" />
 
-          <div className="p-2">
-            <h2 className="text-xl">Basic Info</h2>
-            <p className={cn("text-sm text-text/70")}>
-              How you will appear to other users
-            </p>
-            <div className="mt-2 flex flex-col gap-2">
+          <div className="p-1 md:p-2">
+            <h2 className="text-base md:text-xl">Basic Info</h2>
+            <div className="mt-1 flex flex-col gap-2 md:mt-2">
               <Input
                 k="name"
                 display="Display Name"
@@ -151,7 +150,7 @@ const Page = () => {
               />
               <div
                 className={cn(
-                  "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-4 max-md:gap-2 md:items-center",
+                  "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-2 max-md:gap-2 md:items-center",
                   ...["w-full", "flex-col", "items-start", "p-3"].map(
                     (c) => "max-md:" + c,
                   ),
@@ -159,18 +158,18 @@ const Page = () => {
               >
                 <p
                   className={cn(
-                    "w-[min(30%,15rem)] shrink-0 overflow-x-auto text-primary",
+                    "w-[min(30%,15rem)] shrink-0 overflow-x-auto text-primary md:p-2",
                     ...["w-full"].map((c) => "max-md:" + c),
                   )}
                 >
                   Uid
                 </p>
-                <p className="overflow-x-auto">{user.uid}</p>
+                <p className="overflow-x-auto md:p-2">{user.uid}</p>
               </div>
 
               <div
                 className={cn(
-                  "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-4 max-md:gap-2 md:items-center",
+                  "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-2 max-md:gap-2 md:items-center",
                   ...["w-full", "flex-col", "items-start", "p-3"].map(
                     (c) => "max-md:" + c,
                   ),
@@ -178,22 +177,22 @@ const Page = () => {
               >
                 <p
                   className={cn(
-                    "w-[min(30%,15rem)] shrink-0 overflow-x-auto text-primary",
+                    "w-[min(30%,15rem)] shrink-0 overflow-x-auto text-primary md:p-2",
                     ...["w-full"].map((c) => "max-md:" + c),
                   )}
                 >
                   Email
                 </p>
-                <p className="overflow-x-auto">{user.email}</p>
+                <p className="overflow-x-auto md:p-2">{user.email}</p>
               </div>
             </div>
           </div>
 
           <div className="h-0.5 w-full rounded-full bg-third/50" />
 
-          <div className="p-2">
-            <h2 className="text-xl">Visibility</h2>
-            <p className={cn("text-sm text-text/70")}>
+          <div className="p-1 md:p-2">
+            <h2 className="text-base md:text-xl">Visibility</h2>
+            <p className={cn("text-xs text-text/70 md:text-sm")}>
               Whether you are searchable by other users
             </p>
             <div className="mt-2 flex flex-col gap-2">
@@ -203,8 +202,8 @@ const Page = () => {
 
           <div className="h-0.5 w-full rounded-full bg-third/50" />
 
-          <div className="p-2">
-            <h2 className="text-xl">Other</h2>
+          <div className="p-1 md:p-2">
+            <h2 className="text-base md:text-xl">Other</h2>
             <div className="mt-2 flex flex-col gap-2">
               <div
                 className={cn(
@@ -213,7 +212,7 @@ const Page = () => {
               >
                 <p
                   className={cn(
-                    "shrink-0 p-2 text-primary md:w-[min(30%,15rem)] md:overflow-x-auto",
+                    "shrink-0 p-1 text-primary md:w-[min(30%,15rem)] md:overflow-x-auto md:p-2",
                   )}
                 >
                   Password

@@ -47,12 +47,12 @@ export const Slider = () => {
       )}
     >
       <div
-        className={`relative h-10 w-[min(30%,_15rem)] shrink-0 overflow-x-auto overflow-y-hidden text-primary`}
+        className={`relative h-7 w-[min(30%,_15rem)] shrink-0 overflow-x-auto overflow-y-hidden text-primary md:h-10`}
       >
         <AnimatePresence>
           {isVisible ? (
             <motion.p
-              className="absolute top-0 p-2"
+              className="absolute top-0 p-1 md:p-2"
               variants={visibleVariants}
               initial="initial"
               animate="animate"
@@ -63,7 +63,7 @@ export const Slider = () => {
             </motion.p>
           ) : (
             <motion.p
-              className="absolute top-0 p-2"
+              className="absolute top-0 p-1 md:p-2"
               variants={visibleVariants}
               initial="initial"
               animate="animate"
@@ -75,6 +75,7 @@ export const Slider = () => {
           )}
         </AnimatePresence>
       </div>
+
       <motion.div
         initial={{
           backgroundColor: isVisible ? "#9ccddc" : "#02131d",
@@ -82,7 +83,7 @@ export const Slider = () => {
         animate={{
           backgroundColor: isVisible ? "#9ccddc" : "#02131d",
         }}
-        className="relative w-16 cursor-pointer rounded-full p-2"
+        className="relative w-12 cursor-pointer rounded-full p-1 md:w-16 md:p-2"
         onClick={async () => {
           const user = getAuth(app).currentUser;
           if (!user) return;
@@ -93,7 +94,7 @@ export const Slider = () => {
         }}
       >
         <motion.div
-          className="relative h-4 w-4 rounded-full"
+          className="relative h-2 w-2 rounded-full md:h-4 md:w-4"
           initial={{
             backgroundColor: isVisible ? "#e2f1ff" : "#5591a9",
             x: isVisible ? "2rem" : "0rem",
