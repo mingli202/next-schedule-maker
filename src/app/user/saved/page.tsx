@@ -39,7 +39,7 @@ const Page = async () => {
         <div className="overflow-x-auto overflow-y-hidden max-md:order-1 md:h-full md:basis-3/4">
           <ViewWrapper allClasses={allClasses} />
         </div>
-        <div className="overflow-y-hidden max-md:order-2 md:h-full md:basis-1/4 md:overflow-x-auto">
+        <div className="overflow-y-hidden max-md:order-2 max-md:mt-2 md:h-full md:basis-1/4 md:overflow-x-auto">
           <RightNavbar
             className="h-full min-w-[10rem]"
             allClasses={allClasses}
