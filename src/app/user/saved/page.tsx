@@ -35,7 +35,7 @@ const Page = async () => {
 
   return (
     <div className="h-full w-full overflow-hidden p-2">
-      <div className="h-full w-full gap-4 overflow-y-auto md:flex md:h-full md:overflow-hidden">
+      <div className="h-full w-full gap-4 overflow-y-auto md:flex md:overflow-hidden">
         <div className="overflow-x-auto overflow-y-hidden max-md:order-1 md:h-full md:basis-3/4">
           <ViewWrapper allClasses={allClasses} />
         </div>

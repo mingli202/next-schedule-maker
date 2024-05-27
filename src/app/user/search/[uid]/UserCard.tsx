@@ -74,16 +74,30 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
   };
 
   return (
-    <div className={cn("h-full w-full md:p-2", className)} {...props}>
+    <div
+      className={cn("h-full w-full overflow-hidden md:p-2", className)}
+      {...props}
+    >
       {showUser !== undefined && allUsers !== undefined ? (
         showUser && allUsers ? (
           <div
             className={cn(
-              "flex h-full w-full gap-2 rounded-md bg-bgSecondary p-1 shadow-lg shadow-primary/30 md:gap-3 md:p-3",
-              "max-md:flex-col",
+              "h-full w-full gap-2 rounded-md bg-bgSecondary p-1 shadow-lg shadow-primary/30 md:flex md:gap-3 md:p-3",
+              "overflow-auto",
             )}
           >
-            <div className="box-border flex basis-full flex-col gap-1 overflow-hidden rounded-md max-md:order-2 md:h-full md:basis-1/4 md:gap-2">
+            <div className="shrink-0 overflow-x-hidden overflow-y-hidden md:order-2 md:h-full md:basis-3/4 md:overflow-x-auto">
+              <View
+                disableRemove
+                allClasses={allClasses}
+                scheduleClasses={searchSchedule}
+                stateType={{
+                  type: "setStateAction",
+                  dispatch: setSearchSchedule,
+                }}
+              />
+            </div>
+            <div className="box-border flex basis-full flex-col gap-1 overflow-hidden rounded-md md:order-1 md:h-full md:basis-1/4 md:gap-2">
               <div className="flex shrink-0 items-center gap-2 p-1">
                 <h2 className="font-heading text-xl md:text-3xl">
                   {allUsers[uid].name}
@@ -146,18 +160,6 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
                   <p>This user has no schedule on display.</p>
                 )}
               </div>
-            </div>
-
-            <div className="shrink-0 overflow-x-hidden overflow-y-hidden max-md:order-1 md:h-full md:basis-3/4 md:overflow-x-auto">
-              <View
-                disableRemove
-                allClasses={allClasses}
-                scheduleClasses={searchSchedule}
-                stateType={{
-                  type: "setStateAction",
-                  dispatch: setSearchSchedule,
-                }}
-              />
             </div>
           </div>
         ) : (

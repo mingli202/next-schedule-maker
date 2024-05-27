@@ -42,7 +42,7 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
   }, [router]);
 
   return (
-    <main className="relative flex h-screen w-screen overflow-hidden font-body text-text max-md:flex-col">
+    <main className="relative flex h-screen w-screen overflow-hidden font-body text-text max-md:flex-col max-md:text-sm">
       {loginState === "signedin" && (
         <ContextProvider>{children}</ContextProvider>
       )}
@@ -53,7 +53,9 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
       )}
       {loginState === "signedout" && (
         <div className="flex h-screen w-screen flex-col items-center justify-center gap-2">
-          <h1 className="font-heading text-3xl">You are signed out</h1>
+          <h1 className="font-heading text-xl md:text-3xl">
+            You are signed out
+          </h1>
           <Link href="/login">
             <Button variant="special">Go to login page</Button>
           </Link>

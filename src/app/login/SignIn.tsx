@@ -28,8 +28,8 @@ const SignIn = ({
   const [type, setType] = useState<"password" | "text">("password");
 
   const action = async (formData: FormData) => {
-    const email = formData.get("email");
-    const password = formData.get("password");
+    const email = formData.get("signinEmail");
+    const password = formData.get("signinPassword");
 
     if (!email || !password) return;
 
@@ -45,18 +45,18 @@ const SignIn = ({
   return (
     <motion.div
       className={cn(
-        "flex w-[min(25rem,80%)] flex-col items-center gap-4 rounded-md p-4 shadow-lg shadow-primary",
+        "flex w-[min(20rem,80%)] flex-col items-center gap-2 rounded-md p-2 shadow-lg shadow-primary max-md:text-sm md:w-[min(25rem,80%)] md:gap-4 md:p-4",
         className,
       )}
       {...props}
     >
-      <h2 className="font-heading text-3xl">Sign In</h2>
+      <h2 className="font-heading text-xl md:text-3xl">Sign In</h2>
 
       <form
         className="flex w-full flex-col gap-2 [&>label>p]:opacity-50"
         action={action}
       >
-        <label className="box-border w-full" htmlFor="email">
+        <label className="box-border w-full" htmlFor="signinEmail">
           <p>Email</p>
           <input
             className={cn(
@@ -67,14 +67,14 @@ const SignIn = ({
               },
             )}
             placeholder="example@gmail.com"
-            name="email"
-            id="email"
+            name="signinEmail"
+            id="signinEmail"
             type="email"
             required
           />
         </label>
 
-        <label className="box-border w-full" htmlFor="password">
+        <label className="box-border w-full" htmlFor="signinPassword">
           <div className="flex justify-between">
             <p className="opacity-50">Password</p>
             <Link
@@ -93,9 +93,9 @@ const SignIn = ({
                     error !== "",
                 },
               )}
-              name="password"
+              name="signinPassword"
               autoComplete="off"
-              id="password"
+              id="signinPassword"
               type={type}
               required
             />

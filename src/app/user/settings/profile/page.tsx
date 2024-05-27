@@ -228,7 +228,9 @@ const Page = () => {
                       height={16}
                       className="shrink-0"
                     />
-                    <p className={cn("overflow-x-auto p-2")}>Google Account</p>
+                    <p className={cn("overflow-x-auto p-1 md:p-2")}>
+                      Google Account
+                    </p>
                   </div>
                 ) : (
                   <Button

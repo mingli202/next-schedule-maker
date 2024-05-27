@@ -26,8 +26,8 @@ const SignUp = ({
   const action = async (formdata: FormData) => {
     const auth = getAuth(app);
 
-    const email = formdata.get("email");
-    const password = formdata.get("password");
+    const email = formdata.get("signupEmail");
+    const password = formdata.get("signupPassword");
     const passwordConfirm = formdata.get("password-confirm");
 
     if (!email || !password || !passwordConfirm) return;
@@ -46,18 +46,18 @@ const SignUp = ({
   return (
     <motion.div
       className={cn(
-        "flex w-[min(25rem,80%)] flex-col items-center gap-4 rounded-md p-4 shadow-lg shadow-primary",
+        "flex w-[min(20rem,80%)] flex-col items-center gap-2 rounded-md p-2 shadow-lg shadow-primary max-md:text-sm md:w-[min(25rem,80%)] md:gap-4 md:p-4",
         className,
       )}
       {...props}
     >
-      <h2 className="font-heading text-3xl">Sign Up</h2>
+      <h2 className="font-heading text-xl md:text-3xl">Sign Up</h2>
 
       <form
         className="flex w-full flex-col gap-2 [&>label>p]:opacity-50"
         action={action}
       >
-        <label className="box-border w-full" htmlFor="email">
+        <label className="box-border w-full" htmlFor="signupEmail">
           <p>Email</p>
           <input
             className={cn(
@@ -68,14 +68,14 @@ const SignUp = ({
               },
             )}
             placeholder="example@gmail.com"
-            name="email"
-            id="email"
+            name="signupEmail"
+            id="signupEmail"
             type="email"
             required
           />
         </label>
 
-        <label className="box-border w-full" htmlFor="password">
+        <label className="box-border w-full" htmlFor="signupPassword">
           <div className="flex justify-between">
             <p className="opacity-50">Password</p>
           </div>
@@ -88,9 +88,9 @@ const SignUp = ({
                     error !== "",
                 },
               )}
-              name="password"
+              name="signupPassword"
               autoComplete="off"
-              id="password"
+              id="signupPassword"
               required
             />
           </div>
