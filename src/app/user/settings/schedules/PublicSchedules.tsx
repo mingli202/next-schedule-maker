@@ -64,7 +64,7 @@ const PublicSchedules = ({ allClasses, className, ...props }: Props) => {
       {...props}
     >
       <div className="flex h-full basis-1/2 flex-col overflow-hidden rounded-md bg-bgSecondary p-2">
-        <h2 className="shrink-0 text-xl">Public</h2>
+        <h2 className="shrink-0 text-base md:text-xl">Public</h2>
         <div className="flex basis-full flex-col overflow-hidden rounded-md bg-bgPrimary p-2">
           <SavedList
             savedSchedules={publicSchedules ?? {}}
@@ -82,7 +82,7 @@ const PublicSchedules = ({ allClasses, className, ...props }: Props) => {
         </div>
       </div>
       <div className="flex h-full basis-1/2 flex-col overflow-hidden rounded-md bg-bgSecondary p-2">
-        <h2 className="shrink-0 text-xl">Private</h2>
+        <h2 className="shrink-0 text-base md:text-xl">Private</h2>
         <div className="flex basis-full flex-col overflow-hidden rounded-md bg-bgPrimary p-2">
           <SavedList
             savedSchedules={dif(publicSchedules, userSchedules) ?? {}}

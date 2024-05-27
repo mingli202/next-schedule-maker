@@ -17,8 +17,8 @@ const Page = () => {
         )}
       >
         <div className="shrink-0">
-          <h1 className="font-heading text-3xl">Other</h1>
-          <p className={cn("text-sm text-text/70")}>
+          <h1 className="font-heading text-xl md:text-3xl">Other</h1>
+          <p className={cn("text-xs text-text/70 md:text-sm")}>
             Some other stuff you might be interested in
           </p>
         </div>
@@ -26,7 +26,7 @@ const Page = () => {
 
         <div
           className={cn(
-            "flex items-center justify-between p-2",
+            "flex items-center justify-between p-1 md:p-2",
             "flex-col"
               .split(" ")
               .map((c) => "max-md:" + c)
@@ -34,8 +34,8 @@ const Page = () => {
           )}
         >
           <div>
-            <h2 className="text-xl">Delete Account</h2>
-            <p className={cn("text-sm text-text/70")}>
+            <h2 className="text-base md:text-xl">Delete Account</h2>
+            <p className={cn("text-xs text-text/70 md:text-sm")}>
               If you no long have any use for your account, consider deleting it
               to free up space in the database.
             </p>
