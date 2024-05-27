@@ -18,12 +18,12 @@ const Card = ({ title, desc, param }: CardProps) => {
   return (
     <div className="flex shrink-0 justify-between gap-2 rounded-md bg-bgSecondary p-2">
       <div>
-        <h2 className="text-xl font-bold">{title}</h2>
-        <p className="opacity-90">{desc}</p>
+        <h2 className="text-base font-bold md:text-xl">{title}</h2>
+        <p className="opacity-90 max-md:text-sm">{desc}</p>
       </div>
       <div className="flex shrink-0 items-center justify-center">
         <div
-          className="flex h-8 w-8 items-center justify-center rounded-md bg-secondary transition hover:bg-third"
+          className="flex h-6 w-6 items-center justify-center rounded-md bg-secondary transition hover:bg-third md:h-8 md:w-8"
           onClick={() => {
             const url = new URL(window.location.href);
 
@@ -37,7 +37,7 @@ const Card = ({ title, desc, param }: CardProps) => {
           }}
         >
           {q === "true" && (
-            <FontAwesomeIcon icon={faCheck} className="h-4 w-4" />
+            <FontAwesomeIcon icon={faCheck} className="h-3 w-3 md:h-4 md:w-4" />
           )}
         </div>
       </div>
