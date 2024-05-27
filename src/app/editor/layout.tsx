@@ -39,16 +39,16 @@ const Layout = async ({ children }: Props) => {
 
   return (
     <ScheduleContextProvider>
-      <main className="box-border flex w-screen overflow-auto p-2 text-sm text-text max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
+      <main className="box-border flex w-screen gap-2 overflow-y-auto overflow-x-hidden p-2 text-sm text-text max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
         <div
-          className="overflow-x-auto overflow-y-hidden max-md:order-2 md:h-full"
+          className="overflow-x-hidden overflow-y-hidden max-md:order-2 md:h-full md:overflow-x-auto"
           id="menu"
         >
           {children}
         </div>
         <DragIndicator />
         <div
-          className="overflow-x-auto overflow-y-hidden max-md:order-1 md:h-full"
+          className="overflow-hidden max-md:order-1 md:h-full md:overflow-x-auto md:overflow-y-hidden"
           id="view"
         >
           <ViewWrapper allClasses={allClasses} />

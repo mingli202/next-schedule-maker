@@ -40,7 +40,7 @@ const ExpandClass = ({
 
   return (
     <motion.div
-      className="absolute left-0 top-0 z-30 flex h-full w-full items-center justify-center rounded-md bg-white/30 backdrop-blur-md backdrop-filter"
+      className="absolute left-0 top-0 z-30 flex h-full w-full items-center justify-center rounded-md bg-white/30 backdrop-blur-md backdrop-filter max-md:text-xs"
       initial="initial"
       animate="animate"
       exit="initial"
@@ -91,12 +91,12 @@ const ExpandClass = ({
           </Button>
         </div>
 
-        <div className="text-md flex flex-col p-1">
-          <h2 className="">
+        <div className="flex flex-col p-1">
+          <h2>
             {cl.program}: {cl.course} {cl.code}
           </h2>
 
-          <h1 className="font-heading text-2xl font-bold">
+          <h1 className="font-heading text-base font-bold md:text-2xl">
             {cl.section} {cl.lecture.title}
           </h1>
 
@@ -117,7 +117,12 @@ const ExpandClass = ({
                     ? "N/A"
                     : cl.lecture.rating.score}
                 </p>
-                <div className="absolute top-0 hidden w-[12rem] -translate-y-1/2 translate-x-12 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block">
+                <div
+                  className={cn(
+                    "absolute top-0 hidden w-[12rem] -translate-x-1/2 translate-y-1/3 md:-translate-y-1/2 md:translate-x-12",
+                    "rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block",
+                  )}
+                >
                   <p>
                     Rating:{" "}
                     {cl.lecture.rating.avg === 0

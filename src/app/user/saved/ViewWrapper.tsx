@@ -14,7 +14,6 @@ const ViewWrapper = ({ allClasses }: Props) => {
 
   return (
     <View
-      className="h-[40rem] min-w-[40rem] md:h-full"
       allClasses={allClasses}
       stateType={{
         type: "setStateAction",

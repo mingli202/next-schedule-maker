@@ -1,9 +1,9 @@
 "use client";
 
 import GridView from "./GridView";
-import { twMerge } from "tailwind-merge";
 import PreviewHover from "./PreviewHover";
 import { Class, SharedCurrentClasses, StateType } from "@/types";
+import { cn } from "@/lib";
 
 const Hours = () => {
   const initalMinutes = 8 * 60;
@@ -24,7 +24,7 @@ const Hours = () => {
       {hours.map((h) => (
         <div
           key={h}
-          className="flex translate-y-1/2 items-center justify-end text-xs opacity-60"
+          className="flex translate-y-1/2 items-center justify-end text-[0.5rem] opacity-60 md:text-xs"
         >
           {h}
         </div>
@@ -49,8 +49,10 @@ const View = ({
 }: Props) => {
   return (
     <div
-      className={twMerge(
-        "box-border grid grid-cols-[3rem_repeat(5,1fr)] grid-rows-[repeat(21,1fr)] rounded-md bg-primary p-4 text-bgPrimary",
+      className={cn(
+        "box-border grid h-[40rem] w-full grid-cols-[2rem_repeat(5,1fr)] md:grid-cols-[3rem_repeat(5,1fr)]",
+        "grid-rows-[repeat(21,1fr)] rounded-md bg-primary p-4 text-bgPrimary",
+        "md:h-full md:min-w-[40rem]",
         className,
       )}
     >
@@ -58,16 +60,21 @@ const View = ({
         <Hours />
       </div>
       <div className="col-span-5 col-start-2 flex">
-        {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map((day) => (
+        {["Mon", "Tue", "Wed", "Thu", "Fri"].map((day) => (
           <span
             key={day}
-            className="line-clamp-1 flex basis-1/5 items-center justify-center max-md:text-sm"
+            className="line-clamp-1 flex basis-1/5 items-center justify-center max-md:text-xs"
           >
             {day}
           </span>
         ))}
       </div>
-      <div className="relative col-span-5 row-[span_20/span_20] grid grid-cols-5 grid-rows-[repeat(20,1fr)] rounded-md bg-slate shadow-lg shadow-bgPrimary/30">
+      <div
+        className={cn(
+          "relative col-span-5 row-[span_20/span_20] grid grid-cols-5 grid-rows-[repeat(20,1fr)]",
+          "rounded-md bg-slate shadow-lg shadow-bgPrimary/30",
+        )}
+      >
         <div className="absolute left-0 top-0 grid h-full w-full grid-cols-5 grid-rows-[repeat(20,1fr)]">
           <div className="invisible col-span-full">
             Place holder to make horizontal lines start lower

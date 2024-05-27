@@ -148,7 +148,6 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
             <div className="basis-3/4 overflow-x-auto overflow-y-hidden max-md:order-1 md:h-full">
               <View
                 disableRemove
-                className="h-[40rem] min-w-[40rem] md:h-full"
                 allClasses={allClasses}
                 scheduleClasses={searchSchedule}
                 stateType={{
