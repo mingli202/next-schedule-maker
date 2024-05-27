@@ -120,7 +120,7 @@ const ExpandClass = ({
                 <div
                   className={cn(
                     "absolute top-0 hidden w-[12rem] -translate-x-1/2 translate-y-1/3 md:-translate-y-1/2 md:translate-x-12",
-                    "rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block",
+                    "z-10 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block",
                   )}
                 >
                   <p>
@@ -189,7 +189,7 @@ const ExpandClass = ({
                   <p>
                     {cl.lab.rating.score === 0 ? "N/A" : cl.lab.rating.score}
                   </p>
-                  <div className="absolute top-0 hidden w-[12rem] -translate-y-1/2 translate-x-12 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block">
+                  <div className="absolute top-0 z-10 hidden w-[12rem] -translate-y-1/2 translate-x-12 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block">
                     <p>
                       Rating:{" "}
                       {cl.lab.rating.avg === 0
