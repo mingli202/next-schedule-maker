@@ -1,7 +1,12 @@
 "use client";
 
 import { SharedCurrentClasses, ActionType } from "@/types";
-import React, { createContext, useReducer } from "react";
+import React, {
+  createContext,
+  useEffect,
+  useLayoutEffect,
+  useReducer,
+} from "react";
 
 export const ScheduleClassesContext = createContext<SharedCurrentClasses[]>([]);
 export const ScheduleDispatchContext = createContext<
@@ -16,23 +21,43 @@ const reducer = (
   currentClasses: SharedCurrentClasses[],
   action: ActionType,
 ) => {
+  let updated;
   switch (action.type) {
     case "add": {
-      return [...currentClasses, action.cl];
+      updated = [...currentClasses, action.cl];
+      break;
     }
     case "delete": {
-      return currentClasses.filter((cl) => cl.id !== action.id);
+      updated = currentClasses.filter((cl) => cl.id !== action.id);
+      break;
     }
     case "set": {
-      return action.schedule;
+      updated = action.schedule;
+      break;
     }
   }
+  localStorage.setItem("currentSchedule", JSON.stringify(updated));
+  return updated;
 };
 
 const initalValue: SharedCurrentClasses[] = [];
 
 const ScheduleContextProvider = ({ children }: Props) => {
   const [currentClasses, dispatch] = useReducer(reducer, initalValue);
+  const key = "currentSchedule";
+
+  useLayoutEffect(() => {
+    const savedSchedule = localStorage.getItem(key);
+    console.log({ savedSchedule });
+
+    if (!savedSchedule) {
+      console.log("initial");
+      localStorage.setItem(key, JSON.stringify([]));
+    } else {
+      console.log("set");
+      dispatch({ type: "set", schedule: JSON.parse(savedSchedule) });
+    }
+  }, []);
 
   return (
     <ScheduleClassesContext.Provider value={currentClasses}>
