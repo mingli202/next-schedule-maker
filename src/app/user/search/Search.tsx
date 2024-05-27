@@ -46,7 +46,7 @@ const Search = ({ className, ...props }: Props) => {
           name="q"
           id="q"
           type="text"
-          placeholder="Search by username, email or uid"
+          placeholder="Search by username"
           onChange={(e) => {
             setInputQuery(e.target.value);
           }}

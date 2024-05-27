@@ -74,18 +74,25 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
   };
 
   return (
-    <div className={cn("h-full w-full p-2", className)} {...props}>
+    <div className={cn("h-full w-full md:p-2", className)} {...props}>
       {showUser !== undefined && allUsers !== undefined ? (
         showUser && allUsers ? (
-          <div className="flex h-full w-full gap-3 rounded-md bg-bgSecondary p-3 shadow-xl shadow-primary/30">
-            <div className="box-border flex basis-1/4 flex-col gap-2 overflow-hidden rounded-md max-md:order-2 md:h-full">
-              <div className="flex shrink-0 items-center gap-2">
-                <h2 className="font-heading text-3xl">{allUsers[uid].name}</h2>
+          <div
+            className={cn(
+              "flex h-full w-full gap-2 rounded-md bg-bgSecondary p-1 shadow-lg shadow-primary/30 md:gap-3 md:p-3",
+              "max-md:flex-col",
+            )}
+          >
+            <div className="box-border flex basis-full flex-col gap-1 overflow-hidden rounded-md max-md:order-2 md:h-full md:basis-1/4 md:gap-2">
+              <div className="flex shrink-0 items-center gap-2 p-1">
+                <h2 className="font-heading text-xl md:text-3xl">
+                  {allUsers[uid].name}
+                </h2>
 
                 {followings && followings.includes(allUsers[uid].uid) ? (
                   <Button
                     variant="basic"
-                    className="h-7 w-7 shrink-0 p-0"
+                    className="h-7 w-7 shrink-0 p-1"
                     onClick={async (e) => {
                       e.stopPropagation();
 
@@ -124,10 +131,6 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
                 )}
               </div>
 
-              <div className="shrink-0 text-sm text-third">
-                <p>{allUsers[uid].email}</p>
-                <p>{allUsers[uid].uid}</p>
-              </div>
               <div className="flex w-full basis-full flex-col overflow-hidden rounded-md bg-bgPrimary p-2">
                 {allUsers[uid].schedules ? (
                   <SavedList
@@ -145,7 +148,7 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
               </div>
             </div>
 
-            <div className="basis-3/4 overflow-x-auto overflow-y-hidden max-md:order-1 md:h-full">
+            <div className="shrink-0 overflow-x-hidden overflow-y-hidden max-md:order-1 md:h-full md:basis-3/4 md:overflow-x-auto">
               <View
                 disableRemove
                 allClasses={allClasses}

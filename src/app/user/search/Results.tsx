@@ -28,7 +28,7 @@ const Results = ({ allUsers, q }: Props) => {
         usr.uid !== user?.uid &&
         q.split(" ").every((_q) => {
           const re = new RegExp(_q, "ig");
-          return usr.email.match(re) || usr.name.match(re) || usr.uid.match(re);
+          return usr.name.match(re);
         })
       );
     });
@@ -127,8 +127,6 @@ const Results = ({ allUsers, q }: Props) => {
                   </Button>
                 )}
               </div>
-              <p>{usr.email}</p>
-              <p>{usr.uid}</p>
             </div>
           </motion.div>
         ))}
