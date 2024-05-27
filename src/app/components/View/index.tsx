@@ -24,7 +24,7 @@ const Hours = () => {
       {hours.map((h) => (
         <div
           key={h}
-          className="flex translate-y-1/2 items-center justify-end text-[0.5rem] opacity-60 md:text-xs"
+          className="flex translate-y-1/2 items-center text-[0.5rem] opacity-60 md:text-xs"
         >
           {h}
         </div>
@@ -51,7 +51,7 @@ const View = ({
     <div
       className={cn(
         "box-border grid h-[40rem] w-full grid-cols-[2rem_repeat(5,1fr)] md:grid-cols-[3rem_repeat(5,1fr)]",
-        "grid-rows-[repeat(21,1fr)] rounded-md bg-primary p-4 text-bgPrimary",
+        "grid-rows-[repeat(21,1fr)] rounded-md bg-primary p-2 text-bgPrimary md:p-4",
         "md:h-full md:min-w-[40rem]",
         className,
       )}
@@ -72,29 +72,25 @@ const View = ({
       <div
         className={cn(
           "relative col-span-5 row-[span_20/span_20] grid grid-cols-5 grid-rows-[repeat(20,1fr)]",
-          "rounded-md bg-slate shadow-lg shadow-bgPrimary/30",
+          "h-full rounded-md bg-slate shadow-lg shadow-bgPrimary/30",
         )}
       >
         <div className="absolute left-0 top-0 grid h-full w-full grid-cols-5 grid-rows-[repeat(20,1fr)]">
-          <div className="invisible col-span-full">
-            Place holder to make horizontal lines start lower
-          </div>
+          <div className="col-span-full row-span-1" />
           {Array(19)
             .fill(0)
             .map((_, index) => {
               return (
                 <div
                   key={index}
-                  className="col-span-full mx-2 box-border h-[1px] -translate-y-1/2 rounded-full bg-gray-400"
+                  className="col-span-full row-span-1 mx-2 box-border h-[1px] -translate-y-1/2 rounded-full bg-gray-400"
                 ></div>
               );
             })}
         </div>
 
         <div className="absolute left-0 top-0 grid h-full w-full grid-cols-5 grid-rows-[repeat(20,1fr)]">
-          <div className="invisible row-span-full">
-            Place holder to make vertical lines start a block right
-          </div>
+          <div className="invisible row-span-full" />
           {Array(4)
             .fill(0)
             .map((_, index) => {
