@@ -64,7 +64,6 @@ const filterByTime = (arr: ReturnType, time: string) => {
         .split("-")
         .map((t) => Number(t));
 
-      console.log({ tStart, tEnd, start, end });
       return tStart >= start && tEnd <= end;
     });
   });

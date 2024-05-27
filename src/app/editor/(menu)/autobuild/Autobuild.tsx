@@ -1,6 +1,6 @@
 "use client";
 
-import { Class, SharedCurrentClasses } from "@/types";
+import { Class, Code, SharedCurrentClasses } from "@/types";
 import { useEffect, useState } from "react";
 import Form from "./Form";
 import { Button } from "@/ui";
@@ -17,7 +17,7 @@ const Autobuild = ({ allClasses, colors }: Props) => {
     "form" | "building" | "complete"
   >("form");
 
-  const [codes, setCodes] = useState<string[]>([]);
+  const [codes, setCodes] = useState<Code[]>([]);
 
   useEffect(() => {
     setCodes(JSON.parse(sessionStorage.getItem("autobuild") ?? "[]"));
@@ -27,47 +27,32 @@ const Autobuild = ({ allClasses, colors }: Props) => {
     SharedCurrentClasses[][]
   >([]);
 
+  const [useCurrent, setUseCurrent] = useState(false);
+
   return (
-    <div className="relative box-border flex h-full w-full flex-col items-center gap-2 overflow-hidden p-2">
+    <div className="relative box-border flex h-full w-full flex-col items-center gap-2 overflow-y-auto overflow-x-hidden p-2">
       {isBuilding === "form" && (
         <>
-          <div className="flex h-full flex-col gap-2">
+          <div className="flex w-full flex-col gap-2">
             <div>
               <h1 className="text-center font-heading text-xl">Auto Builder</h1>
-              <p className="text-center">
-                Input additional course codes and generate all possible
-                schedules based on the current schedule displayed. Note that the
-                codes below must be extra courses not present in the current
-                schedule.
-              </p>
             </div>
-            <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-2">
-              {codes.map((code) => (
-                <p
-                  key={code}
-                  className="flex cursor-pointer items-center rounded-md bg-bgSecondary p-2 transition hover:bg-secondary"
-                  onClick={() => {
-                    const updatedCodes = codes.filter((c) => c !== code);
-                    sessionStorage.setItem(
-                      "autobuild",
-                      JSON.stringify(updatedCodes),
-                    );
-                    setCodes(updatedCodes);
-                  }}
-                  title="remove"
-                >
-                  {code}
-                </p>
-              ))}
-              <Form
-                allClasses={allClasses}
-                codes={codes}
-                setCodes={setCodes}
-                setIsBuilding={setIsBuilding}
+            <label htmlFor="useCurrent" className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="useCurrent"
+                name="useCurrent"
+                onChange={() => setUseCurrent(!useCurrent)}
+                checked={useCurrent}
               />
+              <p>Use the current schedule as baseline</p>
+            </label>
+
+            <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2">
+              <Form allClasses={allClasses} codes={codes} setCodes={setCodes} />
             </div>
           </div>
-          <div className="relative bottom-0 z-10 flex items-center justify-center bg-bgPrimary">
+          <div className="relative bottom-0 z-[5] flex items-center justify-center bg-bgPrimary">
             <Button
               variant="special"
               className="w-fit"
@@ -84,6 +69,7 @@ const Autobuild = ({ allClasses, colors }: Props) => {
           colors={colors}
           codes={codes}
           setIsBuilding={setIsBuilding}
+          useCurrent={useCurrent}
         />
       )}
       {isBuilding === "complete" && (

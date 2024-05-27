@@ -1,23 +1,88 @@
-import { Class, SharedCurrentClasses } from "@/types";
+import { Class, Code, SharedCurrentClasses } from "@/types";
 import isValid from "../search/checkValid";
 import { getLocalJsonData } from "@/lib";
 
 const generate = async (
-  codes: string[],
+  codes: Code[],
   currentClasses: SharedCurrentClasses[],
   colors: string[],
+  useCurrent: boolean,
 ) => {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
   const classes = Object.entries(allClasses).filter(([, cl]) =>
-    codes.includes(cl.code),
+    codes.some((c) => c.code === cl.code),
   );
 
-  let toReturn: SharedCurrentClasses[][] = [currentClasses];
+  let toReturn: SharedCurrentClasses[][] = useCurrent ? [currentClasses] : [[]];
 
   for (const code of codes) {
-    const classesForCode = classes.filter(([, cl]) => cl.code === code);
+    const classesForCode = classes.filter(([, cl]) => {
+      if (cl.code !== code.code) {
+        return false;
+      }
+
+      if (code.timeRange) {
+        const tArr = [
+          ...Object.entries(cl.lecture),
+          ...Object.entries(cl.lab),
+        ].filter(([key]) => !["prof", "title", "rating"].includes(key));
+
+        const start = code.timeRange.from?.replace(":", "") ?? "0";
+        const end = code.timeRange.to?.replace(":", "") ?? "2400";
+
+        const rightTime = tArr.every(([, t]) => {
+          const [tStart, tEnd] = t
+            .toString()
+            .split("-")
+            .map((t) => Number(t));
+
+          return tStart >= Number(start) && tEnd <= Number(end);
+        });
+
+        if (!rightTime) {
+          return false;
+        }
+      }
+
+      if (code.professors && code.professors.length > 0) {
+        if (
+          !code.professors.includes(cl.lecture.prof) &&
+          !code.professors.includes(cl.lab.prof)
+        ) {
+          return false;
+        }
+      }
+
+      if (code.ratingRange) {
+        const { to, from } = code.ratingRange;
+
+        const { avg } = cl.lecture.rating;
+
+        if (to && to < avg) {
+          return false;
+        }
+        if (from && from > avg) {
+          return false;
+        }
+      }
+
+      if (code.scoreRange) {
+        const { to, from } = code.scoreRange;
+
+        const { score } = cl.lecture.rating;
+
+        if (to && to < score) {
+          return false;
+        }
+        if (from && from > score) {
+          return false;
+        }
+      }
+
+      return true;
+    });
 
     toReturn = toReturn.flatMap((schedule) => {
       const validClasses = classesForCode.filter(([, cl]) =>
@@ -44,7 +109,8 @@ const generate = async (
   }
 
   return toReturn.filter(
-    (s) => s.length === codes.length + currentClasses.length,
+    (s) =>
+      s.length === codes.length + currentClasses.length * (useCurrent ? 1 : 0),
   );
 };
 
