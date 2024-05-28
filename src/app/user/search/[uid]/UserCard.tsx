@@ -7,8 +7,6 @@ import { db, app } from "@/backend";
 import { cn } from "@/lib";
 import { Class, SharedCurrentClasses, UserPublic } from "@/types";
 import { Button } from "@/ui";
-import { faUserMinus, faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getAuth } from "firebase/auth";
 import { onValue, ref, update } from "firebase/database";
 import { HTMLAttributes, useEffect, useState } from "react";
