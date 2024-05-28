@@ -43,13 +43,10 @@ const ScheduleContextProvider = ({ children }: Props) => {
 
   useLayoutEffect(() => {
     const savedSchedule = localStorage.getItem(key);
-    console.log({ savedSchedule });
 
     if (!savedSchedule) {
-      console.log("initial");
       localStorage.setItem(key, JSON.stringify([]));
     } else {
-      console.log("set");
       dispatch({ type: "set", schedule: JSON.parse(savedSchedule) });
     }
   }, []);
