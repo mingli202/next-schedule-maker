@@ -98,7 +98,7 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
               />
             </div>
             <div className="box-border flex basis-full flex-col gap-1 overflow-hidden rounded-md md:order-1 md:h-full md:basis-1/4 md:gap-2">
-              <div className="flex shrink-0 items-center gap-2 p-1">
+              <div className="flex shrink-0 items-center justify-between gap-2 p-1">
                 <h2 className="font-heading text-xl md:text-3xl">
                   {allUsers[uid].name}
                 </h2>
@@ -106,22 +106,19 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
                 {followings && followings.includes(allUsers[uid].uid) ? (
                   <Button
                     variant="basic"
-                    className="h-7 w-7 shrink-0 p-1"
+                    className="shrink-0"
                     onClick={async (e) => {
                       e.stopPropagation();
 
                       await unfollow();
                     }}
                   >
-                    <FontAwesomeIcon
-                      icon={faUserMinus}
-                      className="h-full w-full"
-                    />
+                    Unfollow
                   </Button>
                 ) : (
                   <Button
                     variant="basic"
-                    className="h-7 w-7 shrink-0 p-0"
+                    className="shrink-0"
                     onClick={async (e) => {
                       e.stopPropagation();
 
@@ -137,10 +134,7 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
                       }).catch(() => console.log("Error updating data"));
                     }}
                   >
-                    <FontAwesomeIcon
-                      icon={faUserPlus}
-                      className="h-full w-full"
-                    />
+                    Follow
                   </Button>
                 )}
               </div>
