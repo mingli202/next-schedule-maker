@@ -11,9 +11,10 @@ type Props = {
   allClasses: Record<string, Class>;
   codes: Code[];
   setCodes: React.Dispatch<React.SetStateAction<Code[]>>;
+  useCurrent: boolean;
 };
 
-const Form = ({ allClasses, codes, setCodes }: Props) => {
+const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
   const ref = useRef<HTMLFormElement>(null);
   const currentClasses = useContext(ScheduleClassesContext);
   const currentCodes = currentClasses.map((cl) => allClasses[cl.id].code);
@@ -26,11 +27,11 @@ const Form = ({ allClasses, codes, setCodes }: Props) => {
           .filter(
             (code) =>
               !codes.some((c) => c.code === code) &&
-              !currentCodes.includes(code),
+              (!useCurrent || !currentCodes.includes(code)),
           ),
       ),
     ],
-    [allClasses, codes, currentCodes],
+    [allClasses, codes, currentCodes, useCurrent],
   );
 
   const action = (formdata: FormData) => {

@@ -18,6 +18,7 @@ const Autobuild = ({ allClasses, colors }: Props) => {
   >("form");
 
   const [codes, setCodes] = useState<Code[]>([]);
+  const [useCurrent, setUseCurrent] = useState(false);
 
   useEffect(() => {
     setCodes(JSON.parse(sessionStorage.getItem("autobuild") ?? "[]"));
@@ -26,8 +27,6 @@ const Autobuild = ({ allClasses, colors }: Props) => {
   const [generatedSchedules, setGeneratedSchedules] = useState<
     SharedCurrentClasses[][]
   >([]);
-
-  const [useCurrent, setUseCurrent] = useState(false);
 
   return (
     <div className="relative box-border flex h-full w-full flex-col items-center gap-2 overflow-y-auto overflow-x-hidden p-2">
@@ -49,7 +48,12 @@ const Autobuild = ({ allClasses, colors }: Props) => {
             </label>
 
             <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2">
-              <Form allClasses={allClasses} codes={codes} setCodes={setCodes} />
+              <Form
+                allClasses={allClasses}
+                codes={codes}
+                setCodes={setCodes}
+                useCurrent={useCurrent}
+              />
             </div>
           </div>
           <div className="relative bottom-0 z-[5] flex items-center justify-center bg-bgPrimary">
