@@ -31,7 +31,7 @@ type Props = {
 
 const Layout = ({ children }: Props) => {
   return (
-    <div className="relative flex h-full basis-full flex-col gap-4 overflow-hidden p-2 md:p-4">
+    <div className="relative flex h-full basis-full flex-col gap-4 overflow-hidden p-2">
       {children}
     </div>
   );

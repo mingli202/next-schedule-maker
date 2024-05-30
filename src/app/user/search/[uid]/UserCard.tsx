@@ -73,15 +73,17 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
 
   return (
     <div
-      className={cn("h-full w-full overflow-hidden md:p-2", className)}
+      className={cn(
+        "h-full w-full overflow-y-auto overflow-x-hidden",
+        className,
+      )}
       {...props}
     >
       {showUser !== undefined && allUsers !== undefined ? (
         showUser && allUsers ? (
           <div
             className={cn(
-              "h-full w-full gap-2 rounded-md bg-bgSecondary p-1 shadow-lg shadow-primary/30 md:flex md:gap-3 md:p-3",
-              "overflow-auto",
+              "w-full gap-2 rounded-md bg-bgSecondary p-1 md:flex md:h-full md:gap-3 md:p-3",
             )}
           >
             <div className="shrink-0 overflow-x-hidden overflow-y-hidden md:order-2 md:h-full md:basis-3/4 md:overflow-x-auto">
@@ -95,6 +97,7 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
                 }}
               />
             </div>
+
             <div className="box-border flex basis-full flex-col gap-1 overflow-hidden rounded-md md:order-1 md:h-full md:basis-1/4 md:gap-2">
               <div className="flex shrink-0 items-center justify-between gap-2 p-1">
                 <h2 className="font-heading text-xl md:text-3xl">
