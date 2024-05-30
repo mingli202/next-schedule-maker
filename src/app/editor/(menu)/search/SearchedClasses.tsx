@@ -43,14 +43,33 @@ const SearchedClasses = ({ allClasses, professors, colors }: Props) => {
       {filterClasses.length === 0 && (
         <div className="box-border w-full overflow-y-auto p-4">
           <h2 className="text-center font-heading text-xl">Guidelines:</h2>
+          <ul className="list-disc pl-4">
+            <li>
+              <b>Search</b>: for quick class lookup.
+            </li>
+            <li>
+              <b>Filter</b>: for more filters for the search result.
+            </li>
+            <li>
+              <b>Autobuild</b>: to generate schedules based on fitlers.
+            </li>
+            <li>
+              <b>Saved</b>: to login and save your schedules.
+            </li>
+            <li>
+              <b>Settings</b>: for more options.
+            </li>
+          </ul>
+
           <br />
+          <div className="h-0.5 w-full rounded-full bg-third" />
+          <br />
+
           <p>Search by keywords and separate them by a comma:</p>
           <ul className="list-disc pl-4">
-            <li>waves, brian, M 10h30 to 12h30</li>
-            <li>ENGLISH, 603-200, r{">"}4.5</li>
+            <li>ENGLISH, 603-200, r{">"}4.5, 10:00-16:00</li>
             <li>HUMA, blended, steven</li>
-            <li>bio ii, s{">"}80</li>
-            <li>intro to acc, WF, 1000-1130</li>
+            <li>bio ii, s{">"}80, WF</li>
           </ul>
           <br />
           <p>
@@ -58,29 +77,30 @@ const SearchedClasses = ({ allClasses, professors, colors }: Props) => {
             various patterns:
           </p>
           <ul className="list-disc pl-4">
-            <li>{"r>, r<, r="} matches rating.</li>
-            <li>{"s>, s<, s="} matches score.</li>
+            <li>{"r>, r<, r="} matches a rating range.</li>
+            <li>{"s>, s<, s="} matches a score range.</li>
             <li>
-              M, T, W, R, F or any combinasion of these letters will match days.
+              M, T, W, R, F or any combinasion of these letters will match days
+              off.
             </li>
             <li>
               Any combinasion of NN:MM, NN:MM, NNMM with either a dash or{" "}
-              {'"to"'} between matches time.
-            </li>
-            <li>
-              Combine a day with a time range will match classes that has that
-              specific time.
+              {'"to"'} between matches a time range.
             </li>
             <li>ALL CAPS matches a course name.</li>
             <li>NNN Three numbers matches a code.</li>
             <li>{'"honours" and "blended"'} are special keywords.</li>
             <li>
               Matches a teacher{"'"}s name if the keyword matches at least 67%
-              of either their first or last name
+              of either their first or last name.
             </li>
             <li>Will look for class titles if none of the above matches.</li>
           </ul>
+
           <br />
+          <div className="h-0.5 w-full rounded-full bg-third" />
+          <br />
+
           <p>
             Warning: DO NOT touch the URL unless you are familiar with URL
             Params since everything is stored in the URL. If the URL is broken,

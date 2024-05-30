@@ -292,7 +292,7 @@ const Form = ({ allClasses }: Props) => {
       </div>
 
       <div className="group rounded-md bg-bgSecondary p-2 transition hover:bg-secondary">
-        <p className="font-bold">Days (Has class on these days)</p>
+        <p className="font-bold">Days Off</p>
         <div className="flex gap-2">
           <label
             htmlFor="M"
@@ -414,27 +414,45 @@ const Form = ({ allClasses }: Props) => {
           variant="basic"
           type="reset"
           onClick={() => {
-            ["M", "T", "W", "R", "F"].forEach((day) => {
-              const el = document.getElementById(day) as HTMLInputElement;
-              el.checked = false;
+            const url = new URL(window.location.href);
+
+            [
+              "prof",
+              "rating",
+              "score",
+              "code",
+              "time",
+              "title",
+              "course",
+              "day",
+            ].forEach((query) => {
+              url.searchParams.delete(query);
+            });
+
+            router.push(`/editor/filter?${url.searchParams}`);
+
+            [
+              "M",
+              "T",
+              "W",
+              "R",
+              "F",
+              "prof",
+              "timeMin",
+              "timeMax",
+              "scoreMin",
+              "scoreMax",
+              "ratingMin",
+              "ratingMax",
+            ].forEach((id) => {
+              const el = document.getElementById(id) as HTMLInputElement;
+              el.defaultChecked = false;
+              el.defaultValue = "";
             });
 
             setCourseName("");
             setCode("");
             setTitle("");
-
-            const prof = document.getElementById("prof") as HTMLInputElement;
-            prof.defaultValue = "";
-
-            const timeMin = document.getElementById(
-              "timeMin",
-            ) as HTMLInputElement;
-            timeMin.defaultValue = "";
-
-            const timeMax = document.getElementById(
-              "timeMax",
-            ) as HTMLInputElement;
-            timeMax.defaultValue = "";
           }}
         >
           Clear

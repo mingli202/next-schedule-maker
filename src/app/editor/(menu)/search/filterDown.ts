@@ -87,7 +87,6 @@ const filterByCourse = (arr: ReturnType, courseName: string) => {
 
 const filterByDay = (arr: ReturnType, day: string) => {
   if (day === "") return [];
-  const re = new RegExp(day, "ig");
 
   return arr.filter(([, cl]) => {
     const lectureTime = Object.keys(cl.lecture).filter(
@@ -96,27 +95,8 @@ const filterByDay = (arr: ReturnType, day: string) => {
     const labTime = Object.keys(cl.lab).filter(
       (t) => !["prof", "rating", "title"].includes(t),
     );
-    return [...lectureTime, ...labTime].some((t) => t.match(re));
-  });
-};
-
-const filterByDayAndTime = (arr: ReturnType, day: string, time: string) => {
-  if (day === "" || time === "") return [];
-
-  time = time.replaceAll(/[:h]/g, "").replaceAll(/ ?to ?/g, "-");
-  const dayRe = new RegExp(day, "ig");
-  const timeRe = new RegExp(time, "ig");
-
-  return arr.filter(([, cl]) => {
-    const lectureTime = Object.entries(cl.lecture).filter(
-      ([t]) => !["prof", "rating", "title"].includes(t),
-    );
-    const labTime = Object.entries(cl.lab).filter(
-      ([t]) => !["prof", "rating", "title"].includes(t),
-    );
-    return [...lectureTime, ...labTime].some(
-      ([d, t]) => d.match(dayRe) && typeof t === "string" && t.match(timeRe),
-    );
+    const days = lectureTime.join("") + labTime.join("");
+    return !day.split("").some((d) => days.includes(d));
   });
 };
 
@@ -134,7 +114,6 @@ const ratingReg = /^r[<>=]\d+$/g;
 const scoreReg = /^s[<>=]\d+$/g;
 const courseReg = /^[A-Z]{2,} *[A-Z ]*$/g;
 const dayReg = /^[MTWRF]+ *[MTWRF ]*$/g;
-const dayAndTimeReg = /^[MTWRF]+ *\d{1,2}[:h]?\d{2}(-| ?to ?)\d{2}[:h]?\d{2}$/g;
 
 const filterByQuery = (
   arr: ReturnType,
@@ -150,17 +129,6 @@ const filterByQuery = (
       for (const k of keyword.split(" ")) {
         tmp = filterByCode(tmp, k);
       }
-    }
-    // check if day and time
-    else if (keyword.match(dayAndTimeReg)) {
-      const day = keyword.match(/^[MTWRF]+/g)?.[0];
-      const time = keyword.match(
-        /\d{1,2}[:h]?\d{2}(-| ?to ?)\d{2}[:h]?\d{2}$/g,
-      )?.[0];
-
-      if (!day || !time) continue;
-
-      tmp = filterByDayAndTime(tmp, day, time);
     }
 
     // check if day
