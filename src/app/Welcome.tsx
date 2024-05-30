@@ -13,18 +13,18 @@ function Welcome({
   return (
     <>
       <div
-        className={twMerge(className, "flex w-full items-center")}
+        className={twMerge(
+          className,
+          "flex w-full items-center justify-center",
+        )}
         {...props}
       >
-        <div className="box-border flex flex-col gap-4 bg-transparent pl-16 text-3xl tracking-tight">
-          <h1 className="max-w-7xl flex-1 font-heading text-9xl tracking-tighter">
-            Next Generation Schedule Builder
+        <div className="box-border flex w-full flex-col items-center gap-4 bg-transparent text-xl tracking-tight">
+          <h1 className="flex-1 font-heading text-5xl tracking-tighter">
+            Jac Schedule Builder
           </h1>
-          <p className="max-w-4xl">
-            Dream Builder is a schedule builder for John Abbott College that
-            makes your schedule planing 10x faster!
-          </p>
-          <Link href="/editor" className="mt-6 w-fit">
+          <p className="text-center">The schedule builder you deserve</p>
+          <Link href="/editor" className="w-fit">
             <Button variant="special">
               <div className="flex items-center gap-2 p-1 tracking-tight">
                 <span>Give it a try</span>
