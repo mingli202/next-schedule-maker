@@ -27,7 +27,7 @@ type Props = {
   stateType: StateType;
 };
 
-const ScheduleCard = ({
+function ScheduleCard({
   schedule,
   className,
   allClasses,
@@ -38,7 +38,7 @@ const ScheduleCard = ({
   highlight,
   customSelect,
   ...props
-}: Props & HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div">) => {
+}: Props & HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div">) {
   const [editName, setEditName] = useState(false);
 
   const nameChange = async (formdata: FormData) => {
@@ -211,6 +211,6 @@ const ScheduleCard = ({
       </div>
     </motion.div>
   );
-};
+}
 
 export default ScheduleCard;

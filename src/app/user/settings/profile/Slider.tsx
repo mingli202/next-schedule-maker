@@ -5,7 +5,7 @@ import { getAuth } from "firebase/auth";
 import { AnimatePresence, Variants, motion } from "framer-motion";
 import { cn } from "@/lib";
 
-export const Slider = () => {
+function Slider() {
   const [isVisible, setIsVisible] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -107,6 +107,6 @@ export const Slider = () => {
       </motion.div>
     </div>
   );
-};
+}
 
 export default Slider;

@@ -10,7 +10,40 @@ import ExpandClass from "./ExpandClass";
 
 type MergedClass = Class & SharedCurrentClasses;
 
-const ClassBlock = ({
+type Props = {
+  allClasses: Record<string, Class>;
+  disableRemove?: boolean;
+} & {
+  stateType: StateType;
+  scheduleClasses: SharedCurrentClasses[];
+};
+
+function GridView({
+  allClasses,
+  disableRemove,
+  scheduleClasses,
+  stateType,
+}: Props) {
+  const fullClasses: MergedClass[] = scheduleClasses.map((cl) => {
+    const toReturn: MergedClass = { ...allClasses[cl.id], ...cl };
+    return toReturn;
+  });
+
+  return (
+    <AnimatePresence>
+      {fullClasses.map((cl, index) => (
+        <ClassBlock
+          key={cl.code + cl.section + index}
+          cl={cl}
+          disableRemove={disableRemove}
+          stateType={stateType}
+        />
+      ))}
+    </AnimatePresence>
+  );
+}
+
+function ClassBlock({
   cl,
   disableRemove,
   stateType,
@@ -18,7 +51,7 @@ const ClassBlock = ({
   cl: MergedClass;
   disableRemove?: boolean;
   stateType: StateType;
-}) => {
+}) {
   const card: Variants = {
     hover: {
       opacity: 1,
@@ -104,39 +137,6 @@ const ClassBlock = ({
       </AnimatePresence>
     </Fragment>
   );
-};
-
-type Props = {
-  allClasses: Record<string, Class>;
-  disableRemove?: boolean;
-} & {
-  stateType: StateType;
-  scheduleClasses: SharedCurrentClasses[];
-};
-
-const GridView = ({
-  allClasses,
-  disableRemove,
-  scheduleClasses,
-  stateType,
-}: Props) => {
-  const fullClasses: MergedClass[] = scheduleClasses.map((cl) => {
-    const toReturn: MergedClass = { ...allClasses[cl.id], ...cl };
-    return toReturn;
-  });
-
-  return (
-    <AnimatePresence>
-      {fullClasses.map((cl, index) => (
-        <ClassBlock
-          key={cl.code + cl.section + index}
-          cl={cl}
-          disableRemove={disableRemove}
-          stateType={stateType}
-        />
-      ))}
-    </AnimatePresence>
-  );
-};
+}
 
 export default GridView;

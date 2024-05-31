@@ -15,7 +15,7 @@ import { HTMLAttributes } from "react";
 
 type Props = HTMLAttributes<HTMLDivElement>;
 
-const VerticalNavbar = ({ className, ...props }: Props) => {
+function VerticalNavbar({ className, ...props }: Props) {
   return (
     <div
       className={cn("z-10 box-border bg-bgPrimary p-1 md:p-2", className)}
@@ -89,6 +89,6 @@ const VerticalNavbar = ({ className, ...props }: Props) => {
       </div>
     </div>
   );
-};
+}
 
 export default VerticalNavbar;

@@ -14,14 +14,14 @@ type Props = {
   customSelect?: (id: string, s: Saved) => void;
 };
 
-const SavedList = ({
+function SavedList({
   savedSchedules,
   allClasses,
   noEdit,
   select,
   stateType,
   customSelect,
-}: Props) => {
+}: Props) {
   const [highlight, setHighlight] = useState<string>();
 
   return (
@@ -53,6 +53,6 @@ const SavedList = ({
       </div>
     </div>
   );
-};
+}
 
 export default SavedList;

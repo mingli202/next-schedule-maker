@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-const MenuNavBar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
+function MenuNavBar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   const searchParams = useSearchParams();
 
   return (
@@ -94,6 +94,6 @@ const MenuNavBar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
       </Link>
     </div>
   );
-};
+}
 
 export default MenuNavBar;

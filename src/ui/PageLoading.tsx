@@ -2,7 +2,7 @@
 
 import { Variants, motion } from "framer-motion";
 
-const PageLoading = () => {
+function PageLoading() {
   const children: Variants = {
     initial: {
       rotateY: 0,
@@ -43,6 +43,6 @@ const PageLoading = () => {
       <p>Loading...</p>
     </div>
   );
-};
+}
 
 export default PageLoading;

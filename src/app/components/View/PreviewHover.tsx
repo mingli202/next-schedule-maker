@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 type Props = {
   allClasses: Record<string, Class>;
 };
-const PreviewHover = ({ allClasses }: Props) => {
+function PreviewHover({ allClasses }: Props) {
   const searchParams = useSearchParams();
   if (searchParams.get("previewHover") !== "true") return;
 
@@ -38,6 +38,6 @@ const PreviewHover = ({ allClasses }: Props) => {
       })}
     </div>
   );
-};
+}
 
 export default PreviewHover;

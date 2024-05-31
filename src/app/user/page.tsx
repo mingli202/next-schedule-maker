@@ -4,7 +4,7 @@ import FollowingsPreview from "./FollowingsPreview";
 import SavedPreview from "./SavedPreview";
 import { Class } from "@/types";
 
-const Page = async () => {
+async function Page() {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
@@ -20,6 +20,6 @@ const Page = async () => {
       </div>
     </div>
   );
-};
+}
 
 export default Page;

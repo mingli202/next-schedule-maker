@@ -14,7 +14,7 @@ type Props = {
   useCurrent: boolean;
 };
 
-const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
+function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
   const ref = useRef<HTMLFormElement>(null);
   const currentClasses = useContext(ScheduleClassesContext);
   const currentCodes = currentClasses.map((cl) => allClasses[cl.id].code);
@@ -34,7 +34,7 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
     [allClasses, codes, currentCodes, useCurrent],
   );
 
-  const action = (formdata: FormData) => {
+  function action(formdata: FormData) {
     ref.current!.reset();
 
     const newInput = formdata.get("extraCode");
@@ -49,9 +49,9 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
     sessionStorage.setItem("autobuild", JSON.stringify(updatedCodes));
 
     setCodes(updatedCodes);
-  };
+  }
 
-  const openDialog = (code: string, type: string) => {
+  function openDialog(code: string, type: string) {
     const dialog = document.getElementById(
       type + "dialog" + code,
     )! as HTMLDivElement;
@@ -65,7 +65,7 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
     };
 
     body.addEventListener("click", f);
-  };
+  }
 
   return (
     <>
@@ -445,6 +445,6 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
       </form>
     </>
   );
-};
+}
 
 export default Form;

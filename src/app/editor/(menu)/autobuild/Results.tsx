@@ -12,7 +12,7 @@ type Props = {
   generatedSchedules: SharedCurrentClasses[][];
 };
 
-const Results = ({ setIsBuilding, generatedSchedules, allClasses }: Props) => {
+function Results({ setIsBuilding, generatedSchedules, allClasses }: Props) {
   useEffect(() => {
     setIsBuilding("complete");
   }, [setIsBuilding]);
@@ -28,6 +28,6 @@ const Results = ({ setIsBuilding, generatedSchedules, allClasses }: Props) => {
       )}
     </>
   );
-};
+}
 
 export default Results;

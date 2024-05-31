@@ -12,7 +12,7 @@ type Props = {
   colors: string[];
 };
 
-const Autobuild = ({ allClasses, colors }: Props) => {
+function Autobuild({ allClasses, colors }: Props) {
   const [isBuilding, setIsBuilding] = useState<
     "form" | "building" | "complete"
   >("form");
@@ -98,6 +98,6 @@ const Autobuild = ({ allClasses, colors }: Props) => {
       )}
     </div>
   );
-};
+}
 
 export default Autobuild;

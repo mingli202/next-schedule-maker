@@ -9,7 +9,7 @@ import Search from "./Search";
 import Results from "./Results";
 import { useSearchParams } from "next/navigation";
 
-const Page = () => {
+function Page() {
   const [allUsers, setallUsers] = useState<UserPublic[]>([]);
   const searchParams = useSearchParams();
 
@@ -41,6 +41,6 @@ const Page = () => {
       </div>
     </>
   );
-};
+}
 
 export default Page;

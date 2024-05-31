@@ -19,13 +19,13 @@ type Props = {
   useCurrent: boolean;
 };
 
-const Loader = ({
+function Loader({
   setGeneratedSchedules,
   codes,
   colors,
   setIsBuilding,
   useCurrent,
-}: Props) => {
+}: Props) {
   const currentClasses = useContext(ScheduleClassesContext);
 
   generate(codes, currentClasses, colors, useCurrent)
@@ -36,6 +36,6 @@ const Loader = ({
     .catch((err) => console.log(err));
 
   return <PageLoading />;
-};
+}
 
 export default Loader;

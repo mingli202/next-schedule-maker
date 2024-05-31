@@ -8,31 +8,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HTMLAttributes } from "react";
 
-const Card = ({
-  currentPath,
-  href,
-  children,
-}: {
-  currentPath: string;
-  href: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        "shrink-0 rounded-md p-1.5 transition max-md:text-sm md:p-2",
-        currentPath === href && "bg-secondary font-bold",
-      )}
-    >
-      {children}
-    </Link>
-  );
-};
-
 type Props = HTMLAttributes<HTMLDivElement>;
 
-const RightNavbar = ({ className, ...props }: Props) => {
+function RightNavbar({ className, ...props }: Props) {
   const path = usePathname();
 
   return (
@@ -65,6 +43,27 @@ const RightNavbar = ({ className, ...props }: Props) => {
       </Button>
     </div>
   );
-};
+}
 
+function Card({
+  currentPath,
+  href,
+  children,
+}: {
+  currentPath: string;
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "shrink-0 rounded-md p-1.5 transition max-md:text-sm md:p-2",
+        currentPath === href && "bg-secondary font-bold",
+      )}
+    >
+      {children}
+    </Link>
+  );
+}
 export default RightNavbar;

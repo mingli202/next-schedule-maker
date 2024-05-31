@@ -12,7 +12,7 @@ import { UserPublic } from "@/types";
 
 type Props = HTMLAttributes<HTMLDivElement>;
 
-const FollowingsPreview = ({ className, ...props }: Props) => {
+function FollowingsPreview({ className, ...props }: Props) {
   const [followings, setfollowings] = useState<string[] | null | "loading">(
     "loading",
   );
@@ -122,6 +122,6 @@ const FollowingsPreview = ({ className, ...props }: Props) => {
       ) : null}
     </div>
   );
-};
+}
 
 export default FollowingsPreview;

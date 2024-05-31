@@ -32,13 +32,13 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: Props) => {
+function Layout({ children }: Props) {
   return (
     <LoginStateObserver>
       {children}
       <VerticalNavbar className="h-fit shrink-0 max-md:relative max-md:bottom-0 max-md:w-full md:order-first md:h-full" />
     </LoginStateObserver>
   );
-};
+}
 
 export default Layout;

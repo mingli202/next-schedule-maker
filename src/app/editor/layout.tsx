@@ -33,7 +33,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Layout = async ({ children }: Props) => {
+async function Layout({ children }: Props) {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
@@ -56,6 +56,6 @@ const Layout = async ({ children }: Props) => {
       </main>
     </ScheduleContextProvider>
   );
-};
+}
 
 export default Layout;

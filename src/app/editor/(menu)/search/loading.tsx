@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const Loading = () => {
+function Loading() {
   return (
     <motion.div
       className="basis-full overflow-hidden rounded-md"
@@ -32,6 +32,6 @@ const Loading = () => {
       </div>
     </motion.div>
   );
-};
+}
 
 export default Loading;

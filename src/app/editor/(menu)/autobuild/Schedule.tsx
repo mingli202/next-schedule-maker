@@ -12,7 +12,7 @@ type Props = {
   allClasses: Record<string, Class>;
 };
 
-const Schedule = ({ schedule, allClasses }: Props) => {
+function Schedule({ schedule, allClasses }: Props) {
   const dispatch = useContext(ScheduleDispatchContext);
 
   return (
@@ -84,6 +84,6 @@ const Schedule = ({ schedule, allClasses }: Props) => {
       </div>
     </div>
   );
-};
+}
 
 export default Schedule;

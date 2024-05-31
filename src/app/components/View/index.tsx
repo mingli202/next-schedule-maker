@@ -5,34 +5,6 @@ import PreviewHover from "./PreviewHover";
 import { Class, SharedCurrentClasses, StateType } from "@/types";
 import { cn } from "@/lib";
 
-const Hours = () => {
-  const initalMinutes = 8 * 60;
-
-  const hours = Array(21)
-    .fill(0)
-    .map((_, index) => {
-      const totalMinutes = index * 30 + initalMinutes;
-
-      const hour = Math.floor(totalMinutes / 60);
-      const minute = totalMinutes % 60;
-
-      return `${hour}:${minute === 0 ? "00" : minute}`;
-    });
-
-  return (
-    <>
-      {hours.map((h) => (
-        <div
-          key={h}
-          className="flex translate-y-1/2 items-center text-[0.5rem] opacity-60 md:text-xs"
-        >
-          {h}
-        </div>
-      ))}
-    </>
-  );
-};
-
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   disableRemove?: boolean;
   allClasses: Record<string, Class>;
@@ -40,13 +12,13 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   scheduleClasses: SharedCurrentClasses[];
 };
 
-const View = ({
+function View({
   className,
   disableRemove,
   allClasses,
   stateType,
   scheduleClasses,
-}: Props) => {
+}: Props) {
   return (
     <div
       className={cn(
@@ -113,6 +85,34 @@ const View = ({
       </div>
     </div>
   );
-};
+}
+
+function Hours() {
+  const initalMinutes = 8 * 60;
+
+  const hours = Array(21)
+    .fill(0)
+    .map((_, index) => {
+      const totalMinutes = index * 30 + initalMinutes;
+
+      const hour = Math.floor(totalMinutes / 60);
+      const minute = totalMinutes % 60;
+
+      return `${hour}:${minute === 0 ? "00" : minute}`;
+    });
+
+  return (
+    <>
+      {hours.map((h) => (
+        <div
+          key={h}
+          className="flex translate-y-1/2 items-center text-[0.5rem] opacity-60 md:text-xs"
+        >
+          {h}
+        </div>
+      ))}
+    </>
+  );
+}
 
 export default View;

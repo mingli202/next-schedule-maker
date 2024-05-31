@@ -3,7 +3,7 @@ import { Class, SharedCurrentClasses } from "@/types";
 import ExcelJS from "exceljs";
 import FileSaver from "file-saver";
 
-const download = async (currentSchedule: SharedCurrentClasses[]) => {
+async function download(currentSchedule: SharedCurrentClasses[]) {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
   const workbook = new ExcelJS.Workbook();
@@ -129,6 +129,6 @@ const download = async (currentSchedule: SharedCurrentClasses[]) => {
     console.log(err);
     alert("Failed to download. Try again.");
   }
-};
+}
 
 export default download;

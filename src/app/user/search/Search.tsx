@@ -9,12 +9,12 @@ import { HTMLAttributes, useEffect, useRef, useState } from "react";
 
 type Props = HTMLAttributes<HTMLDivElement>;
 
-const Search = ({ className, ...props }: Props) => {
+function Search({ className, ...props }: Props) {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null!);
   const [inputQuery, setInputQuery] = useState("");
 
-  const action = (formdata: FormData) => {
+  function action(formdata: FormData) {
     const search = formdata.get("q")?.toString();
 
     const url = new URL(window.location.href);
@@ -26,7 +26,7 @@ const Search = ({ className, ...props }: Props) => {
     }
 
     router.push("/user/search?" + url.searchParams);
-  };
+  }
 
   useEffect(() => {
     const id = setTimeout(() => formRef.current.requestSubmit(), 300);
@@ -57,6 +57,6 @@ const Search = ({ className, ...props }: Props) => {
       </form>
     </div>
   );
-};
+}
 
 export default Search;

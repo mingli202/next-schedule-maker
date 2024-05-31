@@ -9,14 +9,14 @@ import { Class, SharedCurrentClasses, UserPublic } from "@/types";
 import { Button } from "@/ui";
 import { getAuth } from "firebase/auth";
 import { onValue, ref, update } from "firebase/database";
-import { HTMLAttributes, useEffect, useState } from "react";
+import { HTMLAttributes, useCallback, useEffect, useState } from "react";
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   allClasses: Record<string, Class>;
   uid: string;
 };
 
-const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
+function UserCard({ className, allClasses, uid, ...props }: Props) {
   const [followings, setfollowings] = useState<string[] | null>(null);
   const [allUsers, setallUsers] = useState<
     Record<string, UserPublic> | null | undefined
@@ -59,7 +59,7 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
     };
   }, [uid]);
 
-  const unfollow = async () => {
+  const unfollow = useCallback(async () => {
     const user = getAuth(app).currentUser;
 
     if (!user || !followings) return;
@@ -69,7 +69,7 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
     await update(ref(db, `/users/${user.uid}`), {
       followings: toUpdate,
     }).catch(() => console.log("Error updating data"));
-  };
+  }, [followings]);
 
   return (
     <div
@@ -168,6 +168,6 @@ const UserCard = ({ className, allClasses, uid, ...props }: Props) => {
       ) : null}
     </div>
   );
-};
+}
 
 export default UserCard;

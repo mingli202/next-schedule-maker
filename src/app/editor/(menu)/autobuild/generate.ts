@@ -2,12 +2,12 @@ import { Class, Code, SharedCurrentClasses } from "@/types";
 import isValid from "../search/checkValid";
 import { getLocalJsonData } from "@/lib";
 
-const generate = async (
+async function generate(
   codes: Code[],
   currentClasses: SharedCurrentClasses[],
   colors: string[],
   useCurrent: boolean,
-) => {
+) {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
@@ -112,6 +112,6 @@ const generate = async (
     (s) =>
       s.length === codes.length + currentClasses.length * (useCurrent ? 1 : 0),
   );
-};
+}
 
 export default generate;

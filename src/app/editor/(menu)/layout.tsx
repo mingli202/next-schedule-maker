@@ -4,7 +4,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const MenuLayout = ({ children }: Props) => {
+function MenuLayout({ children }: Props) {
   return (
     <div className="flex h-full flex-col gap-2 overflow-hidden rounded-md md:min-w-[20rem]">
       <MenuNavBar className="shrink-0" />
@@ -13,6 +13,6 @@ const MenuLayout = ({ children }: Props) => {
       </div>
     </div>
   );
-};
+}
 
 export default MenuLayout;

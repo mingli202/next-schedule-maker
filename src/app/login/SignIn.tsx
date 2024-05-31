@@ -19,15 +19,15 @@ type Props = {
   setWindow: Dispatch<SetStateAction<"signin" | "signup">>;
 };
 
-const SignIn = ({
+function SignIn({
   className,
   setWindow,
   ...props
-}: HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div"> & Props) => {
+}: HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div"> & Props) {
   const [error, setError] = useState("");
   const [type, setType] = useState<"password" | "text">("password");
 
-  const action = async (formData: FormData) => {
+  async function action(formData: FormData) {
     const email = formData.get("signinEmail");
     const password = formData.get("signinPassword");
 
@@ -40,7 +40,7 @@ const SignIn = ({
       email.toString(),
       password.toString(),
     ).catch(() => setError("Invalid Email or Password"));
-  };
+  }
 
   return (
     <motion.div
@@ -169,6 +169,6 @@ const SignIn = ({
       </div>
     </motion.div>
   );
-};
+}
 
 export default SignIn;

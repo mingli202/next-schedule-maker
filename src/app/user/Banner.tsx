@@ -7,7 +7,7 @@ import { getAuth, signOut } from "firebase/auth";
 
 import { HTMLAttributes } from "react";
 
-const Banner = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
+function Banner({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   const user = getAuth(app).currentUser;
 
   return (
@@ -31,6 +31,6 @@ const Banner = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
       </Button>
     </div>
   );
-};
+}
 
 export default Banner;

@@ -1,6 +1,6 @@
 import { Navbar, Welcome, AboutUs, Features, Contact } from ".";
 
-const LandingPage = () => {
+function LandingPage() {
   return (
     <main className="flex w-screen flex-col overflow-x-hidden font-body text-text">
       <Navbar className="fixed w-full" />
@@ -10,6 +10,6 @@ const LandingPage = () => {
       <Contact id="contact" className="pt-20" />
     </main>
   );
-};
+}
 
 export default LandingPage;

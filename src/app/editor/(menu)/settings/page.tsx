@@ -1,7 +1,7 @@
 import BottomMenu from "./BottomMenu";
 import Card from "./Card";
 
-const Settings = () => {
+function Settings() {
   return (
     <div className="relative flex h-full w-full flex-col gap-2 rounded-md">
       <h1 className="shrink-0 font-heading text-xl md:text-2xl">Options</h1>
@@ -24,6 +24,6 @@ const Settings = () => {
       <BottomMenu />
     </div>
   );
-};
+}
 
 export default Settings;

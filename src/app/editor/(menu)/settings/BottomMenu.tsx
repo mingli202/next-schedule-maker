@@ -15,7 +15,7 @@ import download from "./download";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "@/backend";
 
-const BottomMenu = () => {
+function BottomMenu() {
   const currentClasses = useContext(ScheduleClassesContext);
 
   const [path, setPath] = useState("/");
@@ -108,6 +108,6 @@ const BottomMenu = () => {
       </div>
     </div>
   );
-};
+}
 
 export default BottomMenu;

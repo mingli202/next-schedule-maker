@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-const MenuPage = () => {
+function MenuPage() {
   redirect("/editor/search");
-};
+}
 
 export default MenuPage;

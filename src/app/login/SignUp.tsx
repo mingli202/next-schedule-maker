@@ -16,14 +16,14 @@ type Props = {
   setWindow: React.Dispatch<React.SetStateAction<"signin" | "signup">>;
 };
 
-const SignUp = ({
+function SignUp({
   className,
   setWindow,
   ...props
-}: HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div"> & Props) => {
+}: HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div"> & Props) {
   const [error, setError] = useState("");
 
-  const action = async (formdata: FormData) => {
+  async function action(formdata: FormData) {
     const auth = getAuth(app);
 
     const email = formdata.get("signupEmail");
@@ -41,7 +41,7 @@ const SignUp = ({
       email.toString(),
       password.toString(),
     ).catch(() => setError("An error occured. Try again."));
-  };
+  }
 
   return (
     <motion.div
@@ -163,6 +163,6 @@ const SignUp = ({
       </div>
     </motion.div>
   );
-};
+}
 
 export default SignUp;

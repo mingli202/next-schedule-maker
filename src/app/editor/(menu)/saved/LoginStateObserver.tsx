@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import LoggedOut from "./LoggedOut";
 import { Button } from "@/ui";
 
-const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
+function LoginStateObserver({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   const [loginState, setLoginState] = useState<
@@ -72,6 +72,6 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
       {loginState === "signedin" && children}
     </div>
   );
-};
+}
 
 export default LoginStateObserver;
