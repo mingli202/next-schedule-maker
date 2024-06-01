@@ -6,6 +6,9 @@ import { faChevronRight, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment, useContext } from "react";
 import { ScheduleDispatchContext } from "../../ScheduleContext";
+import { app, db } from "@/backend";
+import { push, ref, set } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 type Props = {
   schedule: SharedCurrentClasses[];
@@ -78,7 +81,21 @@ function Schedule({ schedule, allClasses }: Props) {
         <Button
           variant="basic"
           className="w-fit"
-          onClick={() => dispatch({ type: "set", schedule })}
+          onClick={async function () {
+            const user = getAuth(app).currentUser;
+
+            if (!user) return;
+
+            const newSchedule = {
+              data: schedule,
+              name: `Untitled`,
+            } as const;
+
+            await set(
+              push(ref(db, `/users/${user.uid}/schedules`)),
+              newSchedule,
+            ).catch((err) => console.log(err));
+          }}
         >
           <FontAwesomeIcon icon={faDownload} className="h-4" />
         </Button>
