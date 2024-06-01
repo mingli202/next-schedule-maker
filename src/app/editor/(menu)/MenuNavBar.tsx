@@ -3,8 +3,8 @@
 import { cn } from "@/lib";
 import { Button } from "@/ui";
 import {
-  faDownload,
   faFilter,
+  faFolder,
   faGear,
   faSearch,
   faStar,
@@ -75,7 +75,7 @@ function MenuNavBar({ className }: React.HTMLAttributes<HTMLDivElement>) {
           className="flex w-full justify-center rounded-md p-1"
           targetPath="/editor/saved"
         >
-          <FontAwesomeIcon icon={faDownload} className="h-4" />
+          <FontAwesomeIcon icon={faFolder} className="h-4" />
         </Button>
       </Link>
 

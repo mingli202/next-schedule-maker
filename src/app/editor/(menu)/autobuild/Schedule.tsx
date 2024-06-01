@@ -2,7 +2,7 @@
 
 import { Class, SharedCurrentClasses } from "@/types";
 import { Button } from "@/ui";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment, useContext } from "react";
 import { ScheduleDispatchContext } from "../../ScheduleContext";
@@ -46,6 +46,7 @@ function Schedule({ schedule, allClasses }: Props) {
           );
         })}
       </div>
+
       <div>
         {schedule.map(({ bgColor, id, textColor }, i) => {
           const { section, code, lecture } = allClasses[id];
@@ -74,6 +75,14 @@ function Schedule({ schedule, allClasses }: Props) {
         })}
       </div>
       <div className="col-span-full flex items-center justify-end">
+        <Button
+          variant="basic"
+          className="w-fit"
+          onClick={() => dispatch({ type: "set", schedule })}
+        >
+          <FontAwesomeIcon icon={faDownload} className="h-4" />
+        </Button>
+
         <Button
           variant="basic"
           className="w-fit"

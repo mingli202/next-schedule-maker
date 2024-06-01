@@ -3,7 +3,7 @@
 import { cn } from "@/lib";
 import { Button } from "@/ui";
 import {
-  faDownload,
+  faFolder,
   faGear,
   faHammer,
   faHome,
@@ -52,7 +52,7 @@ function VerticalNavbar({ className, ...props }: Props) {
             targetPath="/user/saved"
           >
             <FontAwesomeIcon
-              icon={faDownload}
+              icon={faFolder}
               className="h-6 w-6 md:h-8 md:w-8"
             />
           </Button>
