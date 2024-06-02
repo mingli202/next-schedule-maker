@@ -68,7 +68,7 @@ function Autobuild({ allClasses, colors }: Props) {
                         setDayOff([...dayOff, day]);
                       }
                     }}
-                    defaultChecked={dayOff.includes(day)}
+                    checked={dayOff.includes(day)}
                   />
                   <p>{day}</p>
                 </label>
@@ -149,14 +149,13 @@ function Autobuild({ allClasses, colors }: Props) {
       )}
       {isBuilding === "complete" && (
         <>
-          <div className="flex h-full w-full flex-col gap-2 overflow-y-auto overflow-x-hidden rounded-md">
-            <Results
-              setIsBuilding={setIsBuilding}
-              generatedSchedules={generatedSchedules}
-              allClasses={allClasses}
-            />
-          </div>
-          <div className="z-10 flex w-full items-center justify-center bg-bgPrimary">
+          <Results
+            setIsBuilding={setIsBuilding}
+            generatedSchedules={generatedSchedules}
+            allClasses={allClasses}
+          />
+
+          <div className="z-10 flex w-full items-center justify-center bg-bgPrimary max-md:order-first">
             <Button
               variant="special"
               className="w-fit"
