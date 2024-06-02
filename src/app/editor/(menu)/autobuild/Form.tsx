@@ -10,7 +10,7 @@ import { ScheduleClassesContext } from "../../ScheduleContext";
 type Props = {
   allClasses: Record<string, Class>;
   codes: Code[];
-  setCodes: React.Dispatch<React.SetStateAction<Code[]>>;
+  setCodes: (u: Code[]) => void;
   useCurrent: boolean;
 };
 

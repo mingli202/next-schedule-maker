@@ -1,7 +1,7 @@
 "use client";
 
 import { Class, Code, SharedCurrentClasses } from "@/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Form from "./Form";
 import { Button } from "@/ui";
 import Loader from "./Loader";
