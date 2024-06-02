@@ -46,8 +46,6 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
 
     const updatedCodes = [...codes, { code: newInput.toString() }];
 
-    sessionStorage.setItem("autobuild", JSON.stringify(updatedCodes));
-
     setCodes(updatedCodes);
   }
 
@@ -89,10 +87,6 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
                 variant="basic"
                 onClick={() => {
                   const updatedCodes = codes.filter((c) => c !== code);
-                  sessionStorage.setItem(
-                    "autobuild",
-                    JSON.stringify(updatedCodes),
-                  );
                   setCodes(updatedCodes);
                 }}
                 className="w-fit p-0"
@@ -136,10 +130,6 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
                                   : [p],
                               }
                             : c,
-                        );
-                        sessionStorage.setItem(
-                          "autobuild",
-                          JSON.stringify(updatedCodes),
                         );
                         setCodes(updatedCodes);
                       }}
@@ -194,10 +184,6 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
                             }
                           : c,
                       );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
-                      );
                       setCodes(updatedCodes);
                     }}
                   />
@@ -227,10 +213,6 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
                               },
                             }
                           : c,
-                      );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
                       );
                       setCodes(updatedCodes);
                     }}
@@ -283,10 +265,6 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
                             }
                           : c,
                       );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
-                      );
                       setCodes(updatedCodes);
                     }}
                   />
@@ -316,10 +294,6 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
                               },
                             }
                           : c,
-                      );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
                       );
                       setCodes(updatedCodes);
                     }}
@@ -372,10 +346,6 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
                             }
                           : c,
                       );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
-                      );
                       setCodes(updatedCodes);
                     }}
                   />
@@ -405,10 +375,6 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
                               },
                             }
                           : c,
-                      );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
                       );
                       setCodes(updatedCodes);
                     }}

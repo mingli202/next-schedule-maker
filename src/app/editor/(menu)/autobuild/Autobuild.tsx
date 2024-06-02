@@ -6,6 +6,7 @@ import Form from "./Form";
 import { Button } from "@/ui";
 import Loader from "./Loader";
 import Results from "./Results";
+import useSessionStorage from "./useSessionStorage";
 
 type Props = {
   allClasses: Record<string, Class>;
@@ -17,13 +18,9 @@ function Autobuild({ allClasses, colors }: Props) {
     "form" | "building" | "complete"
   >("form");
 
-  const [codes, setCodes] = useState<Code[]>([]);
-  const [useCurrent, setUseCurrent] = useState(false);
-  const [dayOff, setDayOff] = useState<string[]>([]);
-
-  useEffect(() => {
-    setCodes(JSON.parse(sessionStorage.getItem("autobuild") ?? "[]"));
-  }, []);
+  const [codes, setCodes] = useSessionStorage<Code[]>([], "codes");
+  const [useCurrent, setUseCurrent] = useSessionStorage(false, "useCurrent");
+  const [dayOff, setDayOff] = useSessionStorage<string[]>([], "dayOff");
 
   const [generatedSchedules, setGeneratedSchedules] = useState<
     SharedCurrentClasses[][]
