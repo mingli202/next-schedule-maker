@@ -78,6 +78,8 @@ function Schedule({ schedule, allClasses }: Props) {
         })}
       </div>
       <div className="col-span-full flex items-center justify-end">
+        {/* TODO: remove this button */}
+        <Button onClick={() => console.log({ schedule })}>d</Button>
         <Button
           variant="basic"
           className="w-fit"

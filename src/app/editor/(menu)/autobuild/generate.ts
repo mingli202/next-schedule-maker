@@ -8,6 +8,7 @@ async function generate(
   colors: string[],
   useCurrent: boolean,
   dayOff: string[],
+  time: [string, string],
 ) {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
@@ -34,14 +35,14 @@ async function generate(
         }
       }
 
-      if (code.timeRange) {
+      if (time[0] !== "00:00" || time[1] !== "23:59") {
         const tArr = [
           ...Object.entries(cl.lecture),
           ...Object.entries(cl.lab),
         ].filter(([key]) => !["prof", "title", "rating"].includes(key));
 
-        const start = code.timeRange.from?.replace(":", "") ?? "0";
-        const end = code.timeRange.to?.replace(":", "") ?? "2400";
+        const start = time[0].replace(":", "") ?? "0";
+        const end = time[1].replace(":", "") ?? "2400";
 
         const rightTime = tArr.every(([, t]) => {
           const [tStart, tEnd] = t

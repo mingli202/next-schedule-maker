@@ -18,6 +18,7 @@ type Props = {
   >;
   useCurrent: boolean;
   dayOff: string[];
+  time: [string, string];
 };
 
 function Loader({
@@ -27,10 +28,11 @@ function Loader({
   setIsBuilding,
   useCurrent,
   dayOff,
+  time,
 }: Props) {
   const currentClasses = useContext(ScheduleClassesContext);
 
-  generate(codes, currentClasses, colors, useCurrent, dayOff)
+  generate(codes, currentClasses, colors, useCurrent, dayOff, time)
     .then((res) => {
       setGeneratedSchedules(res);
       setIsBuilding("complete");

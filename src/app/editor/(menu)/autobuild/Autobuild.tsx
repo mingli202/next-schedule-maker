@@ -21,6 +21,10 @@ function Autobuild({ allClasses, colors }: Props) {
   const [codes, setCodes] = useSessionStorage<Code[]>([], "codes");
   const [useCurrent, setUseCurrent] = useSessionStorage(false, "useCurrent");
   const [dayOff, setDayOff] = useSessionStorage<string[]>([], "dayOff");
+  const [time, setTime] = useSessionStorage<[string, string]>(
+    ["00:00", "23:59"],
+    "time",
+  );
 
   const [generatedSchedules, setGeneratedSchedules] = useState<
     SharedCurrentClasses[][]
@@ -64,11 +68,52 @@ function Autobuild({ allClasses, colors }: Props) {
                         setDayOff([...dayOff, day]);
                       }
                     }}
-                    checked={dayOff.includes(day)}
+                    defaultChecked={dayOff.includes(day)}
                   />
                   <p>{day}</p>
                 </label>
               ))}
+            </div>
+
+            <div className="flex flex-wrap gap-1 [&_*]:outline-none">
+              <p>Time range: </p>
+              <label className="flex gap-1" htmlFor="from">
+                <input
+                  type="time"
+                  defaultValue={time[0]}
+                  min="08:00"
+                  max="18:00"
+                  step={`${60 * 30}`}
+                  placeholder="18:00"
+                  autoComplete="off"
+                  onChange={(e) => {
+                    setTime([e.target.value, time[1]]);
+                  }}
+                  className="rounded-md text-black"
+                  id="from"
+                  name="from"
+                />
+              </label>
+
+              <p>to</p>
+
+              <label className="flex gap-1" htmlFor="to">
+                <input
+                  type="time"
+                  defaultValue={time[1]}
+                  min="08:00"
+                  max="18:00"
+                  step={`${60 * 30}`}
+                  placeholder="18:00"
+                  autoComplete="off"
+                  onChange={(e) => {
+                    setTime([time[0], e.target.value]);
+                  }}
+                  className="rounded-md text-black"
+                  id="to"
+                  name="to"
+                />
+              </label>
             </div>
 
             <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2">
@@ -99,6 +144,7 @@ function Autobuild({ allClasses, colors }: Props) {
           setIsBuilding={setIsBuilding}
           useCurrent={useCurrent}
           dayOff={dayOff}
+          time={time}
         />
       )}
       {isBuilding === "complete" && (
