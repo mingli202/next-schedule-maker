@@ -7,6 +7,7 @@ async function generate(
   currentClasses: SharedCurrentClasses[],
   colors: string[],
   useCurrent: boolean,
+  dayOff: string[],
 ) {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
@@ -21,6 +22,16 @@ async function generate(
     const classesForCode = classes.filter(([, cl]) => {
       if (cl.code !== code.code) {
         return false;
+      }
+
+      if (dayOff.length > 0) {
+        const tArr = [...Object.keys(cl.lecture), ...Object.keys(cl.lab)]
+          .filter((key) => !["prof", "title", "rating"].includes(key))
+          .join("");
+
+        if (dayOff.some((d) => tArr.includes(d))) {
+          return false;
+        }
       }
 
       if (code.timeRange) {

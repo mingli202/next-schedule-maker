@@ -162,14 +162,11 @@ function filterByDay(arr: ReturnType, day: string) {
   if (day === "") return [];
 
   return arr.filter(([, cl]) => {
-    const lectureTime = Object.keys(cl.lecture).filter(
-      (t) => !["prof", "rating", "title"].includes(t),
-    );
-    const labTime = Object.keys(cl.lab).filter(
-      (t) => !["prof", "rating", "title"].includes(t),
-    );
-    const days = lectureTime.join("") + labTime.join("");
-    return !day.split("").some((d) => days.includes(d));
+    const tArr = [...Object.keys(cl.lecture), ...Object.keys(cl.lab)]
+      .filter((key) => !["prof", "title", "rating"].includes(key))
+      .join("");
+
+    return !day.split("").some((d) => tArr.includes(d));
   });
 }
 

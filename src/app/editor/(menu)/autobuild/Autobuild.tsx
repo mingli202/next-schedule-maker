@@ -19,6 +19,7 @@ function Autobuild({ allClasses, colors }: Props) {
 
   const [codes, setCodes] = useState<Code[]>([]);
   const [useCurrent, setUseCurrent] = useState(false);
+  const [dayOff, setDayOff] = useState<string[]>([]);
 
   useEffect(() => {
     setCodes(JSON.parse(sessionStorage.getItem("autobuild") ?? "[]"));
@@ -47,6 +48,32 @@ function Autobuild({ allClasses, colors }: Props) {
               <p>Use the current schedule as baseline</p>
             </label>
 
+            <div className="flex gap-3">
+              <p>Days off:</p>
+              {["M", "T", "W", "R", "F"].map((day) => (
+                <label
+                  htmlFor={day}
+                  className="flex items-center gap-2"
+                  key={day}
+                >
+                  <input
+                    type="checkbox"
+                    id={day}
+                    name={day}
+                    onChange={() => {
+                      if (dayOff.includes(day)) {
+                        setDayOff(dayOff.filter((d) => d !== day));
+                      } else {
+                        setDayOff([...dayOff, day]);
+                      }
+                    }}
+                    checked={dayOff.includes(day)}
+                  />
+                  <p>{day}</p>
+                </label>
+              ))}
+            </div>
+
             <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2">
               <Form
                 allClasses={allClasses}
@@ -74,6 +101,7 @@ function Autobuild({ allClasses, colors }: Props) {
           codes={codes}
           setIsBuilding={setIsBuilding}
           useCurrent={useCurrent}
+          dayOff={dayOff}
         />
       )}
       {isBuilding === "complete" && (

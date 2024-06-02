@@ -17,6 +17,7 @@ type Props = {
     React.SetStateAction<"form" | "building" | "complete">
   >;
   useCurrent: boolean;
+  dayOff: string[];
 };
 
 function Loader({
@@ -25,10 +26,11 @@ function Loader({
   colors,
   setIsBuilding,
   useCurrent,
+  dayOff,
 }: Props) {
   const currentClasses = useContext(ScheduleClassesContext);
 
-  generate(codes, currentClasses, colors, useCurrent)
+  generate(codes, currentClasses, colors, useCurrent, dayOff)
     .then((res) => {
       setGeneratedSchedules(res);
       setIsBuilding("complete");
