@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 function ScrollIndicator() {
   return (
-    <div className="absolute bottom-2 flex w-full flex-col items-center justify-center opacity-80">
+    <div className="absolute bottom-2 z-20 flex w-full flex-col items-center justify-center opacity-80">
       <svg
         className="h-7 w-12"
         viewBox="0 0 100 100"
