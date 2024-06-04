@@ -19,12 +19,12 @@ type Props = {
   allClasses: Record<string, Class>;
 };
 
-const SavedSchedules = ({ allClasses }: Props) => {
+function SavedSchedules({ allClasses }: Props) {
   const [savedSchedules, setSavedSchedules] = useState<Record<string, Saved>>();
   const currentClasses = useContext(ScheduleClassesContext);
   const dispatch = useContext(ScheduleDispatchContext);
 
-  const handleClick = async () => {
+  async function handleClick() {
     const user = getAuth(app).currentUser;
 
     if (!user) return;
@@ -32,13 +32,12 @@ const SavedSchedules = ({ allClasses }: Props) => {
     const newSchedule = {
       data: currentClasses,
       name: `Untitled`,
-      semester: "fall 2024",
     } as const;
 
     await set(push(ref(db, `/users/${user.uid}/schedules`)), newSchedule).catch(
       (err) => console.log(err),
     );
-  };
+  }
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -133,6 +132,6 @@ const SavedSchedules = ({ allClasses }: Props) => {
       </div>
     </div>
   );
-};
+}
 
 export default SavedSchedules;

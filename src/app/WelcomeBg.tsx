@@ -1,7 +1,12 @@
-function Bg() {
-  // schedule making animation
-  // classes that floats around
-  return <div className="absolute -z-10 h-full w-full"></div>;
+import { getLocalJsonData } from "@/lib";
+import { Class } from "@/types";
+import BgAnimation from "./BgAnimation";
+
+async function Bg() {
+  const allClasses: Record<string, Class> =
+    await getLocalJsonData("allClasses");
+
+  return <BgAnimation allClasses={allClasses} />;
 }
 
 export default Bg;

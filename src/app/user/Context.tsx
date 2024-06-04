@@ -12,7 +12,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const ContextProvider = ({ children }: Props) => {
+function ContextProvider({ children }: Props) {
   const [currentClasses, setCurrentClasses] = useState<SharedCurrentClasses[]>(
     [],
   );
@@ -24,6 +24,6 @@ const ContextProvider = ({ children }: Props) => {
       </SetScheduleContext.Provider>
     </ScheduleClassesContext.Provider>
   );
-};
+}
 
 export default ContextProvider;

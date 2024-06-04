@@ -8,7 +8,7 @@ import { ScheduleClassesContext, SetScheduleContext } from "../Context";
 type Props = {
   allClasses: Record<string, Class>;
 };
-const ViewWrapper = ({ allClasses }: Props) => {
+function ViewWrapper({ allClasses }: Props) {
   const setCurrentClasses = useContext(SetScheduleContext);
   const currentClasses = useContext(ScheduleClassesContext);
 
@@ -23,6 +23,6 @@ const ViewWrapper = ({ allClasses }: Props) => {
       disableRemove
     />
   );
-};
+}
 
 export default ViewWrapper;

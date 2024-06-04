@@ -16,86 +16,7 @@ import Image from "next/image";
 import Slider from "./Slider";
 import { cn } from "@/lib";
 
-const Input = ({
-  k,
-  value,
-  display,
-  action,
-}: {
-  k: string;
-  value: string;
-  display: string;
-  action: (formdata: FormData) => void;
-}) => {
-  const [editName, setEditName] = useState(false);
-
-  return (
-    <div
-      className={cn(
-        "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-2 md:items-center",
-        ...["w-full", "flex-col", "items-start", "gap-2"].map(
-          (c) => "max-md:" + c,
-        ),
-      )}
-    >
-      <p
-        className={cn(
-          "w-[min(30%,15rem)] shrink-0 overflow-x-auto text-primary md:p-2",
-          ...["w-full"].map((c) => "max-md:" + c),
-        )}
-      >
-        {display}
-      </p>
-      {editName ? (
-        <form
-          className="box-border flex items-center overflow-hidden rounded-md bg-bgPrimary max-md:w-full"
-          action={(f: FormData) => {
-            setEditName(false);
-            action(f);
-          }}
-        >
-          <input
-            className="bg-bgPrimary p-2 outline-none max-md:basis-full md:w-fit"
-            autoFocus
-            defaultValue={value}
-            name={k}
-          />
-          <Button variant="basic" type="submit" className="shrink-0">
-            <FontAwesomeIcon icon={faCheckCircle} className="h-4 w-4" />
-          </Button>
-
-          <Button
-            variant="basic"
-            type="button"
-            onClick={() => setEditName(false)}
-            className="shrink-0"
-          >
-            <FontAwesomeIcon icon={faXmarkCircle} className="h-4 w-4" />
-          </Button>
-        </form>
-      ) : (
-        <div className="flex w-full gap-2 md:p-2">
-          <p className={cn("overflow-x-auto")} title="edit">
-            {value}
-          </p>
-
-          <Button
-            title="delete"
-            variant="basic"
-            className="shrink-0 p-0"
-            onClick={() => {
-              setEditName(true);
-            }}
-          >
-            <FontAwesomeIcon icon={faEdit} className="h-4 w-4" />
-          </Button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const Page = () => {
+function Page() {
   const [user, setuser] = useState<UserPublic | null>(null);
 
   useEffect(() => {
@@ -259,6 +180,85 @@ const Page = () => {
       )}
     </div>
   );
-};
+}
+
+function Input({
+  k,
+  value,
+  display,
+  action,
+}: {
+  k: string;
+  value: string;
+  display: string;
+  action: (formdata: FormData) => void;
+}) {
+  const [editName, setEditName] = useState(false);
+
+  return (
+    <div
+      className={cn(
+        "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-2 md:items-center",
+        ...["w-full", "flex-col", "items-start", "gap-2"].map(
+          (c) => "max-md:" + c,
+        ),
+      )}
+    >
+      <p
+        className={cn(
+          "w-[min(30%,15rem)] shrink-0 overflow-x-auto text-primary md:p-2",
+          ...["w-full"].map((c) => "max-md:" + c),
+        )}
+      >
+        {display}
+      </p>
+      {editName ? (
+        <form
+          className="box-border flex items-center overflow-hidden rounded-md bg-bgPrimary max-md:w-full"
+          action={(f: FormData) => {
+            setEditName(false);
+            action(f);
+          }}
+        >
+          <input
+            className="bg-bgPrimary p-2 outline-none max-md:basis-full md:w-fit"
+            autoFocus
+            defaultValue={value}
+            name={k}
+          />
+          <Button variant="basic" type="submit" className="shrink-0">
+            <FontAwesomeIcon icon={faCheckCircle} className="h-4 w-4" />
+          </Button>
+
+          <Button
+            variant="basic"
+            type="button"
+            onClick={() => setEditName(false)}
+            className="shrink-0"
+          >
+            <FontAwesomeIcon icon={faXmarkCircle} className="h-4 w-4" />
+          </Button>
+        </form>
+      ) : (
+        <div className="flex w-full gap-2 md:p-2">
+          <p className={cn("overflow-x-auto")} title="edit">
+            {value}
+          </p>
+
+          <Button
+            title="delete"
+            variant="basic"
+            className="shrink-0 p-0"
+            onClick={() => {
+              setEditName(true);
+            }}
+          >
+            <FontAwesomeIcon icon={faEdit} className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default Page;

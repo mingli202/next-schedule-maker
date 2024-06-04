@@ -9,7 +9,7 @@ import { cn } from "@/lib";
 
 type MergedClass = Class & SharedCurrentClasses;
 
-const ExpandClass = ({
+function ExpandClass({
   cl,
   setExpand,
   stateType,
@@ -19,7 +19,7 @@ const ExpandClass = ({
   setExpand: React.Dispatch<React.SetStateAction<boolean>>;
   stateType: StateType;
   disableRemove?: boolean;
-}) => {
+}) {
   const expandVariants: Variants = {
     initial: {
       opacity: 0,
@@ -246,6 +246,6 @@ const ExpandClass = ({
       </motion.div>
     </motion.div>
   );
-};
+}
 
 export default ExpandClass;

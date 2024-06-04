@@ -5,7 +5,7 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { AnimatePresence, Variants } from "framer-motion";
 
-const Login = () => {
+function Login() {
   const [window, setWindow] = useState<"signin" | "signup">("signin");
 
   const variants: Variants = {
@@ -51,6 +51,6 @@ const Login = () => {
       </AnimatePresence>
     </div>
   );
-};
+}
 
 export default Login;

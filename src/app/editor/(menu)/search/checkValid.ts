@@ -1,10 +1,10 @@
 import { Class, SharedCurrentClasses } from "@/types";
 
-const isValid = (
+function isValid(
   classToCheck: Class,
   scheduleToCompare: SharedCurrentClasses[],
   allClasses: Record<string, Class>,
-) => {
+) {
   if (scheduleToCompare.length === 0) return true;
 
   const classToCheckTimes = [
@@ -47,6 +47,6 @@ const isValid = (
   }
 
   return true;
-};
+}
 
 export default isValid;

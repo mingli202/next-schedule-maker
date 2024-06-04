@@ -32,8 +32,8 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: Props) => {
+function Layout({ children }: Props) {
   return <LoginStateObserver>{children}</LoginStateObserver>;
-};
+}
 
 export default Layout;

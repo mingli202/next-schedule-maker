@@ -14,7 +14,7 @@ type Props = {
   colors: string[];
 };
 
-const SearchedClasses = ({ allClasses, professors, colors }: Props) => {
+function SearchedClasses({ allClasses, professors, colors }: Props) {
   const searchParams = useSearchParams();
   const search = new Map(searchParams.entries());
 
@@ -119,6 +119,6 @@ const SearchedClasses = ({ allClasses, professors, colors }: Props) => {
       )}
     </div>
   );
-};
+}
 
 export default SearchedClasses;

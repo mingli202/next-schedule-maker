@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const DragIndicator = () => {
+function DragIndicator() {
   const [vw, setVW] = useState(0);
   const [menu, setMenu] = useState<HTMLElement | null>(null);
   const [view, setView] = useState<HTMLElement | null>(null);
@@ -31,6 +31,6 @@ const DragIndicator = () => {
       <div className="h-10 w-1/2 rounded-full bg-slate" />
     </motion.div>
   );
-};
+}
 
 export default DragIndicator;

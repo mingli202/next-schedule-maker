@@ -12,7 +12,7 @@ type Props = {
   allClasses: Record<string, Class>;
 };
 
-const ViewWrapper = ({ allClasses }: Props) => {
+function ViewWrapper({ allClasses }: Props) {
   const dispatch = useContext(ScheduleDispatchContext);
   const scheduleClasses = useContext(ScheduleClassesContext);
 
@@ -26,6 +26,6 @@ const ViewWrapper = ({ allClasses }: Props) => {
       scheduleClasses={scheduleClasses}
     />
   );
-};
+}
 
 export default ViewWrapper;

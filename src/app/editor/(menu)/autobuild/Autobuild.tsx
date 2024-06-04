@@ -1,28 +1,30 @@
 "use client";
 
 import { Class, Code, SharedCurrentClasses } from "@/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Form from "./Form";
 import { Button } from "@/ui";
 import Loader from "./Loader";
 import Results from "./Results";
+import useSessionStorage from "./useSessionStorage";
 
 type Props = {
   allClasses: Record<string, Class>;
   colors: string[];
 };
 
-const Autobuild = ({ allClasses, colors }: Props) => {
+function Autobuild({ allClasses, colors }: Props) {
   const [isBuilding, setIsBuilding] = useState<
     "form" | "building" | "complete"
   >("form");
 
-  const [codes, setCodes] = useState<Code[]>([]);
-  const [useCurrent, setUseCurrent] = useState(false);
-
-  useEffect(() => {
-    setCodes(JSON.parse(sessionStorage.getItem("autobuild") ?? "[]"));
-  }, []);
+  const [codes, setCodes] = useSessionStorage<Code[]>([], "codes");
+  const [useCurrent, setUseCurrent] = useSessionStorage(false, "useCurrent");
+  const [dayOff, setDayOff] = useSessionStorage<string[]>([], "dayOff");
+  const [time, setTime] = useSessionStorage<[string, string]>(
+    ["00:00", "23:59"],
+    "time",
+  );
 
   const [generatedSchedules, setGeneratedSchedules] = useState<
     SharedCurrentClasses[][]
@@ -46,6 +48,73 @@ const Autobuild = ({ allClasses, colors }: Props) => {
               />
               <p>Use the current schedule as baseline</p>
             </label>
+
+            <div className="flex gap-3">
+              <p>Days off:</p>
+              {["M", "T", "W", "R", "F"].map((day) => (
+                <label
+                  htmlFor={day}
+                  className="flex items-center gap-2"
+                  key={day}
+                >
+                  <input
+                    type="checkbox"
+                    id={day}
+                    name={day}
+                    onChange={() => {
+                      if (dayOff.includes(day)) {
+                        setDayOff(dayOff.filter((d) => d !== day));
+                      } else {
+                        setDayOff([...dayOff, day]);
+                      }
+                    }}
+                    checked={dayOff.includes(day)}
+                  />
+                  <p>{day}</p>
+                </label>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-1 [&_*]:outline-none">
+              <p>Time range: </p>
+              <label className="flex gap-1" htmlFor="from">
+                <input
+                  type="time"
+                  defaultValue={time[0]}
+                  min="08:00"
+                  max="18:00"
+                  step={`${60 * 30}`}
+                  placeholder="18:00"
+                  autoComplete="off"
+                  onChange={(e) => {
+                    setTime([e.target.value, time[1]]);
+                  }}
+                  className="rounded-md text-black"
+                  id="from"
+                  name="from"
+                />
+              </label>
+
+              <p>to</p>
+
+              <label className="flex gap-1" htmlFor="to">
+                <input
+                  type="time"
+                  defaultValue={time[1]}
+                  min="08:00"
+                  max="18:00"
+                  step={`${60 * 30}`}
+                  placeholder="18:00"
+                  autoComplete="off"
+                  onChange={(e) => {
+                    setTime([time[0], e.target.value]);
+                  }}
+                  className="rounded-md text-black"
+                  id="to"
+                  name="to"
+                />
+              </label>
+            </div>
 
             <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2">
               <Form
@@ -74,18 +143,19 @@ const Autobuild = ({ allClasses, colors }: Props) => {
           codes={codes}
           setIsBuilding={setIsBuilding}
           useCurrent={useCurrent}
+          dayOff={dayOff}
+          time={time}
         />
       )}
       {isBuilding === "complete" && (
         <>
-          <div className="flex h-full w-full flex-col gap-2 overflow-y-auto overflow-x-hidden rounded-md">
-            <Results
-              setIsBuilding={setIsBuilding}
-              generatedSchedules={generatedSchedules}
-              allClasses={allClasses}
-            />
-          </div>
-          <div className="z-10 flex w-full items-center justify-center bg-bgPrimary">
+          <Results
+            setIsBuilding={setIsBuilding}
+            generatedSchedules={generatedSchedules}
+            allClasses={allClasses}
+          />
+
+          <div className="z-10 flex w-full items-center justify-center bg-bgPrimary max-md:order-first">
             <Button
               variant="special"
               className="w-fit"
@@ -98,6 +168,6 @@ const Autobuild = ({ allClasses, colors }: Props) => {
       )}
     </div>
   );
-};
+}
 
 export default Autobuild;

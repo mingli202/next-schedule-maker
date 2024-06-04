@@ -10,11 +10,11 @@ import { ScheduleClassesContext } from "../../ScheduleContext";
 type Props = {
   allClasses: Record<string, Class>;
   codes: Code[];
-  setCodes: React.Dispatch<React.SetStateAction<Code[]>>;
+  setCodes: (u: Code[]) => void;
   useCurrent: boolean;
 };
 
-const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
+function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
   const ref = useRef<HTMLFormElement>(null);
   const currentClasses = useContext(ScheduleClassesContext);
   const currentCodes = currentClasses.map((cl) => allClasses[cl.id].code);
@@ -34,7 +34,7 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
     [allClasses, codes, currentCodes, useCurrent],
   );
 
-  const action = (formdata: FormData) => {
+  function action(formdata: FormData) {
     ref.current!.reset();
 
     const newInput = formdata.get("extraCode");
@@ -46,12 +46,10 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
 
     const updatedCodes = [...codes, { code: newInput.toString() }];
 
-    sessionStorage.setItem("autobuild", JSON.stringify(updatedCodes));
-
     setCodes(updatedCodes);
-  };
+  }
 
-  const openDialog = (code: string, type: string) => {
+  function openDialog(code: string, type: string) {
     const dialog = document.getElementById(
       type + "dialog" + code,
     )! as HTMLDivElement;
@@ -65,7 +63,7 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
     };
 
     body.addEventListener("click", f);
-  };
+  }
 
   return (
     <>
@@ -89,10 +87,6 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
                 variant="basic"
                 onClick={() => {
                   const updatedCodes = codes.filter((c) => c !== code);
-                  sessionStorage.setItem(
-                    "autobuild",
-                    JSON.stringify(updatedCodes),
-                  );
                   setCodes(updatedCodes);
                 }}
                 className="w-fit p-0"
@@ -137,105 +131,12 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
                               }
                             : c,
                         );
-                        sessionStorage.setItem(
-                          "autobuild",
-                          JSON.stringify(updatedCodes),
-                        );
                         setCodes(updatedCodes);
                       }}
                     />
                     {p}
                   </label>
                 ))}
-              </form>
-            </div>
-
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                openDialog(code.code, "time");
-              }}
-            >
-              <p className="cursor-pointer hover:underline">
-                time range:{" "}
-                {code.timeRange
-                  ? `${code.timeRange.from ?? "00:00"} - ${
-                      code.timeRange.to ?? "23:59"
-                    }`
-                  : "any (click to edit)"}
-              </p>
-
-              <form
-                id={"timedialog" + code.code}
-                className="absolute z-10 hidden flex-col gap-2 rounded-md bg-primary p-2 text-black no-underline shadow shadow-black"
-              >
-                <label className="flex gap-1">
-                  from
-                  <input
-                    type="time"
-                    defaultValue={code.timeRange?.from}
-                    min="08:00"
-                    max="18:00"
-                    step={`${60 * 30}`}
-                    placeholder="18:00"
-                    autoComplete="off"
-                    onChange={(e) => {
-                      const updatedCodes = codes.map((c) =>
-                        c.code === code.code
-                          ? {
-                              ...c,
-                              timeRange: {
-                                ...c.timeRange,
-                                from:
-                                  e.target.value === ""
-                                    ? undefined
-                                    : e.target.value.slice(0, 5),
-                              },
-                            }
-                          : c,
-                      );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
-                      );
-                      setCodes(updatedCodes);
-                    }}
-                  />
-                </label>
-
-                <label className="flex gap-1">
-                  to
-                  <input
-                    type="time"
-                    defaultValue={code.timeRange?.to}
-                    min="08:00"
-                    max="18:00"
-                    step={`${60 * 30}`}
-                    placeholder="18:00"
-                    autoComplete="off"
-                    onChange={(e) => {
-                      const updatedCodes = codes.map((c) =>
-                        c.code === code.code
-                          ? {
-                              ...c,
-                              timeRange: {
-                                ...c.timeRange,
-                                to:
-                                  e.target.value === ""
-                                    ? undefined
-                                    : e.target.value.slice(0, 5),
-                              },
-                            }
-                          : c,
-                      );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
-                      );
-                      setCodes(updatedCodes);
-                    }}
-                  />
-                </label>
               </form>
             </div>
 
@@ -283,10 +184,6 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
                             }
                           : c,
                       );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
-                      );
                       setCodes(updatedCodes);
                     }}
                   />
@@ -316,10 +213,6 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
                               },
                             }
                           : c,
-                      );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
                       );
                       setCodes(updatedCodes);
                     }}
@@ -372,10 +265,6 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
                             }
                           : c,
                       );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
-                      );
                       setCodes(updatedCodes);
                     }}
                   />
@@ -405,10 +294,6 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
                               },
                             }
                           : c,
-                      );
-                      sessionStorage.setItem(
-                        "autobuild",
-                        JSON.stringify(updatedCodes),
                       );
                       setCodes(updatedCodes);
                     }}
@@ -445,6 +330,6 @@ const Form = ({ allClasses, codes, setCodes, useCurrent }: Props) => {
       </form>
     </>
   );
-};
+}
 
 export default Form;

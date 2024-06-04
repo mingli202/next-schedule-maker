@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ContextProvider from "./Context";
 
-const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
+function LoginStateObserver({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   const [loginState, setLoginState] = useState<
@@ -86,6 +86,6 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
       )}
     </main>
   );
-};
+}
 
 export default LoginStateObserver;

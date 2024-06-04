@@ -19,7 +19,7 @@ type Props = {
   setShowDelete: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const DeleteModal = ({ setShowDelete }: Props) => {
+function DeleteModal({ setShowDelete }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   const expandVariants: Variants = {
@@ -40,7 +40,7 @@ const DeleteModal = ({ setShowDelete }: Props) => {
     },
   };
 
-  const action = async (formData: FormData) => {
+  async function action(formData: FormData) {
     const email = formData.get("email");
     const password = formData.get("password");
 
@@ -64,7 +64,7 @@ const DeleteModal = ({ setShowDelete }: Props) => {
     }
 
     await handleDeleteData(user);
-  };
+  }
 
   const handleGoogleDelete = async () => {
     const user = getAuth(app).currentUser;
@@ -182,6 +182,6 @@ const DeleteModal = ({ setShowDelete }: Props) => {
       </motion.div>
     </motion.div>
   );
-};
+}
 
 export default DeleteModal;

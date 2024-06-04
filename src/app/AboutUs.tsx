@@ -7,10 +7,10 @@ type GoalsTextType = {
   desc: string;
 };
 
-const AboutUs = async ({
+async function AboutUs({
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => {
+}: React.HTMLAttributes<HTMLDivElement>) {
   const data: GoalsTextType[] = await getLocalJsonData("goalsText");
 
   return (
@@ -51,6 +51,6 @@ const AboutUs = async ({
       </div>
     </div>
   );
-};
+}
 
 export default AboutUs;

@@ -2,12 +2,14 @@ import { Class, Code, SharedCurrentClasses } from "@/types";
 import isValid from "../search/checkValid";
 import { getLocalJsonData } from "@/lib";
 
-const generate = async (
+async function generate(
   codes: Code[],
   currentClasses: SharedCurrentClasses[],
   colors: string[],
   useCurrent: boolean,
-) => {
+  dayOff: string[],
+  time: [string, string],
+) {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
@@ -23,14 +25,24 @@ const generate = async (
         return false;
       }
 
-      if (code.timeRange) {
+      if (dayOff.length > 0) {
+        const tArr = [...Object.keys(cl.lecture), ...Object.keys(cl.lab)]
+          .filter((key) => !["prof", "title", "rating"].includes(key))
+          .join("");
+
+        if (dayOff.some((d) => tArr.includes(d))) {
+          return false;
+        }
+      }
+
+      if (time[0] !== "00:00" || time[1] !== "23:59") {
         const tArr = [
           ...Object.entries(cl.lecture),
           ...Object.entries(cl.lab),
         ].filter(([key]) => !["prof", "title", "rating"].includes(key));
 
-        const start = code.timeRange.from?.replace(":", "") ?? "0";
-        const end = code.timeRange.to?.replace(":", "") ?? "2400";
+        const start = time[0].replace(":", "") ?? "0";
+        const end = time[1].replace(":", "") ?? "2400";
 
         const rightTime = tArr.every(([, t]) => {
           const [tStart, tEnd] = t
@@ -112,6 +124,6 @@ const generate = async (
     (s) =>
       s.length === codes.length + currentClasses.length * (useCurrent ? 1 : 0),
   );
-};
+}
 
 export default generate;

@@ -1,7 +1,7 @@
 import { PageLoading } from "@/ui";
 
-const Loading = () => {
+function Loading() {
   return <PageLoading />;
-};
+}
 
 export default Loading;

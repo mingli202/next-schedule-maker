@@ -5,7 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
+function LoginStateObserver({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   const [loginState, setLoginState] = useState<
@@ -36,6 +36,6 @@ const LoginStateObserver = ({ children }: { children: React.ReactNode }) => {
       {loginState === "signedout" && children}
     </main>
   );
-};
+}
 
 export default LoginStateObserver;

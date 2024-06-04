@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const Loading = () => {
+function Loading() {
   return (
     <motion.div
       className="relative flex h-full w-full flex-col gap-2 overflow-hidden rounded-md p-2"
@@ -24,6 +24,6 @@ const Loading = () => {
       ))}
     </motion.div>
   );
-};
+}
 
 export default Loading;

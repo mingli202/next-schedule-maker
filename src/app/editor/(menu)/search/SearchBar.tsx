@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-const SearchBar = () => {
+function SearchBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -10,13 +10,13 @@ const SearchBar = () => {
 
   const isLiveSearch = searchParams.get("liveSearch");
 
-  const search = (formData: FormData) => {
+  function search(formData: FormData) {
     const searchInput = formData.get("search")!.toString();
 
     const url = new URL(window.location.href);
     url.searchParams.set("q", searchInput);
     router.push(`/editor/search?${url.searchParams}`);
-  };
+  }
 
   return (
     <form action={search} autoComplete="off">
@@ -41,6 +41,6 @@ const SearchBar = () => {
       />
     </form>
   );
-};
+}
 
 export default SearchBar;

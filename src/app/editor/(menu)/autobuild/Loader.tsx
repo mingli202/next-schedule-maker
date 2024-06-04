@@ -17,18 +17,22 @@ type Props = {
     React.SetStateAction<"form" | "building" | "complete">
   >;
   useCurrent: boolean;
+  dayOff: string[];
+  time: [string, string];
 };
 
-const Loader = ({
+function Loader({
   setGeneratedSchedules,
   codes,
   colors,
   setIsBuilding,
   useCurrent,
-}: Props) => {
+  dayOff,
+  time,
+}: Props) {
   const currentClasses = useContext(ScheduleClassesContext);
 
-  generate(codes, currentClasses, colors, useCurrent)
+  generate(codes, currentClasses, colors, useCurrent, dayOff, time)
     .then((res) => {
       setGeneratedSchedules(res);
       setIsBuilding("complete");
@@ -36,6 +40,6 @@ const Loader = ({
     .catch((err) => console.log(err));
 
   return <PageLoading />;
-};
+}
 
 export default Loader;

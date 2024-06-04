@@ -8,11 +8,11 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { app } from "@/backend";
 import { useRouter } from "next/navigation";
 
-const ForgotPage = () => {
+function ForgotPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const action = async (formdata: FormData) => {
+  async function action(formdata: FormData) {
     const email = formdata.get("email");
     if (!email) return;
 
@@ -26,7 +26,7 @@ const ForgotPage = () => {
 
     alert("Email sent!");
     router.push("/login");
-  };
+  }
 
   return (
     <main className="flex h-screen w-screen flex-col items-center justify-center gap-4">
@@ -59,6 +59,6 @@ const ForgotPage = () => {
       </Link>
     </main>
   );
-};
+}
 
 export default ForgotPage;

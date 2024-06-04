@@ -27,7 +27,7 @@ type Props = {
   stateType: StateType;
 };
 
-const ScheduleCard = ({
+function ScheduleCard({
   schedule,
   className,
   allClasses,
@@ -38,10 +38,12 @@ const ScheduleCard = ({
   highlight,
   customSelect,
   ...props
-}: Props & HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div">) => {
+}: Props & HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div">) {
   const [editName, setEditName] = useState(false);
 
-  const nameChange = async (formdata: FormData) => {
+  async function nameChange(formdata: FormData) {
+    setEditName(false);
+
     const user = getAuth(app).currentUser;
     if (!user) return;
 
@@ -52,18 +54,17 @@ const ScheduleCard = ({
     await update(dbRef, {
       [schId]: { ...schedule, name },
     }).catch((err) => console.log(err));
-    setEditName(false);
-  };
+  }
 
-  const deleteSchedule = async () => {
+  async function deleteSchedule() {
     const user = getAuth(app).currentUser;
     if (!user) return;
 
     const dbref = ref(db, `/users/${user.uid}/schedules/${schId}`);
     await remove(dbref);
-  };
+  }
 
-  const select = () => {
+  function select() {
     if (stateType === "none") return;
 
     if (!schedule.data) {
@@ -87,7 +88,7 @@ const ScheduleCard = ({
     } catch {
       alert("Only Winter 2024 Classes are allowed.");
     }
-  };
+  }
 
   return (
     <motion.div
@@ -98,6 +99,9 @@ const ScheduleCard = ({
         },
         className,
       )}
+      onClick={(e) => {
+        e.nativeEvent.stopImmediatePropagation();
+      }}
       {...props}
     >
       <div
@@ -182,6 +186,15 @@ const ScheduleCard = ({
               className={cn(!noEdit && "cursor-pointer", "line-clamp-1")}
               onClick={() => {
                 if (noEdit) return;
+
+                document.getRootNode().addEventListener(
+                  "click",
+                  () => {
+                    setEditName(false);
+                  },
+                  { once: true },
+                );
+
                 setEditName(true);
               }}
               title="edit"
@@ -211,6 +224,6 @@ const ScheduleCard = ({
       </div>
     </motion.div>
   );
-};
+}
 
 export default ScheduleCard;

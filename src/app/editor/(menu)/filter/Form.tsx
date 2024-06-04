@@ -9,7 +9,7 @@ type Props = {
   allClasses: Record<string, Class>;
 };
 
-const Form = ({ allClasses }: Props) => {
+function Form({ allClasses }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -51,7 +51,7 @@ const Form = ({ allClasses }: Props) => {
     [title, titleDatalist],
   );
 
-  const action = (formData: FormData) => {
+  function action(formData: FormData) {
     const url = new URL(window.location.href);
 
     const days = formData.getAll("day");
@@ -95,7 +95,7 @@ const Form = ({ allClasses }: Props) => {
     }
 
     router.push(`/editor/search?${url.searchParams}`);
-  };
+  }
 
   return (
     <form
@@ -464,6 +464,6 @@ const Form = ({ allClasses }: Props) => {
       </div>
     </form>
   );
-};
+}
 
 export default Form;

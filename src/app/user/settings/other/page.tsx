@@ -6,7 +6,7 @@ import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import DeleteModal from "./DeleteModal";
 
-const Page = () => {
+function Page() {
   const [showDelete, setShowDelete] = useState(false);
 
   return (
@@ -56,6 +56,6 @@ const Page = () => {
       </AnimatePresence>
     </>
   );
-};
+}
 
 export default Page;

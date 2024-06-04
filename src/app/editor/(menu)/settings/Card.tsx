@@ -9,7 +9,7 @@ type CardProps = {
   desc: string;
   param: string;
 };
-const Card = ({ title, desc, param }: CardProps) => {
+function Card({ title, desc, param }: CardProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -43,6 +43,6 @@ const Card = ({ title, desc, param }: CardProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default Card;

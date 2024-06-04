@@ -2,7 +2,7 @@ import { cn, getLocalJsonData } from "@/lib";
 import PublicSchedules from "./PublicSchedules";
 import { Class } from "@/types";
 
-const Page = async () => {
+async function Page() {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
@@ -20,6 +20,6 @@ const Page = async () => {
       <PublicSchedules allClasses={allClasses} className="w-full basis-full" />
     </div>
   );
-};
+}
 
 export default Page;

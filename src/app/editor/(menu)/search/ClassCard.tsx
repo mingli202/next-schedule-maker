@@ -24,30 +24,30 @@ type Props = {
   currentClasses: SharedCurrentClasses[];
 };
 
-const ClassCard = ({ id, cl, allClasses, colors, currentClasses }: Props) => {
+function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
   const searchParams = useSearchParams();
 
   const router = useRouter();
 
   const dispatch = useContext(ScheduleDispatchContext);
 
-  const handleHoverEnter = () => {
+  function handleHoverEnter() {
     if (searchParams.get("previewHover") !== "true") return;
 
     const url = new URL(window.location.href);
     url.searchParams.set("hoverId", id);
 
     router.push(`/editor/search?${url.searchParams}`);
-  };
+  }
 
-  const handleHoverEnd = () => {
+  function handleHoverEnd() {
     if (searchParams.get("previewHover") !== "true") return;
 
     const url = new URL(window.location.href);
     url.searchParams.delete("hoverId");
 
     router.push(`/editor/search?${url.searchParams}`);
-  };
+  }
 
   return (
     <motion.div
@@ -261,6 +261,6 @@ const ClassCard = ({ id, cl, allClasses, colors, currentClasses }: Props) => {
       </div>
     </motion.div>
   );
-};
+}
 
 export default ClassCard;

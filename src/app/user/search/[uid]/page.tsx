@@ -8,11 +8,11 @@ type Props = {
   };
 };
 
-const Page = async ({ params }: Props) => {
+async function Page({ params }: Props) {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
   return <UserCard allClasses={allClasses} uid={params.uid} />;
-};
+}
 
 export default Page;

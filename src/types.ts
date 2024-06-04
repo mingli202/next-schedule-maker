@@ -89,7 +89,6 @@ export type Saved = {
 export type Code = {
   code: string;
   professors?: string[];
-  timeRange?: { from?: string; to?: string };
   ratingRange?: { from?: number; to?: number };
   scoreRange?: { from?: number; to?: number };
 };

@@ -17,7 +17,7 @@ type Props = {
   allClasses: Record<string, Class>;
 } & HTMLAttributes<HTMLDivElement>;
 
-const SavedPreview = ({ className, allClasses, ...props }: Props) => {
+function SavedPreview({ className, allClasses, ...props }: Props) {
   const [schedules, setSchedules] = useState<
     Record<string, Saved> | null | "loading"
   >("loading");
@@ -76,6 +76,6 @@ const SavedPreview = ({ className, allClasses, ...props }: Props) => {
       ) : null}
     </div>
   );
-};
+}
 
 export default SavedPreview;

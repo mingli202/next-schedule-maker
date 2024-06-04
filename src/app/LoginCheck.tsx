@@ -5,7 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ref, update } from "firebase/database";
 import { useEffect } from "react";
 
-const LoginCheck = () => {
+function LoginCheck() {
   useEffect(() => {
     const unsub = onAuthStateChanged(getAuth(app), async (user) => {
       if (!user) return;
@@ -23,6 +23,6 @@ const LoginCheck = () => {
   }, []);
 
   return null;
-};
+}
 
 export default LoginCheck;

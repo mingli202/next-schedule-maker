@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
-const LoggedOut = () => {
+function LoggedOut() {
   return (
     <div className="flex h-full w-full items-center justify-center">
       <div className="flex h-full w-full flex-col items-center justify-center gap-2">
@@ -23,6 +23,6 @@ const LoggedOut = () => {
       </div>
     </div>
   );
-};
+}
 
 export default LoggedOut;

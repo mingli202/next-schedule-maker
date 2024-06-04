@@ -7,14 +7,14 @@ import { getAuth } from "firebase/auth";
 import { onValue, ref, update } from "firebase/database";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { HTMLAttributes, useEffect, useState } from "react";
+import { HTMLAttributes, useCallback, useEffect, useState } from "react";
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   allUsers: UserPublic[];
   q: string;
 };
 
-const Results = ({ allUsers, q }: Props) => {
+function Results({ allUsers, q }: Props) {
   const [followings, setfollowings] = useState<string[] | null>(null);
   const [results, setResults] = useState<UserPublic[]>([]);
 
@@ -49,29 +49,35 @@ const Results = ({ allUsers, q }: Props) => {
     };
   }, []);
 
-  const unfollow = async (followingUid: string) => {
-    const user = getAuth(app).currentUser;
-    if (!user || !followings) return;
+  const unfollow = useCallback(
+    async (followingUid: string) => {
+      const user = getAuth(app).currentUser;
+      if (!user || !followings) return;
 
-    const toUpdate = followings.filter((f) => f !== followingUid);
+      const toUpdate = followings.filter((f) => f !== followingUid);
 
-    await update(ref(db, `/users/${user.uid}`), {
-      followings: toUpdate,
-    });
-  };
+      await update(ref(db, `/users/${user.uid}`), {
+        followings: toUpdate,
+      });
+    },
+    [followings],
+  );
 
-  const follow = async (followingUid: string) => {
-    const user = getAuth(app).currentUser;
-    if (!user) return;
+  const follow = useCallback(
+    async (followingUid: string) => {
+      const user = getAuth(app).currentUser;
+      if (!user) return;
 
-    const updatedFollowings = followings
-      ? [...followings, followingUid]
-      : [followingUid];
+      const updatedFollowings = followings
+        ? [...followings, followingUid]
+        : [followingUid];
 
-    await update(ref(db, `/users/${user.uid}`), {
-      followings: updatedFollowings,
-    }).catch(() => alert("Failed to follow user"));
-  };
+      await update(ref(db, `/users/${user.uid}`), {
+        followings: updatedFollowings,
+      }).catch(() => alert("Failed to follow user"));
+    },
+    [followings],
+  );
 
   return (
     <div
@@ -134,6 +140,6 @@ const Results = ({ allUsers, q }: Props) => {
       <div className="col-span-full h-0 bg-transparent opacity-0" />
     </div>
   );
-};
+}
 
 export default Results;

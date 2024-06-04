@@ -29,7 +29,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: Props) => {
+function Layout({ children }: Props) {
   return (
     <div className="flex basis-full overflow-hidden p-2 max-md:flex-col md:h-full md:justify-center">
       <div className="flex h-full w-full gap-2 max-md:flex-col md:w-[min(80%,70rem)]">
@@ -40,6 +40,6 @@ const Layout = ({ children }: Props) => {
       </div>
     </div>
   );
-};
+}
 
 export default Layout;

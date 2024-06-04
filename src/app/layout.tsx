@@ -28,11 +28,11 @@ export const metadata: Metadata = {
   ],
 };
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
-        className={`${fraunces.variable} ${poppins.variable} overflow-x-hidden bg-bgPrimary font-body text-text antialiased`}
+        className={`${fraunces.variable} ${poppins.variable} overflow-x-hidden bg-bgPrimary font-body text-sm text-text antialiased md:text-base`}
       >
         {children}
         <SpeedInsights />
@@ -41,6 +41,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </body>
     </html>
   );
-};
+}
 
 export default RootLayout;

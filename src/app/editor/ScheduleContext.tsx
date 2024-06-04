@@ -12,10 +12,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const reducer = (
-  currentClasses: SharedCurrentClasses[],
-  action: ActionType,
-) => {
+function reducer(currentClasses: SharedCurrentClasses[], action: ActionType) {
   let updated;
   switch (action.type) {
     case "add": {
@@ -33,11 +30,11 @@ const reducer = (
   }
   localStorage.setItem("currentSchedule", JSON.stringify(updated));
   return updated;
-};
+}
 
 const initalValue: SharedCurrentClasses[] = [];
 
-const ScheduleContextProvider = ({ children }: Props) => {
+function ScheduleContextProvider({ children }: Props) {
   const [currentClasses, dispatch] = useReducer(reducer, initalValue);
   const key = "currentSchedule";
 
@@ -58,6 +55,6 @@ const ScheduleContextProvider = ({ children }: Props) => {
       </ScheduleDispatchContext.Provider>
     </ScheduleClassesContext.Provider>
   );
-};
+}
 
 export default ScheduleContextProvider;

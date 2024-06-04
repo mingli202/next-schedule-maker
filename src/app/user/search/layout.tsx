@@ -29,12 +29,12 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: Props) => {
+function Layout({ children }: Props) {
   return (
     <div className="relative flex h-full basis-full flex-col gap-4 overflow-hidden p-2">
       {children}
     </div>
   );
-};
+}
 
 export default Layout;

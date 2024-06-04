@@ -17,7 +17,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   allClasses: Record<string, Class>;
 };
 
-const RightNavbar = ({ className, allClasses, ...props }: Props) => {
+function RightNavbar({ className, allClasses, ...props }: Props) {
   const [schedules, setschedules] = useState<
     Record<string, Saved> | "loading" | undefined
   >("loading");
@@ -62,6 +62,6 @@ const RightNavbar = ({ className, allClasses, ...props }: Props) => {
         ))}
     </div>
   );
-};
+}
 
 export default RightNavbar;

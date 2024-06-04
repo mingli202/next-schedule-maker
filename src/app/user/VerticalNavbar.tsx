@@ -3,7 +3,7 @@
 import { cn } from "@/lib";
 import { Button } from "@/ui";
 import {
-  faDownload,
+  faFolder,
   faGear,
   faHammer,
   faHome,
@@ -15,7 +15,7 @@ import { HTMLAttributes } from "react";
 
 type Props = HTMLAttributes<HTMLDivElement>;
 
-const VerticalNavbar = ({ className, ...props }: Props) => {
+function VerticalNavbar({ className, ...props }: Props) {
   return (
     <div
       className={cn("z-10 box-border bg-bgPrimary p-1 md:p-2", className)}
@@ -52,7 +52,7 @@ const VerticalNavbar = ({ className, ...props }: Props) => {
             targetPath="/user/saved"
           >
             <FontAwesomeIcon
-              icon={faDownload}
+              icon={faFolder}
               className="h-6 w-6 md:h-8 md:w-8"
             />
           </Button>
@@ -89,6 +89,6 @@ const VerticalNavbar = ({ className, ...props }: Props) => {
       </div>
     </div>
   );
-};
+}
 
 export default VerticalNavbar;

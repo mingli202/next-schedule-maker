@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar";
 import SearchedClasses from "./SearchedClasses";
 import { Class } from "@/types";
 
-const Search = async () => {
+async function Search() {
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
@@ -21,6 +21,6 @@ const Search = async () => {
       />
     </>
   );
-};
+}
 
 export default Search;
