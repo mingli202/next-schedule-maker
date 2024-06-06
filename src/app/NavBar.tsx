@@ -34,7 +34,7 @@ function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
     <div
       className={twMerge(
         className,
-        "z-20 box-border flex flex-col gap-4 bg-bgPrimary bg-opacity-50 p-4 backdrop-blur-lg backdrop-filter",
+        "z-50 box-border flex flex-col gap-4 bg-bgPrimary bg-opacity-50 p-4 backdrop-blur-lg backdrop-filter",
       )}
     >
       <div className="flex items-center justify-between">

@@ -106,8 +106,6 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
       <div className="col-span-full flex items-center justify-between">
         <span className="ml-1">{index + 1}</span>
         <div className="flex">
-          {/* TODO: remove this button */}
-          <Button onClick={() => console.log(schedule)}>d</Button>
           <Button
             variant="basic"
             className="w-fit"
