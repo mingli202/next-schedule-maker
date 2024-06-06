@@ -83,7 +83,7 @@ function ClassBlock({
 
         return (
           <motion.div
-            key={cl.code + d + cl.section + `${Math.random()}`}
+            key={cl.code + d + cl.section + index}
             className={cn(
               "relative z-10 box-border overflow-hidden rounded-md border-[3px]",
               "border-solid border-black/20 p-1",
@@ -95,12 +95,10 @@ function ClassBlock({
               color: cl.textColor,
               backgroundColor: cl.bgColor,
             }}
-            initial={disableTime ? false : { opacity: 0, scale: 0.9 }}
-            animate={disableTime ? false : { opacity: 1, scale: 1 }}
+            initial={disableTime ? undefined : { opacity: 0, scale: 0.9 }}
+            animate={disableTime ? undefined : { opacity: 1, scale: 1 }}
             exit={disableTime ? undefined : { opacity: 0, scale: 0.9 }}
-            transition={
-              disableTime ? { delay: 0, duration: 0 } : { delay: index * 0.05 }
-            }
+            transition={disableTime ? undefined : { delay: index * 0.05 }}
             variants={disableTime ? undefined : card}
             whileHover="hover"
           >

@@ -40,7 +40,7 @@ function ExpandClass({
 
   return (
     <motion.div
-      className="absolute left-0 top-0 z-30 flex h-full w-full items-center justify-center rounded-md bg-white/30 backdrop-blur-md backdrop-filter max-md:text-xs"
+      className="absolute left-0 top-0 z-30 flex h-full w-full items-center justify-center rounded-md bg-white/30 text-xs backdrop-blur-md backdrop-filter md:text-base"
       initial="initial"
       animate="animate"
       exit="initial"
