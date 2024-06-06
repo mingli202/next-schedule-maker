@@ -23,7 +23,7 @@ async function Welcome({
       )}
       {...props}
     >
-      <div className="z-[-1] box-border flex w-full flex-col items-center gap-4 bg-transparent text-xl tracking-tight">
+      <div className="box-border flex w-full flex-col items-center gap-4 bg-transparent text-xl tracking-tight">
         <h1 className="flex-1 text-center font-heading text-5xl tracking-tighter drop-shadow-[#000_0_0_20px]">
           Jac Schedule Builder
         </h1>

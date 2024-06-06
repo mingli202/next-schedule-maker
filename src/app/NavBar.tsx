@@ -47,18 +47,6 @@ function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
 
         {windowWidth && windowWidth >= 768 ? (
           <div className="flex gap-6">
-            <Link href="#about">
-              <Button variant="basic">About</Button>
-            </Link>
-
-            <Link href="#features">
-              <Button variant="basic">Features</Button>
-            </Link>
-
-            <Link href="#contact">
-              <Button variant="basic">Contact</Button>
-            </Link>
-
             <Link href={path}>
               <Button variant="special">Login</Button>
             </Link>
