@@ -22,7 +22,7 @@ function Results({ setIsBuilding, generatedSchedules, allClasses }: Props) {
 
   return (
     <div
-      className="relative flex h-full w-full flex-col gap-2 overflow-y-auto overflow-x-hidden rounded-md"
+      className="relative flex h-[80dvh] w-full flex-col gap-2 overflow-y-auto overflow-x-hidden rounded-md md:h-full"
       onScroll={(e) => setScroll(e.currentTarget.scrollTop)}
     >
       {generatedSchedules.length === 0 ? (
