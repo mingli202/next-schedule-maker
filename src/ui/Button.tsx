@@ -1,7 +1,7 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { ButtonHTMLAttributes, useCallback, useRef } from "react";
+import { ButtonHTMLAttributes, useRef } from "react";
 import { HTMLMotionProps, motion, useAnimate } from "framer-motion";
 import { usePathname } from "next/navigation";
 
@@ -42,42 +42,39 @@ function Button({
   const ref = useRef<HTMLButtonElement>(null!);
   const [scope, animate] = useAnimate();
 
-  const expandingCircle = useCallback(
-    async (
-      e: React.PointerEvent<HTMLButtonElement>,
-      buttonVariant: "basic" | "special",
-      out?: boolean,
-    ) => {
-      if (variant !== buttonVariant) return;
+  const expandingCircle = async (
+    e: React.PointerEvent<HTMLButtonElement>,
+    buttonVariant: "basic" | "special",
+    out?: boolean,
+  ) => {
+    if (variant !== buttonVariant) return;
 
-      const styles = {
-        basic: {
-          opacity: [0.3, 0],
-          scale: [0, 3],
-        },
-        special: {
-          scale: out ? [3, 0] : [0, 3],
-        },
-        path: {},
-      };
+    const styles = {
+      basic: {
+        opacity: [0.3, 0],
+        scale: [0, 3],
+      },
+      special: {
+        scale: out ? [3, 0] : [0, 3],
+      },
+      path: {},
+    };
 
-      const bounds = ref.current.getBoundingClientRect();
+    const bounds = ref.current.getBoundingClientRect();
 
-      const offset = bounds.width / 2;
-      const x = e.clientX - bounds.x - offset;
-      const y = e.clientY - bounds.y - offset;
+    const offset = bounds.width / 2;
+    const x = e.clientX - bounds.x - offset;
+    const y = e.clientY - bounds.y - offset;
 
-      await animate(
-        scope.current,
-        { x: [x], y: [y], ...styles[buttonVariant] },
-        {
-          duration: 0.5,
-          times: [0, 1],
-        },
-      );
-    },
-    [animate, scope, variant],
-  );
+    await animate(
+      scope.current,
+      { x: [x], y: [y], ...styles[buttonVariant] },
+      {
+        duration: 0.5,
+        times: [0, 1],
+      },
+    );
+  };
 
   return (
     <motion.button

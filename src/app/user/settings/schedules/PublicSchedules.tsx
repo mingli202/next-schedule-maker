@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, HTMLAttributes, useCallback } from "react";
+import { useState, useEffect, HTMLAttributes } from "react";
 import { Class, Saved } from "@/types";
 import { getAuth } from "firebase/auth";
 import { onValue, push, ref, remove, set } from "firebase/database";
@@ -19,19 +19,19 @@ function PublicSchedules({ allClasses, className, ...props }: Props) {
 
   const [userSchedules, setuserSchedules] = useState<Schedule | null>(null);
 
-  const dif = useCallback(
-    (publicSch: Schedule | null, userSch: Schedule | null): Schedule | null => {
-      if (!userSch) return null;
-      if (!publicSch) return userSch;
+  const dif = (
+    publicSch: Schedule | null,
+    userSch: Schedule | null,
+  ): Schedule | null => {
+    if (!userSch) return null;
+    if (!publicSch) return userSch;
 
-      const publicIds = new Set(Object.values(publicSch).map((val) => val.id));
+    const publicIds = new Set(Object.values(publicSch).map((val) => val.id));
 
-      return Object.fromEntries(
-        Object.entries(userSch).filter(([id]) => !publicIds.has(id)),
-      );
-    },
-    [],
-  );
+    return Object.fromEntries(
+      Object.entries(userSch).filter(([id]) => !publicIds.has(id)),
+    );
+  };
 
   useEffect(() => {
     const user = getAuth(app).currentUser;

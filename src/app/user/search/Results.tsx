@@ -7,7 +7,7 @@ import { getAuth } from "firebase/auth";
 import { onValue, ref, update } from "firebase/database";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { HTMLAttributes, useCallback, useEffect, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 
 type Props = HTMLAttributes<HTMLDivElement> & {
   allUsers: UserPublic[];
@@ -49,35 +49,29 @@ function Results({ allUsers, q }: Props) {
     };
   }, []);
 
-  const unfollow = useCallback(
-    async (followingUid: string) => {
-      const user = getAuth(app).currentUser;
-      if (!user || !followings) return;
+  const unfollow = async (followingUid: string) => {
+    const user = getAuth(app).currentUser;
+    if (!user || !followings) return;
 
-      const toUpdate = followings.filter((f) => f !== followingUid);
+    const toUpdate = followings.filter((f) => f !== followingUid);
 
-      await update(ref(db, `/users/${user.uid}`), {
-        followings: toUpdate,
-      });
-    },
-    [followings],
-  );
+    await update(ref(db, `/users/${user.uid}`), {
+      followings: toUpdate,
+    });
+  };
 
-  const follow = useCallback(
-    async (followingUid: string) => {
-      const user = getAuth(app).currentUser;
-      if (!user) return;
+  const follow = async (followingUid: string) => {
+    const user = getAuth(app).currentUser;
+    if (!user) return;
 
-      const updatedFollowings = followings
-        ? [...followings, followingUid]
-        : [followingUid];
+    const updatedFollowings = followings
+      ? [...followings, followingUid]
+      : [followingUid];
 
-      await update(ref(db, `/users/${user.uid}`), {
-        followings: updatedFollowings,
-      }).catch(() => alert("Failed to follow user"));
-    },
-    [followings],
-  );
+    await update(ref(db, `/users/${user.uid}`), {
+      followings: updatedFollowings,
+    }).catch(() => alert("Failed to follow user"));
+  };
 
   return (
     <div
