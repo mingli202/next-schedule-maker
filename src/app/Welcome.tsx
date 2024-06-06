@@ -3,7 +3,6 @@ import { Button } from "@/ui";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import ScrollIndicator from "./ScrollIndicator";
 import { HTMLAttributes } from "react";
 import { Class } from "@/types";
 import { getLocalJsonData } from "@/lib";
@@ -43,7 +42,6 @@ async function Welcome({
           </Button>
         </Link>
       </div>
-      <ScrollIndicator />
       <BgAnimation allClasses={allClasses} />
     </div>
   );

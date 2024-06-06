@@ -11,7 +11,7 @@ type Props = {
 
 function BgAnimation({ allClasses }: Props) {
   const last = useRef(1);
-  const pause = useRef(true); // TODO: set back to false
+  const pause = useRef(false);
 
   const [vw, setVw] = useState(Infinity);
 
