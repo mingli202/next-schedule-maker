@@ -122,26 +122,22 @@ function ScheduleCard({
           schedule.data.map(({ bgColor, id }) => {
             const sch = allClasses[id];
 
-            return (
-              <Fragment key={sch.code + sch.section + "course"}>
-                {sch.viewData.map((s, i) => {
-                  const [day, [start, end]] = Object.entries(s)[0];
+            return sch.viewData.map((s, i) => {
+              const [day, [start, end]] = Object.entries(s)[0];
 
-                  return (
-                    <div
-                      className="rounded-sm"
-                      style={{
-                        gridColumn: day,
-                        gridRowStart: start,
-                        gridRowEnd: end,
-                        backgroundColor: bgColor,
-                      }}
-                      key={sch.code + sch.section + day + `${i}`}
-                    />
-                  );
-                })}
-              </Fragment>
-            );
+              return (
+                <div
+                  className="rounded-sm"
+                  style={{
+                    gridColumn: day,
+                    gridRowStart: start,
+                    gridRowEnd: end,
+                    backgroundColor: bgColor,
+                  }}
+                  key={sch.code + sch.section + day + `${i}`}
+                />
+              );
+            });
           })}
       </div>
 
