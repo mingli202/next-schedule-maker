@@ -28,7 +28,7 @@ function reducer(currentClasses: SharedCurrentClasses[], action: ActionType) {
       break;
     }
   }
-  localStorage.setItem("currentSchedule", JSON.stringify(updated));
+  localStorage.setItem("currentScheduleFall", JSON.stringify(updated));
   return updated;
 }
 
@@ -36,16 +36,9 @@ const initalValue: SharedCurrentClasses[] = [];
 
 function ScheduleContextProvider({ children }: Props) {
   const [currentClasses, dispatch] = useReducer(reducer, initalValue);
-  const key = "currentSchedule";
+  const key = "currentScheduleFall";
 
   useLayoutEffect(() => {
-    // TODO: remove this alert when done
-    const id = setTimeout(() => {
-      alert(
-        "Please wait patiently as we are parsing the pdf and getting the data up to date",
-      );
-    }, 1000);
-
     const savedSchedule = localStorage.getItem(key);
 
     if (!savedSchedule) {
@@ -53,8 +46,6 @@ function ScheduleContextProvider({ children }: Props) {
     } else {
       dispatch({ type: "set", schedule: JSON.parse(savedSchedule) });
     }
-
-    return () => clearTimeout(id);
   }, []);
 
   return (
