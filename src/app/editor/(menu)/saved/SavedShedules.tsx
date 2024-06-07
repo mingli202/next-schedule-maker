@@ -32,6 +32,7 @@ function SavedSchedules({ allClasses }: Props) {
     const newSchedule = {
       data: currentClasses,
       name: `Untitled`,
+      semester: "fall",
     } as const;
 
     await set(push(ref(db, `/users/${user.uid}/schedules`)), newSchedule).catch(

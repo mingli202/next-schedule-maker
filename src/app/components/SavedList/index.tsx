@@ -28,26 +28,28 @@ function SavedList({
     <div className="basis-full overflow-y-auto overflow-x-hidden max-md:text-sm">
       <div className="grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))] gap-1 md:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
         <AnimatePresence>
-          {Object.entries(savedSchedules).map(([id, s]) => {
-            return (
-              <ScheduleCard
-                highlight={highlight}
-                handleHighlight={() => {
-                  if (!select) return;
-                  setHighlight(id);
-                }}
-                schedule={s}
-                key={id}
-                schId={id}
-                allClasses={allClasses}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                noEdit={noEdit}
-                stateType={stateType}
-                customSelect={customSelect}
-              />
-            );
-          })}
+          {Object.entries(savedSchedules)
+            .filter(([, s]) => s.semester === "fall")
+            .map(([id, s]) => {
+              return (
+                <ScheduleCard
+                  highlight={highlight}
+                  handleHighlight={() => {
+                    if (!select) return;
+                    setHighlight(id);
+                  }}
+                  schedule={s}
+                  key={id}
+                  schId={id}
+                  allClasses={allClasses}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  noEdit={noEdit}
+                  stateType={stateType}
+                  customSelect={customSelect}
+                />
+              );
+            })}
           <div className="col-span-full h-0 bg-transparent" />
         </AnimatePresence>
       </div>

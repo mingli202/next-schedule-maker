@@ -28,7 +28,7 @@ function View({
         "rounded-md bg-primary p-2 text-bgPrimary md:p-4",
 
         disableTime
-          ? "grid-rows-21 h-full grid-cols-5 grid-rows-[repeat(20,1fr)] md:h-full md:w-full md:p-2"
+          ? "h-full grid-cols-5 grid-rows-[repeat(20,1fr)] md:h-full md:w-full md:p-2"
           : "h-[40rem] grid-cols-[2rem_repeat(5,1fr)] grid-rows-[repeat(21,1fr)] md:h-full md:min-w-[40rem] md:grid-cols-[3rem_repeat(5,1fr)]",
 
         className,
@@ -36,6 +36,9 @@ function View({
     >
       {!disableTime && (
         <>
+          <p className="absolute left-0 top-0 col-span-1 row-span-1 p-2 text-[0.5rem] md:text-xs">
+            Fall 2024
+          </p>
           <div className="grid-rows-[repeat(20,1fr) col-span-1 row-[span_21/span_21] mr-4 grid grid-cols-1">
             <Hours />
           </div>
