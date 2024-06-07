@@ -117,6 +117,7 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
               const newSchedule = {
                 data: schedule,
                 name: `Untitled`,
+                semester: "fall",
               } as const;
 
               await set(
