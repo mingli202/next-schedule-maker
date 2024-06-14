@@ -24,7 +24,7 @@ function Loading() {
                 .map((_, k) => (
                   <div
                     key={k}
-                    className="flex h-5 w-full rounded-full bg-slate"
+                    className="flex h-5 w-full rounded-full bg-slate/50"
                   ></div>
                 ))}
             </div>

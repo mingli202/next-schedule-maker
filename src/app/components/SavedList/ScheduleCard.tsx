@@ -9,7 +9,7 @@ import {
   faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Fragment, HTMLAttributes, useState } from "react";
+import { HTMLAttributes, useState } from "react";
 import { ref, remove, update } from "firebase/database";
 import { app, db } from "@/backend";
 import { HTMLMotionProps, motion } from "framer-motion";
