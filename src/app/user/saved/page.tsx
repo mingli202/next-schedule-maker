@@ -5,6 +5,8 @@ import { Metadata } from "next";
 import ViewWrapper from "./ViewWrapper";
 
 export const metadata: Metadata = {
+  robots: "robots.txt",
+  manifest: "manifest.json",
   title: "Saved Schedules",
   description:
     "John Abbott College (JAC) Dream Schedule Builder User Saved Schedules Page",

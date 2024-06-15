@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  robots: "robots.txt",
+  manifest: "manifest.json",
   title: "Search Users",
   description: "John Abbott College (JAC) Dream Schedule Builder Search Users",
   authors: { name: "Ming Li Liu" },

@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import RightNavbar from "./RightNavbar";
 
 export const metadata: Metadata = {
+  robots: "robots.txt",
+  manifest: "manifest.json",
   title: "Settings",
   description:
     "John Abbott College (JAC) Dream Schedule Builder User Settings.",

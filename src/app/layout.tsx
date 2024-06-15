@@ -28,6 +28,11 @@ export const metadata: Metadata = {
     "JS",
     "TailwindCss",
   ],
+  robots: "robots.txt",
+  manifest: "manifest.json",
+  other: {
+    "google-site-verification": "cSh40L1cc_UacQ_WYgMrNFYCIdZcRopjr8AWnUyDCoY",
+  },
 };
 
 function RootLayout({ children }: { children: React.ReactNode }) {

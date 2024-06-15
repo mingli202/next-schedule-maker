@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import LoginStateObserver from "./LoginStateObserver";
 
 export const metadata: Metadata = {
+  robots: "robots.txt",
+  manifest: "manifest.json",
   title: "Login",
   description:
     "John Abbott College (JAC) Dream Schedule Builder Login Page. Login into your account to access your schedules anywhere anytime.",

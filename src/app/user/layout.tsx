@@ -3,6 +3,8 @@ import LoginStateObserver from "./LoginStateObserver";
 import VerticalNavbar from "./VerticalNavbar";
 
 export const metadata: Metadata = {
+  robots: "robots.txt",
+  manifest: "manifest.json",
   title: "User",
   description:
     "John Abbott College (JAC) Dream Schedule Builder User Dashboard. A user home page where your saved schedules are all in one place.",

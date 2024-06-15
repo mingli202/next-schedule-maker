@@ -8,6 +8,8 @@ import { Class } from "@/types";
 
 import { Metadata } from "next";
 export const metadata: Metadata = {
+  robots: "robots.txt",
+  manifest: "manifest.json",
   title: "Editor",
   description:
     "John Abbott College (JAC) Dream Schedule Builder Editor. A visual interface to add and generate schedules that fits your needs.",
