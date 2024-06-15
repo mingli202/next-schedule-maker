@@ -2,11 +2,11 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Search Users",
-  description: "Schedule Builder Search Users",
+  description: "John Abbott College (JAC) Dream Schedule Builder Search Users",
   authors: { name: "Ming Li Liu" },
   creator: "Ming Li Liu",
   generator: "Next.js",
-  applicationName: "Dream Builder",
+  applicationName: "Javascript",
   keywords: [
     "Schedule Maker",
     "Schedule Builder",

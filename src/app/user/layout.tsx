@@ -4,11 +4,12 @@ import VerticalNavbar from "./VerticalNavbar";
 
 export const metadata: Metadata = {
   title: "User",
-  description: "Schedule Builder User Dashboard",
+  description:
+    "John Abbott College (JAC) Dream Schedule Builder User Dashboard. A user home page where your saved schedules are all in one place.",
   authors: { name: "Ming Li Liu" },
   creator: "Ming Li Liu",
   generator: "Next.js",
-  applicationName: "Dream Builder",
+  applicationName: "Javascript",
   keywords: [
     "Schedule Maker",
     "Schedule Builder",

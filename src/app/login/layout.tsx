@@ -3,11 +3,12 @@ import LoginStateObserver from "./LoginStateObserver";
 
 export const metadata: Metadata = {
   title: "Login",
-  description: "Schedule Builder Login Page",
+  description:
+    "John Abbott College (JAC) Dream Schedule Builder Login Page. Login into your account to access your schedules anywhere anytime.",
   authors: { name: "Ming Li Liu" },
   creator: "Ming Li Liu",
   generator: "Next.js",
-  applicationName: "Dream Builder",
+  applicationName: "Javascript",
   keywords: [
     "Schedule Maker",
     "Schedule Builder",

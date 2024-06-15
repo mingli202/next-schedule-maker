@@ -6,11 +6,12 @@ import ViewWrapper from "./ViewWrapper";
 
 export const metadata: Metadata = {
   title: "Saved Schedules",
-  description: "User Saved Schedules",
+  description:
+    "John Abbott College (JAC) Dream Schedule Builder User Saved Schedules Page",
   authors: { name: "Ming Li Liu" },
   creator: "Ming Li Liu",
   generator: "Next.js",
-  applicationName: "Dream Builder",
+  applicationName: "Javascript",
   keywords: [
     "Schedule Maker",
     "Schedule Builder",

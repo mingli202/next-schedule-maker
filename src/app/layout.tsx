@@ -7,14 +7,16 @@ import LoginCheck from "./LoginCheck";
 
 export const metadata: Metadata = {
   title: "JAC Dream Schedule Builder",
-  description: "Schedule Builder Home Page",
+  description:
+    "John Abbott College (JAC) Dream Schedule Builder Home Page. An interactive schedule builder for John Abbott College (JAC) students. By using our advanced filtering options, you can make your dream schedule in seconds!",
   authors: { name: "Ming Li Liu" },
   creator: "Ming Li Liu",
   generator: "Next.js",
-  applicationName: "Dream Builder",
+  applicationName: "Javascript",
   keywords: [
     "Schedule Maker",
     "Schedule Builder",
+    "Schedule Visualiser",
     "John Abbott College",
     "JAC",
     "Dream Schedule Maker",

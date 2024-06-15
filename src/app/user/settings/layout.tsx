@@ -3,11 +3,12 @@ import RightNavbar from "./RightNavbar";
 
 export const metadata: Metadata = {
   title: "Settings",
-  description: "Schedule Builder User Settings ",
+  description:
+    "John Abbott College (JAC) Dream Schedule Builder User Settings.",
   authors: { name: "Ming Li Liu" },
   creator: "Ming Li Liu",
   generator: "Next.js",
-  applicationName: "Dream Builder",
+  applicationName: "Javascript",
   keywords: [
     "Schedule Maker",
     "Schedule Builder",

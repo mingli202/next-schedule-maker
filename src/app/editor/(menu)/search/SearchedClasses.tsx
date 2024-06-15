@@ -55,7 +55,7 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
               <b>Filter</b>: for more filters for the search result.
             </li>
             <li>
-              <b>Autobuild</b>: to generate schedules based on fitlers.
+              <b>Autobuild</b>: to generate schedules based on filters.
             </li>
             <li>
               <b>Saved</b>: to login and save your schedules.
@@ -88,7 +88,7 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
               off.
             </li>
             <li>
-              Any combinasion of NN:MM, NN:MM, NNMM with either a dash or{" "}
+              Any combinasion of NN:MM, NNhMM, NNMM with either a dash or{" "}
               {'"to"'} between matches a time range.
             </li>
             <li>ALL CAPS matches a course name.</li>

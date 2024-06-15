@@ -9,11 +9,12 @@ import { Class } from "@/types";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Editor",
-  description: "Schedule Builder Editor",
+  description:
+    "John Abbott College (JAC) Dream Schedule Builder Editor. A visual interface to add and generate schedules that fits your needs.",
   authors: { name: "Ming Li Liu" },
   creator: "Ming Li Liu",
   generator: "Next.js",
-  applicationName: "Dream Builder",
+  applicationName: "Javascript",
   keywords: [
     "Schedule Maker",
     "Schedule Builder",
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
     "JAC",
     "Dream Schedule Maker",
     "Editor",
+    "Visualizer",
     "Schedule Planner",
     "Next Js",
     "React",
