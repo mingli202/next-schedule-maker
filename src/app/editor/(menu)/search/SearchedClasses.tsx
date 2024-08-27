@@ -118,7 +118,7 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
           <br />
 
           <Link
-            href="https://github.com/Nanoscience202/next-schedule-maker"
+            href="https://github.com/mingli202/next-schedule-maker"
             className="flex items-center gap-2"
           >
             <svg
@@ -136,7 +136,7 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
           </Link>
 
           <Link
-            href="https://github.com/Nanoscience202"
+            href="https://github.com/mingli202"
             className="flex items-center gap-2"
           >
             <Image
