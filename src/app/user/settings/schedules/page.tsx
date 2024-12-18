@@ -3,6 +3,10 @@ import PublicSchedules from "./PublicSchedules";
 import { Class } from "@/types";
 
 async function Page() {
+  alert(
+    "The data will be updated for WINTER 2025 after I'm done with my finals (last day is December 19). I also plan on making a few changes such as removing the need to login to save schedules and save them locally on your browser. I promise I will update it at least one week before the first day of registration, so before December 27. Thanks for understanding!",
+  );
+
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
