@@ -46,6 +46,14 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
 
       {filterClasses.length === 0 && (
         <div className="box-border w-full overflow-y-auto p-4">
+          <div className="rounded-lg bg-white p-2 text-red-700">
+            The data will be updated for WINTER 2025 after I{"'"}m done with my
+            finals (last day is December 19). I also plan on making a few
+            changes such as removing the need to login to save schedules and
+            save them locally on your browser. I will update it at least one
+            week before the first day of registration, so before December 27.
+            Thanks for understanding!
+          </div>
           <h2 className="text-center font-heading text-xl">Guidelines:</h2>
           <ul className="list-disc pl-4">
             <li>
@@ -64,11 +72,9 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
               <b>Settings</b>: for more options.
             </li>
           </ul>
-
           <br />
           <div className="h-0.5 w-full rounded-full bg-third" />
           <br />
-
           <p>Search by keywords and separate them by a comma:</p>
           <ul className="list-disc pl-4">
             <li>ENGLISH, 603-200, r{">"}4.5, 10:00-16:00</li>
@@ -100,11 +106,9 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
             </li>
             <li>Will look for class titles if none of the above matches.</li>
           </ul>
-
           <br />
           <div className="h-0.5 w-full rounded-full bg-third" />
           <br />
-
           <p>
             DISCLAIMER: This website is a tool meant to help students plan their
             schedule. It is NOT an official website and you still need to make
@@ -112,11 +116,9 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
             make the website as reliable as possible, it is still your
             responsibility to make sure that the info is correct.
           </p>
-
           <br />
           <div className="h-0.5 w-full rounded-full bg-third" />
           <br />
-
           <Link
             href="https://github.com/mingli202/next-schedule-maker"
             className="flex items-center gap-2"
@@ -134,7 +136,6 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
             </svg>
             <p>Contribute</p>
           </Link>
-
           <Link
             href="https://github.com/mingli202"
             className="flex items-center gap-2"
@@ -148,7 +149,6 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
             />
             Made by Ming Li Liu, 2022-2024 Honours Science student
           </Link>
-
           <Link
             href="https://www.instagram.com/vincent_mingli/"
             className="flex items-center gap-2"
@@ -166,7 +166,6 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
             </svg>
             vincent_mingli
           </Link>
-
           <div className="flex items-center gap-2">
             <FontAwesomeIcon icon={faPhone} className="h-4 w-4" />
             (514) 586-1268
