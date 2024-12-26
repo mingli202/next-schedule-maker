@@ -34,19 +34,31 @@ function SavedSchedules({ allClasses }: Props) {
     } as const;
 
     if (!user) {
-      setSavedSchedules();
-    } else {
-      await set(
-        push(ref(db, `/users/${user.uid}/schedules`)),
-        newSchedule,
-      ).catch((err) => console.log(err));
+      const schedules = { ...(savedSchedules ?? {}) };
+      schedules[Math.random().toString()] = newSchedule;
+
+      localStorage.setItem(
+        "savedSchedulesWinter2025",
+        JSON.stringify(schedules),
+      );
+
+      console.log({ schedules });
+      setSavedSchedules(schedules);
+      return;
     }
+
+    await set(push(ref(db, `/users/${user.uid}/schedules`)), newSchedule).catch(
+      (err) => console.log(err),
+    );
   }
 
   useEffect(() => {
     const auth = getAuth(app);
     const user = auth.currentUser;
     if (!user) {
+      setSavedSchedules(
+        JSON.parse(localStorage.getItem("savedSchedulesWinter2025") ?? "{}"),
+      );
       return;
     }
 
@@ -126,7 +138,7 @@ function SavedSchedules({ allClasses }: Props) {
                 <p className="font-bold">
                   {c.code} {c.lecture.title}
                 </p>
-                <p className="">
+                <p>
                   {c.section} {c.lecture.prof}
                 </p>
               </div>
