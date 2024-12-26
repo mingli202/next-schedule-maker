@@ -27,17 +27,20 @@ function SavedSchedules({ allClasses }: Props) {
   async function handleClick() {
     const user = getAuth(app).currentUser;
 
-    if (!user) return;
-
-    const newSchedule = {
+    const newSchedule: Saved = {
       data: currentClasses,
       name: `Untitled`,
-      semester: "fall",
+      semester: "winter2025",
     } as const;
 
-    await set(push(ref(db, `/users/${user.uid}/schedules`)), newSchedule).catch(
-      (err) => console.log(err),
-    );
+    if (!user) {
+      setSavedSchedules();
+    } else {
+      await set(
+        push(ref(db, `/users/${user.uid}/schedules`)),
+        newSchedule,
+      ).catch((err) => console.log(err));
+    }
   }
 
   useEffect(() => {

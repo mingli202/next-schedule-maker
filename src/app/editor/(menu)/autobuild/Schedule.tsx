@@ -1,6 +1,6 @@
 "use client";
 
-import { Class, SharedCurrentClasses } from "@/types";
+import { Class, Saved, SharedCurrentClasses } from "@/types";
 import { Button } from "@/ui";
 import { faChevronRight, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -114,10 +114,10 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
 
               if (!user) return;
 
-              const newSchedule = {
+              const newSchedule: Saved = {
                 data: schedule,
                 name: `Untitled`,
-                semester: "fall",
+                semester: "winter2025",
               } as const;
 
               await set(

@@ -124,7 +124,7 @@ async function download(currentSchedule: SharedCurrentClasses[]) {
     const filetype =
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const blob = new Blob([buffer], { type: filetype });
-    FileSaver.saveAs(blob, "Fall 2024 Schedule.xlsx");
+    FileSaver.saveAs(blob, "Winter 2025 Schedule.xlsx");
     alert("File downloaded!");
   } catch (err) {
     console.log(err);
