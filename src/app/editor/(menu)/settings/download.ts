@@ -25,7 +25,8 @@ async function download(currentSchedule: SharedCurrentClasses[]) {
     },
   ];
 
-  const sheet = workbook.addWorksheet("Fall 2024 Schedule");
+  // TODO: change for next semester
+  const sheet = workbook.addWorksheet("Winter 2025 Schedule");
 
   sheet.columns = [
     "",
