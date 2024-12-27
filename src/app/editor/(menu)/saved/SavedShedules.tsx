@@ -27,13 +27,24 @@ function SavedSchedules({ allClasses }: Props) {
   async function handleClick() {
     const user = getAuth(app).currentUser;
 
-    if (!user) return;
-
-    const newSchedule = {
+    const newSchedule: Saved = {
       data: currentClasses,
       name: `Untitled`,
-      semester: "fall",
+      semester: "winter2025",
     } as const;
+
+    if (!user) {
+      const schedules = { ...(savedSchedules ?? {}) };
+      schedules[Math.random().toString()] = newSchedule;
+
+      localStorage.setItem(
+        "savedSchedulesWinter2025",
+        JSON.stringify(schedules),
+      );
+
+      setSavedSchedules(schedules);
+      return;
+    }
 
     await set(push(ref(db, `/users/${user.uid}/schedules`)), newSchedule).catch(
       (err) => console.log(err),
@@ -44,6 +55,9 @@ function SavedSchedules({ allClasses }: Props) {
     const auth = getAuth(app);
     const user = auth.currentUser;
     if (!user) {
+      setSavedSchedules(
+        JSON.parse(localStorage.getItem("savedSchedulesWinter2025") ?? "{}"),
+      );
       return;
     }
 
@@ -78,6 +92,7 @@ function SavedSchedules({ allClasses }: Props) {
       </div>
 
       <SavedList
+        setSavedSchedules={setSavedSchedules}
         savedSchedules={savedSchedules ?? {}}
         allClasses={allClasses}
         stateType={{
@@ -123,7 +138,7 @@ function SavedSchedules({ allClasses }: Props) {
                 <p className="font-bold">
                   {c.code} {c.lecture.title}
                 </p>
-                <p className="">
+                <p>
                   {c.section} {c.lecture.prof}
                 </p>
               </div>

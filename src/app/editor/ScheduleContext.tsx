@@ -28,22 +28,20 @@ function reducer(currentClasses: SharedCurrentClasses[], action: ActionType) {
       break;
     }
   }
-  localStorage.setItem("currentScheduleFall", JSON.stringify(updated));
+  localStorage.setItem("currentScheduleWinter2025", JSON.stringify(updated));
   return updated;
 }
 
 const initalValue: SharedCurrentClasses[] = [];
 
 function ScheduleContextProvider({ children }: Props) {
-  //alert(
-  //  "The data will be updated for WINTER 2025 after I'm done with my finals (last day is December 19). I also plan on making a few changes such as removing the need to login to save schedules and save them locally on your browser. I promise I will update it at least one week before the first day of registration, so before December 27. Thanks for understanding!",
-  //);
-
   const [currentClasses, dispatch] = useReducer(reducer, initalValue);
-  const key = "currentScheduleFall";
+  const old_key = "currentScheduleFall";
+  const key = "currentScheduleWinter2025";
 
   useLayoutEffect(() => {
     const savedSchedule = localStorage.getItem(key);
+    localStorage.removeItem(old_key);
 
     if (!savedSchedule) {
       localStorage.setItem(key, JSON.stringify([]));

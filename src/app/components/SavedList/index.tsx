@@ -7,6 +7,9 @@ import { useState } from "react";
 
 type Props = {
   savedSchedules: Record<string, Saved>;
+  setSavedSchedules?: React.Dispatch<
+    React.SetStateAction<Record<string, Saved> | undefined>
+  >;
   allClasses: Record<string, Class>;
   noEdit?: boolean;
   select?: boolean;
@@ -16,6 +19,7 @@ type Props = {
 
 function SavedList({
   savedSchedules,
+  setSavedSchedules,
   allClasses,
   noEdit,
   select,
@@ -29,10 +33,11 @@ function SavedList({
       <div className="grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))] gap-1 md:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
         <AnimatePresence>
           {Object.entries(savedSchedules)
-            .filter(([, s]) => s.semester === "fall")
+            .filter(([, s]) => s.semester === "winter2025")
             .map(([id, s]) => {
               return (
                 <ScheduleCard
+                  setSavedSchedules={setSavedSchedules}
                   highlight={highlight}
                   handleHighlight={() => {
                     if (!select) return;

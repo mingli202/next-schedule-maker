@@ -9,7 +9,6 @@ import {
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import LoggedOut from "./LoggedOut";
 import { Button } from "@/ui";
 
 function LoginStateObserver({ children }: { children: React.ReactNode }) {
@@ -45,7 +44,6 @@ function LoginStateObserver({ children }: { children: React.ReactNode }) {
           Verifying...
         </div>
       )}
-      {loginState === "signedout" && <LoggedOut />}
       {loginState === "emailunverified" && (
         <div className="flex h-full w-full flex-col items-center justify-center gap-2">
           <h1 className="font-heading text-3xl">Email Verification</h1>
@@ -69,6 +67,7 @@ function LoginStateObserver({ children }: { children: React.ReactNode }) {
           </Button>
         </div>
       )}
+      {loginState === "signedout" && children}
       {loginState === "signedin" && children}
     </div>
   );

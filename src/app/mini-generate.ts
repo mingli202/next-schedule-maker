@@ -87,7 +87,7 @@ function getCodes(data: Record<string, Class>, prefix = "") {
         .filter(
           (d) =>
             (d.code.startsWith(prefix) || d.program.startsWith(prefix)) &&
-            d.code !== "101-DDJ-AB",
+            d.code !== "120-DAC-AB",
         )
         .map((d) => d.code),
     ),

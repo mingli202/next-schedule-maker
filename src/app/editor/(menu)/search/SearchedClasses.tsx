@@ -46,14 +46,6 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
 
       {filterClasses.length === 0 && (
         <div className="box-border w-full overflow-y-auto p-4">
-          <div className="rounded-lg bg-white p-2 text-red-700">
-            The data will be updated for WINTER 2025 after I{"'"}m done with my
-            finals (last day is December 19). I also plan on making a few
-            changes such as removing the need to login to save schedules and
-            save them locally on your browser. I will update it at least one
-            week before the first day of registration, so before December 27.
-            Thanks for understanding!
-          </div>
           <h2 className="text-center font-heading text-xl">Guidelines:</h2>
           <ul className="list-disc pl-4">
             <li>
