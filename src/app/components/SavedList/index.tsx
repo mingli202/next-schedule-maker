@@ -7,6 +7,9 @@ import { useState } from "react";
 
 type Props = {
   savedSchedules: Record<string, Saved>;
+  setSavedSchedules?: React.Dispatch<
+    React.SetStateAction<Record<string, Saved> | undefined>
+  >;
   allClasses: Record<string, Class>;
   noEdit?: boolean;
   select?: boolean;
@@ -16,6 +19,7 @@ type Props = {
 
 function SavedList({
   savedSchedules,
+  setSavedSchedules,
   allClasses,
   noEdit,
   select,
@@ -33,6 +37,7 @@ function SavedList({
             .map(([id, s]) => {
               return (
                 <ScheduleCard
+                  setSavedSchedules={setSavedSchedules}
                   highlight={highlight}
                   handleHighlight={() => {
                     if (!select) return;

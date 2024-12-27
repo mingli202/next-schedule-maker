@@ -18,6 +18,9 @@ import { getAuth } from "firebase/auth";
 
 type Props = {
   schedule: Saved;
+  setSavedSchedules?: React.Dispatch<
+    React.SetStateAction<Record<string, Saved> | undefined>
+  >;
   allClasses: Record<string, Class>;
   handleHighlight: () => void;
   highlight?: string;
@@ -29,6 +32,7 @@ type Props = {
 
 function ScheduleCard({
   schedule,
+  setSavedSchedules,
   className,
   allClasses,
   handleHighlight,
@@ -43,11 +47,33 @@ function ScheduleCard({
 
   async function nameChange(formdata: FormData) {
     setEditName(false);
+    const name = formdata.get("name")?.toString() ?? "Untitled";
 
     const user = getAuth(app).currentUser;
-    if (!user) return;
+    if (!user) {
+      if (setSavedSchedules) {
+        setSavedSchedules((savedSchedules) => {
+          if (!savedSchedules) return undefined;
 
-    const name = formdata.get("name")?.toString() ?? "Untitled";
+          const newSavedSchedules = {
+            ...savedSchedules,
+            [schId]: {
+              ...savedSchedules[schId],
+              name,
+            },
+          };
+
+          localStorage.setItem(
+            "savedSchedulesWinter2025",
+            JSON.stringify(newSavedSchedules),
+          );
+
+          return newSavedSchedules;
+        });
+      }
+
+      return;
+    }
 
     const dbRef = ref(db, `/users/${user.uid}/schedules`);
 
@@ -58,7 +84,23 @@ function ScheduleCard({
 
   async function deleteSchedule() {
     const user = getAuth(app).currentUser;
-    if (!user) return;
+    if (!user) {
+      if (setSavedSchedules) {
+        setSavedSchedules((savedSchedules) => {
+          if (!savedSchedules) return undefined;
+
+          delete savedSchedules[schId];
+
+          localStorage.setItem(
+            "savedSchedulesWinter2025",
+            JSON.stringify(savedSchedules),
+          );
+
+          return { ...savedSchedules };
+        });
+      }
+      return;
+    }
 
     const dbref = ref(db, `/users/${user.uid}/schedules/${schId}`);
     await remove(dbref);
@@ -86,7 +128,7 @@ function ScheduleCard({
         stateType.dispatch(schedule.data);
       }
     } catch {
-      alert("Only Winter 2024 Classes are allowed.");
+      alert("Only Winter 2025 Classes are allowed.");
     }
   }
 

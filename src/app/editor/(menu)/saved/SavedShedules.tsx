@@ -93,6 +93,7 @@ function SavedSchedules({ allClasses }: Props) {
       </div>
 
       <SavedList
+        setSavedSchedules={setSavedSchedules}
         savedSchedules={savedSchedules ?? {}}
         allClasses={allClasses}
         stateType={{
