@@ -42,7 +42,6 @@ function SavedSchedules({ allClasses }: Props) {
         JSON.stringify(schedules),
       );
 
-      console.log({ schedules });
       setSavedSchedules(schedules);
       return;
     }

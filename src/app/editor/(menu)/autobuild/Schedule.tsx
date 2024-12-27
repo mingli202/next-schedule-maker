@@ -112,13 +112,24 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
             onClick={async function () {
               const user = getAuth(app).currentUser;
 
-              if (!user) return;
-
               const newSchedule: Saved = {
                 data: schedule,
-                name: `Untitled`,
+                name: `Generated ${index + 1}`,
                 semester: "winter2025",
               } as const;
+
+              if (!user) {
+                const savedSchedules = JSON.parse(
+                  localStorage.getItem("savedSchedulesWinter2025") ?? "{}",
+                );
+                savedSchedules[Math.random().toString()] = newSchedule;
+                localStorage.setItem(
+                  "savedSchedulesWinter2025",
+                  JSON.stringify(savedSchedules),
+                );
+
+                return;
+              }
 
               await set(
                 push(ref(db, `/users/${user.uid}/schedules`)),
