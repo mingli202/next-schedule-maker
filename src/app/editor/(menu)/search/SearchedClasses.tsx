@@ -46,6 +46,17 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
 
       {filterClasses.length === 0 && (
         <div className="box-border w-full overflow-y-auto p-4">
+          <div className="mb-4 flex flex-col items-center justify-center rounded-md border border-red-300 p-2 text-lg text-red-300">
+            <p>IMPORTANT!</p>
+            <p>
+              Since the schedule of classes pdf is so inconsistent that I had to
+              write an absurd amount of tests, and ratemyprofessor now blocks
+              web scrapers so I can{"'"}t run my usual python code 😭 (although
+              I did eventually figure a workaround), updating to fall2025 is
+              taking longer than usual so if everything goes well, I should get
+              it up the latest by Tuesday June 10. Thanks for your patience!
+            </p>
+          </div>
           <h2 className="text-center font-heading text-xl">Guidelines:</h2>
           <ul className="list-disc pl-4">
             <li>
@@ -104,9 +115,9 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
           <p>
             DISCLAIMER: This website is a tool meant to help students plan their
             schedule. It is NOT an official website and you still need to make
-            your schedule via OMNIVOX. Moreover, although we try our best to
-            make the website as reliable as possible, it is still your
-            responsibility to make sure that the info is correct.
+            your schedule via OMNIVOX. Moreover, although I try my best to make
+            the website as reliable as possible, it is still your responsibility
+            to make sure that the info is correct.
           </p>
           <br />
           <div className="h-0.5 w-full rounded-full bg-third" />
