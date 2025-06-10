@@ -30,17 +30,14 @@ function SavedSchedules({ allClasses }: Props) {
     const newSchedule: Saved = {
       data: currentClasses,
       name: `Untitled`,
-      semester: "winter2025",
+      semester: "fall2025",
     } as const;
 
     if (!user) {
       const schedules = { ...(savedSchedules ?? {}) };
       schedules[Math.random().toString()] = newSchedule;
 
-      localStorage.setItem(
-        "savedSchedulesWinter2025",
-        JSON.stringify(schedules),
-      );
+      localStorage.setItem("savedSchedulesfall2025", JSON.stringify(schedules));
 
       setSavedSchedules(schedules);
       return;
@@ -56,7 +53,7 @@ function SavedSchedules({ allClasses }: Props) {
     const user = auth.currentUser;
     if (!user) {
       setSavedSchedules(
-        JSON.parse(localStorage.getItem("savedSchedulesWinter2025") ?? "{}"),
+        JSON.parse(localStorage.getItem("savedSchedulesfall2025") ?? "{}"),
       );
       return;
     }

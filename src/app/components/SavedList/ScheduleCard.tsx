@@ -64,7 +64,7 @@ function ScheduleCard({
           };
 
           localStorage.setItem(
-            "savedSchedulesWinter2025",
+            "savedSchedulesfall2025",
             JSON.stringify(newSavedSchedules),
           );
 
@@ -92,7 +92,7 @@ function ScheduleCard({
           delete savedSchedules[schId];
 
           localStorage.setItem(
-            "savedSchedulesWinter2025",
+            "savedSchedulesfall2025",
             JSON.stringify(savedSchedules),
           );
 
@@ -128,7 +128,7 @@ function ScheduleCard({
         stateType.dispatch(schedule.data);
       }
     } catch {
-      alert("Only Winter 2025 Classes are allowed.");
+      alert("Only Fall 2025 Classes are allowed.");
     }
   }
 
