@@ -16,7 +16,7 @@ import { ScheduleDispatchContext } from "../../ScheduleContext";
 import { motion } from "framer-motion";
 import LecLab from "@/app/components/LecLab";
 import { db } from "@/backend";
-import { get, ref, update } from "firebase/database";
+import { ref, update } from "firebase/database";
 import "firebase/compat/database";
 import firebase from "firebase/compat/app";
 
