@@ -1,6 +1,7 @@
 import { Class, Code, SharedCurrentClasses } from "@/types";
 import isValid from "../search/checkValid";
 import { getLocalJsonData } from "@/lib";
+import { getSectionTimes } from "@/lib/util";
 
 async function generate(
   codes: Code[],
@@ -25,22 +26,16 @@ async function generate(
         return false;
       }
 
+      const tArr = getSectionTimes(cl);
       if (dayOff.length > 0) {
-        const tArr = [...Object.keys(cl.lecture), ...Object.keys(cl.lab)]
-          .filter((key) => !["prof", "title", "rating"].includes(key))
-          .join("");
+        const tArrr = tArr.join("");
 
-        if (dayOff.some((d) => tArr.includes(d))) {
+        if (dayOff.some((d) => tArrr.includes(d))) {
           return false;
         }
       }
 
       if (time[0] !== "00:00" || time[1] !== "23:59") {
-        const tArr = [
-          ...Object.entries(cl.lecture),
-          ...Object.entries(cl.lab),
-        ].filter(([key]) => !["prof", "title", "rating"].includes(key));
-
         const start = time[0].replace(":", "") ?? "0";
         const end = time[1].replace(":", "") ?? "2400";
 
@@ -60,14 +55,16 @@ async function generate(
 
       if (code.professors && code.professors.length > 0) {
         if (
+          cl.lecture &&
           !code.professors.includes(cl.lecture.prof) &&
+          cl.lab &&
           !code.professors.includes(cl.lab.prof)
         ) {
           return false;
         }
       }
 
-      if (code.ratingRange) {
+      if (code.ratingRange && cl.lecture?.rating) {
         const { to, from } = code.ratingRange;
 
         const { avg } = cl.lecture.rating;
@@ -80,7 +77,7 @@ async function generate(
         }
       }
 
-      if (code.scoreRange) {
+      if (code.scoreRange && cl.lecture?.rating) {
         const { to, from } = code.scoreRange;
 
         const { score } = cl.lecture.rating;

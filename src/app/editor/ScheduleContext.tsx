@@ -28,7 +28,7 @@ function reducer(currentClasses: SharedCurrentClasses[], action: ActionType) {
       break;
     }
   }
-  localStorage.setItem("currentScheduleWinter2025", JSON.stringify(updated));
+  localStorage.setItem("currentSchedulefall2025", JSON.stringify(updated));
   return updated;
 }
 
@@ -36,8 +36,8 @@ const initalValue: SharedCurrentClasses[] = [];
 
 function ScheduleContextProvider({ children }: Props) {
   const [currentClasses, dispatch] = useReducer(reducer, initalValue);
-  const old_key = "currentScheduleFall";
-  const key = "currentScheduleWinter2025";
+  const old_key = "currentScheduleWinter2025";
+  const key = "currentSchedulefall2025";
 
   useLayoutEffect(() => {
     const savedSchedule = localStorage.getItem(key);

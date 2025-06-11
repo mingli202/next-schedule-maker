@@ -1,7 +1,7 @@
 const getLocalJsonData = async <T>(name: string): Promise<T> => {
-  const url = `https://raw.githubusercontent.com/mingli202/next-schedule-maker/winter2025/public/json/${name}.json`;
+  const url = `https://raw.githubusercontent.com/mingli202/next-schedule-maker/fall2025/public/json/${name}.json`;
 
-  const res = await fetch(url);
+  const res = await fetch(url, { cache: "no-cache" });
   if (!res.ok) throw new Error("fetch failed: " + res.statusText);
   const toReturn: T = await res.json();
   return toReturn;

@@ -1,3 +1,4 @@
+import { getSectionTimes } from "@/lib/util";
 import { Class, SharedCurrentClasses } from "@/types";
 
 function isValid(
@@ -7,19 +8,13 @@ function isValid(
 ) {
   if (scheduleToCompare.length === 0) return true;
 
-  const classToCheckTimes = [
-    ...Object.entries(classToCheck.lecture),
-    ...Object.entries(classToCheck.lab),
-  ].filter(([key]) => !["prof", "title", "rating"].includes(key));
+  const classToCheckTimes = getSectionTimes(classToCheck);
 
   for (const { id } of scheduleToCompare) {
     const againstClass = allClasses[id];
     if (classToCheck.code === againstClass.code) return false;
 
-    const againstClassTime = [
-      ...Object.entries(againstClass.lecture),
-      ...Object.entries(againstClass.lab),
-    ].filter(([key]) => !["prof", "title", "rating"].includes(key));
+    const againstClassTime = getSectionTimes(againstClass);
 
     for (const [d1, t1] of classToCheckTimes) {
       if (typeof t1 !== "string") continue;

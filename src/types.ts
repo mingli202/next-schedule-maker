@@ -50,13 +50,15 @@ export type Class = {
   lecture: {
     prof: string;
     title: string;
-    rating: Rating;
-  };
+    rating: Rating | null;
+    time: Record<string, string[]>;
+  } | null;
   lab: {
     prof: string;
     title: string;
-    rating: Rating;
-  };
+    rating: Rating | null;
+    time: Record<string, string[]>;
+  } | null;
   more: string;
   viewData: Time[];
 };
@@ -83,7 +85,7 @@ export type Saved = {
   id?: string;
   data?: SharedCurrentClasses[];
   name?: string;
-  semester?: "winter2025";
+  semester?: "fall2025";
 };
 
 export type Code = {

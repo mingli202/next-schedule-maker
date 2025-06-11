@@ -3,11 +3,10 @@
 import { ActionType, Class, SharedCurrentClasses } from "@/types";
 import { Button } from "@/ui";
 import {
-  faClock,
   faEye,
   faMinus,
   faPlus,
-  faUser,
+  faWarning,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,6 +14,11 @@ import isValid from "./checkValid";
 import { useContext } from "react";
 import { ScheduleDispatchContext } from "../../ScheduleContext";
 import { motion } from "framer-motion";
+import LecLab from "@/app/components/LecLab";
+import { db } from "@/backend";
+import { ref, update } from "firebase/database";
+import "firebase/compat/database";
+import firebase from "firebase/compat/app";
 
 type Props = {
   id: string;
@@ -61,203 +65,111 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
       </p>
 
       <h3 className="font-heading text-xl font-bold">
-        {cl.section} {cl.lecture.title}
+        {cl.section} {cl.lecture?.title}
       </h3>
 
-      <div className="mt-2 rounded-md bg-secondary p-2">
-        <h4 className="italic">Lecture</h4>
-
-        <div className="relative flex items-center gap-2">
-          <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
-          {cl.lecture.prof}
-          <div className="group relative flex cursor-default font-bold">
-            <p>
-              {cl.lecture.rating.score === 0 ? "N/A" : cl.lecture.rating.score}
-            </p>
-            <div className="absolute top-0 hidden w-[12rem] -translate-y-1/2 translate-x-12 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block">
-              <p>
-                Rating:{" "}
-                {cl.lecture.rating.avg === 0
-                  ? "N/A"
-                  : `${cl.lecture.rating.avg}/5`}
-              </p>
-              <p>
-                Difficulty:{" "}
-                {cl.lecture.rating.difficulty === 0
-                  ? "N/A"
-                  : `${cl.lecture.rating.difficulty}/5`}
-              </p>
-              <p>
-                Raters:{" "}
-                {cl.lecture.rating.nRating === 0
-                  ? "N/A"
-                  : `${cl.lecture.rating.nRating} raters`}
-              </p>
-              <p>
-                Take again:{" "}
-                {cl.lecture.rating.takeAgain === 0
-                  ? "N/A"
-                  : `${cl.lecture.rating.takeAgain}%`}
-              </p>
-              <p className="font-bold">
-                Overall Score:{" "}
-                {cl.lecture.rating.score === 0
-                  ? "N/A"
-                  : `${cl.lecture.rating.score}/100`}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {Object.entries(cl.lecture)
-          .filter((i) => !["title", "prof", "rating"].includes(i[0]))
-          .map((j, index) => {
-            return (
-              <p className="flex items-center gap-2" key={index}>
-                <FontAwesomeIcon icon={faClock} className="h-4 opacity-50" />
-                {j[0]}
-                <span>{j[1] as string}</span>
-              </p>
-            );
-          })}
-      </div>
-
-      {"prof" in cl.lab && (
-        <div className="mt-2 rounded-md bg-secondary p-2">
-          <h4 className="italic">Lab</h4>
-
-          <div className="relative flex items-center gap-2">
-            <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
-            {cl.lab.prof}
-            <div className="group relative flex cursor-default font-bold">
-              <p>{cl.lab.rating.score === 0 ? "N/A" : cl.lab.rating.score}</p>
-              <div className="absolute top-0 hidden w-[12rem] -translate-y-1/2 translate-x-12 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block">
-                <p>
-                  Rating:{" "}
-                  {cl.lab.rating.avg === 0 ? "N/A" : `${cl.lab.rating.avg}/5`}
-                </p>
-                <p>
-                  Difficulty:{" "}
-                  {cl.lab.rating.difficulty === 0
-                    ? "N/A"
-                    : `${cl.lab.rating.difficulty}/5`}
-                </p>
-                <p>
-                  Raters:{" "}
-                  {cl.lab.rating.nRating === 0
-                    ? "N/A"
-                    : `${cl.lab.rating.nRating} raters`}
-                </p>
-                <p>
-                  Take again:{" "}
-                  {cl.lab.rating.takeAgain === 0
-                    ? "N/A"
-                    : `${cl.lab.rating.takeAgain}%`}
-                </p>
-                <p className="font-bold">
-                  Overall Score:{" "}
-                  {cl.lab.rating.score === 0
-                    ? "N/A"
-                    : `${cl.lab.rating.score}/100`}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {Object.entries(cl.lab)
-            .filter((i) => !["title", "prof", "rating"].includes(i[0]))
-            .map((j, index) => {
-              return (
-                <p className="flex items-center gap-2" key={index}>
-                  <FontAwesomeIcon icon={faClock} className="h-4 opacity-50" />
-                  {j[0]}
-                  <span>{j[1] as string}</span>
-                </p>
-              );
-            })}
-        </div>
-      )}
+      <LecLab cl={cl} leclab="lecture" />
+      <LecLab cl={cl} leclab="laboratory" />
 
       {cl.more !== "" && <p className="mt-2 text-third">{cl.more}</p>}
-      <div className="flex items-center justify-end pt-2">
+      <div className="flex items-center justify-between pt-2">
         <Button
           variant="basic"
+          title="Report Wrong Info"
           className="flex items-center justify-center"
-          title="preview"
-          onClick={() => {
-            const hover = searchParams.get("previewHover");
+          onClick={async () => {
+            const ServerValue = firebase.database.ServerValue;
 
-            const url = new URL(window.location.href);
-
-            if (hover !== "true") {
-              url.searchParams.set("previewHover", "true");
-              url.searchParams.set("hoverId", id);
-
-              router.push(`/editor/search?${url.searchParams}`);
-            } else {
-              url.searchParams.delete("previewHover");
-              url.searchParams.delete("hoverId");
-
-              router.push(`/editor/search?${url.searchParams}`);
-            }
+            await update(ref(db, "reports"), {
+              [id]: ServerValue.increment(1),
+            });
           }}
         >
-          <FontAwesomeIcon icon={faEye} />
+          <FontAwesomeIcon icon={faWarning} />
         </Button>
 
-        {isValid(cl, currentClasses, allClasses) ? (
+        <div className="flex justify-end">
           <Button
             variant="basic"
             className="flex items-center justify-center"
-            title="add"
+            title="preview"
             onClick={() => {
-              const checkValid = searchParams.get("checkValid");
+              const hover = searchParams.get("previewHover");
 
-              if (checkValid === "true") {
-                handleHoverEnd();
+              const url = new URL(window.location.href);
+
+              if (hover !== "true") {
+                url.searchParams.set("previewHover", "true");
+                url.searchParams.set("hoverId", id);
+
+                router.push(`/editor/search?${url.searchParams}`);
+              } else {
+                url.searchParams.delete("previewHover");
+                url.searchParams.delete("hoverId");
+
+                router.push(`/editor/search?${url.searchParams}`);
               }
-
-              let bgColor = "";
-              let textColor = "#000";
-              const pickedColors = currentClasses.map((cl) => cl.bgColor);
-
-              for (let i = 0; i < colors.length; i++) {
-                if (!pickedColors.includes(colors[i])) {
-                  if (i > 7) textColor = "#FFF";
-                  bgColor = colors[i];
-                  break;
-                }
-              }
-
-              const action: ActionType = {
-                type: "add",
-                cl: {
-                  id,
-                  bgColor,
-                  textColor,
-                },
-              };
-
-              dispatch(action);
             }}
           >
-            <FontAwesomeIcon icon={faPlus} />
+            <FontAwesomeIcon icon={faEye} />
           </Button>
-        ) : (
-          currentClasses.some(({ id: savedId }): boolean => savedId === id) && (
+
+          {isValid(cl, currentClasses, allClasses) ? (
             <Button
               variant="basic"
               className="flex items-center justify-center"
-              title="remove"
+              title="add"
               onClick={() => {
-                const action: ActionType = { type: "delete", id };
+                const checkValid = searchParams.get("checkValid");
+
+                if (checkValid === "true") {
+                  handleHoverEnd();
+                }
+
+                let bgColor = "";
+                let textColor = "#000";
+                const pickedColors = currentClasses.map((cl) => cl.bgColor);
+
+                for (let i = 0; i < colors.length; i++) {
+                  if (!pickedColors.includes(colors[i])) {
+                    if (i > 7) textColor = "#FFF";
+                    bgColor = colors[i];
+                    break;
+                  }
+                }
+
+                const action: ActionType = {
+                  type: "add",
+                  cl: {
+                    id,
+                    bgColor,
+                    textColor,
+                  },
+                };
+
                 dispatch(action);
               }}
             >
-              <FontAwesomeIcon icon={faMinus} />
+              <FontAwesomeIcon icon={faPlus} />
             </Button>
-          )
-        )}
+          ) : (
+            currentClasses.some(
+              ({ id: savedId }): boolean => savedId === id,
+            ) && (
+              <Button
+                variant="basic"
+                className="flex items-center justify-center"
+                title="remove"
+                onClick={() => {
+                  const action: ActionType = { type: "delete", id };
+                  dispatch(action);
+                }}
+              >
+                <FontAwesomeIcon icon={faMinus} />
+              </Button>
+            )
+          )}
+        </div>
       </div>
     </motion.div>
   );

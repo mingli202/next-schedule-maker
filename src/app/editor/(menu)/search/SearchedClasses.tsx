@@ -10,7 +10,7 @@ import { Class } from "@/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import Image from "next/image";
-import { faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faPhone, faWarning } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   allClasses: Record<string, Class>;
@@ -46,15 +46,16 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
 
       {filterClasses.length === 0 && (
         <div className="box-border w-full overflow-y-auto p-4">
-          <div className="mb-4 flex flex-col items-center justify-center rounded-md border border-red-300 p-2 text-lg text-red-300">
+          <div className="mb-4 flex flex-col items-center justify-center rounded-md border border-red-300 p-2 text-red-300">
             <p>IMPORTANT!</p>
             <p>
-              Since the schedule of classes pdf is so inconsistent that I had to
-              write an absurd amount of tests, and ratemyprofessor now blocks
-              web scrapers so I can{"'"}t run my usual python code 😭 (although
-              I did eventually figure a workaround), updating to fall2025 is
-              taking longer than usual so if everything goes well, I should get
-              it up the latest by Tuesday June 10. Thanks for your patience!
+              There are many inconsistencies in the pdf AND the most recent June
+              6 pdf is <b>different</b> from the June 3 version (which is the
+              one I got). Since I can{"'"}t guarantee that everything is here
+              and most up to date, you can now <b>report</b> a section that is
+              wrong by clicking the <FontAwesomeIcon icon={faWarning} /> icon at
+              the bottom left of the searched results. I will be notified and I
+              will fix it shortly.
             </p>
           </div>
           <h2 className="text-center font-heading text-xl">Guidelines:</h2>

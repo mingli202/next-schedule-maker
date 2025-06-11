@@ -2,10 +2,11 @@
 
 import { Class, SharedCurrentClasses, StateType } from "@/types";
 import { Button } from "@/ui";
-import { faClock, faCompress, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faCompress } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Variants, motion } from "framer-motion";
 import { cn } from "@/lib";
+import LecLab from "../LecLab";
 
 type MergedClass = Class & SharedCurrentClasses;
 
@@ -97,149 +98,26 @@ function ExpandClass({
           </h2>
 
           <h1 className="font-heading text-base font-bold md:text-2xl">
-            {cl.section} {cl.lecture.title}
+            {cl.section} {cl.lecture?.title}
           </h1>
 
-          <div
+          <LecLab
+            cl={cl}
+            leclab="lecture"
             className={cn("mt-2 rounded-md p-2", {
               "bg-black/10": cl.textColor === "#000",
               "bg-white/10": cl.textColor === "#FFF",
             })}
-          >
-            <h4 className="italic">Lecture</h4>
+          />
 
-            <div className="relative flex items-center gap-2">
-              <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
-              {cl.lecture.prof}
-              <div className="group relative flex cursor-default font-bold">
-                <p>
-                  {cl.lecture.rating.score === 0
-                    ? "N/A"
-                    : cl.lecture.rating.score}
-                </p>
-                <div
-                  className={cn(
-                    "absolute top-0 hidden w-[12rem] -translate-x-1/2 translate-y-1/3 md:-translate-y-1/2 md:translate-x-12",
-                    "z-10 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block",
-                  )}
-                >
-                  <p>
-                    Rating:{" "}
-                    {cl.lecture.rating.avg === 0
-                      ? "N/A"
-                      : `${cl.lecture.rating.avg}/5`}
-                  </p>
-                  <p>
-                    Difficulty:{" "}
-                    {cl.lecture.rating.difficulty === 0
-                      ? "N/A"
-                      : `${cl.lecture.rating.difficulty}/5`}
-                  </p>
-                  <p>
-                    Raters:{" "}
-                    {cl.lecture.rating.nRating === 0
-                      ? "N/A"
-                      : `${cl.lecture.rating.nRating} raters`}
-                  </p>
-                  <p>
-                    Take again:{" "}
-                    {cl.lecture.rating.takeAgain === 0
-                      ? "N/A"
-                      : `${cl.lecture.rating.takeAgain}%`}
-                  </p>
-                  <p className="font-bold">
-                    Overall Score:{" "}
-                    {cl.lecture.rating.score === 0
-                      ? "N/A"
-                      : `${cl.lecture.rating.score}/100`}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {Object.entries(cl.lecture)
-              .filter((i) => !["title", "prof", "rating"].includes(i[0]))
-              .map((j, index) => {
-                return (
-                  <p className="flex items-center gap-2" key={index}>
-                    <FontAwesomeIcon
-                      icon={faClock}
-                      className="h-4 opacity-50"
-                    />
-                    {j[0]}
-                    <span>{j[1] as string}</span>
-                  </p>
-                );
-              })}
-          </div>
-
-          {"prof" in cl.lab && (
-            <div
-              className={cn("mt-2 rounded-md p-2", {
-                "bg-black/10": cl.textColor === "#000",
-                "bg-white/10": cl.textColor === "#FFF",
-              })}
-            >
-              <h4 className="italic">Lab</h4>
-
-              <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
-                {cl.lab.prof}
-                <div className="group relative flex cursor-default font-bold">
-                  <p>
-                    {cl.lab.rating.score === 0 ? "N/A" : cl.lab.rating.score}
-                  </p>
-                  <div className="absolute top-0 z-10 hidden w-[12rem] -translate-y-1/2 translate-x-12 rounded-md bg-slate p-1 text-sm font-normal leading-4 text-black shadow-lg group-hover:block">
-                    <p>
-                      Rating:{" "}
-                      {cl.lab.rating.avg === 0
-                        ? "N/A"
-                        : `${cl.lab.rating.avg}/5`}
-                    </p>
-                    <p>
-                      Difficulty:{" "}
-                      {cl.lab.rating.difficulty === 0
-                        ? "N/A"
-                        : `${cl.lab.rating.difficulty}/5`}
-                    </p>
-                    <p>
-                      Raters:{" "}
-                      {cl.lab.rating.nRating === 0
-                        ? "N/A"
-                        : `${cl.lab.rating.nRating} raters`}
-                    </p>
-                    <p>
-                      Take again:{" "}
-                      {cl.lab.rating.takeAgain === 0
-                        ? "N/A"
-                        : `${cl.lab.rating.takeAgain}%`}
-                    </p>
-                    <p className="font-bold">
-                      Overall Score:{" "}
-                      {cl.lab.rating.score === 0
-                        ? "N/A"
-                        : `${cl.lab.rating.score}/100`}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {Object.entries(cl.lab)
-                .filter((i) => !["title", "prof", "rating"].includes(i[0]))
-                .map((j, index) => {
-                  return (
-                    <p className="flex items-center gap-2" key={index}>
-                      <FontAwesomeIcon
-                        icon={faClock}
-                        className="h-4 opacity-50"
-                      />
-                      {j[0]}
-                      <span>{j[1] as string}</span>
-                    </p>
-                  );
-                })}
-            </div>
-          )}
+          <LecLab
+            cl={cl}
+            leclab="laboratory"
+            className={cn("mt-2 rounded-md p-2", {
+              "bg-black/10": cl.textColor === "#000",
+              "bg-white/10": cl.textColor === "#FFF",
+            })}
+          />
 
           {cl.more !== "" && <p className="mt-2 opacity-70">{cl.more}</p>}
         </div>

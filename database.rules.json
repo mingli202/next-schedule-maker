@@ -14,6 +14,9 @@
           ".write": "auth !== null && auth.uid === $uid"
         }
       }
+    },
+    "reports": {
+      ".write": true
     }
   }
 }

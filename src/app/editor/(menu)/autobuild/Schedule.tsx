@@ -93,10 +93,10 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
               </div>
               <div>
                 <p className="font-bold">
-                  {code} {lecture.title}
+                  {code} {lecture?.title}
                 </p>
                 <p>
-                  {section} {lecture.prof}
+                  {section} {lecture?.prof}
                 </p>
               </div>
             </div>
@@ -115,16 +115,16 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
               const newSchedule: Saved = {
                 data: schedule,
                 name: `Generated ${index + 1}`,
-                semester: "winter2025",
+                semester: "fall2025",
               } as const;
 
               if (!user) {
                 const savedSchedules = JSON.parse(
-                  localStorage.getItem("savedSchedulesWinter2025") ?? "{}",
+                  localStorage.getItem("savedSchedulesfall2025") ?? "{}",
                 );
                 savedSchedules[Math.random().toString()] = newSchedule;
                 localStorage.setItem(
-                  "savedSchedulesWinter2025",
+                  "savedSchedulesfall2025",
                   JSON.stringify(savedSchedules),
                 );
 

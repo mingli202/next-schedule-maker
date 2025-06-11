@@ -1,5 +1,6 @@
 import { Class, SharedCurrentClasses } from "@/types";
 import isValid from "./checkValid";
+import { getSectionTimes } from "@/lib/util";
 
 type ReturnType = [string, Class][];
 
@@ -80,7 +81,7 @@ function filterByProfessor(arr: ReturnType, prof: string) {
   if (prof === "") return [];
 
   const re = new RegExp(prof, "ig");
-  return arr.filter(([, cl]) => cl.lecture.prof.match(re));
+  return arr.filter(([, cl]) => cl.lecture?.prof.match(re));
 }
 
 function filterByRating(arr: ReturnType, rating: string, type: "r" | "s") {
@@ -93,16 +94,25 @@ function filterByRating(arr: ReturnType, rating: string, type: "r" | "s") {
   switch (sign) {
     case "<":
       return arr.filter(([, cl]) => {
+        if (!cl.lecture || !cl.lecture.rating) {
+          return false;
+        }
         if (type === "r") return cl.lecture.rating.avg < num;
         if (type === "s") return cl.lecture.rating.score < num;
       });
     case ">":
       return arr.filter(([, cl]) => {
+        if (!cl.lecture || !cl.lecture.rating) {
+          return false;
+        }
         if (type === "r") return cl.lecture.rating.avg > num;
         if (type === "s") return cl.lecture.rating.score > num;
       });
     case "=":
       return arr.filter(([, cl]) => {
+        if (!cl.lecture || !cl.lecture.rating) {
+          return false;
+        }
         if (type === "r") return cl.lecture.rating.avg === num;
         if (type === "s") return cl.lecture.rating.score === num;
       });
@@ -126,10 +136,7 @@ function filterByTime(arr: ReturnType, time: string) {
   });
 
   const toReturn = arr.filter(([, cl]) => {
-    const tArr = [
-      ...Object.entries(cl.lecture),
-      ...Object.entries(cl.lab),
-    ].filter(([key]) => !["prof", "title", "rating"].includes(key));
+    const tArr = getSectionTimes(cl);
 
     return tArr.every(([, t]) => {
       const [tStart, tEnd] = t
@@ -148,7 +155,7 @@ function filterByTitle(arr: ReturnType, title: string) {
   if (title === "") return [];
 
   const re = new RegExp(title, "ig");
-  return arr.filter(([, cl]) => cl.lecture.title.match(re));
+  return arr.filter(([, cl]) => cl.lecture?.title.match(re));
 }
 
 function filterByCourse(arr: ReturnType, courseName: string) {
@@ -162,9 +169,7 @@ function filterByDay(arr: ReturnType, day: string) {
   if (day === "") return [];
 
   return arr.filter(([, cl]) => {
-    const tArr = [...Object.keys(cl.lecture), ...Object.keys(cl.lab)]
-      .filter((key) => !["prof", "title", "rating"].includes(key))
-      .join("");
+    const tArr = getSectionTimes(cl).join("");
 
     return !day.split("").some((d) => tArr.includes(d));
   });
