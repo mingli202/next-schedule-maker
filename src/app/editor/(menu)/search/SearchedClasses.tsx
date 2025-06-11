@@ -53,9 +53,10 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
               6 pdf is <b>different</b> from the June 3 version (which is the
               one I got). Since I can{"'"}t guarantee that everything is here
               and most up to date, you can now <b>report</b> a section that is
-              wrong by clicking the <FontAwesomeIcon icon={faWarning} /> icon at
-              the bottom left of the searched results. I will be notified and I
-              will fix it shortly.
+              wrong by clicking the{" "}
+              <FontAwesomeIcon icon={faWarning} height={16} /> icon at the
+              bottom left of the searched results. I will be notified and I will
+              fix it shortly.
             </p>
           </div>
           <h2 className="text-center font-heading text-xl">Guidelines:</h2>
