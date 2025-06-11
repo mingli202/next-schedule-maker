@@ -46172,9 +46172,9 @@
     "count": 1038,
     "section": "00001",
     "course": "",
-    "code": "&",
+    "code": "570-DFA-AB ",
     "lecture": {
-      "title": "CERAMICS 570-DFA-AB Fa\u00e7onnage",
+      "title": "Fa\u00e7onnage",
       "prof": "Horlik, Veronika",
       "time": {
         "W": [
@@ -46207,9 +46207,9 @@
     "count": 1039,
     "section": "00002",
     "course": "",
-    "code": "&",
+    "code": "570-DFA-AB",
     "lecture": {
-      "title": "CERAMICS 570-DFA-AB Fa\u00e7onnage",
+      "title": "Fa\u00e7onnage",
       "prof": "Horlik, Veronika",
       "time": {
         "F": [
@@ -50911,9 +50911,9 @@
     "count": 1146,
     "section": "00001",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-150-AB ",
     "lecture": {
-      "title": "570-150-AB Intro to Photography and Digital Imaging",
+      "title": "Intro to Photography and Digital Imaging",
       "prof": "Ryan, Kellie-Rae",
       "time": {
         "TR": [
@@ -50952,9 +50952,9 @@
     "count": 1147,
     "section": "00002",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-150-AB",
     "lecture": {
-      "title": "570-150-AB Intro to Photography and Digital Imaging",
+      "title": "Intro to Photography and Digital Imaging",
       "prof": "Ryan, Kellie-Rae",
       "time": {
         "TR": [
@@ -50993,9 +50993,9 @@
     "count": 1148,
     "section": "00001",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-151-AB ",
     "lecture": {
-      "title": "570-151-AB Web Fundamentals",
+      "title": "Web Fundamentals",
       "prof": "Girouard, Eric",
       "time": {
         "MW": [
@@ -51034,9 +51034,9 @@
     "count": 1149,
     "section": "00002",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-151-AB ",
     "lecture": {
-      "title": "570-151-AB Web Fundamentals",
+      "title": "Web Fundamentals",
       "prof": "Girouard, Eric",
       "time": {
         "MW": [
@@ -51075,9 +51075,9 @@
     "count": 1150,
     "section": "00001",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-152-AB ",
     "lecture": {
-      "title": "570-152-AB Page Layout",
+      "title": "Page Layout",
       "prof": "Rogers, Ian",
       "time": {
         "TR": [
@@ -51116,9 +51116,9 @@
     "count": 1151,
     "section": "00002",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-152-AB ",
     "lecture": {
-      "title": "570-152-AB Page Layout",
+      "title": "Page Layout",
       "prof": "Rogers, Ian",
       "time": {
         "TR": [
@@ -51157,9 +51157,9 @@
     "count": 1152,
     "section": "00001",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-153-AB ",
     "lecture": {
-      "title": "570-153-AB Vector Graphics",
+      "title": "Vector Graphics",
       "prof": "Richman, Janice",
       "time": {
         "WF": [
@@ -51198,9 +51198,9 @@
     "count": 1153,
     "section": "00002",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-153-AB ",
     "lecture": {
-      "title": "570-153-AB Vector Graphics",
+      "title": "Vector Graphics",
       "prof": "Richman, Janice",
       "time": {
         "WF": [
@@ -51239,9 +51239,9 @@
     "count": 1154,
     "section": "00001",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-154-AB ",
     "lecture": {
-      "title": "570-154-AB Sketching for Design Creativity",
+      "title": "Sketching for Design Creativity",
       "prof": "Gare, Belinda June",
       "time": {
         "TF": [
@@ -51280,9 +51280,9 @@
     "count": 1155,
     "section": "00002",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-154-AB ",
     "lecture": {
-      "title": "570-154-AB Sketching for Design Creativity",
+      "title": "Sketching for Design Creativity",
       "prof": "Gare, Belinda June",
       "time": {
         "TF": [
@@ -51321,9 +51321,9 @@
     "count": 1156,
     "section": "00001",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-350-AB ",
     "lecture": {
-      "title": "570-350-AB Branding Studio I",
+      "title": "Branding Studio I",
       "prof": "Pant, Corinne",
       "time": {
         "WF": [
@@ -51362,9 +51362,9 @@
     "count": 1157,
     "section": "00002",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-350-AB ",
     "lecture": {
-      "title": "570-350-AB Branding Studio I",
+      "title": "Branding Studio I",
       "prof": "Pant, Corinne",
       "time": {
         "WF": [
@@ -51403,9 +51403,9 @@
     "count": 1158,
     "section": "00001",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-351-AB ",
     "lecture": {
-      "title": "570-351-AB Web Publishing",
+      "title": "Web Publishing",
       "prof": "Jones, Sebrina",
       "time": {
         "TF": [
@@ -51444,9 +51444,9 @@
     "count": 1159,
     "section": "00002",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-351-AB ",
     "lecture": {
-      "title": "570-351-AB Web Publishing",
+      "title": "Web Publishing",
       "prof": "Jones, Sebrina",
       "time": {
         "TF": [
@@ -51485,9 +51485,9 @@
     "count": 1160,
     "section": "00001",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-352-AB ",
     "lecture": {
-      "title": "570-352-AB Book Design",
+      "title": "Book Design",
       "prof": "Gare, Belinda June",
       "time": {
         "MR": [
@@ -51526,9 +51526,9 @@
     "count": 1161,
     "section": "00002",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-352-AB ",
     "lecture": {
-      "title": "570-352-AB Book Design",
+      "title": "Book Design",
       "prof": "Gare, Belinda June",
       "time": {
         "MR": [
@@ -51567,9 +51567,9 @@
     "count": 1162,
     "section": "00001",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-353-AB ",
     "lecture": {
-      "title": "570-353-AB Logo & Pictogram Design",
+      "title": "Logo & Pictogram Design",
       "prof": "Rogers, Ian",
       "time": {
         "MW": [
@@ -51608,9 +51608,9 @@
     "count": 1163,
     "section": "00002",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-353-AB ",
     "lecture": {
-      "title": "570-353-AB Logo & Pictogram Design",
+      "title": "Logo & Pictogram Design",
       "prof": "Rogers, Ian",
       "time": {
         "MW": [
@@ -51649,9 +51649,9 @@
     "count": 1164,
     "section": "00001",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-354-AB ",
     "lecture": {
-      "title": "570-354-AB Photography & Advanced Image Processing",
+      "title": "Photography & Advanced Image Processing",
       "prof": "Rock, Richard",
       "time": {
         "MR": [
@@ -51690,9 +51690,9 @@
     "count": 1165,
     "section": "00002",
     "course": "",
-    "code": "DESIGN",
+    "code": "570-354-AB ",
     "lecture": {
-      "title": "570-354-AB Photography & Advanced Image Processing",
+      "title": "Photography & Advanced Image Processing",
       "prof": "Rock, Richard",
       "time": {
         "MR": [

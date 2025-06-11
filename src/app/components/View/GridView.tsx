@@ -102,10 +102,10 @@ function ClassBlock({
             variants={disableTime ? undefined : card}
             whileHover="hover"
           >
-            <p className="line-clamp-2 font-bold">{cl.lecture.title}</p>
+            <p className="line-clamp-2 font-bold">{cl.lecture?.title}</p>
             <p className="mt-1 line-clamp-1">{cl.code}</p>
             <p className="font">{cl.section}</p>
-            <p className="mt-1 line-clamp-2">{cl.lecture.prof}</p>
+            <p className="mt-1 line-clamp-2">{cl.lecture?.prof}</p>
             {disableTime ? null : (
               <motion.div
                 className="absolute bottom-0 left-0 flex w-full justify-between bg-white/10 p-2 backdrop-blur-sm backdrop-filter"

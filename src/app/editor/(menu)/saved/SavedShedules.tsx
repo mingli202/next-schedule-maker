@@ -133,10 +133,10 @@ function SavedSchedules({ allClasses }: Props) {
                 }
               >
                 <p className="font-bold">
-                  {c.code} {c.lecture.title}
+                  {c.code} {c.lecture?.title}
                 </p>
                 <p>
-                  {c.section} {c.lecture.prof}
+                  {c.section} {c.lecture?.prof}
                 </p>
               </div>
             );

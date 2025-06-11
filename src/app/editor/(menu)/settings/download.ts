@@ -95,10 +95,10 @@ async function download(currentSchedule: SharedCurrentClasses[]) {
             cell.value = `${cl.section} ${cl.code}`;
             break;
           case 1:
-            cell.value = cl.lecture.title;
+            cell.value = cl.lecture?.title ?? "";
             break;
           case 2:
-            cell.value = cl.lecture.prof;
+            cell.value = cl.lecture?.prof ?? "";
             break;
         }
       }

@@ -50,13 +50,15 @@ export type Class = {
   lecture: {
     prof: string;
     title: string;
-    rating: Rating;
-  };
+    rating: Rating | null;
+    time: Record<string, string[]>;
+  } | null;
   lab: {
     prof: string;
     title: string;
-    rating: Rating;
-  };
+    rating: Rating | null;
+    time: Record<string, string[]>;
+  } | null;
   more: string;
   viewData: Time[];
 };

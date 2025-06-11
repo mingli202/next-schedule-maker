@@ -29,10 +29,12 @@ function PreviewHover({ allClasses }: Props) {
               gridRowEnd: end,
             }}
           >
-            <p className="line-clamp-2 font-bold">{hoverClass.lecture.title}</p>
+            <p className="line-clamp-2 font-bold">
+              {hoverClass.lecture?.title}
+            </p>
             <p className="mt-1 line-clamp-1">{hoverClass.code}</p>
             <p className="font">{hoverClass.section}</p>
-            <p className="mt-1 line-clamp-2">{hoverClass.lecture.prof}</p>
+            <p className="mt-1 line-clamp-2">{hoverClass.lecture?.prof}</p>
           </div>
         );
       })}

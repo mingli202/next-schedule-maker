@@ -93,10 +93,10 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
               </div>
               <div>
                 <p className="font-bold">
-                  {code} {lecture.title}
+                  {code} {lecture?.title}
                 </p>
                 <p>
-                  {section} {lecture.prof}
+                  {section} {lecture?.prof}
                 </p>
               </div>
             </div>

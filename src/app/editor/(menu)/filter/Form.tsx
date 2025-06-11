@@ -46,7 +46,7 @@ function Form({ allClasses }: Props) {
     () =>
       titleDatalist.filter((cl) => {
         const titleRe = new RegExp(title, "gi");
-        return cl.lecture.title.match(titleRe);
+        return cl.lecture?.title.match(titleRe);
       }),
     [title, titleDatalist],
   );
@@ -119,11 +119,16 @@ function Form({ allClasses }: Props) {
           value={courseName}
         />
         <datalist id="a">
-          {[...new Set(courseNameDatalist.map((cl) => cl.course).sort())].map(
-            (val) => (
-              <option value={val} key={val} />
+          {[
+            ...new Set(
+              courseNameDatalist
+                .map((cl) => cl.course)
+                .filter((c) => c !== "")
+                .sort(),
             ),
-          )}
+          ].map((val) => (
+            <option value={val} key={val} />
+          ))}
         </datalist>
       </label>
 
@@ -167,11 +172,16 @@ function Form({ allClasses }: Props) {
           value={title}
         />
         <datalist id="c">
-          {[...new Set(titleDatalist.map((cl) => cl.lecture.title).sort())].map(
-            (val) => (
-              <option key={val} value={val} />
+          {[
+            ...new Set(
+              titleDatalist
+                .map((cl) => cl.lecture?.title)
+                .filter((p) => p)
+                .sort(),
             ),
-          )}
+          ].map((val) => (
+            <option key={val} value={val} />
+          ))}
         </datalist>
       </label>
 
@@ -191,11 +201,16 @@ function Form({ allClasses }: Props) {
           type="text"
         />
         <datalist id="d">
-          {[...new Set(profDatalist.map((cl) => cl.lecture.prof).sort())].map(
-            (val) => (
-              <option value={val} key={val} />
+          {[
+            ...new Set(
+              profDatalist
+                .map((cl) => cl.lecture?.prof)
+                .filter((p) => p)
+                .sort(),
             ),
-          )}
+          ].map((val) => (
+            <option value={val} key={val} />
+          ))}
         </datalist>
       </label>
 

@@ -72,7 +72,9 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
           (cl) => cl.code === code.code,
         );
 
-        const professors = [...new Set(classes.map((cl) => cl.lecture.prof))]
+        const professors = [
+          ...new Set(classes.map((cl) => cl.lecture?.prof ?? "")),
+        ]
           .toSorted()
           .filter((p) => p !== "");
 
