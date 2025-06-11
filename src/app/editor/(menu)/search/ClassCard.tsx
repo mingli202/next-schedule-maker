@@ -13,7 +13,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter, useSearchParams } from "next/navigation";
 import isValid from "./checkValid";
-import { useContext, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import { ScheduleDispatchContext } from "../../ScheduleContext";
 import { motion } from "framer-motion";
 import LecLab from "@/app/components/LecLab";
@@ -49,6 +49,10 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
     "loading",
   );
 
+  const [alreadyPresent, setAlreadyPresent] = useState<Record<string, boolean>>(
+    {},
+  );
+
   function handleHoverEnter() {
     if (searchParams.get("previewHover") !== "true") return;
 
@@ -67,14 +71,15 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
     router.push(`/editor/search?${url.searchParams}`);
   }
 
-  let reportedClasses = localStorage.getItem("fall2025ReportedClasses");
-  if (reportedClasses === null) {
-    reportedClasses = "{}";
-    localStorage.setItem("fall2025ReportedClasses", "{}");
-  }
+  useLayoutEffect(() => {
+    let reportedClasses = localStorage.getItem("fall2025ReportedClasses");
+    if (reportedClasses === null) {
+      reportedClasses = "{}";
+      localStorage.setItem("fall2025ReportedClasses", "{}");
+    }
 
-  const alreadyPresentObj: Record<string, boolean> =
-    JSON.parse(reportedClasses);
+    setAlreadyPresent(JSON.parse(reportedClasses));
+  }, []);
 
   return (
     <motion.div
@@ -117,7 +122,7 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
         <Button
           variant="basic"
           title={
-            alreadyPresentObj[id]
+            alreadyPresent[id]
               ? "Report wrong info (again)"
               : "Report wrong info"
           }
@@ -133,15 +138,16 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
               [id]: ServerValue.increment(1),
             });
 
-            if (alreadyPresentObj[id]) {
+            if (alreadyPresent[id]) {
               setReportedState("Reported again!");
             } else {
               setReportedState("Reported!");
-              alreadyPresentObj[id] = true;
+              const alreadyPresentNext = { ...alreadyPresent, [id]: true };
+              setAlreadyPresent(alreadyPresentNext);
 
               localStorage.setItem(
                 "fall2025ReportedClasses",
-                JSON.stringify(alreadyPresentObj),
+                JSON.stringify(alreadyPresentNext),
               );
             }
 
