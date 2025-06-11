@@ -67,6 +67,15 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
     router.push(`/editor/search?${url.searchParams}`);
   }
 
+  let reportedClasses = localStorage.getItem("fall2025ReportedClasses");
+  if (reportedClasses === null) {
+    reportedClasses = "{}";
+    localStorage.setItem("fall2025ReportedClasses", "{}");
+  }
+
+  const alreadyPresentObj: Record<string, boolean> =
+    JSON.parse(reportedClasses);
+
   return (
     <motion.div
       key={id}
@@ -107,7 +116,11 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
       <div className="flex items-center justify-between pt-2">
         <Button
           variant="basic"
-          title="Report Wrong Info"
+          title={
+            alreadyPresentObj[id]
+              ? "Report wrong info (again)"
+              : "Report wrong info"
+          }
           className="flex items-center justify-center"
           onClick={async (e) => {
             setReportedCoordinates({
@@ -119,17 +132,6 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
             await update(ref(db, "reports"), {
               [id]: ServerValue.increment(1),
             });
-
-            let reportedClasses = localStorage.getItem(
-              "fall2025ReportedClasses",
-            );
-            if (reportedClasses === null) {
-              reportedClasses = "{}";
-              localStorage.setItem("fall2025ReportedClasses", "{}");
-            }
-
-            const alreadyPresentObj: Record<string, boolean> =
-              JSON.parse(reportedClasses);
 
             if (alreadyPresentObj[id]) {
               setReportedState("Reported again!");
