@@ -3,15 +3,17 @@
 import { ActionType, Class, SharedCurrentClasses } from "@/types";
 import { Button } from "@/ui";
 import {
+  faCheck,
   faEye,
   faMinus,
   faPlus,
+  faSpinner,
   faWarning,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter, useSearchParams } from "next/navigation";
 import isValid from "./checkValid";
-import { useContext } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import { ScheduleDispatchContext } from "../../ScheduleContext";
 import { motion } from "framer-motion";
 import LecLab from "@/app/components/LecLab";
@@ -28,12 +30,28 @@ type Props = {
   currentClasses: SharedCurrentClasses[];
 };
 
+type Point = {
+  x: number;
+  y: number;
+};
+
 function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
   const searchParams = useSearchParams();
 
   const router = useRouter();
 
   const dispatch = useContext(ScheduleDispatchContext);
+
+  const [reportedCoordinates, setReportedCoordinates] = useState<Point | null>(
+    null,
+  );
+  const [reportedState, setReportedState] = useState<"loading" | string>(
+    "loading",
+  );
+
+  const [alreadyPresent, setAlreadyPresent] = useState<Record<string, boolean>>(
+    {},
+  );
 
   function handleHoverEnter() {
     if (searchParams.get("previewHover") !== "true") return;
@@ -53,6 +71,16 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
     router.push(`/editor/search?${url.searchParams}`);
   }
 
+  useLayoutEffect(() => {
+    let reportedClasses = localStorage.getItem("fall2025ReportedClasses");
+    if (reportedClasses === null) {
+      reportedClasses = "{}";
+      localStorage.setItem("fall2025ReportedClasses", "{}");
+    }
+
+    setAlreadyPresent(JSON.parse(reportedClasses));
+  }, []);
+
   return (
     <motion.div
       key={id}
@@ -60,6 +88,24 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
       onHoverStart={handleHoverEnter}
       onHoverEnd={handleHoverEnd}
     >
+      {reportedCoordinates ? (
+        <div
+          className="absolute z-10 -translate-y-full rounded-sm bg-bgPrimary p-1 text-sm"
+          style={{ top: reportedCoordinates.y, left: reportedCoordinates.x }}
+        >
+          {reportedState === "loading" ? (
+            <div>
+              <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-2">
+              <p>{reportedState}</p>
+              <FontAwesomeIcon icon={faCheck} />
+            </div>
+          )}
+        </div>
+      ) : null}
+
       <p className="font-light">
         {cl.program}: {cl.course} {cl.code}
       </p>
@@ -75,14 +121,45 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
       <div className="flex items-center justify-between pt-2">
         <Button
           variant="basic"
-          title="Report Wrong Info"
+          title={
+            alreadyPresent[id]
+              ? "Report wrong info (again)"
+              : "Report wrong info"
+          }
           className="flex items-center justify-center"
-          onClick={async () => {
+          onClick={async (e) => {
+            setReportedCoordinates({
+              x: e.clientX,
+              y: e.clientY,
+            });
             const ServerValue = firebase.database.ServerValue;
 
             await update(ref(db, "reports"), {
               [id]: ServerValue.increment(1),
             });
+
+            if (alreadyPresent[id]) {
+              setReportedState("Reported again!");
+            } else {
+              setReportedState("Reported!");
+              const alreadyPresentNext = { ...alreadyPresent, [id]: true };
+              setAlreadyPresent(alreadyPresentNext);
+
+              localStorage.setItem(
+                "fall2025ReportedClasses",
+                JSON.stringify(alreadyPresentNext),
+              );
+            }
+
+            const f = () => {
+              window.removeEventListener("mousemove", f);
+              window.removeEventListener("click", f);
+              setReportedState("loading");
+              setReportedCoordinates(null);
+            };
+
+            window.addEventListener("mousemove", f, { once: true });
+            window.addEventListener("click", f, { once: true });
           }}
         >
           <FontAwesomeIcon icon={faWarning} />
