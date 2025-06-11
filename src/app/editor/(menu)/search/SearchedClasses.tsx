@@ -116,9 +116,9 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
           <p>
             DISCLAIMER: This website is a tool meant to help students plan their
             schedule. It is NOT an official website and you still need to make
-            your schedule via OMNIVOX. Moreover, although we try our best to
-            make the website as reliable as possible, it is still your
-            responsibility to make sure that the info is correct.
+            your schedule via OMNIVOX. Moreover, although I try my best to make
+            the website as reliable as possible, it is still your responsibility
+            to make sure that the info is correct.
           </p>
           <br />
           <div className="h-0.5 w-full rounded-full bg-third" />
