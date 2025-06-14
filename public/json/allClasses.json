@@ -1326,7 +1326,7 @@
     "course": "BIOLOGY",
     "code": "101-SF2-AB",
     "lecture": {
-      "title": "\u00c9cologie et \u00e9volution",
+      "title": "Écologie et évolution",
       "prof": "Levesque, Christian",
       "time": {
         "TR": [
@@ -1344,7 +1344,7 @@
       }
     },
     "lab": {
-      "title": "\u00c9cologie et \u00e9volution",
+      "title": "Écologie et évolution",
       "prof": "Levesque, Christian",
       "time": {
         "W": [
@@ -1390,7 +1390,7 @@
     "course": "BIOLOGY",
     "code": "101-SF2-AB",
     "lecture": {
-      "title": "\u00c9cologie et \u00e9volution",
+      "title": "Écologie et évolution",
       "prof": "Levesque, Christian",
       "time": {
         "TR": [
@@ -1408,7 +1408,7 @@
       }
     },
     "lab": {
-      "title": "\u00c9cologie et \u00e9volution",
+      "title": "Écologie et évolution",
       "prof": "Levesque, Christian",
       "time": {
         "W": [
@@ -2041,7 +2041,7 @@
     "code": "202-SN1-RE",
     "lecture": {
       "title": "General Chemistry",
-      "prof": "B\u00e9rub\u00e9, Am\u00e9lie",
+      "prof": "Bérubé, Amélie",
       "time": {
         "TF": [
           "1000-1130"
@@ -2054,12 +2054,12 @@
         "takeAgain": 44,
         "difficulty": 4.2,
         "status": "found",
-        "prof": "B\u00e9rub\u00e9, Am\u00e9lie"
+        "prof": "Bérubé, Amélie"
       }
     },
     "lab": {
       "title": "General Chemistry",
-      "prof": "B\u00e9rub\u00e9, Am\u00e9lie",
+      "prof": "Bérubé, Amélie",
       "time": {
         "M": [
           "0830-1030"
@@ -2072,7 +2072,7 @@
         "takeAgain": 44,
         "difficulty": 4.2,
         "status": "found",
-        "prof": "B\u00e9rub\u00e9, Am\u00e9lie"
+        "prof": "Bérubé, Amélie"
       }
     },
     "more": "",
@@ -2105,7 +2105,7 @@
     "code": "202-SN1-RE",
     "lecture": {
       "title": "General Chemistry",
-      "prof": "B\u00e9rub\u00e9, Am\u00e9lie",
+      "prof": "Bérubé, Amélie",
       "time": {
         "TF": [
           "1000-1130"
@@ -2118,12 +2118,12 @@
         "takeAgain": 44,
         "difficulty": 4.2,
         "status": "found",
-        "prof": "B\u00e9rub\u00e9, Am\u00e9lie"
+        "prof": "Bérubé, Amélie"
       }
     },
     "lab": {
       "title": "General Chemistry",
-      "prof": "B\u00e9rub\u00e9, Am\u00e9lie",
+      "prof": "Bérubé, Amélie",
       "time": {
         "M": [
           "1030-1230"
@@ -2136,7 +2136,7 @@
         "takeAgain": 44,
         "difficulty": 4.2,
         "status": "found",
-        "prof": "B\u00e9rub\u00e9, Am\u00e9lie"
+        "prof": "Bérubé, Amélie"
       }
     },
     "more": "",
@@ -2169,7 +2169,7 @@
     "code": "202-SN1-RE",
     "lecture": {
       "title": "General Chemistry",
-      "prof": "R\u00e9gimbal, Jean-Michel",
+      "prof": "Régimbal, Jean-Michel",
       "time": {
         "WF": [
           "0830-1000"
@@ -2182,12 +2182,12 @@
         "takeAgain": 25,
         "difficulty": 4.4,
         "status": "found",
-        "prof": "R\u00e9gimbal, Jean-Michel"
+        "prof": "Régimbal, Jean-Michel"
       }
     },
     "lab": {
       "title": "General Chemistry",
-      "prof": "R\u00e9gimbal, Jean-Michel",
+      "prof": "Régimbal, Jean-Michel",
       "time": {
         "M": [
           "1230-1430"
@@ -2200,7 +2200,7 @@
         "takeAgain": 25,
         "difficulty": 4.4,
         "status": "found",
-        "prof": "R\u00e9gimbal, Jean-Michel"
+        "prof": "Régimbal, Jean-Michel"
       }
     },
     "more": "",
@@ -2233,7 +2233,7 @@
     "code": "202-SN1-RE",
     "lecture": {
       "title": "General Chemistry",
-      "prof": "R\u00e9gimbal, Jean-Michel",
+      "prof": "Régimbal, Jean-Michel",
       "time": {
         "WF": [
           "0830-1000"
@@ -2246,12 +2246,12 @@
         "takeAgain": 25,
         "difficulty": 4.4,
         "status": "found",
-        "prof": "R\u00e9gimbal, Jean-Michel"
+        "prof": "Régimbal, Jean-Michel"
       }
     },
     "lab": {
       "title": "General Chemistry",
-      "prof": "R\u00e9gimbal, Jean-Michel",
+      "prof": "Régimbal, Jean-Michel",
       "time": {
         "M": [
           "1430-1630"
@@ -2264,7 +2264,7 @@
         "takeAgain": 25,
         "difficulty": 4.4,
         "status": "found",
-        "prof": "R\u00e9gimbal, Jean-Michel"
+        "prof": "Régimbal, Jean-Michel"
       }
     },
     "more": "",
@@ -2379,7 +2379,7 @@
     },
     "lab": {
       "title": "General Chemistry",
-      "prof": "R\u00e9gimbal, Jean-Michel",
+      "prof": "Régimbal, Jean-Michel",
       "time": {
         "T": [
           "1030-1230"
@@ -2392,7 +2392,7 @@
         "takeAgain": 25,
         "difficulty": 4.4,
         "status": "found",
-        "prof": "R\u00e9gimbal, Jean-Michel"
+        "prof": "Régimbal, Jean-Michel"
       }
     },
     "more": "",
@@ -2556,7 +2556,7 @@
     "code": "202-SN1-RE",
     "lecture": {
       "title": "General Chemistry",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "time": {
         "MR": [
           "1000-1130"
@@ -2569,12 +2569,12 @@
         "takeAgain": 44,
         "difficulty": 4.1,
         "status": "found",
-        "prof": "Perez Quintana, Germ\u00e1n Miguel"
+        "prof": "Perez Quintana, Germán Miguel"
       }
     },
     "lab": {
       "title": "General Chemistry",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "time": {
         "W": [
           "0800-1000"
@@ -2587,7 +2587,7 @@
         "takeAgain": 44,
         "difficulty": 4.1,
         "status": "found",
-        "prof": "Perez Quintana, Germ\u00e1n Miguel"
+        "prof": "Perez Quintana, Germán Miguel"
       }
     },
     "more": "",
@@ -2620,7 +2620,7 @@
     "code": "202-SN1-RE",
     "lecture": {
       "title": "General Chemistry",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "time": {
         "MR": [
           "1000-1130"
@@ -2633,12 +2633,12 @@
         "takeAgain": 44,
         "difficulty": 4.1,
         "status": "found",
-        "prof": "Perez Quintana, Germ\u00e1n Miguel"
+        "prof": "Perez Quintana, Germán Miguel"
       }
     },
     "lab": {
       "title": "General Chemistry",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "time": {
         "W": [
           "1000-1200"
@@ -2651,7 +2651,7 @@
         "takeAgain": 44,
         "difficulty": 4.1,
         "status": "found",
-        "prof": "Perez Quintana, Germ\u00e1n Miguel"
+        "prof": "Perez Quintana, Germán Miguel"
       }
     },
     "more": "",
@@ -3092,7 +3092,7 @@
     },
     "lab": {
       "title": "General Chemistry",
-      "prof": "B\u00e9rub\u00e9, Am\u00e9lie",
+      "prof": "Bérubé, Amélie",
       "time": {
         "F": [
           "1230-1430"
@@ -3105,7 +3105,7 @@
         "takeAgain": 44,
         "difficulty": 4.2,
         "status": "found",
-        "prof": "B\u00e9rub\u00e9, Am\u00e9lie"
+        "prof": "Bérubé, Amélie"
       }
     },
     "more": "",
@@ -3156,7 +3156,7 @@
     },
     "lab": {
       "title": "General Chemistry",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "time": {
         "F": [
           "1430-1630"
@@ -3169,7 +3169,7 @@
         "takeAgain": 44,
         "difficulty": 4.1,
         "status": "found",
-        "prof": "Perez Quintana, Germ\u00e1n Miguel"
+        "prof": "Perez Quintana, Germán Miguel"
       }
     },
     "more": "",
@@ -3958,7 +3958,7 @@
     "code": "202-SN2-RE",
     "lecture": {
       "title": "Chemistry of Solutions",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "time": {
         "M": [
           "1400-1600"
@@ -3971,12 +3971,12 @@
         "takeAgain": 44,
         "difficulty": 4.1,
         "status": "found",
-        "prof": "Perez Quintana, Germ\u00e1n Miguel"
+        "prof": "Perez Quintana, Germán Miguel"
       }
     },
     "lab": {
       "title": "Chemistry of Solutions",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "time": {
         "R": [
           "1230-1430"
@@ -3989,7 +3989,7 @@
         "takeAgain": 44,
         "difficulty": 4.1,
         "status": "found",
-        "prof": "Perez Quintana, Germ\u00e1n Miguel"
+        "prof": "Perez Quintana, Germán Miguel"
       }
     },
     "more": "",
@@ -4016,7 +4016,7 @@
     "code": "202-SN2-RE",
     "lecture": {
       "title": "Chemistry of Solutions",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "time": {
         "M": [
           "1400-1600"
@@ -4029,12 +4029,12 @@
         "takeAgain": 44,
         "difficulty": 4.1,
         "status": "found",
-        "prof": "Perez Quintana, Germ\u00e1n Miguel"
+        "prof": "Perez Quintana, Germán Miguel"
       }
     },
     "lab": {
       "title": "Chemistry of Solutions",
-      "prof": "Perez Quintana, Germ\u00e1n Miguel",
+      "prof": "Perez Quintana, Germán Miguel",
       "time": {
         "R": [
           "1430-1630"
@@ -4047,7 +4047,7 @@
         "takeAgain": 44,
         "difficulty": 4.1,
         "status": "found",
-        "prof": "Perez Quintana, Germ\u00e1n Miguel"
+        "prof": "Perez Quintana, Germán Miguel"
       }
     },
     "more": "",
@@ -4190,7 +4190,7 @@
     "code": "202-SF2-AB",
     "lecture": {
       "title": "Chimie des solutions",
-      "prof": "R\u00e9gimbal, Jean-Michel",
+      "prof": "Régimbal, Jean-Michel",
       "time": {
         "T": [
           "1430-1630"
@@ -4203,12 +4203,12 @@
         "takeAgain": 25,
         "difficulty": 4.4,
         "status": "found",
-        "prof": "R\u00e9gimbal, Jean-Michel"
+        "prof": "Régimbal, Jean-Michel"
       }
     },
     "lab": {
       "title": "Chimie des solutions",
-      "prof": "R\u00e9gimbal, Jean-Michel",
+      "prof": "Régimbal, Jean-Michel",
       "time": {
         "F": [
           "1230-1430"
@@ -4221,7 +4221,7 @@
         "takeAgain": 25,
         "difficulty": 4.4,
         "status": "found",
-        "prof": "R\u00e9gimbal, Jean-Michel"
+        "prof": "Régimbal, Jean-Michel"
       }
     },
     "more": "",
@@ -4248,7 +4248,7 @@
     "code": "202-SF2-AB",
     "lecture": {
       "title": "Chimie des solutions",
-      "prof": "R\u00e9gimbal, Jean-Michel",
+      "prof": "Régimbal, Jean-Michel",
       "time": {
         "T": [
           "1430-1630"
@@ -4261,12 +4261,12 @@
         "takeAgain": 25,
         "difficulty": 4.4,
         "status": "found",
-        "prof": "R\u00e9gimbal, Jean-Michel"
+        "prof": "Régimbal, Jean-Michel"
       }
     },
     "lab": {
       "title": "Chimie des solutions",
-      "prof": "R\u00e9gimbal, Jean-Michel",
+      "prof": "Régimbal, Jean-Michel",
       "time": {
         "F": [
           "1430-1630"
@@ -4279,7 +4279,7 @@
         "takeAgain": 25,
         "difficulty": 4.4,
         "status": "found",
-        "prof": "R\u00e9gimbal, Jean-Michel"
+        "prof": "Régimbal, Jean-Michel"
       }
     },
     "more": "",
@@ -4422,7 +4422,7 @@
     "code": "202-SNU-RE",
     "lecture": {
       "title": "Organic Chemistry",
-      "prof": "B\u00e9rub\u00e9, Am\u00e9lie",
+      "prof": "Bérubé, Amélie",
       "time": {
         "T": [
           "0800-1000"
@@ -4435,12 +4435,12 @@
         "takeAgain": 44,
         "difficulty": 4.2,
         "status": "found",
-        "prof": "B\u00e9rub\u00e9, Am\u00e9lie"
+        "prof": "Bérubé, Amélie"
       }
     },
     "lab": {
       "title": "Organic Chemistry",
-      "prof": "B\u00e9rub\u00e9, Am\u00e9lie",
+      "prof": "Bérubé, Amélie",
       "time": {
         "R": [
           "0830-1130"
@@ -4453,7 +4453,7 @@
         "takeAgain": 44,
         "difficulty": 4.2,
         "status": "found",
-        "prof": "B\u00e9rub\u00e9, Am\u00e9lie"
+        "prof": "Bérubé, Amélie"
       }
     },
     "more": "",
@@ -4480,7 +4480,7 @@
     "code": "202-SNU-RE",
     "lecture": {
       "title": "Organic Chemistry",
-      "prof": "B\u00e9rub\u00e9, Am\u00e9lie",
+      "prof": "Bérubé, Amélie",
       "time": {
         "T": [
           "0800-1000"
@@ -4493,12 +4493,12 @@
         "takeAgain": 44,
         "difficulty": 4.2,
         "status": "found",
-        "prof": "B\u00e9rub\u00e9, Am\u00e9lie"
+        "prof": "Bérubé, Amélie"
       }
     },
     "lab": {
       "title": "Organic Chemistry",
-      "prof": "B\u00e9rub\u00e9, Am\u00e9lie",
+      "prof": "Bérubé, Amélie",
       "time": {
         "R": [
           "1300-1600"
@@ -4511,7 +4511,7 @@
         "takeAgain": 44,
         "difficulty": 4.2,
         "status": "found",
-        "prof": "B\u00e9rub\u00e9, Am\u00e9lie"
+        "prof": "Bérubé, Amélie"
       }
     },
     "more": "",
@@ -5361,7 +5361,7 @@
     "code": "205-SNC-AB",
     "lecture": {
       "title": "Planetary Geology",
-      "prof": "L\u00e9veill\u00e9, Richard John",
+      "prof": "Léveillé, Richard John",
       "time": {
         "MW": [
           "1430-1530"
@@ -5374,12 +5374,12 @@
         "takeAgain": 90,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "L\u00e9veill\u00e9, Richard John"
+        "prof": "Léveillé, Richard John"
       }
     },
     "lab": {
       "title": "Planetary Geology",
-      "prof": "L\u00e9veill\u00e9, Richard John",
+      "prof": "Léveillé, Richard John",
       "time": {
         "R": [
           "0830-1030"
@@ -5392,7 +5392,7 @@
         "takeAgain": 90,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "L\u00e9veill\u00e9, Richard John"
+        "prof": "Léveillé, Richard John"
       }
     },
     "more": "",
@@ -5425,7 +5425,7 @@
     "code": "205-SNC-AB",
     "lecture": {
       "title": "Planetary Geology",
-      "prof": "L\u00e9veill\u00e9, Richard John",
+      "prof": "Léveillé, Richard John",
       "time": {
         "MW": [
           "1430-1530"
@@ -5438,12 +5438,12 @@
         "takeAgain": 90,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "L\u00e9veill\u00e9, Richard John"
+        "prof": "Léveillé, Richard John"
       }
     },
     "lab": {
       "title": "Planetary Geology",
-      "prof": "L\u00e9veill\u00e9, Richard John",
+      "prof": "Léveillé, Richard John",
       "time": {
         "R": [
           "1030-1230"
@@ -5456,7 +5456,7 @@
         "takeAgain": 90,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "L\u00e9veill\u00e9, Richard John"
+        "prof": "Léveillé, Richard John"
       }
     },
     "more": "",
@@ -5489,7 +5489,7 @@
     "code": "205-SNP-AB",
     "lecture": {
       "title": "Earth Systems Science",
-      "prof": "L\u00e9veill\u00e9, Richard John",
+      "prof": "Léveillé, Richard John",
       "time": {
         "MW": [
           "1530-1630"
@@ -5502,12 +5502,12 @@
         "takeAgain": 90,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "L\u00e9veill\u00e9, Richard John"
+        "prof": "Léveillé, Richard John"
       }
     },
     "lab": {
       "title": "Earth Systems Science",
-      "prof": "L\u00e9veill\u00e9, Richard John",
+      "prof": "Léveillé, Richard John",
       "time": {
         "T": [
           "1230-1430"
@@ -5520,7 +5520,7 @@
         "takeAgain": 90,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "L\u00e9veill\u00e9, Richard John"
+        "prof": "Léveillé, Richard John"
       }
     },
     "more": "",
@@ -5553,7 +5553,7 @@
     "code": "205-SNP-AB",
     "lecture": {
       "title": "Earth Systems Science",
-      "prof": "L\u00e9veill\u00e9, Richard John",
+      "prof": "Léveillé, Richard John",
       "time": {
         "MW": [
           "1530-1630"
@@ -5566,12 +5566,12 @@
         "takeAgain": 90,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "L\u00e9veill\u00e9, Richard John"
+        "prof": "Léveillé, Richard John"
       }
     },
     "lab": {
       "title": "Earth Systems Science",
-      "prof": "L\u00e9veill\u00e9, Richard John",
+      "prof": "Léveillé, Richard John",
       "time": {
         "T": [
           "1430-1630"
@@ -5584,7 +5584,7 @@
         "takeAgain": 90,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "L\u00e9veill\u00e9, Richard John"
+        "prof": "Léveillé, Richard John"
       }
     },
     "more": "",
@@ -6972,7 +6972,7 @@
     "course": "MATHEMATICS",
     "code": "201-SF3-AB",
     "lecture": {
-      "title": "Calcul int\u00e9gral",
+      "title": "Calcul intégral",
       "prof": "Herlin, Antoine",
       "time": {
         "TR": [
@@ -10908,7 +10908,7 @@
     "course": "PHYSICS",
     "code": "203-SF2-AB",
     "lecture": {
-      "title": "\u00c9lectricit\u00e9 et magn\u00e9tisme",
+      "title": "Électricité et magnétisme",
       "prof": "Pare, Nanouk",
       "time": {
         "R": [
@@ -10926,7 +10926,7 @@
       }
     },
     "lab": {
-      "title": "\u00c9lectricit\u00e9 et magn\u00e9tisme",
+      "title": "Électricité et magnétisme",
       "prof": "Camirand, Hubert",
       "time": {
         "M": [
@@ -10966,7 +10966,7 @@
     "course": "PHYSICS",
     "code": "203-SF2-AB",
     "lecture": {
-      "title": "\u00c9lectricit\u00e9 et magn\u00e9tisme",
+      "title": "Électricité et magnétisme",
       "prof": "Pare, Nanouk",
       "time": {
         "R": [
@@ -10984,7 +10984,7 @@
       }
     },
     "lab": {
-      "title": "\u00c9lectricit\u00e9 et magn\u00e9tisme",
+      "title": "Électricité et magnétisme",
       "prof": "Camirand, Hubert",
       "time": {
         "M": [
@@ -18028,7 +18028,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Young, Thomas",
       "time": {
         "WF": [
@@ -18069,7 +18069,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Bryce, Stephen",
       "time": {
         "TR": [
@@ -18110,7 +18110,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Sotiron, Jean Michel",
       "time": {
         "MW": [
@@ -18151,7 +18151,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Sotiron, Jean Michel",
       "time": {
         "MW": [
@@ -18192,7 +18192,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Seck, Medoune Mouhamad",
       "time": {
         "TR": [
@@ -18233,7 +18233,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Seck, Medoune Mouhamad",
       "time": {
         "TR": [
@@ -18274,7 +18274,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Harrar, Vanessa",
       "time": {
         "TR": [
@@ -18315,7 +18315,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Nassif, Charbel",
       "time": {
         "WF": [
@@ -18356,7 +18356,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Nassif, Charbel",
       "time": {
         "WF": [
@@ -18397,7 +18397,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Tosaj, Nicholas",
       "time": {
         "MW": [
@@ -18438,7 +18438,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Tosaj, Nicholas",
       "time": {
         "F": [
@@ -18473,7 +18473,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Riverin, Maude",
       "time": {
         "MW": [
@@ -18514,7 +18514,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Boer, Elise Marianne",
       "time": {
         "M": [
@@ -18549,7 +18549,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Ziliotti, Roberto",
       "time": {
         "TR": [
@@ -18590,7 +18590,7 @@
     "course": "METHODOLOGY",
     "code": "300-10F-AB",
     "lecture": {
-      "title": "M\u00e9thodes de travail intellectuel",
+      "title": "Méthodes de travail intellectuel",
       "prof": "Boer, Elise Marianne",
       "time": {
         "F": [
@@ -19535,7 +19535,7 @@
     "code": "300-222-AB",
     "lecture": {
       "title": "Research and Qualitative Methods",
-      "prof": "L\u00e9g\u00e8re, Jessica",
+      "prof": "Légère, Jessica",
       "time": {
         "W": [
           "0830-1100"
@@ -19548,12 +19548,12 @@
         "takeAgain": 73,
         "difficulty": 3.1,
         "status": "found",
-        "prof": "L\u00e9g\u00e8re, Jessica"
+        "prof": "Légère, Jessica"
       }
     },
     "lab": {
       "title": "Research and Qualitative Methods",
-      "prof": "L\u00e9g\u00e8re, Jessica",
+      "prof": "Légère, Jessica",
       "time": {
         "M": [
           "0830-1000"
@@ -19566,7 +19566,7 @@
         "takeAgain": 73,
         "difficulty": 3.1,
         "status": "found",
-        "prof": "L\u00e9g\u00e8re, Jessica"
+        "prof": "Légère, Jessica"
       }
     },
     "more": "",
@@ -19593,7 +19593,7 @@
     "code": "300-222-AB",
     "lecture": {
       "title": "Research and Qualitative Methods",
-      "prof": "L\u00e9g\u00e8re, Jessica",
+      "prof": "Légère, Jessica",
       "time": {
         "W": [
           "0830-1100"
@@ -19606,12 +19606,12 @@
         "takeAgain": 73,
         "difficulty": 3.1,
         "status": "found",
-        "prof": "L\u00e9g\u00e8re, Jessica"
+        "prof": "Légère, Jessica"
       }
     },
     "lab": {
       "title": "Research and Qualitative Methods",
-      "prof": "L\u00e9g\u00e8re, Jessica",
+      "prof": "Légère, Jessica",
       "time": {
         "M": [
           "1000-1130"
@@ -19624,7 +19624,7 @@
         "takeAgain": 73,
         "difficulty": 3.1,
         "status": "found",
-        "prof": "L\u00e9g\u00e8re, Jessica"
+        "prof": "Légère, Jessica"
       }
     },
     "more": "",
@@ -19651,7 +19651,7 @@
     "code": "300-222-AB",
     "lecture": {
       "title": "Research and Qualitative Methods",
-      "prof": "L\u00e9g\u00e8re, Jessica",
+      "prof": "Légère, Jessica",
       "time": {
         "R": [
           "0830-1100"
@@ -19664,12 +19664,12 @@
         "takeAgain": 73,
         "difficulty": 3.1,
         "status": "found",
-        "prof": "L\u00e9g\u00e8re, Jessica"
+        "prof": "Légère, Jessica"
       }
     },
     "lab": {
       "title": "Research and Qualitative Methods",
-      "prof": "L\u00e9g\u00e8re, Jessica",
+      "prof": "Légère, Jessica",
       "time": {
         "T": [
           "0830-1000"
@@ -19682,7 +19682,7 @@
         "takeAgain": 73,
         "difficulty": 3.1,
         "status": "found",
-        "prof": "L\u00e9g\u00e8re, Jessica"
+        "prof": "Légère, Jessica"
       }
     },
     "more": "",
@@ -19709,7 +19709,7 @@
     "code": "300-222-AB",
     "lecture": {
       "title": "Research and Qualitative Methods",
-      "prof": "L\u00e9g\u00e8re, Jessica",
+      "prof": "Légère, Jessica",
       "time": {
         "R": [
           "0830-1100"
@@ -19722,12 +19722,12 @@
         "takeAgain": 73,
         "difficulty": 3.1,
         "status": "found",
-        "prof": "L\u00e9g\u00e8re, Jessica"
+        "prof": "Légère, Jessica"
       }
     },
     "lab": {
       "title": "Research and Qualitative Methods",
-      "prof": "L\u00e9g\u00e8re, Jessica",
+      "prof": "Légère, Jessica",
       "time": {
         "T": [
           "1000-1130"
@@ -19740,7 +19740,7 @@
         "takeAgain": 73,
         "difficulty": 3.1,
         "status": "found",
-        "prof": "L\u00e9g\u00e8re, Jessica"
+        "prof": "Légère, Jessica"
       }
     },
     "more": "",
@@ -20110,7 +20110,7 @@
     "code": "300-303-AB",
     "lecture": {
       "title": "Social Science Integrative Project",
-      "prof": "Beaupr\u00e9-Odorico, Vicki",
+      "prof": "Beaupré-Odorico, Vicki",
       "time": {
         "T": [
           "0830-1130"
@@ -20123,7 +20123,7 @@
         "takeAgain": 89,
         "difficulty": 2.4,
         "status": "found",
-        "prof": "Beaupr\u00e9-Odorico, Vicki"
+        "prof": "Beaupré-Odorico, Vicki"
       }
     },
     "lab": null,
@@ -20145,7 +20145,7 @@
     "code": "300-303-AB",
     "lecture": {
       "title": "Social Science Integrative Project",
-      "prof": "Chowanietz, Christophe Cl\u00e9ment",
+      "prof": "Chowanietz, Christophe Clément",
       "time": {
         "TR": [
           "1300-1430"
@@ -20158,7 +20158,7 @@
         "takeAgain": 83,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "Chowanietz, Christophe Cl\u00e9ment"
+        "prof": "Chowanietz, Christophe Clément"
       }
     },
     "lab": null,
@@ -21846,7 +21846,7 @@
     "code": "360-223-AB",
     "lecture": {
       "title": "Quantitative Methods",
-      "prof": "Beaupr\u00e9-Odorico, Vicki",
+      "prof": "Beaupré-Odorico, Vicki",
       "time": {
         "W": [
           "1200-1400"
@@ -21859,12 +21859,12 @@
         "takeAgain": 89,
         "difficulty": 2.4,
         "status": "found",
-        "prof": "Beaupr\u00e9-Odorico, Vicki"
+        "prof": "Beaupré-Odorico, Vicki"
       }
     },
     "lab": {
       "title": "Quantitative Methods",
-      "prof": "Beaupr\u00e9-Odorico, Vicki",
+      "prof": "Beaupré-Odorico, Vicki",
       "time": {
         "M": [
           "1200-1400"
@@ -21877,7 +21877,7 @@
         "takeAgain": 89,
         "difficulty": 2.4,
         "status": "found",
-        "prof": "Beaupr\u00e9-Odorico, Vicki"
+        "prof": "Beaupré-Odorico, Vicki"
       }
     },
     "more": "",
@@ -21904,7 +21904,7 @@
     "code": "360-223-AB",
     "lecture": {
       "title": "Quantitative Methods",
-      "prof": "Beaupr\u00e9-Odorico, Vicki",
+      "prof": "Beaupré-Odorico, Vicki",
       "time": {
         "W": [
           "1430-1630"
@@ -21917,12 +21917,12 @@
         "takeAgain": 89,
         "difficulty": 2.4,
         "status": "found",
-        "prof": "Beaupr\u00e9-Odorico, Vicki"
+        "prof": "Beaupré-Odorico, Vicki"
       }
     },
     "lab": {
       "title": "Quantitative Methods",
-      "prof": "Beaupr\u00e9-Odorico, Vicki",
+      "prof": "Beaupré-Odorico, Vicki",
       "time": {
         "M": [
           "1430-1630"
@@ -21935,7 +21935,7 @@
         "takeAgain": 89,
         "difficulty": 2.4,
         "status": "found",
-        "prof": "Beaupr\u00e9-Odorico, Vicki"
+        "prof": "Beaupré-Odorico, Vicki"
       }
     },
     "more": "",
@@ -22358,7 +22358,7 @@
     "code": "385-101-AB",
     "lecture": {
       "title": "Introduction to Political Science",
-      "prof": "Chowanietz, Christophe Cl\u00e9ment",
+      "prof": "Chowanietz, Christophe Clément",
       "time": {
         "TR": [
           "1130-1300"
@@ -22371,7 +22371,7 @@
         "takeAgain": 83,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "Chowanietz, Christophe Cl\u00e9ment"
+        "prof": "Chowanietz, Christophe Clément"
       }
     },
     "lab": null,
@@ -22399,7 +22399,7 @@
     "code": "385-101-AB",
     "lecture": {
       "title": "Introduction to Political Science",
-      "prof": "Chowanietz, Christophe Cl\u00e9ment",
+      "prof": "Chowanietz, Christophe Clément",
       "time": {
         "MW": [
           "1000-1130"
@@ -22412,7 +22412,7 @@
         "takeAgain": 83,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "Chowanietz, Christophe Cl\u00e9ment"
+        "prof": "Chowanietz, Christophe Clément"
       }
     },
     "lab": null,
@@ -22440,7 +22440,7 @@
     "code": "385-101-AB",
     "lecture": {
       "title": "Introduction to Political Science",
-      "prof": "Chowanietz, Christophe Cl\u00e9ment",
+      "prof": "Chowanietz, Christophe Clément",
       "time": {
         "MW": [
           "1130-1300"
@@ -22453,7 +22453,7 @@
         "takeAgain": 83,
         "difficulty": 2.1,
         "status": "found",
-        "prof": "Chowanietz, Christophe Cl\u00e9ment"
+        "prof": "Chowanietz, Christophe Clément"
       }
     },
     "lab": null,
@@ -25226,7 +25226,7 @@
     "course": "MATHEMATICS",
     "code": "201-A3F-AB",
     "lecture": {
-      "title": "Probabilit\u00e9s et statistiques",
+      "title": "Probabilités et statistiques",
       "prof": "Dubois, Olivier",
       "time": {
         "MW": [
@@ -26372,7 +26372,7 @@
     "course": "",
     "code": "502-CCC-AB",
     "lecture": {
-      "title": "Arts and Cultures of Qu\u00e9bec",
+      "title": "Arts and Cultures of Québec",
       "prof": "TBA-2, Film",
       "time": {
         "F": [
@@ -26407,7 +26407,7 @@
     "course": "",
     "code": "502-CCC-AB",
     "lecture": {
-      "title": "Arts and Cultures of Qu\u00e9bec",
+      "title": "Arts and Cultures of Québec",
       "prof": "TBA-2, Film",
       "time": {
         "R": [
@@ -26442,7 +26442,7 @@
     "course": "",
     "code": "502-CFC-AB",
     "lecture": {
-      "title": "Arts et cultures du Qu\u00e9bec",
+      "title": "Arts et cultures du Québec",
       "prof": "Golden, Anne",
       "time": {
         "M": [
@@ -26477,7 +26477,7 @@
     "course": "",
     "code": "502-CFC-AB",
     "lecture": {
-      "title": "Arts et cultures du Qu\u00e9bec",
+      "title": "Arts et cultures du Québec",
       "prof": "Wees, Michael",
       "time": {
         "W": [
@@ -26513,7 +26513,7 @@
     "code": "502-SEG-AB",
     "lecture": {
       "title": "Integrating Seminar for Multidisciplinary",
-      "prof": "Belzile, Fr\u00e9d\u00e9rick A.",
+      "prof": "Belzile, Frédérick A.",
       "time": {
         "F": [
           "1130-1530"
@@ -26526,7 +26526,7 @@
         "takeAgain": 85,
         "difficulty": 2.6,
         "status": "found",
-        "prof": "Belzile, Fr\u00e9d\u00e9rick A."
+        "prof": "Belzile, Frédérick A."
       }
     },
     "lab": null,
@@ -26688,7 +26688,7 @@
     "code": "530-DMA-AB",
     "lecture": {
       "title": "Introduction to Digital Media",
-      "prof": "Belzile, Fr\u00e9d\u00e9rick A.",
+      "prof": "Belzile, Frédérick A.",
       "time": {
         "W": [
           "1130-1430"
@@ -26701,7 +26701,7 @@
         "takeAgain": 85,
         "difficulty": 2.6,
         "status": "found",
-        "prof": "Belzile, Fr\u00e9d\u00e9rick A."
+        "prof": "Belzile, Frédérick A."
       }
     },
     "lab": null,
@@ -26723,7 +26723,7 @@
     "code": "530-DME-AB",
     "lecture": {
       "title": "Explorations in Digital Media (Level 2)",
-      "prof": "Belzile, Fr\u00e9d\u00e9rick A.",
+      "prof": "Belzile, Frédérick A.",
       "time": {
         "R": [
           "1130-1430"
@@ -26736,7 +26736,7 @@
         "takeAgain": 85,
         "difficulty": 2.6,
         "status": "found",
-        "prof": "Belzile, Fr\u00e9d\u00e9rick A."
+        "prof": "Belzile, Frédérick A."
       }
     },
     "lab": null,
@@ -27706,33 +27706,6 @@
   },
   "563": {
     "program": "Arts, Literature & Communication",
-    "count": 563,
-    "section": "00002",
-    "course": "",
-    "code": "608-T1A-AB",
-    "lecture": {
-      "title": "Beginners Italian 101",
-      "prof": "",
-      "time": {
-        "F": [
-          "1130-1430"
-        ]
-      },
-      "rating": null
-    },
-    "lab": null,
-    "more": "*** Not open, may open during registration ***\n",
-    "viewData": [
-      {
-        "5": [
-          8,
-          14
-        ]
-      }
-    ]
-  },
-  "564": {
-    "program": "Arts, Literature & Communication",
     "count": 564,
     "section": "00001",
     "course": "",
@@ -27772,7 +27745,7 @@
       }
     ]
   },
-  "565": {
+  "564": {
     "program": "Arts, Literature & Communication",
     "count": 565,
     "section": "00001",
@@ -27813,7 +27786,7 @@
       }
     ]
   },
-  "566": {
+  "565": {
     "program": "Arts, Literature & Communication",
     "count": 566,
     "section": "00002",
@@ -27854,7 +27827,7 @@
       }
     ]
   },
-  "567": {
+  "566": {
     "program": "Arts, Literature & Communication",
     "count": 567,
     "section": "00001",
@@ -27895,7 +27868,7 @@
       }
     ]
   },
-  "568": {
+  "567": {
     "program": "Arts, Literature & Communication",
     "count": 568,
     "section": "00001",
@@ -27930,7 +27903,7 @@
       }
     ]
   },
-  "569": {
+  "568": {
     "program": "Arts, Literature & Communication",
     "count": 569,
     "section": "00001",
@@ -27965,7 +27938,7 @@
       }
     ]
   },
-  "570": {
+  "569": {
     "program": "Arts, Literature & Communication",
     "count": 570,
     "section": "00001",
@@ -28006,7 +27979,7 @@
       }
     ]
   },
-  "571": {
+  "570": {
     "program": "Arts, Literature & Communication",
     "count": 571,
     "section": "00001",
@@ -28047,14 +28020,14 @@
       }
     ]
   },
-  "572": {
+  "571": {
     "program": "Arts, Literature & Communication",
     "count": 572,
     "section": "00001",
     "course": "",
     "code": "560-AFT-AB",
     "lecture": {
-      "title": "Atelier de th\u00e9\u00e2tre: explorer la condition humaine",
+      "title": "Atelier de théâtre: explorer la condition humaine",
       "prof": "Fontaine, Edouard",
       "time": {
         "TF": [
@@ -28088,7 +28061,7 @@
       }
     ]
   },
-  "573": {
+  "572": {
     "program": "Arts, Literature & Communication",
     "count": 573,
     "section": "00001",
@@ -28123,7 +28096,7 @@
       }
     ]
   },
-  "574": {
+  "573": {
     "program": "Pathways Courses",
     "count": 574,
     "section": "00001",
@@ -28190,7 +28163,7 @@
       }
     ]
   },
-  "575": {
+  "574": {
     "program": "Pathways Courses",
     "count": 575,
     "section": "00002",
@@ -28257,7 +28230,7 @@
       }
     ]
   },
-  "576": {
+  "575": {
     "program": "Pathways Courses",
     "count": 576,
     "section": "00001",
@@ -28321,7 +28294,7 @@
       }
     ]
   },
-  "577": {
+  "576": {
     "program": "Pathways Courses",
     "count": 577,
     "section": "00002",
@@ -28385,7 +28358,7 @@
       }
     ]
   },
-  "578": {
+  "577": {
     "program": "Pathways Courses",
     "count": 578,
     "section": "00001",
@@ -28435,7 +28408,7 @@
       }
     ]
   },
-  "579": {
+  "578": {
     "program": "Pathways Courses",
     "count": 579,
     "section": "00002",
@@ -28485,7 +28458,7 @@
       }
     ]
   },
-  "580": {
+  "579": {
     "program": "Pathways Courses",
     "count": 580,
     "section": "00003",
@@ -28535,7 +28508,7 @@
       }
     ]
   },
-  "581": {
+  "580": {
     "program": "Pathways Courses",
     "count": 581,
     "section": "00004",
@@ -28585,7 +28558,7 @@
       }
     ]
   },
-  "582": {
+  "581": {
     "program": "Pathways Courses",
     "count": 582,
     "section": "00005",
@@ -28635,7 +28608,7 @@
       }
     ]
   },
-  "583": {
+  "582": {
     "program": "Pathways Courses",
     "count": 583,
     "section": "00001",
@@ -28688,7 +28661,7 @@
       }
     ]
   },
-  "584": {
+  "583": {
     "program": "Pathways Courses",
     "count": 584,
     "section": "00002",
@@ -28741,7 +28714,7 @@
       }
     ]
   },
-  "585": {
+  "584": {
     "program": "Pathways Courses",
     "count": 585,
     "section": "00003",
@@ -28794,7 +28767,7 @@
       }
     ]
   },
-  "586": {
+  "585": {
     "program": "Pathways Courses",
     "count": 586,
     "section": "00004",
@@ -28847,7 +28820,7 @@
       }
     ]
   },
-  "587": {
+  "586": {
     "program": "Pathways Courses",
     "count": 587,
     "section": "00005",
@@ -28900,7 +28873,7 @@
       }
     ]
   },
-  "588": {
+  "587": {
     "program": "Pathways Courses",
     "count": 588,
     "section": "00006",
@@ -28953,7 +28926,7 @@
       }
     ]
   },
-  "589": {
+  "588": {
     "program": "Pathways Courses",
     "count": 589,
     "section": "00001",
@@ -28994,7 +28967,7 @@
       }
     ]
   },
-  "590": {
+  "589": {
     "program": "Pathways Courses",
     "count": 590,
     "section": "00002",
@@ -29038,7 +29011,7 @@
       }
     ]
   },
-  "591": {
+  "590": {
     "program": "Pathways Courses",
     "count": 591,
     "section": "00001",
@@ -29079,7 +29052,7 @@
       }
     ]
   },
-  "592": {
+  "591": {
     "program": "Pathways Courses",
     "count": 592,
     "section": "00002",
@@ -29120,7 +29093,7 @@
       }
     ]
   },
-  "593": {
+  "592": {
     "program": "Pathways Courses",
     "count": 593,
     "section": "00001",
@@ -29161,7 +29134,7 @@
       }
     ]
   },
-  "594": {
+  "593": {
     "program": "Pathways Courses",
     "count": 594,
     "section": "00001",
@@ -29225,7 +29198,7 @@
       }
     ]
   },
-  "595": {
+  "594": {
     "program": "Pathways Courses",
     "count": 595,
     "section": "00002",
@@ -29289,7 +29262,7 @@
       }
     ]
   },
-  "596": {
+  "595": {
     "program": "Pathways Courses",
     "count": 596,
     "section": "00001",
@@ -29330,7 +29303,7 @@
       }
     ]
   },
-  "597": {
+  "596": {
     "program": "English",
     "count": 597,
     "section": "00001",
@@ -29371,7 +29344,7 @@
       }
     ]
   },
-  "598": {
+  "597": {
     "program": "English",
     "count": 598,
     "section": "00001",
@@ -29412,7 +29385,7 @@
       }
     ]
   },
-  "599": {
+  "598": {
     "program": "English",
     "count": 599,
     "section": "00002",
@@ -29453,7 +29426,7 @@
       }
     ]
   },
-  "600": {
+  "599": {
     "program": "English",
     "count": 600,
     "section": "00003",
@@ -29494,7 +29467,7 @@
       }
     ]
   },
-  "601": {
+  "600": {
     "program": "English",
     "count": 601,
     "section": "00004",
@@ -29535,7 +29508,7 @@
       }
     ]
   },
-  "602": {
+  "601": {
     "program": "English",
     "count": 602,
     "section": "00005",
@@ -29576,7 +29549,7 @@
       }
     ]
   },
-  "603": {
+  "602": {
     "program": "English",
     "count": 603,
     "section": "00006",
@@ -29617,7 +29590,7 @@
       }
     ]
   },
-  "604": {
+  "603": {
     "program": "English",
     "count": 604,
     "section": "00007",
@@ -29658,7 +29631,7 @@
       }
     ]
   },
-  "605": {
+  "604": {
     "program": "English",
     "count": 605,
     "section": "00008",
@@ -29699,7 +29672,7 @@
       }
     ]
   },
-  "606": {
+  "605": {
     "program": "English",
     "count": 606,
     "section": "00001",
@@ -29740,7 +29713,7 @@
       }
     ]
   },
-  "607": {
+  "606": {
     "program": "English",
     "count": 607,
     "section": "00002",
@@ -29781,7 +29754,7 @@
       }
     ]
   },
-  "608": {
+  "607": {
     "program": "English",
     "count": 608,
     "section": "00003",
@@ -29822,7 +29795,7 @@
       }
     ]
   },
-  "609": {
+  "608": {
     "program": "English",
     "count": 609,
     "section": "00004",
@@ -29863,7 +29836,7 @@
       }
     ]
   },
-  "610": {
+  "609": {
     "program": "English",
     "count": 610,
     "section": "00005",
@@ -29904,7 +29877,7 @@
       }
     ]
   },
-  "611": {
+  "610": {
     "program": "English",
     "count": 611,
     "section": "00006",
@@ -29945,7 +29918,7 @@
       }
     ]
   },
-  "612": {
+  "611": {
     "program": "English",
     "count": 612,
     "section": "00007",
@@ -29986,7 +29959,7 @@
       }
     ]
   },
-  "613": {
+  "612": {
     "program": "English",
     "count": 613,
     "section": "00008",
@@ -30027,7 +30000,7 @@
       }
     ]
   },
-  "614": {
+  "613": {
     "program": "English",
     "count": 614,
     "section": "00009",
@@ -30068,7 +30041,7 @@
       }
     ]
   },
-  "615": {
+  "614": {
     "program": "English",
     "count": 615,
     "section": "00010",
@@ -30109,7 +30082,7 @@
       }
     ]
   },
-  "616": {
+  "615": {
     "program": "English",
     "count": 616,
     "section": "00011",
@@ -30150,7 +30123,7 @@
       }
     ]
   },
-  "617": {
+  "616": {
     "program": "English",
     "count": 617,
     "section": "00012",
@@ -30191,7 +30164,7 @@
       }
     ]
   },
-  "618": {
+  "617": {
     "program": "English",
     "count": 618,
     "section": "00013",
@@ -30232,7 +30205,7 @@
       }
     ]
   },
-  "619": {
+  "618": {
     "program": "English",
     "count": 619,
     "section": "00014",
@@ -30273,7 +30246,7 @@
       }
     ]
   },
-  "620": {
+  "619": {
     "program": "English",
     "count": 620,
     "section": "00015",
@@ -30314,7 +30287,7 @@
       }
     ]
   },
-  "621": {
+  "620": {
     "program": "English",
     "count": 621,
     "section": "00016",
@@ -30355,7 +30328,7 @@
       }
     ]
   },
-  "622": {
+  "621": {
     "program": "English",
     "count": 622,
     "section": "00017",
@@ -30396,7 +30369,7 @@
       }
     ]
   },
-  "623": {
+  "622": {
     "program": "English",
     "count": 623,
     "section": "00018",
@@ -30437,7 +30410,7 @@
       }
     ]
   },
-  "624": {
+  "623": {
     "program": "English",
     "count": 624,
     "section": "00019",
@@ -30478,7 +30451,7 @@
       }
     ]
   },
-  "625": {
+  "624": {
     "program": "English",
     "count": 625,
     "section": "00020",
@@ -30519,7 +30492,7 @@
       }
     ]
   },
-  "626": {
+  "625": {
     "program": "English",
     "count": 626,
     "section": "00021",
@@ -30560,7 +30533,7 @@
       }
     ]
   },
-  "627": {
+  "626": {
     "program": "English",
     "count": 627,
     "section": "00023",
@@ -30601,7 +30574,7 @@
       }
     ]
   },
-  "628": {
+  "627": {
     "program": "English",
     "count": 628,
     "section": "00025",
@@ -30642,7 +30615,7 @@
       }
     ]
   },
-  "629": {
+  "628": {
     "program": "English",
     "count": 629,
     "section": "00026",
@@ -30683,7 +30656,7 @@
       }
     ]
   },
-  "630": {
+  "629": {
     "program": "English",
     "count": 630,
     "section": "00027",
@@ -30724,7 +30697,7 @@
       }
     ]
   },
-  "631": {
+  "630": {
     "program": "English",
     "count": 631,
     "section": "00028",
@@ -30765,7 +30738,7 @@
       }
     ]
   },
-  "632": {
+  "631": {
     "program": "English",
     "count": 632,
     "section": "00029",
@@ -30806,7 +30779,7 @@
       }
     ]
   },
-  "633": {
+  "632": {
     "program": "English",
     "count": 633,
     "section": "00030",
@@ -30847,7 +30820,7 @@
       }
     ]
   },
-  "634": {
+  "633": {
     "program": "English",
     "count": 634,
     "section": "00031",
@@ -30888,7 +30861,7 @@
       }
     ]
   },
-  "635": {
+  "634": {
     "program": "English",
     "count": 635,
     "section": "00032",
@@ -30929,7 +30902,7 @@
       }
     ]
   },
-  "636": {
+  "635": {
     "program": "English",
     "count": 636,
     "section": "00033",
@@ -30970,7 +30943,7 @@
       }
     ]
   },
-  "637": {
+  "636": {
     "program": "English",
     "count": 637,
     "section": "00034",
@@ -31011,7 +30984,7 @@
       }
     ]
   },
-  "638": {
+  "637": {
     "program": "English",
     "count": 638,
     "section": "00035",
@@ -31052,7 +31025,7 @@
       }
     ]
   },
-  "639": {
+  "638": {
     "program": "English",
     "count": 639,
     "section": "00036",
@@ -31093,7 +31066,7 @@
       }
     ]
   },
-  "640": {
+  "639": {
     "program": "English",
     "count": 640,
     "section": "00037",
@@ -31134,7 +31107,7 @@
       }
     ]
   },
-  "641": {
+  "640": {
     "program": "English",
     "count": 641,
     "section": "00038",
@@ -31175,7 +31148,7 @@
       }
     ]
   },
-  "642": {
+  "641": {
     "program": "English",
     "count": 642,
     "section": "00039",
@@ -31216,7 +31189,7 @@
       }
     ]
   },
-  "643": {
+  "642": {
     "program": "English",
     "count": 643,
     "section": "00040",
@@ -31257,7 +31230,7 @@
       }
     ]
   },
-  "644": {
+  "643": {
     "program": "English",
     "count": 644,
     "section": "00041",
@@ -31298,7 +31271,7 @@
       }
     ]
   },
-  "645": {
+  "644": {
     "program": "English",
     "count": 645,
     "section": "00042",
@@ -31339,7 +31312,7 @@
       }
     ]
   },
-  "646": {
+  "645": {
     "program": "English",
     "count": 646,
     "section": "00043",
@@ -31380,7 +31353,7 @@
       }
     ]
   },
-  "647": {
+  "646": {
     "program": "English",
     "count": 647,
     "section": "00044",
@@ -31421,7 +31394,7 @@
       }
     ]
   },
-  "648": {
+  "647": {
     "program": "English",
     "count": 648,
     "section": "00045",
@@ -31462,7 +31435,7 @@
       }
     ]
   },
-  "649": {
+  "648": {
     "program": "English",
     "count": 649,
     "section": "00046",
@@ -31503,7 +31476,7 @@
       }
     ]
   },
-  "650": {
+  "649": {
     "program": "English",
     "count": 650,
     "section": "00047",
@@ -31544,7 +31517,7 @@
       }
     ]
   },
-  "651": {
+  "650": {
     "program": "English",
     "count": 651,
     "section": "00048",
@@ -31585,7 +31558,7 @@
       }
     ]
   },
-  "652": {
+  "651": {
     "program": "English",
     "count": 652,
     "section": "00049",
@@ -31626,7 +31599,7 @@
       }
     ]
   },
-  "653": {
+  "652": {
     "program": "English",
     "count": 653,
     "section": "00050",
@@ -31661,7 +31634,7 @@
       }
     ]
   },
-  "654": {
+  "653": {
     "program": "English",
     "count": 654,
     "section": "00051",
@@ -31702,7 +31675,7 @@
       }
     ]
   },
-  "655": {
+  "654": {
     "program": "English",
     "count": 655,
     "section": "00052",
@@ -31735,7 +31708,7 @@
       }
     ]
   },
-  "656": {
+  "655": {
     "program": "English",
     "count": 656,
     "section": "00001",
@@ -31776,7 +31749,7 @@
       }
     ]
   },
-  "657": {
+  "656": {
     "program": "English",
     "count": 657,
     "section": "00002",
@@ -31817,7 +31790,7 @@
       }
     ]
   },
-  "658": {
+  "657": {
     "program": "English",
     "count": 658,
     "section": "00003",
@@ -31858,7 +31831,7 @@
       }
     ]
   },
-  "659": {
+  "658": {
     "program": "English",
     "count": 659,
     "section": "00004",
@@ -31899,7 +31872,7 @@
       }
     ]
   },
-  "660": {
+  "659": {
     "program": "English",
     "count": 660,
     "section": "00005",
@@ -31940,7 +31913,7 @@
       }
     ]
   },
-  "661": {
+  "660": {
     "program": "English",
     "count": 661,
     "section": "00006",
@@ -31981,7 +31954,7 @@
       }
     ]
   },
-  "662": {
+  "661": {
     "program": "English",
     "count": 662,
     "section": "00007",
@@ -32022,7 +31995,7 @@
       }
     ]
   },
-  "663": {
+  "662": {
     "program": "English",
     "count": 663,
     "section": "00008",
@@ -32063,7 +32036,7 @@
       }
     ]
   },
-  "664": {
+  "663": {
     "program": "English",
     "count": 664,
     "section": "00009",
@@ -32104,7 +32077,7 @@
       }
     ]
   },
-  "665": {
+  "664": {
     "program": "English",
     "count": 665,
     "section": "00010",
@@ -32145,7 +32118,7 @@
       }
     ]
   },
-  "666": {
+  "665": {
     "program": "English",
     "count": 666,
     "section": "00011",
@@ -32186,7 +32159,7 @@
       }
     ]
   },
-  "667": {
+  "666": {
     "program": "English",
     "count": 667,
     "section": "00012",
@@ -32227,7 +32200,7 @@
       }
     ]
   },
-  "668": {
+  "667": {
     "program": "English",
     "count": 668,
     "section": "00013",
@@ -32268,7 +32241,7 @@
       }
     ]
   },
-  "669": {
+  "668": {
     "program": "English",
     "count": 669,
     "section": "00014",
@@ -32309,7 +32282,7 @@
       }
     ]
   },
-  "670": {
+  "669": {
     "program": "English",
     "count": 670,
     "section": "00015",
@@ -32350,7 +32323,7 @@
       }
     ]
   },
-  "671": {
+  "670": {
     "program": "English",
     "count": 671,
     "section": "00016",
@@ -32391,7 +32364,7 @@
       }
     ]
   },
-  "672": {
+  "671": {
     "program": "English",
     "count": 672,
     "section": "00017",
@@ -32432,7 +32405,7 @@
       }
     ]
   },
-  "673": {
+  "672": {
     "program": "English",
     "count": 673,
     "section": "00018",
@@ -32473,7 +32446,7 @@
       }
     ]
   },
-  "674": {
+  "673": {
     "program": "English",
     "count": 674,
     "section": "00019",
@@ -32514,7 +32487,7 @@
       }
     ]
   },
-  "675": {
+  "674": {
     "program": "English",
     "count": 675,
     "section": "00020",
@@ -32547,7 +32520,7 @@
       }
     ]
   },
-  "676": {
+  "675": {
     "program": "English",
     "count": 676,
     "section": "00060",
@@ -32588,7 +32561,7 @@
       }
     ]
   },
-  "677": {
+  "676": {
     "program": "English",
     "count": 677,
     "section": "00061",
@@ -32629,7 +32602,7 @@
       }
     ]
   },
-  "678": {
+  "677": {
     "program": "English",
     "count": 678,
     "section": "00001",
@@ -32670,7 +32643,7 @@
       }
     ]
   },
-  "679": {
+  "678": {
     "program": "English",
     "count": 679,
     "section": "00002",
@@ -32711,7 +32684,7 @@
       }
     ]
   },
-  "680": {
+  "679": {
     "program": "English",
     "count": 680,
     "section": "00003",
@@ -32752,7 +32725,7 @@
       }
     ]
   },
-  "681": {
+  "680": {
     "program": "English",
     "count": 681,
     "section": "00004",
@@ -32793,7 +32766,7 @@
       }
     ]
   },
-  "682": {
+  "681": {
     "program": "English",
     "count": 682,
     "section": "00005",
@@ -32834,7 +32807,7 @@
       }
     ]
   },
-  "683": {
+  "682": {
     "program": "English",
     "count": 683,
     "section": "00006",
@@ -32875,7 +32848,7 @@
       }
     ]
   },
-  "684": {
+  "683": {
     "program": "English",
     "count": 684,
     "section": "00007",
@@ -32916,7 +32889,7 @@
       }
     ]
   },
-  "685": {
+  "684": {
     "program": "English",
     "count": 685,
     "section": "00008",
@@ -32957,7 +32930,7 @@
       }
     ]
   },
-  "686": {
+  "685": {
     "program": "English",
     "count": 686,
     "section": "00009",
@@ -32998,7 +32971,7 @@
       }
     ]
   },
-  "687": {
+  "686": {
     "program": "English",
     "count": 687,
     "section": "00010",
@@ -33039,7 +33012,7 @@
       }
     ]
   },
-  "688": {
+  "687": {
     "program": "English",
     "count": 688,
     "section": "00011",
@@ -33080,7 +33053,7 @@
       }
     ]
   },
-  "689": {
+  "688": {
     "program": "English",
     "count": 689,
     "section": "00012",
@@ -33121,7 +33094,7 @@
       }
     ]
   },
-  "690": {
+  "689": {
     "program": "English",
     "count": 690,
     "section": "00013",
@@ -33162,7 +33135,7 @@
       }
     ]
   },
-  "691": {
+  "690": {
     "program": "English",
     "count": 691,
     "section": "00015",
@@ -33203,7 +33176,7 @@
       }
     ]
   },
-  "692": {
+  "691": {
     "program": "English",
     "count": 692,
     "section": "00016",
@@ -33244,7 +33217,7 @@
       }
     ]
   },
-  "693": {
+  "692": {
     "program": "English",
     "count": 693,
     "section": "00017",
@@ -33285,7 +33258,7 @@
       }
     ]
   },
-  "694": {
+  "693": {
     "program": "English",
     "count": 694,
     "section": "00018",
@@ -33326,7 +33299,7 @@
       }
     ]
   },
-  "695": {
+  "694": {
     "program": "English",
     "count": 695,
     "section": "00019",
@@ -33367,7 +33340,7 @@
       }
     ]
   },
-  "696": {
+  "695": {
     "program": "English",
     "count": 696,
     "section": "00020",
@@ -33408,7 +33381,7 @@
       }
     ]
   },
-  "697": {
+  "696": {
     "program": "English",
     "count": 697,
     "section": "00021",
@@ -33449,7 +33422,7 @@
       }
     ]
   },
-  "698": {
+  "697": {
     "program": "English",
     "count": 698,
     "section": "00022",
@@ -33490,7 +33463,7 @@
       }
     ]
   },
-  "699": {
+  "698": {
     "program": "English",
     "count": 699,
     "section": "00023",
@@ -33531,7 +33504,7 @@
       }
     ]
   },
-  "700": {
+  "699": {
     "program": "English",
     "count": 700,
     "section": "00024",
@@ -33572,7 +33545,7 @@
       }
     ]
   },
-  "701": {
+  "700": {
     "program": "English",
     "count": 701,
     "section": "00025",
@@ -33613,7 +33586,7 @@
       }
     ]
   },
-  "702": {
+  "701": {
     "program": "English",
     "count": 702,
     "section": "00027",
@@ -33646,7 +33619,7 @@
       }
     ]
   },
-  "703": {
+  "702": {
     "program": "English",
     "count": 703,
     "section": "00050",
@@ -33681,7 +33654,7 @@
       }
     ]
   },
-  "704": {
+  "703": {
     "program": "English",
     "count": 704,
     "section": "00051",
@@ -33716,89 +33689,7 @@
       }
     ]
   },
-  "705": {
-    "program": "English",
-    "count": 705,
-    "section": "00060",
-    "course": "ENGLISH",
-    "code": "603-103-MQ",
-    "lecture": {
-      "title": "Writing Tutors",
-      "prof": "Eberle, Wendy",
-      "time": {
-        "TR": [
-          "1230-1430"
-        ]
-      },
-      "rating": {
-        "score": 55.1,
-        "avg": 2.8,
-        "nRating": 12,
-        "takeAgain": 25,
-        "difficulty": 3.3,
-        "status": "found",
-        "prof": "Eberle, Wendy"
-      }
-    },
-    "lab": null,
-    "more": "",
-    "viewData": [
-      {
-        "2": [
-          10,
-          14
-        ]
-      },
-      {
-        "4": [
-          10,
-          14
-        ]
-      }
-    ]
-  },
-  "706": {
-    "program": "English",
-    "count": 706,
-    "section": "00061",
-    "course": "ENGLISH",
-    "code": "603-103-MQ",
-    "lecture": {
-      "title": "A Godlike Science (Writing Tutors)",
-      "prof": "Lepine, Anna",
-      "time": {
-        "WF": [
-          "1030-1230"
-        ]
-      },
-      "rating": {
-        "score": 75.5,
-        "avg": 3.9,
-        "nRating": 20,
-        "takeAgain": 72,
-        "difficulty": 3.4,
-        "status": "found",
-        "prof": "Lepine, Anna"
-      }
-    },
-    "lab": null,
-    "more": "As part of the college's Climate Action Plan, these courses will be covering the four Climate and Ecological Emergency Learning Objectives in their content. Depending on the discipline, these Learning Objectives will be woven into the course competencies in various ways, and assessed by the teacher as part of the course evaluation plan. ",
-    "viewData": [
-      {
-        "3": [
-          6,
-          10
-        ]
-      },
-      {
-        "5": [
-          6,
-          10
-        ]
-      }
-    ]
-  },
-  "707": {
+  "704": {
     "program": "English",
     "count": 707,
     "section": "00001",
@@ -33833,7 +33724,7 @@
       }
     ]
   },
-  "708": {
+  "705": {
     "program": "English",
     "count": 708,
     "section": "00002",
@@ -33884,7 +33775,7 @@
       }
     ]
   },
-  "709": {
+  "706": {
     "program": "English",
     "count": 709,
     "section": "00003",
@@ -33926,7 +33817,7 @@
       }
     ]
   },
-  "710": {
+  "707": {
     "program": "English",
     "count": 710,
     "section": "00004",
@@ -33967,7 +33858,7 @@
       }
     ]
   },
-  "711": {
+  "708": {
     "program": "English",
     "count": 711,
     "section": "00005",
@@ -34008,7 +33899,7 @@
       }
     ]
   },
-  "712": {
+  "709": {
     "program": "English",
     "count": 712,
     "section": "00006",
@@ -34049,7 +33940,7 @@
       }
     ]
   },
-  "713": {
+  "710": {
     "program": "English",
     "count": 713,
     "section": "00007",
@@ -34090,7 +33981,7 @@
       }
     ]
   },
-  "714": {
+  "711": {
     "program": "English",
     "count": 714,
     "section": "00008",
@@ -34131,7 +34022,7 @@
       }
     ]
   },
-  "715": {
+  "712": {
     "program": "English",
     "count": 715,
     "section": "00009",
@@ -34172,7 +34063,7 @@
       }
     ]
   },
-  "716": {
+  "713": {
     "program": "English",
     "count": 716,
     "section": "00010",
@@ -34213,7 +34104,7 @@
       }
     ]
   },
-  "717": {
+  "714": {
     "program": "English",
     "count": 717,
     "section": "00011",
@@ -34254,7 +34145,7 @@
       }
     ]
   },
-  "718": {
+  "715": {
     "program": "English",
     "count": 718,
     "section": "00012",
@@ -34295,7 +34186,7 @@
       }
     ]
   },
-  "719": {
+  "716": {
     "program": "English",
     "count": 719,
     "section": "00013",
@@ -34336,7 +34227,7 @@
       }
     ]
   },
-  "720": {
+  "717": {
     "program": "English",
     "count": 720,
     "section": "00014",
@@ -34377,7 +34268,7 @@
       }
     ]
   },
-  "721": {
+  "718": {
     "program": "English",
     "count": 721,
     "section": "00015",
@@ -34418,7 +34309,7 @@
       }
     ]
   },
-  "722": {
+  "719": {
     "program": "English",
     "count": 722,
     "section": "00016",
@@ -34451,7 +34342,7 @@
       }
     ]
   },
-  "723": {
+  "720": {
     "program": "English",
     "count": 723,
     "section": "00017",
@@ -34484,96 +34375,14 @@
       }
     ]
   },
-  "724": {
-    "program": "English",
-    "count": 724,
-    "section": "00060",
-    "course": "ENGLISH",
-    "code": "603-200-AB",
-    "lecture": {
-      "title": "Writing Tutors",
-      "prof": "Eberle, Wendy",
-      "time": {
-        "TR": [
-          "1230-1430"
-        ]
-      },
-      "rating": {
-        "score": 55.1,
-        "avg": 2.8,
-        "nRating": 12,
-        "takeAgain": 25,
-        "difficulty": 3.3,
-        "status": "found",
-        "prof": "Eberle, Wendy"
-      }
-    },
-    "lab": null,
-    "more": "",
-    "viewData": [
-      {
-        "2": [
-          10,
-          14
-        ]
-      },
-      {
-        "4": [
-          10,
-          14
-        ]
-      }
-    ]
-  },
-  "725": {
-    "program": "English",
-    "count": 725,
-    "section": "00061",
-    "course": "ENGLISH",
-    "code": "603-200-AB",
-    "lecture": {
-      "title": "A Godlike Science (Writing Tutors)",
-      "prof": "Lepine, Anna",
-      "time": {
-        "WF": [
-          "1030-1230"
-        ]
-      },
-      "rating": {
-        "score": 75.5,
-        "avg": 3.9,
-        "nRating": 20,
-        "takeAgain": 72,
-        "difficulty": 3.4,
-        "status": "found",
-        "prof": "Lepine, Anna"
-      }
-    },
-    "lab": null,
-    "more": "As part of the college's Climate Action Plan, these courses will be covering the four Climate and Ecological Emergency Learning Objectives in their content. Depending on the discipline, these Learning Objectives will be woven into the course competencies in various ways, and assessed by the teacher as part of the course evaluation plan. ",
-    "viewData": [
-      {
-        "3": [
-          6,
-          10
-        ]
-      },
-      {
-        "5": [
-          6,
-          10
-        ]
-      }
-    ]
-  },
-  "726": {
+  "721": {
     "program": "French",
     "count": 726,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-011-AB",
     "lecture": {
-      "title": "Initiation au fran\u00e7ais, langue seconde",
+      "title": "Initiation au français, langue seconde",
       "prof": "Sweeney, Antoine",
       "time": {
         "MTW": [
@@ -34613,14 +34422,14 @@
       }
     ]
   },
-  "727": {
+  "722": {
     "program": "French",
     "count": 727,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-006-50",
     "lecture": {
-      "title": "Pratique du fran\u00e7ais, langue seconde, \u00e0 l'oral et \u00e0 l'\u00e9crit",
+      "title": "Pratique du français, langue seconde, à l'oral et à l'écrit",
       "prof": "Piquette, Sophie",
       "time": {
         "MW": [
@@ -34654,14 +34463,14 @@
       }
     ]
   },
-  "728": {
+  "723": {
     "program": "French",
     "count": 728,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-009-AB",
     "lecture": {
-      "title": "Renforcement en fran\u00e7ais, langue seconde",
+      "title": "Renforcement en français, langue seconde",
       "prof": "Nicou, Claude",
       "time": {
         "MW": [
@@ -34689,6 +34498,211 @@
       },
       {
         "3": [
+          1,
+          5
+        ]
+      }
+    ]
+  },
+  "724": {
+    "program": "French",
+    "count": 729,
+    "section": "00002",
+    "course": "FRENCH",
+    "code": "602-009-AB",
+    "lecture": {
+      "title": "Renforcement en français, langue seconde",
+      "prof": "Tellier, Christine",
+      "time": {
+        "TR": [
+          "0800-1000"
+        ]
+      },
+      "rating": {
+        "score": 39.1,
+        "avg": 1.9,
+        "nRating": 20,
+        "takeAgain": 25,
+        "difficulty": 4.2,
+        "status": "found",
+        "prof": "Tellier, Christine"
+      }
+    },
+    "lab": null,
+    "more": "",
+    "viewData": [
+      {
+        "2": [
+          1,
+          5
+        ]
+      },
+      {
+        "4": [
+          1,
+          5
+        ]
+      }
+    ]
+  },
+  "725": {
+    "program": "French",
+    "count": 730,
+    "section": "00003",
+    "course": "FRENCH",
+    "code": "602-009-AB",
+    "lecture": {
+      "title": "Renforcement en français, langue seconde",
+      "prof": "Tellier, Christine",
+      "time": {
+        "TR": [
+          "1030-1230"
+        ]
+      },
+      "rating": {
+        "score": 39.1,
+        "avg": 1.9,
+        "nRating": 20,
+        "takeAgain": 25,
+        "difficulty": 4.2,
+        "status": "found",
+        "prof": "Tellier, Christine"
+      }
+    },
+    "lab": null,
+    "more": "",
+    "viewData": [
+      {
+        "2": [
+          6,
+          10
+        ]
+      },
+      {
+        "4": [
+          6,
+          10
+        ]
+      }
+    ]
+  },
+  "726": {
+    "program": "French",
+    "count": 731,
+    "section": "00004",
+    "course": "FRENCH",
+    "code": "602-009-AB",
+    "lecture": {
+      "title": "Renforcement en français, langue seconde",
+      "prof": "Rozenberg, Évelyne",
+      "time": {
+        "TR": [
+          "1600-1800"
+        ]
+      },
+      "rating": {
+        "score": 83.3,
+        "avg": 5.0,
+        "nRating": 4,
+        "takeAgain": 100,
+        "difficulty": 1.5,
+        "status": "found",
+        "prof": "Rozenberg, Évelyne"
+      }
+    },
+    "lab": null,
+    "more": "",
+    "viewData": [
+      {
+        "2": [
+          17,
+          21
+        ]
+      },
+      {
+        "4": [
+          17,
+          21
+        ]
+      }
+    ]
+  },
+  "727": {
+    "program": "French",
+    "count": 732,
+    "section": "00001",
+    "course": "FRENCH",
+    "code": "602-008-RE",
+    "lecture": {
+      "title": "Mise à niveau pour Français, langue seconde de la 5e seconda",
+      "prof": "Nicou, Claude",
+      "time": {
+        "MW": [
+          "0800-1000"
+        ]
+      },
+      "rating": {
+        "score": 53.5,
+        "avg": 2.7,
+        "nRating": 15,
+        "takeAgain": 53,
+        "difficulty": 3.7,
+        "status": "found",
+        "prof": "Nicou, Claude"
+      }
+    },
+    "lab": null,
+    "more": "",
+    "viewData": [
+      {
+        "1": [
+          1,
+          5
+        ]
+      },
+      {
+        "3": [
+          1,
+          5
+        ]
+      }
+    ]
+  },
+  "728": {
+    "program": "French",
+    "count": 733,
+    "section": "00002",
+    "course": "FRENCH",
+    "code": "602-008-RE",
+    "lecture": {
+      "title": "Mise à niveau pour Français, langue seconde de la 5e seconda",
+      "prof": "Tellier, Christine",
+      "time": {
+        "TR": [
+          "0800-1000"
+        ]
+      },
+      "rating": {
+        "score": 39.1,
+        "avg": 1.9,
+        "nRating": 20,
+        "takeAgain": 25,
+        "difficulty": 4.2,
+        "status": "found",
+        "prof": "Tellier, Christine"
+      }
+    },
+    "lab": null,
+    "more": "",
+    "viewData": [
+      {
+        "2": [
+          1,
+          5
+        ]
+      },
+      {
+        "4": [
           1,
           5
         ]
@@ -34697,16 +34711,16 @@
   },
   "729": {
     "program": "French",
-    "count": 729,
-    "section": "00002",
+    "count": 734,
+    "section": "00003",
     "course": "FRENCH",
-    "code": "602-009-AB",
+    "code": "602-008-RE",
     "lecture": {
-      "title": "Renforcement en fran\u00e7ais, langue seconde",
+      "title": "Mise à niveau pour Français, langue seconde de la 5e seconda",
       "prof": "Tellier, Christine",
       "time": {
         "TR": [
-          "0800-1000"
+          "1030-1230"
         ]
       },
       "rating": {
@@ -34724,40 +34738,40 @@
     "viewData": [
       {
         "2": [
-          1,
-          5
+          6,
+          10
         ]
       },
       {
         "4": [
-          1,
-          5
+          6,
+          10
         ]
       }
     ]
   },
   "730": {
     "program": "French",
-    "count": 730,
-    "section": "00003",
+    "count": 735,
+    "section": "00004",
     "course": "FRENCH",
-    "code": "602-009-AB",
+    "code": "602-008-RE",
     "lecture": {
-      "title": "Renforcement en fran\u00e7ais, langue seconde",
-      "prof": "Tellier, Christine",
+      "title": "Mise à niveau pour Français, langue seconde de la 5e seconda",
+      "prof": "Rozenberg, Évelyne",
       "time": {
         "TR": [
-          "1030-1230"
+          "1600-1800"
         ]
       },
       "rating": {
-        "score": 39.1,
-        "avg": 1.9,
-        "nRating": 20,
-        "takeAgain": 25,
-        "difficulty": 4.2,
+        "score": 83.3,
+        "avg": 5.0,
+        "nRating": 4,
+        "takeAgain": 100,
+        "difficulty": 1.5,
         "status": "found",
-        "prof": "Tellier, Christine"
+        "prof": "Rozenberg, Évelyne"
       }
     },
     "lab": null,
@@ -34765,231 +34779,26 @@
     "viewData": [
       {
         "2": [
-          6,
-          10
+          17,
+          21
         ]
       },
       {
         "4": [
-          6,
-          10
+          17,
+          21
         ]
       }
     ]
   },
   "731": {
     "program": "French",
-    "count": 731,
-    "section": "00004",
-    "course": "FRENCH",
-    "code": "602-009-AB",
-    "lecture": {
-      "title": "Renforcement en fran\u00e7ais, langue seconde",
-      "prof": "Rozenberg, \u00c9velyne",
-      "time": {
-        "TR": [
-          "1600-1800"
-        ]
-      },
-      "rating": {
-        "score": 83.3,
-        "avg": 5.0,
-        "nRating": 4,
-        "takeAgain": 100,
-        "difficulty": 1.5,
-        "status": "found",
-        "prof": "Rozenberg, \u00c9velyne"
-      }
-    },
-    "lab": null,
-    "more": "",
-    "viewData": [
-      {
-        "2": [
-          17,
-          21
-        ]
-      },
-      {
-        "4": [
-          17,
-          21
-        ]
-      }
-    ]
-  },
-  "732": {
-    "program": "French",
-    "count": 732,
-    "section": "00001",
-    "course": "FRENCH",
-    "code": "602-008-RE",
-    "lecture": {
-      "title": "Mise \u00e0 niveau pour Fran\u00e7ais, langue seconde de la 5e seconda",
-      "prof": "Nicou, Claude",
-      "time": {
-        "MW": [
-          "0800-1000"
-        ]
-      },
-      "rating": {
-        "score": 53.5,
-        "avg": 2.7,
-        "nRating": 15,
-        "takeAgain": 53,
-        "difficulty": 3.7,
-        "status": "found",
-        "prof": "Nicou, Claude"
-      }
-    },
-    "lab": null,
-    "more": "",
-    "viewData": [
-      {
-        "1": [
-          1,
-          5
-        ]
-      },
-      {
-        "3": [
-          1,
-          5
-        ]
-      }
-    ]
-  },
-  "733": {
-    "program": "French",
-    "count": 733,
-    "section": "00002",
-    "course": "FRENCH",
-    "code": "602-008-RE",
-    "lecture": {
-      "title": "Mise \u00e0 niveau pour Fran\u00e7ais, langue seconde de la 5e seconda",
-      "prof": "Tellier, Christine",
-      "time": {
-        "TR": [
-          "0800-1000"
-        ]
-      },
-      "rating": {
-        "score": 39.1,
-        "avg": 1.9,
-        "nRating": 20,
-        "takeAgain": 25,
-        "difficulty": 4.2,
-        "status": "found",
-        "prof": "Tellier, Christine"
-      }
-    },
-    "lab": null,
-    "more": "",
-    "viewData": [
-      {
-        "2": [
-          1,
-          5
-        ]
-      },
-      {
-        "4": [
-          1,
-          5
-        ]
-      }
-    ]
-  },
-  "734": {
-    "program": "French",
-    "count": 734,
-    "section": "00003",
-    "course": "FRENCH",
-    "code": "602-008-RE",
-    "lecture": {
-      "title": "Mise \u00e0 niveau pour Fran\u00e7ais, langue seconde de la 5e seconda",
-      "prof": "Tellier, Christine",
-      "time": {
-        "TR": [
-          "1030-1230"
-        ]
-      },
-      "rating": {
-        "score": 39.1,
-        "avg": 1.9,
-        "nRating": 20,
-        "takeAgain": 25,
-        "difficulty": 4.2,
-        "status": "found",
-        "prof": "Tellier, Christine"
-      }
-    },
-    "lab": null,
-    "more": "",
-    "viewData": [
-      {
-        "2": [
-          6,
-          10
-        ]
-      },
-      {
-        "4": [
-          6,
-          10
-        ]
-      }
-    ]
-  },
-  "735": {
-    "program": "French",
-    "count": 735,
-    "section": "00004",
-    "course": "FRENCH",
-    "code": "602-008-RE",
-    "lecture": {
-      "title": "Mise \u00e0 niveau pour Fran\u00e7ais, langue seconde de la 5e seconda",
-      "prof": "Rozenberg, \u00c9velyne",
-      "time": {
-        "TR": [
-          "1600-1800"
-        ]
-      },
-      "rating": {
-        "score": 83.3,
-        "avg": 5.0,
-        "nRating": 4,
-        "takeAgain": 100,
-        "difficulty": 1.5,
-        "status": "found",
-        "prof": "Rozenberg, \u00c9velyne"
-      }
-    },
-    "lab": null,
-    "more": "",
-    "viewData": [
-      {
-        "2": [
-          17,
-          21
-        ]
-      },
-      {
-        "4": [
-          17,
-          21
-        ]
-      }
-    ]
-  },
-  "736": {
-    "program": "French",
     "count": 736,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-PR2-AB",
     "lecture": {
-      "title": "Pratique du fran\u00e7ais, langue d'enseignement 2",
+      "title": "Pratique du français, langue d'enseignement 2",
       "prof": "Larochelle, Claudia",
       "time": {
         "MWR": [
@@ -35029,14 +34838,14 @@
       }
     ]
   },
-  "737": {
+  "732": {
     "program": "French",
     "count": 737,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-REN-AB",
     "lecture": {
-      "title": "Renforcement en fran\u00e7ais \u00e9crit",
+      "title": "Renforcement en français écrit",
       "prof": "Mariage, Sylvie",
       "time": {
         "MW": [
@@ -35070,15 +34879,15 @@
       }
     ]
   },
-  "738": {
+  "733": {
     "program": "French",
     "count": 738,
     "section": "00002",
     "course": "FRENCH",
     "code": "602-REN-AB",
     "lecture": {
-      "title": "Renforcement en fran\u00e7ais \u00e9crit",
-      "prof": "Tiganus Calin, Am\u00e9lia",
+      "title": "Renforcement en français écrit",
+      "prof": "Tiganus Calin, Amélia",
       "time": {
         "MW": [
           "1230-1430"
@@ -35091,7 +34900,7 @@
         "takeAgain": 33,
         "difficulty": 3.3,
         "status": "found",
-        "prof": "Tiganus Calin, Am\u00e9lia"
+        "prof": "Tiganus Calin, Amélia"
       }
     },
     "lab": null,
@@ -35111,14 +34920,14 @@
       }
     ]
   },
-  "739": {
+  "734": {
     "program": "French",
     "count": 739,
     "section": "00003",
     "course": "FRENCH",
     "code": "602-REN-AB",
     "lecture": {
-      "title": "Renforcement en fran\u00e7ais \u00e9crit",
+      "title": "Renforcement en français écrit",
       "prof": "Michael, Minar",
       "time": {
         "TR": [
@@ -35152,14 +34961,14 @@
       }
     ]
   },
-  "740": {
+  "735": {
     "program": "French",
     "count": 740,
     "section": "00004",
     "course": "FRENCH",
     "code": "602-REN-AB",
     "lecture": {
-      "title": "Renforcement en fran\u00e7ais \u00e9crit",
+      "title": "Renforcement en français écrit",
       "prof": "Michael, Minar",
       "time": {
         "TR": [
@@ -35193,14 +35002,14 @@
       }
     ]
   },
-  "741": {
+  "736": {
     "program": "French",
     "count": 741,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-C01-MQ",
     "lecture": {
-      "title": "Fran\u00e7ais et soci\u00e9t\u00e9 qu\u00e9b\u00e9coise (niveau 1)",
+      "title": "Français et société québécoise (niveau 1)",
       "prof": "Prince, Sophie",
       "time": {
         "MW": [
@@ -35234,14 +35043,14 @@
       }
     ]
   },
-  "742": {
+  "737": {
     "program": "French",
     "count": 742,
     "section": "00002",
     "course": "FRENCH",
     "code": "602-C01-MQ",
     "lecture": {
-      "title": "Fran\u00e7ais et soci\u00e9t\u00e9 qu\u00e9b\u00e9coise (niveau 1)",
+      "title": "Français et société québécoise (niveau 1)",
       "prof": "Prince, Sophie",
       "time": {
         "MW": [
@@ -35275,14 +35084,14 @@
       }
     ]
   },
-  "743": {
+  "738": {
     "program": "French",
     "count": 743,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-C02-MQ",
     "lecture": {
-      "title": "Fran\u00e7ais et soci\u00e9t\u00e9 qu\u00e9b\u00e9coise (niveau 2)",
+      "title": "Français et société québécoise (niveau 2)",
       "prof": "Hemmati, Proshat",
       "time": {
         "MW": [
@@ -35316,14 +35125,14 @@
       }
     ]
   },
-  "744": {
+  "739": {
     "program": "French",
     "count": 744,
     "section": "00002",
     "course": "FRENCH",
     "code": "602-C02-MQ",
     "lecture": {
-      "title": "Fran\u00e7ais et soci\u00e9t\u00e9 qu\u00e9b\u00e9coise (niveau 2)",
+      "title": "Français et société québécoise (niveau 2)",
       "prof": "Hemmati, Proshat",
       "time": {
         "MW": [
@@ -35357,14 +35166,14 @@
       }
     ]
   },
-  "745": {
+  "740": {
     "program": "French",
     "count": 745,
     "section": "00003",
     "course": "FRENCH",
     "code": "602-C02-MQ",
     "lecture": {
-      "title": "Fran\u00e7ais et soci\u00e9t\u00e9 qu\u00e9b\u00e9coise (niveau 2)",
+      "title": "Français et société québécoise (niveau 2)",
       "prof": "Pezeshki, Shahrouz",
       "time": {
         "TR": [
@@ -35398,14 +35207,14 @@
       }
     ]
   },
-  "746": {
+  "741": {
     "program": "French",
     "count": 746,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-D01-MQ",
     "lecture": {
-      "title": "Fran\u00e7ais, travail et num\u00e9rique (niveau 1)",
+      "title": "Français, travail et numérique (niveau 1)",
       "prof": "Piquette, Sophie",
       "time": {
         "MW": [
@@ -35439,14 +35248,14 @@
       }
     ]
   },
-  "747": {
+  "742": {
     "program": "French",
     "count": 747,
     "section": "00002",
     "course": "FRENCH",
     "code": "602-D02-MQ",
     "lecture": {
-      "title": "Fran\u00e7ais, travail et num\u00e9rique (niveau 2)",
+      "title": "Français, travail et numérique (niveau 2)",
       "prof": "Xu, Xiao",
       "time": {
         "TR": [
@@ -35480,14 +35289,14 @@
       }
     ]
   },
-  "748": {
+  "743": {
     "program": "French",
     "count": 748,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-D02-MQ",
     "lecture": {
-      "title": "Fran\u00e7ais, travail et num\u00e9rique (niveau 2)",
+      "title": "Français, travail et numérique (niveau 2)",
       "prof": "Xu, Xiao",
       "time": {
         "TR": [
@@ -35521,14 +35330,14 @@
       }
     ]
   },
-  "749": {
+  "744": {
     "program": "French",
     "count": 749,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-E01-MQ",
     "lecture": {
-      "title": "Projet exp\u00e9rientiel - Niveau 1",
+      "title": "Projet expérientiel - Niveau 1",
       "prof": "Pezeshki, Shahrouz",
       "time": {
         "F": [
@@ -35556,14 +35365,14 @@
       }
     ]
   },
-  "750": {
+  "745": {
     "program": "French",
     "count": 750,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Laganiere, Frederic",
       "time": {
         "MW": [
@@ -35597,14 +35406,14 @@
       }
     ]
   },
-  "751": {
+  "746": {
     "program": "French",
     "count": 751,
     "section": "00002",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Aissani, Louiza",
       "time": {
         "M": [
@@ -35632,15 +35441,15 @@
       }
     ]
   },
-  "752": {
+  "747": {
     "program": "French",
     "count": 752,
     "section": "00003",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
-      "prof": "Estim\u00e9, Qualito",
+      "title": "Oeuvres narratives et écriture",
+      "prof": "Estimé, Qualito",
       "time": {
         "M": [
           "1430-1730"
@@ -35653,7 +35462,7 @@
         "takeAgain": 0,
         "difficulty": 2.9,
         "status": "found",
-        "prof": "Estim\u00e9, Qualito"
+        "prof": "Estimé, Qualito"
       }
     },
     "lab": null,
@@ -35667,14 +35476,14 @@
       }
     ]
   },
-  "753": {
+  "748": {
     "program": "French",
     "count": 753,
     "section": "00004",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Michael, Minar",
       "time": {
         "M": [
@@ -35702,14 +35511,14 @@
       }
     ]
   },
-  "754": {
+  "749": {
     "program": "French",
     "count": 754,
     "section": "00005",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Bessette, Ariane",
       "time": {
         "T": [
@@ -35737,14 +35546,14 @@
       }
     ]
   },
-  "755": {
+  "750": {
     "program": "French",
     "count": 755,
     "section": "00006",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Aissani, Louiza",
       "time": {
         "T": [
@@ -35772,14 +35581,14 @@
       }
     ]
   },
-  "756": {
+  "751": {
     "program": "French",
     "count": 756,
     "section": "00007",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Beausoleil, Jean Marc",
       "time": {
         "T": [
@@ -35807,14 +35616,14 @@
       }
     ]
   },
-  "757": {
+  "752": {
     "program": "French",
     "count": 757,
     "section": "00008",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Limoges, Alexandre",
       "time": {
         "T": [
@@ -35842,14 +35651,14 @@
       }
     ]
   },
-  "758": {
+  "753": {
     "program": "French",
     "count": 758,
     "section": "00009",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Bessette, Ariane",
       "time": {
         "W": [
@@ -35877,14 +35686,14 @@
       }
     ]
   },
-  "759": {
+  "754": {
     "program": "French",
     "count": 759,
     "section": "00010",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Bechara, Rosa Maria",
       "time": {
         "W": [
@@ -35912,14 +35721,14 @@
       }
     ]
   },
-  "760": {
+  "755": {
     "program": "French",
     "count": 760,
     "section": "00011",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Beausoleil, Jean Marc",
       "time": {
         "W": [
@@ -35947,14 +35756,14 @@
       }
     ]
   },
-  "761": {
+  "756": {
     "program": "French",
     "count": 761,
     "section": "00012",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Litt\u00e9rature et univers narratif - Personnages f\u00e9minins",
+      "title": "Littérature et univers narratif - Personnages féminins",
       "prof": "Ste-Marie, Isabelle",
       "time": {
         "W": [
@@ -35982,14 +35791,14 @@
       }
     ]
   },
-  "762": {
+  "757": {
     "program": "French",
     "count": 762,
     "section": "00013",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Bechara, Rosa Maria",
       "time": {
         "R": [
@@ -36017,14 +35826,14 @@
       }
     ]
   },
-  "763": {
+  "758": {
     "program": "French",
     "count": 763,
     "section": "00014",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Litt\u00e9rature et univers narratif - Personnages f\u00e9minins",
+      "title": "Littérature et univers narratif - Personnages féminins",
       "prof": "Ste-Marie, Isabelle",
       "time": {
         "R": [
@@ -36052,14 +35861,14 @@
       }
     ]
   },
-  "764": {
+  "759": {
     "program": "French",
     "count": 764,
     "section": "00015",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Hemmati, Proshat",
       "time": {
         "R": [
@@ -36087,14 +35896,14 @@
       }
     ]
   },
-  "765": {
+  "760": {
     "program": "French",
     "count": 765,
     "section": "00016",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Sweeney, Antoine",
       "time": {
         "F": [
@@ -36122,14 +35931,14 @@
       }
     ]
   },
-  "766": {
+  "761": {
     "program": "French",
     "count": 766,
     "section": "00017",
     "course": "FRENCH",
     "code": "602-UF0-MQ",
     "lecture": {
-      "title": "Oeuvres narratives et \u00e9criture",
+      "title": "Oeuvres narratives et écriture",
       "prof": "Michael, Minar",
       "time": {
         "F": [
@@ -36157,14 +35966,14 @@
       }
     ]
   },
-  "767": {
+  "762": {
     "program": "French",
     "count": 767,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
     "lecture": {
-      "title": "Po\u00e9sie, th\u00e9\u00e2tre et \u00e9criture",
+      "title": "Poésie, théâtre et écriture",
       "prof": "Bechara, Rosa Maria",
       "time": {
         "M": [
@@ -36192,14 +36001,14 @@
       }
     ]
   },
-  "768": {
+  "763": {
     "program": "French",
     "count": 768,
     "section": "00002",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
     "lecture": {
-      "title": "Po\u00e9sie, th\u00e9\u00e2tre et \u00e9criture",
+      "title": "Poésie, théâtre et écriture",
       "prof": "Popica, Maria",
       "time": {
         "M": [
@@ -36227,14 +36036,14 @@
       }
     ]
   },
-  "769": {
+  "764": {
     "program": "French",
     "count": 769,
     "section": "00003",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
     "lecture": {
-      "title": "Po\u00e9sie, th\u00e9\u00e2tre et \u00e9criture",
+      "title": "Poésie, théâtre et écriture",
       "prof": "Popica, Maria",
       "time": {
         "T": [
@@ -36262,14 +36071,14 @@
       }
     ]
   },
-  "770": {
+  "765": {
     "program": "French",
     "count": 770,
     "section": "00004",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
     "lecture": {
-      "title": "Po\u00e9sie, th\u00e9\u00e2tre et \u00e9criture",
+      "title": "Poésie, théâtre et écriture",
       "prof": "Boutin, David",
       "time": {
         "W": [
@@ -36297,15 +36106,15 @@
       }
     ]
   },
-  "771": {
+  "766": {
     "program": "French",
     "count": 771,
     "section": "00005",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
     "lecture": {
-      "title": "Po\u00e9sie, th\u00e9\u00e2tre et \u00e9criture",
-      "prof": "Tiganus Calin, Am\u00e9lia",
+      "title": "Poésie, théâtre et écriture",
+      "prof": "Tiganus Calin, Amélia",
       "time": {
         "W": [
           "1430-1730"
@@ -36318,7 +36127,7 @@
         "takeAgain": 33,
         "difficulty": 3.3,
         "status": "found",
-        "prof": "Tiganus Calin, Am\u00e9lia"
+        "prof": "Tiganus Calin, Amélia"
       }
     },
     "lab": null,
@@ -36332,14 +36141,14 @@
       }
     ]
   },
-  "772": {
+  "767": {
     "program": "French",
     "count": 772,
     "section": "00006",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
     "lecture": {
-      "title": "Po\u00e9sie, th\u00e9\u00e2tre et \u00e9criture",
+      "title": "Poésie, théâtre et écriture",
       "prof": "Boutin, David",
       "time": {
         "R": [
@@ -36367,14 +36176,14 @@
       }
     ]
   },
-  "773": {
+  "768": {
     "program": "French",
     "count": 773,
     "section": "00007",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
     "lecture": {
-      "title": "Po\u00e9sie, th\u00e9\u00e2tre et \u00e9criture",
+      "title": "Poésie, théâtre et écriture",
       "prof": "Provencher, Lysanne",
       "time": {
         "R": [
@@ -36402,14 +36211,14 @@
       }
     ]
   },
-  "774": {
+  "769": {
     "program": "French",
     "count": 774,
     "section": "00008",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
     "lecture": {
-      "title": "Po\u00e9sie, th\u00e9\u00e2tre et \u00e9criture",
+      "title": "Poésie, théâtre et écriture",
       "prof": "Provencher, Lysanne",
       "time": {
         "F": [
@@ -36437,14 +36246,14 @@
       }
     ]
   },
-  "775": {
+  "770": {
     "program": "French",
     "count": 775,
     "section": "00009",
     "course": "FRENCH",
     "code": "602-UF1-MQ",
     "lecture": {
-      "title": "Po\u00e9sie, th\u00e9\u00e2tre et \u00e9criture",
+      "title": "Poésie, théâtre et écriture",
       "prof": "Bechara, Rosa Maria",
       "time": {
         "F": [
@@ -36472,14 +36281,14 @@
       }
     ]
   },
-  "776": {
+  "771": {
     "program": "French",
     "count": 776,
     "section": "00001",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
+      "title": "Comparaison d'oeuvres littéraires",
       "prof": "Lazhar, Yasmine",
       "time": {
         "M": [
@@ -36507,15 +36316,15 @@
       }
     ]
   },
-  "777": {
+  "772": {
     "program": "French",
     "count": 777,
     "section": "00002",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
-      "prof": "Gagn\u00e9, Nicolas",
+      "title": "Comparaison d'oeuvres littéraires",
+      "prof": "Gagné, Nicolas",
       "time": {
         "M": [
           "1430-1730"
@@ -36528,7 +36337,7 @@
         "takeAgain": 27,
         "difficulty": 3.9,
         "status": "found",
-        "prof": "Gagn\u00e9, Nicolas"
+        "prof": "Gagné, Nicolas"
       }
     },
     "lab": null,
@@ -36542,14 +36351,14 @@
       }
     ]
   },
-  "778": {
+  "773": {
     "program": "French",
     "count": 778,
     "section": "00003",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
+      "title": "Comparaison d'oeuvres littéraires",
       "prof": "Lazhar, Yasmine",
       "time": {
         "T": [
@@ -36577,14 +36386,14 @@
       }
     ]
   },
-  "779": {
+  "774": {
     "program": "French",
     "count": 779,
     "section": "00004",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
+      "title": "Comparaison d'oeuvres littéraires",
       "prof": "Sweeney, Antoine",
       "time": {
         "T": [
@@ -36612,14 +36421,14 @@
       }
     ]
   },
-  "780": {
+  "775": {
     "program": "French",
     "count": 780,
     "section": "00005",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
+      "title": "Comparaison d'oeuvres littéraires",
       "prof": "Dukanic, Filip",
       "time": {
         "T": [
@@ -36647,14 +36456,14 @@
       }
     ]
   },
-  "781": {
+  "776": {
     "program": "French",
     "count": 781,
     "section": "00006",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
+      "title": "Comparaison d'oeuvres littéraires",
       "prof": "Aissani, Louiza",
       "time": {
         "W": [
@@ -36682,15 +36491,15 @@
       }
     ]
   },
-  "782": {
+  "777": {
     "program": "French",
     "count": 782,
     "section": "00007",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
-      "prof": "Estim\u00e9, Qualito",
+      "title": "Comparaison d'oeuvres littéraires",
+      "prof": "Estimé, Qualito",
       "time": {
         "W": [
           "1430-1730"
@@ -36703,7 +36512,7 @@
         "takeAgain": 0,
         "difficulty": 2.9,
         "status": "found",
-        "prof": "Estim\u00e9, Qualito"
+        "prof": "Estimé, Qualito"
       }
     },
     "lab": null,
@@ -36717,14 +36526,14 @@
       }
     ]
   },
-  "783": {
+  "778": {
     "program": "French",
     "count": 783,
     "section": "00008",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
+      "title": "Comparaison d'oeuvres littéraires",
       "prof": "Dukanic, Filip",
       "time": {
         "W": [
@@ -36752,14 +36561,14 @@
       }
     ]
   },
-  "784": {
+  "779": {
     "program": "French",
     "count": 784,
     "section": "00009",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
+      "title": "Comparaison d'oeuvres littéraires",
       "prof": "Beausoleil, Jean Marc",
       "time": {
         "R": [
@@ -36787,15 +36596,15 @@
       }
     ]
   },
-  "785": {
+  "780": {
     "program": "French",
     "count": 785,
     "section": "00010",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
-      "prof": "Estim\u00e9, Qualito",
+      "title": "Comparaison d'oeuvres littéraires",
+      "prof": "Estimé, Qualito",
       "time": {
         "R": [
           "1430-1730"
@@ -36808,7 +36617,7 @@
         "takeAgain": 0,
         "difficulty": 2.9,
         "status": "found",
-        "prof": "Estim\u00e9, Qualito"
+        "prof": "Estimé, Qualito"
       }
     },
     "lab": null,
@@ -36822,14 +36631,14 @@
       }
     ]
   },
-  "786": {
+  "781": {
     "program": "French",
     "count": 786,
     "section": "00011",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
+      "title": "Comparaison d'oeuvres littéraires",
       "prof": "Beausoleil, Jean Marc",
       "time": {
         "F": [
@@ -36857,14 +36666,14 @@
       }
     ]
   },
-  "787": {
+  "782": {
     "program": "French",
     "count": 787,
     "section": "00012",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
+      "title": "Comparaison d'oeuvres littéraires",
       "prof": "Larochelle, Claudia",
       "time": {
         "F": [
@@ -36892,15 +36701,15 @@
       }
     ]
   },
-  "788": {
+  "783": {
     "program": "French",
     "count": 788,
     "section": "00013",
     "course": "FRENCH",
     "code": "602-UF2-MQ",
     "lecture": {
-      "title": "Comparaison d'oeuvres litt\u00e9raires",
-      "prof": "Gagn\u00e9, Nicolas",
+      "title": "Comparaison d'oeuvres littéraires",
+      "prof": "Gagné, Nicolas",
       "time": {
         "F": [
           "1130-1430"
@@ -36913,7 +36722,7 @@
         "takeAgain": 27,
         "difficulty": 3.9,
         "status": "found",
-        "prof": "Gagn\u00e9, Nicolas"
+        "prof": "Gagné, Nicolas"
       }
     },
     "lab": null,
@@ -36927,7 +36736,7 @@
       }
     ]
   },
-  "789": {
+  "784": {
     "program": "French",
     "count": 789,
     "section": "00001",
@@ -36968,7 +36777,7 @@
       }
     ]
   },
-  "790": {
+  "785": {
     "program": "French",
     "count": 790,
     "section": "00002",
@@ -36976,7 +36785,7 @@
     "code": "602-100-MQ",
     "lecture": {
       "title": "Basic French",
-      "prof": "Rozenberg, \u00c9velyne",
+      "prof": "Rozenberg, Évelyne",
       "time": {
         "MW": [
           "1300-1430"
@@ -36989,7 +36798,7 @@
         "takeAgain": 100,
         "difficulty": 1.5,
         "status": "found",
-        "prof": "Rozenberg, \u00c9velyne"
+        "prof": "Rozenberg, Évelyne"
       }
     },
     "lab": null,
@@ -37009,7 +36818,7 @@
       }
     ]
   },
-  "791": {
+  "786": {
     "program": "French",
     "count": 791,
     "section": "00003",
@@ -37050,7 +36859,7 @@
       }
     ]
   },
-  "792": {
+  "787": {
     "program": "French",
     "count": 792,
     "section": "00004",
@@ -37091,7 +36900,7 @@
       }
     ]
   },
-  "793": {
+  "788": {
     "program": "French",
     "count": 793,
     "section": "00005",
@@ -37132,7 +36941,7 @@
       }
     ]
   },
-  "794": {
+  "789": {
     "program": "French",
     "count": 794,
     "section": "00001",
@@ -37140,7 +36949,7 @@
     "code": "602-101-MQ",
     "lecture": {
       "title": "French Language and Communication",
-      "prof": "Rozenberg, \u00c9velyne",
+      "prof": "Rozenberg, Évelyne",
       "time": {
         "MW": [
           "1000-1130"
@@ -37153,7 +36962,7 @@
         "takeAgain": 100,
         "difficulty": 1.5,
         "status": "found",
-        "prof": "Rozenberg, \u00c9velyne"
+        "prof": "Rozenberg, Évelyne"
       }
     },
     "lab": null,
@@ -37173,7 +36982,7 @@
       }
     ]
   },
-  "795": {
+  "790": {
     "program": "French",
     "count": 795,
     "section": "00002",
@@ -37181,7 +36990,7 @@
     "code": "602-101-MQ",
     "lecture": {
       "title": "French Language and Communication",
-      "prof": "Rozenberg, \u00c9velyne",
+      "prof": "Rozenberg, Évelyne",
       "time": {
         "MW": [
           "1430-1600"
@@ -37194,7 +37003,7 @@
         "takeAgain": 100,
         "difficulty": 1.5,
         "status": "found",
-        "prof": "Rozenberg, \u00c9velyne"
+        "prof": "Rozenberg, Évelyne"
       }
     },
     "lab": null,
@@ -37214,7 +37023,7 @@
       }
     ]
   },
-  "796": {
+  "791": {
     "program": "French",
     "count": 796,
     "section": "00003",
@@ -37255,7 +37064,7 @@
       }
     ]
   },
-  "797": {
+  "792": {
     "program": "French",
     "count": 797,
     "section": "00004",
@@ -37296,7 +37105,7 @@
       }
     ]
   },
-  "798": {
+  "793": {
     "program": "French",
     "count": 798,
     "section": "00005",
@@ -37337,7 +37146,7 @@
       }
     ]
   },
-  "799": {
+  "794": {
     "program": "French",
     "count": 799,
     "section": "00006",
@@ -37345,7 +37154,7 @@
     "code": "602-101-MQ",
     "lecture": {
       "title": "French Language and Communication",
-      "prof": "Gagn\u00e9, Nicolas",
+      "prof": "Gagné, Nicolas",
       "time": {
         "TR": [
           "1300-1430"
@@ -37358,7 +37167,7 @@
         "takeAgain": 27,
         "difficulty": 3.9,
         "status": "found",
-        "prof": "Gagn\u00e9, Nicolas"
+        "prof": "Gagné, Nicolas"
       }
     },
     "lab": null,
@@ -37378,7 +37187,7 @@
       }
     ]
   },
-  "800": {
+  "795": {
     "program": "French",
     "count": 800,
     "section": "00007",
@@ -37413,7 +37222,7 @@
       }
     ]
   },
-  "801": {
+  "796": {
     "program": "French",
     "count": 801,
     "section": "00008",
@@ -37448,7 +37257,7 @@
       }
     ]
   },
-  "802": {
+  "797": {
     "program": "French",
     "count": 802,
     "section": "00001",
@@ -37483,7 +37292,7 @@
       }
     ]
   },
-  "803": {
+  "798": {
     "program": "French",
     "count": 803,
     "section": "00002",
@@ -37518,7 +37327,7 @@
       }
     ]
   },
-  "804": {
+  "799": {
     "program": "French",
     "count": 804,
     "section": "00003",
@@ -37553,7 +37362,7 @@
       }
     ]
   },
-  "805": {
+  "800": {
     "program": "French",
     "count": 805,
     "section": "00004",
@@ -37588,7 +37397,7 @@
       }
     ]
   },
-  "806": {
+  "801": {
     "program": "French",
     "count": 806,
     "section": "00005",
@@ -37623,7 +37432,7 @@
       }
     ]
   },
-  "807": {
+  "802": {
     "program": "French",
     "count": 807,
     "section": "00006",
@@ -37658,7 +37467,7 @@
       }
     ]
   },
-  "808": {
+  "803": {
     "program": "French",
     "count": 808,
     "section": "00007",
@@ -37666,7 +37475,7 @@
     "code": "602-102-MQ",
     "lecture": {
       "title": "French Language and Culture",
-      "prof": "Estim\u00e9, Qualito",
+      "prof": "Estimé, Qualito",
       "time": {
         "F": [
           "1130-1430"
@@ -37679,7 +37488,7 @@
         "takeAgain": 0,
         "difficulty": 2.9,
         "status": "found",
-        "prof": "Estim\u00e9, Qualito"
+        "prof": "Estimé, Qualito"
       }
     },
     "lab": null,
@@ -37693,7 +37502,7 @@
       }
     ]
   },
-  "809": {
+  "804": {
     "program": "French",
     "count": 809,
     "section": "00001",
@@ -37734,7 +37543,7 @@
       }
     ]
   },
-  "810": {
+  "805": {
     "program": "French",
     "count": 810,
     "section": "00002",
@@ -37775,14 +37584,14 @@
       }
     ]
   },
-  "811": {
+  "806": {
     "program": "French",
     "count": 811,
     "section": "00003",
     "course": "FRENCH",
     "code": "602-103-MQ",
     "lecture": {
-      "title": "Analyse litt\u00e9raire",
+      "title": "Analyse littéraire",
       "prof": "Mariage, Sylvie",
       "time": {
         "T": [
@@ -37810,7 +37619,7 @@
       }
     ]
   },
-  "812": {
+  "807": {
     "program": "French",
     "count": 812,
     "section": "00004",
@@ -37845,7 +37654,7 @@
       }
     ]
   },
-  "813": {
+  "808": {
     "program": "French",
     "count": 813,
     "section": "00005",
@@ -37880,7 +37689,7 @@
       }
     ]
   },
-  "814": {
+  "809": {
     "program": "French",
     "count": 814,
     "section": "00006",
@@ -37915,7 +37724,7 @@
       }
     ]
   },
-  "815": {
+  "810": {
     "program": "French",
     "count": 815,
     "section": "00001",
@@ -37956,7 +37765,7 @@
       }
     ]
   },
-  "816": {
+  "811": {
     "program": "French",
     "count": 816,
     "section": "00002",
@@ -37997,7 +37806,7 @@
       }
     ]
   },
-  "817": {
+  "812": {
     "program": "French",
     "count": 817,
     "section": "00003",
@@ -38038,7 +37847,7 @@
       }
     ]
   },
-  "818": {
+  "813": {
     "program": "French",
     "count": 818,
     "section": "00001",
@@ -38079,7 +37888,7 @@
       }
     ]
   },
-  "819": {
+  "814": {
     "program": "French",
     "count": 819,
     "section": "00002",
@@ -38120,7 +37929,7 @@
       }
     ]
   },
-  "820": {
+  "815": {
     "program": "French",
     "count": 820,
     "section": "00003",
@@ -38128,7 +37937,7 @@
     "code": "602-201-AB",
     "lecture": {
       "title": "French: Level 2",
-      "prof": "Gagn\u00e9, Nicolas",
+      "prof": "Gagné, Nicolas",
       "time": {
         "MR": [
           "1130-1300"
@@ -38141,7 +37950,7 @@
         "takeAgain": 27,
         "difficulty": 3.9,
         "status": "found",
-        "prof": "Gagn\u00e9, Nicolas"
+        "prof": "Gagné, Nicolas"
       }
     },
     "lab": null,
@@ -38161,7 +37970,7 @@
       }
     ]
   },
-  "821": {
+  "816": {
     "program": "French",
     "count": 821,
     "section": "00004",
@@ -38196,7 +38005,7 @@
       }
     ]
   },
-  "822": {
+  "817": {
     "program": "French",
     "count": 822,
     "section": "00001",
@@ -38231,7 +38040,7 @@
       }
     ]
   },
-  "823": {
+  "818": {
     "program": "French",
     "count": 823,
     "section": "00002",
@@ -38266,7 +38075,7 @@
       }
     ]
   },
-  "824": {
+  "819": {
     "program": "French",
     "count": 824,
     "section": "00003",
@@ -38301,7 +38110,7 @@
       }
     ]
   },
-  "825": {
+  "820": {
     "program": "French",
     "count": 825,
     "section": "00004",
@@ -38336,7 +38145,7 @@
       }
     ]
   },
-  "826": {
+  "821": {
     "program": "French",
     "count": 826,
     "section": "00005",
@@ -38371,7 +38180,7 @@
       }
     ]
   },
-  "827": {
+  "822": {
     "program": "French",
     "count": 827,
     "section": "00001",
@@ -38406,14 +38215,14 @@
       }
     ]
   },
-  "828": {
+  "823": {
     "program": "French",
     "count": 828,
     "section": "00002",
     "course": "FRENCH",
     "code": "602-203-AB",
     "lecture": {
-      "title": "Condition f\u00e9minine",
+      "title": "Condition féminine",
       "prof": "Provencher, Lysanne",
       "time": {
         "M": [
@@ -38441,7 +38250,7 @@
       }
     ]
   },
-  "829": {
+  "824": {
     "program": "French",
     "count": 829,
     "section": "00003",
@@ -38476,7 +38285,7 @@
       }
     ]
   },
-  "830": {
+  "825": {
     "program": "French",
     "count": 830,
     "section": "00004",
@@ -38511,14 +38320,14 @@
       }
     ]
   },
-  "831": {
+  "826": {
     "program": "French",
     "count": 831,
     "section": "00005",
     "course": "FRENCH",
     "code": "602-203-AB",
     "lecture": {
-      "title": "Identit\u00e9s plurielles",
+      "title": "Identités plurielles",
       "prof": "Mariage, Sylvie",
       "time": {
         "W": [
@@ -38546,7 +38355,7 @@
       }
     ]
   },
-  "832": {
+  "827": {
     "program": "French",
     "count": 832,
     "section": "00006",
@@ -38581,7 +38390,7 @@
       }
     ]
   },
-  "833": {
+  "828": {
     "program": "French",
     "count": 833,
     "section": "00007",
@@ -38616,7 +38425,7 @@
       }
     ]
   },
-  "834": {
+  "829": {
     "program": "French",
     "count": 834,
     "section": "00008",
@@ -38651,7 +38460,7 @@
       }
     ]
   },
-  "835": {
+  "830": {
     "program": "French",
     "count": 835,
     "section": "00009",
@@ -38686,7 +38495,7 @@
       }
     ]
   },
-  "836": {
+  "831": {
     "program": "Humanities",
     "count": 836,
     "section": "00001",
@@ -38727,7 +38536,7 @@
       }
     ]
   },
-  "837": {
+  "832": {
     "program": "Humanities",
     "count": 837,
     "section": "00002",
@@ -38768,7 +38577,7 @@
       }
     ]
   },
-  "838": {
+  "833": {
     "program": "Humanities",
     "count": 838,
     "section": "00004",
@@ -38809,7 +38618,7 @@
       }
     ]
   },
-  "839": {
+  "834": {
     "program": "Humanities",
     "count": 839,
     "section": "00005",
@@ -38850,7 +38659,7 @@
       }
     ]
   },
-  "840": {
+  "835": {
     "program": "Humanities",
     "count": 840,
     "section": "00006",
@@ -38891,7 +38700,7 @@
       }
     ]
   },
-  "841": {
+  "836": {
     "program": "Humanities",
     "count": 841,
     "section": "00007",
@@ -38932,7 +38741,7 @@
       }
     ]
   },
-  "842": {
+  "837": {
     "program": "Humanities",
     "count": 842,
     "section": "00008",
@@ -38973,7 +38782,7 @@
       }
     ]
   },
-  "843": {
+  "838": {
     "program": "Humanities",
     "count": 843,
     "section": "00009",
@@ -39014,7 +38823,7 @@
       }
     ]
   },
-  "844": {
+  "839": {
     "program": "Humanities",
     "count": 844,
     "section": "00010",
@@ -39055,7 +38864,7 @@
       }
     ]
   },
-  "845": {
+  "840": {
     "program": "Humanities",
     "count": 845,
     "section": "00011",
@@ -39096,7 +38905,7 @@
       }
     ]
   },
-  "846": {
+  "841": {
     "program": "Humanities",
     "count": 846,
     "section": "00012",
@@ -39137,7 +38946,7 @@
       }
     ]
   },
-  "847": {
+  "842": {
     "program": "Humanities",
     "count": 847,
     "section": "00013",
@@ -39178,7 +38987,7 @@
       }
     ]
   },
-  "848": {
+  "843": {
     "program": "Humanities",
     "count": 848,
     "section": "00014",
@@ -39219,7 +39028,7 @@
       }
     ]
   },
-  "849": {
+  "844": {
     "program": "Humanities",
     "count": 849,
     "section": "00015",
@@ -39260,7 +39069,7 @@
       }
     ]
   },
-  "850": {
+  "845": {
     "program": "Humanities",
     "count": 850,
     "section": "00016",
@@ -39301,7 +39110,7 @@
       }
     ]
   },
-  "851": {
+  "846": {
     "program": "Humanities",
     "count": 851,
     "section": "00017",
@@ -39342,7 +39151,7 @@
       }
     ]
   },
-  "852": {
+  "847": {
     "program": "Humanities",
     "count": 852,
     "section": "00018",
@@ -39383,7 +39192,7 @@
       }
     ]
   },
-  "853": {
+  "848": {
     "program": "Humanities",
     "count": 853,
     "section": "00019",
@@ -39424,7 +39233,7 @@
       }
     ]
   },
-  "854": {
+  "849": {
     "program": "Humanities",
     "count": 854,
     "section": "00020",
@@ -39465,7 +39274,7 @@
       }
     ]
   },
-  "855": {
+  "850": {
     "program": "Humanities",
     "count": 855,
     "section": "00021",
@@ -39506,7 +39315,7 @@
       }
     ]
   },
-  "856": {
+  "851": {
     "program": "Humanities",
     "count": 856,
     "section": "00022",
@@ -39547,7 +39356,7 @@
       }
     ]
   },
-  "857": {
+  "852": {
     "program": "Humanities",
     "count": 857,
     "section": "00023",
@@ -39588,7 +39397,7 @@
       }
     ]
   },
-  "858": {
+  "853": {
     "program": "Humanities",
     "count": 858,
     "section": "00024",
@@ -39629,7 +39438,7 @@
       }
     ]
   },
-  "859": {
+  "854": {
     "program": "Humanities",
     "count": 859,
     "section": "00025",
@@ -39670,7 +39479,7 @@
       }
     ]
   },
-  "860": {
+  "855": {
     "program": "Humanities",
     "count": 860,
     "section": "00026",
@@ -39711,7 +39520,7 @@
       }
     ]
   },
-  "861": {
+  "856": {
     "program": "Humanities",
     "count": 861,
     "section": "00027",
@@ -39752,7 +39561,7 @@
       }
     ]
   },
-  "862": {
+  "857": {
     "program": "Humanities",
     "count": 862,
     "section": "00028",
@@ -39793,7 +39602,7 @@
       }
     ]
   },
-  "863": {
+  "858": {
     "program": "Humanities",
     "count": 863,
     "section": "00029",
@@ -39834,7 +39643,7 @@
       }
     ]
   },
-  "864": {
+  "859": {
     "program": "Humanities",
     "count": 864,
     "section": "00001",
@@ -39875,7 +39684,7 @@
       }
     ]
   },
-  "865": {
+  "860": {
     "program": "Humanities",
     "count": 865,
     "section": "00001",
@@ -39916,7 +39725,7 @@
       }
     ]
   },
-  "866": {
+  "861": {
     "program": "Humanities",
     "count": 866,
     "section": "00002",
@@ -39957,7 +39766,7 @@
       }
     ]
   },
-  "867": {
+  "862": {
     "program": "Humanities",
     "count": 867,
     "section": "00003",
@@ -39992,7 +39801,7 @@
       }
     ]
   },
-  "868": {
+  "863": {
     "program": "Humanities",
     "count": 868,
     "section": "00004",
@@ -40027,7 +39836,7 @@
       }
     ]
   },
-  "869": {
+  "864": {
     "program": "Humanities",
     "count": 869,
     "section": "00005",
@@ -40068,7 +39877,7 @@
       }
     ]
   },
-  "870": {
+  "865": {
     "program": "Humanities",
     "count": 870,
     "section": "00006",
@@ -40109,7 +39918,7 @@
       }
     ]
   },
-  "871": {
+  "866": {
     "program": "Humanities",
     "count": 871,
     "section": "00007",
@@ -40150,7 +39959,7 @@
       }
     ]
   },
-  "872": {
+  "867": {
     "program": "Humanities",
     "count": 872,
     "section": "00008",
@@ -40191,7 +40000,7 @@
       }
     ]
   },
-  "873": {
+  "868": {
     "program": "Humanities",
     "count": 873,
     "section": "00009",
@@ -40232,7 +40041,7 @@
       }
     ]
   },
-  "874": {
+  "869": {
     "program": "Humanities",
     "count": 874,
     "section": "00010",
@@ -40273,7 +40082,7 @@
       }
     ]
   },
-  "875": {
+  "870": {
     "program": "Humanities",
     "count": 875,
     "section": "00011",
@@ -40314,7 +40123,7 @@
       }
     ]
   },
-  "876": {
+  "871": {
     "program": "Humanities",
     "count": 876,
     "section": "00012",
@@ -40355,7 +40164,7 @@
       }
     ]
   },
-  "877": {
+  "872": {
     "program": "Humanities",
     "count": 877,
     "section": "00013",
@@ -40396,7 +40205,7 @@
       }
     ]
   },
-  "878": {
+  "873": {
     "program": "Humanities",
     "count": 878,
     "section": "00014",
@@ -40437,7 +40246,7 @@
       }
     ]
   },
-  "879": {
+  "874": {
     "program": "Humanities",
     "count": 879,
     "section": "00015",
@@ -40472,7 +40281,7 @@
       }
     ]
   },
-  "880": {
+  "875": {
     "program": "Humanities",
     "count": 880,
     "section": "00016",
@@ -40513,7 +40322,7 @@
       }
     ]
   },
-  "881": {
+  "876": {
     "program": "Humanities",
     "count": 881,
     "section": "00017",
@@ -40554,7 +40363,7 @@
       }
     ]
   },
-  "882": {
+  "877": {
     "program": "Humanities",
     "count": 882,
     "section": "00018",
@@ -40595,7 +40404,7 @@
       }
     ]
   },
-  "883": {
+  "878": {
     "program": "Humanities",
     "count": 883,
     "section": "00019",
@@ -40630,7 +40439,7 @@
       }
     ]
   },
-  "884": {
+  "879": {
     "program": "Humanities",
     "count": 884,
     "section": "00020",
@@ -40665,7 +40474,7 @@
       }
     ]
   },
-  "885": {
+  "880": {
     "program": "Humanities",
     "count": 885,
     "section": "00021",
@@ -40700,7 +40509,7 @@
       }
     ]
   },
-  "886": {
+  "881": {
     "program": "Humanities",
     "count": 886,
     "section": "00022",
@@ -40735,7 +40544,7 @@
       }
     ]
   },
-  "887": {
+  "882": {
     "program": "Humanities",
     "count": 887,
     "section": "00023",
@@ -40770,7 +40579,7 @@
       }
     ]
   },
-  "888": {
+  "883": {
     "program": "Humanities",
     "count": 888,
     "section": "00024",
@@ -40805,7 +40614,7 @@
       }
     ]
   },
-  "889": {
+  "884": {
     "program": "Humanities",
     "count": 889,
     "section": "00025",
@@ -40840,7 +40649,7 @@
       }
     ]
   },
-  "890": {
+  "885": {
     "program": "Humanities",
     "count": 890,
     "section": "00026",
@@ -40881,7 +40690,7 @@
       }
     ]
   },
-  "891": {
+  "886": {
     "program": "Humanities",
     "count": 891,
     "section": "00027",
@@ -40922,7 +40731,7 @@
       }
     ]
   },
-  "892": {
+  "887": {
     "program": "Humanities",
     "count": 892,
     "section": "00028",
@@ -40957,7 +40766,7 @@
       }
     ]
   },
-  "893": {
+  "888": {
     "program": "Humanities",
     "count": 893,
     "section": "00029",
@@ -40992,7 +40801,7 @@
       }
     ]
   },
-  "894": {
+  "889": {
     "program": "Humanities",
     "count": 894,
     "section": "00030",
@@ -41027,7 +40836,7 @@
       }
     ]
   },
-  "895": {
+  "890": {
     "program": "Humanities",
     "count": 895,
     "section": "00031",
@@ -41062,7 +40871,7 @@
       }
     ]
   },
-  "896": {
+  "891": {
     "program": "Humanities",
     "count": 896,
     "section": "00001",
@@ -41103,7 +40912,7 @@
       }
     ]
   },
-  "897": {
+  "892": {
     "program": "Humanities",
     "count": 897,
     "section": "00001",
@@ -41138,7 +40947,7 @@
       }
     ]
   },
-  "898": {
+  "893": {
     "program": "Humanities",
     "count": 898,
     "section": "00002",
@@ -41173,7 +40982,7 @@
       }
     ]
   },
-  "899": {
+  "894": {
     "program": "Humanities",
     "count": 899,
     "section": "00003",
@@ -41208,7 +41017,7 @@
       }
     ]
   },
-  "900": {
+  "895": {
     "program": "Humanities",
     "count": 900,
     "section": "00001",
@@ -41249,7 +41058,7 @@
       }
     ]
   },
-  "901": {
+  "896": {
     "program": "Humanities",
     "count": 901,
     "section": "00002",
@@ -41290,7 +41099,7 @@
       }
     ]
   },
-  "902": {
+  "897": {
     "program": "Humanities",
     "count": 902,
     "section": "00003",
@@ -41331,7 +41140,7 @@
       }
     ]
   },
-  "903": {
+  "898": {
     "program": "Humanities",
     "count": 903,
     "section": "00004",
@@ -41372,7 +41181,7 @@
       }
     ]
   },
-  "904": {
+  "899": {
     "program": "Humanities",
     "count": 904,
     "section": "00005",
@@ -41413,7 +41222,7 @@
       }
     ]
   },
-  "905": {
+  "900": {
     "program": "Humanities",
     "count": 905,
     "section": "00006",
@@ -41454,7 +41263,7 @@
       }
     ]
   },
-  "906": {
+  "901": {
     "program": "Humanities",
     "count": 906,
     "section": "00007",
@@ -41495,7 +41304,7 @@
       }
     ]
   },
-  "907": {
+  "902": {
     "program": "Humanities",
     "count": 907,
     "section": "00001",
@@ -41536,7 +41345,7 @@
       }
     ]
   },
-  "908": {
+  "903": {
     "program": "Humanities",
     "count": 908,
     "section": "00002",
@@ -41577,7 +41386,7 @@
       }
     ]
   },
-  "909": {
+  "904": {
     "program": "Humanities",
     "count": 909,
     "section": "00003",
@@ -41618,7 +41427,7 @@
       }
     ]
   },
-  "910": {
+  "905": {
     "program": "Humanities",
     "count": 910,
     "section": "00004",
@@ -41659,7 +41468,7 @@
       }
     ]
   },
-  "911": {
+  "906": {
     "program": "Humanities",
     "count": 911,
     "section": "00005",
@@ -41694,7 +41503,7 @@
       }
     ]
   },
-  "912": {
+  "907": {
     "program": "Humanities",
     "count": 912,
     "section": "00006",
@@ -41729,7 +41538,7 @@
       }
     ]
   },
-  "913": {
+  "908": {
     "program": "Humanities",
     "count": 913,
     "section": "00007",
@@ -41764,7 +41573,7 @@
       }
     ]
   },
-  "914": {
+  "909": {
     "program": "Humanities",
     "count": 914,
     "section": "00008",
@@ -41799,7 +41608,7 @@
       }
     ]
   },
-  "915": {
+  "910": {
     "program": "Humanities",
     "count": 915,
     "section": "00009",
@@ -41834,7 +41643,7 @@
       }
     ]
   },
-  "916": {
+  "911": {
     "program": "Humanities",
     "count": 916,
     "section": "00010",
@@ -41875,7 +41684,7 @@
       }
     ]
   },
-  "917": {
+  "912": {
     "program": "Humanities",
     "count": 917,
     "section": "00011",
@@ -41916,7 +41725,7 @@
       }
     ]
   },
-  "918": {
+  "913": {
     "program": "Humanities",
     "count": 918,
     "section": "00012",
@@ -41957,7 +41766,7 @@
       }
     ]
   },
-  "919": {
+  "914": {
     "program": "Humanities",
     "count": 919,
     "section": "00013",
@@ -41998,7 +41807,7 @@
       }
     ]
   },
-  "920": {
+  "915": {
     "program": "Humanities",
     "count": 920,
     "section": "00014",
@@ -42039,7 +41848,7 @@
       }
     ]
   },
-  "921": {
+  "916": {
     "program": "Humanities",
     "count": 921,
     "section": "00015",
@@ -42080,7 +41889,7 @@
       }
     ]
   },
-  "922": {
+  "917": {
     "program": "Humanities",
     "count": 922,
     "section": "00016",
@@ -42121,7 +41930,7 @@
       }
     ]
   },
-  "923": {
+  "918": {
     "program": "Humanities",
     "count": 923,
     "section": "00001",
@@ -42156,7 +41965,7 @@
       }
     ]
   },
-  "924": {
+  "919": {
     "program": "Humanities",
     "count": 924,
     "section": "00002",
@@ -42191,7 +42000,7 @@
       }
     ]
   },
-  "925": {
+  "920": {
     "program": "Humanities",
     "count": 925,
     "section": "00003",
@@ -42232,7 +42041,7 @@
       }
     ]
   },
-  "926": {
+  "921": {
     "program": "Physical Education",
     "count": 926,
     "section": "00001",
@@ -42267,7 +42076,7 @@
       }
     ]
   },
-  "927": {
+  "922": {
     "program": "Physical Education",
     "count": 927,
     "section": "00002",
@@ -42302,7 +42111,7 @@
       }
     ]
   },
-  "928": {
+  "923": {
     "program": "Physical Education",
     "count": 928,
     "section": "00003",
@@ -42337,7 +42146,7 @@
       }
     ]
   },
-  "929": {
+  "924": {
     "program": "Physical Education",
     "count": 929,
     "section": "00004",
@@ -42372,7 +42181,7 @@
       }
     ]
   },
-  "930": {
+  "925": {
     "program": "Physical Education",
     "count": 930,
     "section": "00005",
@@ -42407,7 +42216,7 @@
       }
     ]
   },
-  "931": {
+  "926": {
     "program": "Physical Education",
     "count": 931,
     "section": "00006",
@@ -42442,7 +42251,7 @@
       }
     ]
   },
-  "932": {
+  "927": {
     "program": "Physical Education",
     "count": 932,
     "section": "00007",
@@ -42477,7 +42286,7 @@
       }
     ]
   },
-  "933": {
+  "928": {
     "program": "Physical Education",
     "count": 933,
     "section": "00008",
@@ -42518,7 +42327,7 @@
       }
     ]
   },
-  "934": {
+  "929": {
     "program": "Physical Education",
     "count": 934,
     "section": "00009",
@@ -42553,7 +42362,7 @@
       }
     ]
   },
-  "935": {
+  "930": {
     "program": "Physical Education",
     "count": 935,
     "section": "00010",
@@ -42588,7 +42397,7 @@
       }
     ]
   },
-  "936": {
+  "931": {
     "program": "Physical Education",
     "count": 936,
     "section": "00011",
@@ -42623,7 +42432,7 @@
       }
     ]
   },
-  "937": {
+  "932": {
     "program": "Physical Education",
     "count": 937,
     "section": "00012",
@@ -42658,7 +42467,7 @@
       }
     ]
   },
-  "938": {
+  "933": {
     "program": "Physical Education",
     "count": 938,
     "section": "00013",
@@ -42693,7 +42502,7 @@
       }
     ]
   },
-  "939": {
+  "934": {
     "program": "Physical Education",
     "count": 939,
     "section": "00014",
@@ -42728,7 +42537,7 @@
       }
     ]
   },
-  "940": {
+  "935": {
     "program": "Physical Education",
     "count": 940,
     "section": "00015",
@@ -42763,7 +42572,7 @@
       }
     ]
   },
-  "941": {
+  "936": {
     "program": "Physical Education",
     "count": 941,
     "section": "00016",
@@ -42798,7 +42607,7 @@
       }
     ]
   },
-  "942": {
+  "937": {
     "program": "Physical Education",
     "count": 942,
     "section": "00017",
@@ -42833,7 +42642,7 @@
       }
     ]
   },
-  "943": {
+  "938": {
     "program": "Physical Education",
     "count": 943,
     "section": "00018",
@@ -42841,7 +42650,7 @@
     "code": "109-101-MQ",
     "lecture": {
       "title": "Training for Athletic Performance",
-      "prof": "Marin, No\u00e9mie",
+      "prof": "Marin, Noémie",
       "time": {
         "T": [
           "1230-1430"
@@ -42854,7 +42663,7 @@
         "takeAgain": 92,
         "difficulty": 2.2,
         "status": "found",
-        "prof": "Marin, No\u00e9mie"
+        "prof": "Marin, Noémie"
       }
     },
     "lab": null,
@@ -42868,7 +42677,7 @@
       }
     ]
   },
-  "944": {
+  "939": {
     "program": "Physical Education",
     "count": 944,
     "section": "00019",
@@ -42876,7 +42685,7 @@
     "code": "109-101-MQ",
     "lecture": {
       "title": "Fresh Air Fitness",
-      "prof": "Marin, No\u00e9mie",
+      "prof": "Marin, Noémie",
       "time": {
         "W": [
           "1030-1230"
@@ -42889,7 +42698,7 @@
         "takeAgain": 92,
         "difficulty": 2.2,
         "status": "found",
-        "prof": "Marin, No\u00e9mie"
+        "prof": "Marin, Noémie"
       }
     },
     "lab": null,
@@ -42903,7 +42712,7 @@
       }
     ]
   },
-  "945": {
+  "940": {
     "program": "Physical Education",
     "count": 945,
     "section": "00020",
@@ -42911,7 +42720,7 @@
     "code": "109-101-MQ",
     "lecture": {
       "title": "Team Sports",
-      "prof": "Marin, No\u00e9mie",
+      "prof": "Marin, Noémie",
       "time": {
         "F": [
           "1230-1430"
@@ -42924,7 +42733,7 @@
         "takeAgain": 92,
         "difficulty": 2.2,
         "status": "found",
-        "prof": "Marin, No\u00e9mie"
+        "prof": "Marin, Noémie"
       }
     },
     "lab": null,
@@ -42938,7 +42747,7 @@
       }
     ]
   },
-  "946": {
+  "941": {
     "program": "Physical Education",
     "count": 946,
     "section": "00021",
@@ -42973,7 +42782,7 @@
       }
     ]
   },
-  "947": {
+  "942": {
     "program": "Physical Education",
     "count": 947,
     "section": "00022",
@@ -43008,7 +42817,7 @@
       }
     ]
   },
-  "948": {
+  "943": {
     "program": "Physical Education",
     "count": 948,
     "section": "00023",
@@ -43043,7 +42852,7 @@
       }
     ]
   },
-  "949": {
+  "944": {
     "program": "Physical Education",
     "count": 949,
     "section": "00024",
@@ -43078,7 +42887,7 @@
       }
     ]
   },
-  "950": {
+  "945": {
     "program": "Physical Education",
     "count": 950,
     "section": "00025",
@@ -43113,7 +42922,7 @@
       }
     ]
   },
-  "951": {
+  "946": {
     "program": "Physical Education",
     "count": 951,
     "section": "00026",
@@ -43148,7 +42957,7 @@
       }
     ]
   },
-  "952": {
+  "947": {
     "program": "Physical Education",
     "count": 952,
     "section": "00027",
@@ -43183,7 +42992,7 @@
       }
     ]
   },
-  "953": {
+  "948": {
     "program": "Physical Education",
     "count": 953,
     "section": "00028",
@@ -43218,7 +43027,7 @@
       }
     ]
   },
-  "954": {
+  "949": {
     "program": "Physical Education",
     "count": 954,
     "section": "00029",
@@ -43253,7 +43062,7 @@
       }
     ]
   },
-  "955": {
+  "950": {
     "program": "Physical Education",
     "count": 955,
     "section": "00030",
@@ -43288,7 +43097,7 @@
       }
     ]
   },
-  "956": {
+  "951": {
     "program": "Physical Education",
     "count": 956,
     "section": "00031",
@@ -43323,7 +43132,7 @@
       }
     ]
   },
-  "957": {
+  "952": {
     "program": "Physical Education",
     "count": 957,
     "section": "00032",
@@ -43358,7 +43167,7 @@
       }
     ]
   },
-  "958": {
+  "953": {
     "program": "Physical Education",
     "count": 958,
     "section": "00033",
@@ -43393,7 +43202,7 @@
       }
     ]
   },
-  "959": {
+  "954": {
     "program": "Physical Education",
     "count": 959,
     "section": "00034",
@@ -43428,7 +43237,7 @@
       }
     ]
   },
-  "960": {
+  "955": {
     "program": "Physical Education",
     "count": 960,
     "section": "00035",
@@ -43436,7 +43245,7 @@
     "code": "109-101-MQ",
     "lecture": {
       "title": "Fitness Conditioning",
-      "prof": "Priv\u00e9e, Chelsea",
+      "prof": "Privée, Chelsea",
       "time": {
         "M": [
           "1000-1200"
@@ -43449,7 +43258,7 @@
         "takeAgain": 100,
         "difficulty": 1.4,
         "status": "found",
-        "prof": "Priv\u00e9e, Chelsea"
+        "prof": "Privée, Chelsea"
       }
     },
     "lab": null,
@@ -43463,7 +43272,7 @@
       }
     ]
   },
-  "961": {
+  "956": {
     "program": "Physical Education",
     "count": 961,
     "section": "00036",
@@ -43471,7 +43280,7 @@
     "code": "109-101-MQ",
     "lecture": {
       "title": "Fitness Conditioning",
-      "prof": "Priv\u00e9e, Chelsea",
+      "prof": "Privée, Chelsea",
       "time": {
         "M": [
           "1200-1400"
@@ -43484,7 +43293,7 @@
         "takeAgain": 100,
         "difficulty": 1.4,
         "status": "found",
-        "prof": "Priv\u00e9e, Chelsea"
+        "prof": "Privée, Chelsea"
       }
     },
     "lab": null,
@@ -43498,7 +43307,7 @@
       }
     ]
   },
-  "962": {
+  "957": {
     "program": "Physical Education",
     "count": 962,
     "section": "00037",
@@ -43506,7 +43315,7 @@
     "code": "109-101-MQ",
     "lecture": {
       "title": "Fitness Conditioning",
-      "prof": "Priv\u00e9e, Chelsea",
+      "prof": "Privée, Chelsea",
       "time": {
         "T": [
           "1200-1400"
@@ -43519,7 +43328,7 @@
         "takeAgain": 100,
         "difficulty": 1.4,
         "status": "found",
-        "prof": "Priv\u00e9e, Chelsea"
+        "prof": "Privée, Chelsea"
       }
     },
     "lab": null,
@@ -43533,7 +43342,7 @@
       }
     ]
   },
-  "963": {
+  "958": {
     "program": "Physical Education",
     "count": 963,
     "section": "00038",
@@ -43541,7 +43350,7 @@
     "code": "109-101-MQ",
     "lecture": {
       "title": "Sustainable Fitness (Aug 14-20 9:00-15:00)",
-      "prof": "Raymond-Parent, Genevi\u00e8ve",
+      "prof": "Raymond-Parent, Geneviève",
       "time": {
         "F": [
           "1600-1800"
@@ -43554,7 +43363,7 @@
         "takeAgain": 93,
         "difficulty": 1.6,
         "status": "found",
-        "prof": "Raymond-Parent, Genevi\u00e8ve"
+        "prof": "Raymond-Parent, Geneviève"
       }
     },
     "lab": null,
@@ -43568,7 +43377,7 @@
       }
     ]
   },
-  "964": {
+  "959": {
     "program": "Physical Education",
     "count": 964,
     "section": "00039",
@@ -43603,7 +43412,7 @@
       }
     ]
   },
-  "965": {
+  "960": {
     "program": "Physical Education",
     "count": 965,
     "section": "00040",
@@ -43638,7 +43447,7 @@
       }
     ]
   },
-  "966": {
+  "961": {
     "program": "Physical Education",
     "count": 966,
     "section": "00041",
@@ -43673,7 +43482,7 @@
       }
     ]
   },
-  "967": {
+  "962": {
     "program": "Physical Education",
     "count": 967,
     "section": "00042",
@@ -43708,7 +43517,7 @@
       }
     ]
   },
-  "968": {
+  "963": {
     "program": "Physical Education",
     "count": 968,
     "section": "00043",
@@ -43743,7 +43552,7 @@
       }
     ]
   },
-  "969": {
+  "964": {
     "program": "Physical Education",
     "count": 969,
     "section": "00044",
@@ -43778,7 +43587,7 @@
       }
     ]
   },
-  "970": {
+  "965": {
     "program": "Physical Education",
     "count": 970,
     "section": "00045",
@@ -43813,7 +43622,7 @@
       }
     ]
   },
-  "971": {
+  "966": {
     "program": "Physical Education",
     "count": 971,
     "section": "00046",
@@ -43848,7 +43657,7 @@
       }
     ]
   },
-  "972": {
+  "967": {
     "program": "Physical Education",
     "count": 972,
     "section": "00060",
@@ -43883,7 +43692,7 @@
       }
     ]
   },
-  "973": {
+  "968": {
     "program": "Physical Education",
     "count": 973,
     "section": "00001",
@@ -43918,7 +43727,7 @@
       }
     ]
   },
-  "974": {
+  "969": {
     "program": "Physical Education",
     "count": 974,
     "section": "00002",
@@ -43953,7 +43762,7 @@
       }
     ]
   },
-  "975": {
+  "970": {
     "program": "Physical Education",
     "count": 975,
     "section": "00003",
@@ -43988,7 +43797,7 @@
       }
     ]
   },
-  "976": {
+  "971": {
     "program": "Physical Education",
     "count": 976,
     "section": "00004",
@@ -44023,7 +43832,7 @@
       }
     ]
   },
-  "977": {
+  "972": {
     "program": "Physical Education",
     "count": 977,
     "section": "00005",
@@ -44064,7 +43873,7 @@
       }
     ]
   },
-  "978": {
+  "973": {
     "program": "Physical Education",
     "count": 978,
     "section": "00006",
@@ -44105,7 +43914,7 @@
       }
     ]
   },
-  "979": {
+  "974": {
     "program": "Physical Education",
     "count": 979,
     "section": "00007",
@@ -44149,7 +43958,7 @@
       }
     ]
   },
-  "980": {
+  "975": {
     "program": "Physical Education",
     "count": 980,
     "section": "00008",
@@ -44184,7 +43993,7 @@
       }
     ]
   },
-  "981": {
+  "976": {
     "program": "Physical Education",
     "count": 981,
     "section": "00009",
@@ -44209,7 +44018,7 @@
       }
     },
     "lab": null,
-    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 8 classes on campus and 1 weekend trip Oct 17-19 in Foret Ouareau. Students must provide suitable hiking boots (some pairs available to rent), appropriate clothing. Some equipment available to rent from college \u2013 tents, stoves, sleeping bags, back packs (max. $15). ",
+    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 8 classes on campus and 1 weekend trip Oct 17-19 in Foret Ouareau. Students must provide suitable hiking boots (some pairs available to rent), appropriate clothing. Some equipment available to rent from college – tents, stoves, sleeping bags, back packs (max. $15). ",
     "viewData": [
       {
         "3": [
@@ -44219,7 +44028,7 @@
       }
     ]
   },
-  "982": {
+  "977": {
     "program": "Physical Education",
     "count": 982,
     "section": "00010",
@@ -44244,7 +44053,7 @@
       }
     },
     "lab": null,
-    "more": "ADDITIONAL FEE:       $145.00\n6 classes plus one weekend trip (Sept.26-28) to Montagne D'Argent. Students must provide appropriate outdoor clothing and footwear. Climbing equipment provided. Must provide or rent camping equipment. Some equipment available to rent from college \u2013 tents, stoves, sleeping bags, back packs (max $15). Climbing shoes are optional and can be rented for $20/semester and $8/weekend. ",
+    "more": "ADDITIONAL FEE:       $145.00\n6 classes plus one weekend trip (Sept.26-28) to Montagne D'Argent. Students must provide appropriate outdoor clothing and footwear. Climbing equipment provided. Must provide or rent camping equipment. Some equipment available to rent from college – tents, stoves, sleeping bags, back packs (max $15). Climbing shoes are optional and can be rented for $20/semester and $8/weekend. ",
     "viewData": [
       {
         "4": [
@@ -44254,7 +44063,7 @@
       }
     ]
   },
-  "983": {
+  "978": {
     "program": "Physical Education",
     "count": 983,
     "section": "00011",
@@ -44289,7 +44098,7 @@
       }
     ]
   },
-  "984": {
+  "979": {
     "program": "Physical Education",
     "count": 984,
     "section": "00012",
@@ -44324,7 +44133,7 @@
       }
     ]
   },
-  "985": {
+  "980": {
     "program": "Physical Education",
     "count": 985,
     "section": "00013",
@@ -44359,7 +44168,7 @@
       }
     ]
   },
-  "986": {
+  "981": {
     "program": "Physical Education",
     "count": 986,
     "section": "00014",
@@ -44394,7 +44203,7 @@
       }
     ]
   },
-  "987": {
+  "982": {
     "program": "Physical Education",
     "count": 987,
     "section": "00015",
@@ -44429,7 +44238,7 @@
       }
     ]
   },
-  "988": {
+  "983": {
     "program": "Physical Education",
     "count": 988,
     "section": "00016",
@@ -44437,7 +44246,7 @@
     "code": "109-102-MQ",
     "lecture": {
       "title": "Softball (Aug 14 - 20 9:00 - 15:00)",
-      "prof": "Marin, No\u00e9mie",
+      "prof": "Marin, Noémie",
       "time": {
         "F": [
           "1600-1800"
@@ -44450,7 +44259,7 @@
         "takeAgain": 92,
         "difficulty": 2.2,
         "status": "found",
-        "prof": "Marin, No\u00e9mie"
+        "prof": "Marin, Noémie"
       }
     },
     "lab": null,
@@ -44464,7 +44273,7 @@
       }
     ]
   },
-  "989": {
+  "984": {
     "program": "Physical Education",
     "count": 989,
     "section": "00017",
@@ -44472,7 +44281,7 @@
     "code": "109-102-MQ",
     "lecture": {
       "title": "Ball Hockey",
-      "prof": "Marin, No\u00e9mie",
+      "prof": "Marin, Noémie",
       "time": {
         "R": [
           "1200-1400"
@@ -44485,7 +44294,7 @@
         "takeAgain": 92,
         "difficulty": 2.2,
         "status": "found",
-        "prof": "Marin, No\u00e9mie"
+        "prof": "Marin, Noémie"
       }
     },
     "lab": null,
@@ -44499,7 +44308,7 @@
       }
     ]
   },
-  "990": {
+  "985": {
     "program": "Physical Education",
     "count": 990,
     "section": "00018",
@@ -44534,7 +44343,7 @@
       }
     ]
   },
-  "991": {
+  "986": {
     "program": "Physical Education",
     "count": 991,
     "section": "00019",
@@ -44569,7 +44378,7 @@
       }
     ]
   },
-  "992": {
+  "987": {
     "program": "Physical Education",
     "count": 992,
     "section": "00020",
@@ -44604,7 +44413,7 @@
       }
     ]
   },
-  "993": {
+  "988": {
     "program": "Physical Education",
     "count": 993,
     "section": "00021",
@@ -44639,7 +44448,7 @@
       }
     ]
   },
-  "994": {
+  "989": {
     "program": "Physical Education",
     "count": 994,
     "section": "00022",
@@ -44674,7 +44483,7 @@
       }
     ]
   },
-  "995": {
+  "990": {
     "program": "Physical Education",
     "count": 995,
     "section": "00023",
@@ -44709,7 +44518,7 @@
       }
     ]
   },
-  "996": {
+  "991": {
     "program": "Physical Education",
     "count": 996,
     "section": "00024",
@@ -44744,7 +44553,7 @@
       }
     ]
   },
-  "997": {
+  "992": {
     "program": "Physical Education",
     "count": 997,
     "section": "00025",
@@ -44779,7 +44588,7 @@
       }
     ]
   },
-  "998": {
+  "993": {
     "program": "Physical Education",
     "count": 998,
     "section": "00026",
@@ -44814,7 +44623,7 @@
       }
     ]
   },
-  "999": {
+  "994": {
     "program": "Physical Education",
     "count": 999,
     "section": "00027",
@@ -44849,7 +44658,7 @@
       }
     ]
   },
-  "1000": {
+  "995": {
     "program": "Physical Education",
     "count": 1000,
     "section": "00028",
@@ -44884,7 +44693,7 @@
       }
     ]
   },
-  "1001": {
+  "996": {
     "program": "Physical Education",
     "count": 1001,
     "section": "00029",
@@ -44892,7 +44701,7 @@
     "code": "109-102-MQ",
     "lecture": {
       "title": "Weight Training Techniques",
-      "prof": "Priv\u00e9e, Chelsea",
+      "prof": "Privée, Chelsea",
       "time": {
         "R": [
           "0800-1000"
@@ -44905,7 +44714,7 @@
         "takeAgain": 100,
         "difficulty": 1.4,
         "status": "found",
-        "prof": "Priv\u00e9e, Chelsea"
+        "prof": "Privée, Chelsea"
       }
     },
     "lab": null,
@@ -44919,7 +44728,7 @@
       }
     ]
   },
-  "1002": {
+  "997": {
     "program": "Physical Education",
     "count": 1002,
     "section": "00030",
@@ -44927,7 +44736,7 @@
     "code": "109-102-MQ",
     "lecture": {
       "title": "Weight Training Techniques",
-      "prof": "Priv\u00e9e, Chelsea",
+      "prof": "Privée, Chelsea",
       "time": {
         "R": [
           "1000-1200"
@@ -44940,7 +44749,7 @@
         "takeAgain": 100,
         "difficulty": 1.4,
         "status": "found",
-        "prof": "Priv\u00e9e, Chelsea"
+        "prof": "Privée, Chelsea"
       }
     },
     "lab": null,
@@ -44954,7 +44763,7 @@
       }
     ]
   },
-  "1003": {
+  "998": {
     "program": "Physical Education",
     "count": 1003,
     "section": "00031",
@@ -44962,7 +44771,7 @@
     "code": "109-102-MQ",
     "lecture": {
       "title": "Pilates",
-      "prof": "Raymond-Parent, Genevi\u00e8ve",
+      "prof": "Raymond-Parent, Geneviève",
       "time": {
         "M": [
           "1200-1400"
@@ -44975,7 +44784,7 @@
         "takeAgain": 93,
         "difficulty": 1.6,
         "status": "found",
-        "prof": "Raymond-Parent, Genevi\u00e8ve"
+        "prof": "Raymond-Parent, Geneviève"
       }
     },
     "lab": null,
@@ -44989,7 +44798,7 @@
       }
     ]
   },
-  "1004": {
+  "999": {
     "program": "Physical Education",
     "count": 1004,
     "section": "00032",
@@ -45024,7 +44833,7 @@
       }
     ]
   },
-  "1005": {
+  "1000": {
     "program": "Physical Education",
     "count": 1005,
     "section": "00033",
@@ -45059,7 +44868,7 @@
       }
     ]
   },
-  "1006": {
+  "1001": {
     "program": "Physical Education",
     "count": 1006,
     "section": "00034",
@@ -45094,7 +44903,7 @@
       }
     ]
   },
-  "1007": {
+  "1002": {
     "program": "Physical Education",
     "count": 1007,
     "section": "00035",
@@ -45129,7 +44938,7 @@
       }
     ]
   },
-  "1008": {
+  "1003": {
     "program": "Physical Education",
     "count": 1008,
     "section": "00036",
@@ -45164,7 +44973,7 @@
       }
     ]
   },
-  "1009": {
+  "1004": {
     "program": "Physical Education",
     "count": 1009,
     "section": "00037",
@@ -45199,7 +45008,7 @@
       }
     ]
   },
-  "1010": {
+  "1005": {
     "program": "Physical Education",
     "count": 1010,
     "section": "00060",
@@ -45234,7 +45043,7 @@
       }
     ]
   },
-  "1011": {
+  "1006": {
     "program": "Physical Education",
     "count": 1011,
     "section": "00001",
@@ -45259,7 +45068,7 @@
       }
     },
     "lab": null,
-    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 6 classes on campus and 1 weekend trip Oct 24-26. Students must provide suitable and appropriate clothing. Some equipment available to rent from college \u2013 tents, stoves, sleeping bags, packs\u2026(max. $15). Trip location Fish Creek Pond, New York -  students must be eligible to enter the US. ",
+    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 6 classes on campus and 1 weekend trip Oct 24-26. Students must provide suitable and appropriate clothing. Some equipment available to rent from college – tents, stoves, sleeping bags, packs…(max. $15). Trip location Fish Creek Pond, New York -  students must be eligible to enter the US. ",
     "viewData": [
       {
         "1": [
@@ -45269,7 +45078,7 @@
       }
     ]
   },
-  "1012": {
+  "1007": {
     "program": "Physical Education",
     "count": 1012,
     "section": "00002",
@@ -45294,7 +45103,7 @@
       }
     },
     "lab": null,
-    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: Includes 6 classes on campus and one weekend trip, September 19 - 21 to Nominingue. Students must provide suitable hiking boots (some pairs available to rent), and appropriate camping gear (equipment available to rent from college \u2013 tents, stoves, sleeping bags). ",
+    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: Includes 6 classes on campus and one weekend trip, September 19 - 21 to Nominingue. Students must provide suitable hiking boots (some pairs available to rent), and appropriate camping gear (equipment available to rent from college – tents, stoves, sleeping bags). ",
     "viewData": [
       {
         "1": [
@@ -45304,7 +45113,7 @@
       }
     ]
   },
-  "1013": {
+  "1008": {
     "program": "Physical Education",
     "count": 1013,
     "section": "00003",
@@ -45329,7 +45138,7 @@
       }
     },
     "lab": null,
-    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: Includes 6 classes on campus and 1 weekend trip October 3 \u2013 5 at Riviere du Diable, Mont Tremblant or Fish Creek Pond in the Adirondacks. Must be comfortable in deep water and able to swim 50 meters. Students must provide appropriate outdoor clothing. Camping equipment is available to rent from college \u2013 tents, stoves, sleeping bags. ",
+    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: Includes 6 classes on campus and 1 weekend trip October 3 – 5 at Riviere du Diable, Mont Tremblant or Fish Creek Pond in the Adirondacks. Must be comfortable in deep water and able to swim 50 meters. Students must provide appropriate outdoor clothing. Camping equipment is available to rent from college – tents, stoves, sleeping bags. ",
     "viewData": [
       {
         "5": [
@@ -45339,7 +45148,7 @@
       }
     ]
   },
-  "1014": {
+  "1009": {
     "program": "Physical Education",
     "count": 1014,
     "section": "00004",
@@ -45374,7 +45183,7 @@
       }
     ]
   },
-  "1015": {
+  "1010": {
     "program": "Physical Education",
     "count": 1015,
     "section": "00005",
@@ -45409,7 +45218,7 @@
       }
     ]
   },
-  "1016": {
+  "1011": {
     "program": "Physical Education",
     "count": 1016,
     "section": "00006",
@@ -45434,7 +45243,7 @@
       }
     },
     "lab": null,
-    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 6 classes on campus and 1 weekend trip Oct 3-5. Students must provide suitable hiking boots (some pairs available to rent), and appropriate clothing. Some equipment available to rent from college \u2013 tents, stoves, sleeping bags, back packs\u2026(max. $15). Trip location TBD; students must be eligible to enter the US. ",
+    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 6 classes on campus and 1 weekend trip Oct 3-5. Students must provide suitable hiking boots (some pairs available to rent), and appropriate clothing. Some equipment available to rent from college – tents, stoves, sleeping bags, back packs…(max. $15). Trip location TBD; students must be eligible to enter the US. ",
     "viewData": [
       {
         "5": [
@@ -45444,7 +45253,7 @@
       }
     ]
   },
-  "1017": {
+  "1012": {
     "program": "Physical Education",
     "count": 1017,
     "section": "00007",
@@ -45469,7 +45278,7 @@
       }
     },
     "lab": null,
-    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 2 days of classes on Campus (Aug.11-12) and a 3 day trip (Aug.13-15) to Parc de la Verendrye, QC. Must be comfortable in deep water and able to swim 50 meters (with or without a lifejacket). Students must provide suitable hiking boots (some pairs available to rent), and appropriate outdoor clothing. Some equipment available to rent from college \u2013 tents, stoves, sleeping bags, back packs\u2026(max. $15). ",
+    "more": "ADDITIONAL FEE:       $145.00\nIntensive course: includes 2 days of classes on Campus (Aug.11-12) and a 3 day trip (Aug.13-15) to Parc de la Verendrye, QC. Must be comfortable in deep water and able to swim 50 meters (with or without a lifejacket). Students must provide suitable hiking boots (some pairs available to rent), and appropriate outdoor clothing. Some equipment available to rent from college – tents, stoves, sleeping bags, back packs…(max. $15). ",
     "viewData": [
       {
         "5": [
@@ -45479,7 +45288,7 @@
       }
     ]
   },
-  "1018": {
+  "1013": {
     "program": "Physical Education",
     "count": 1018,
     "section": "00008",
@@ -45514,7 +45323,7 @@
       }
     ]
   },
-  "1019": {
+  "1014": {
     "program": "Physical Education",
     "count": 1019,
     "section": "00009",
@@ -45549,7 +45358,7 @@
       }
     ]
   },
-  "1020": {
+  "1015": {
     "program": "Physical Education",
     "count": 1020,
     "section": "00010",
@@ -45584,7 +45393,7 @@
       }
     ]
   },
-  "1021": {
+  "1016": {
     "program": "Physical Education",
     "count": 1021,
     "section": "00011",
@@ -45609,7 +45418,7 @@
       }
     },
     "lab": null,
-    "more": "ADDITIONAL FEE:       $125.00\nThis is an intensive course. It consists of 5 in-class sessions (August 13-15, 19 and Sat. Sept 27th) from 9:00-3:00 and one 2-day, overnight trip (August  17-18th) in Mont Tremblant.  Camping gear required and available for rent \u2013 Max. $15.00.  Must be comfortable on the Lake and have an interest in the outdoors. ",
+    "more": "ADDITIONAL FEE:       $125.00\nThis is an intensive course. It consists of 5 in-class sessions (August 13-15, 19 and Sat. Sept 27th) from 9:00-3:00 and one 2-day, overnight trip (August  17-18th) in Mont Tremblant.  Camping gear required and available for rent – Max. $15.00.  Must be comfortable on the Lake and have an interest in the outdoors. ",
     "viewData": [
       {
         "4": [
@@ -45619,7 +45428,7 @@
       }
     ]
   },
-  "1022": {
+  "1017": {
     "program": "Physical Education",
     "count": 1022,
     "section": "00012",
@@ -45660,7 +45469,7 @@
       }
     ]
   },
-  "1023": {
+  "1018": {
     "program": "Physical Education",
     "count": 1023,
     "section": "00013",
@@ -45695,7 +45504,7 @@
       }
     ]
   },
-  "1024": {
+  "1019": {
     "program": "Physical Education",
     "count": 1024,
     "section": "00014",
@@ -45736,7 +45545,7 @@
       }
     ]
   },
-  "1025": {
+  "1020": {
     "program": "Physical Education",
     "count": 1025,
     "section": "00015",
@@ -45771,7 +45580,7 @@
       }
     ]
   },
-  "1026": {
+  "1021": {
     "program": "Physical Education",
     "count": 1026,
     "section": "00016",
@@ -45806,7 +45615,7 @@
       }
     ]
   },
-  "1027": {
+  "1022": {
     "program": "Physical Education",
     "count": 1027,
     "section": "00017",
@@ -45841,7 +45650,7 @@
       }
     ]
   },
-  "1028": {
+  "1023": {
     "program": "Physical Education",
     "count": 1028,
     "section": "00018",
@@ -45876,7 +45685,7 @@
       }
     ]
   },
-  "1029": {
+  "1024": {
     "program": "Physical Education",
     "count": 1029,
     "section": "00019",
@@ -45911,7 +45720,7 @@
       }
     ]
   },
-  "1030": {
+  "1025": {
     "program": "Physical Education",
     "count": 1030,
     "section": "00020",
@@ -45946,7 +45755,7 @@
       }
     ]
   },
-  "1031": {
+  "1026": {
     "program": "Physical Education",
     "count": 1031,
     "section": "00021",
@@ -45954,7 +45763,7 @@
     "code": "109-103-MQ",
     "lecture": {
       "title": "Team Sports",
-      "prof": "Priv\u00e9e, Chelsea",
+      "prof": "Privée, Chelsea",
       "time": {
         "W": [
           "0830-1030"
@@ -45967,7 +45776,7 @@
         "takeAgain": 100,
         "difficulty": 1.4,
         "status": "found",
-        "prof": "Priv\u00e9e, Chelsea"
+        "prof": "Privée, Chelsea"
       }
     },
     "lab": null,
@@ -45981,7 +45790,7 @@
       }
     ]
   },
-  "1032": {
+  "1027": {
     "program": "Physical Education",
     "count": 1032,
     "section": "00022",
@@ -45989,7 +45798,7 @@
     "code": "109-103-MQ",
     "lecture": {
       "title": "Team Sports",
-      "prof": "Priv\u00e9e, Chelsea",
+      "prof": "Privée, Chelsea",
       "time": {
         "W": [
           "1030-1230"
@@ -46002,7 +45811,7 @@
         "takeAgain": 100,
         "difficulty": 1.4,
         "status": "found",
-        "prof": "Priv\u00e9e, Chelsea"
+        "prof": "Privée, Chelsea"
       }
     },
     "lab": null,
@@ -46016,7 +45825,7 @@
       }
     ]
   },
-  "1033": {
+  "1028": {
     "program": "Physical Education",
     "count": 1033,
     "section": "00023",
@@ -46024,7 +45833,7 @@
     "code": "109-103-MQ",
     "lecture": {
       "title": "Mind-Body Retreat",
-      "prof": "Raymond-Parent, Genevi\u00e8ve",
+      "prof": "Raymond-Parent, Geneviève",
       "time": {
         "R": [
           "1200-1500"
@@ -46037,7 +45846,7 @@
         "takeAgain": 93,
         "difficulty": 1.6,
         "status": "found",
-        "prof": "Raymond-Parent, Genevi\u00e8ve"
+        "prof": "Raymond-Parent, Geneviève"
       }
     },
     "lab": null,
@@ -46051,7 +45860,7 @@
       }
     ]
   },
-  "1034": {
+  "1029": {
     "program": "Physical Education",
     "count": 1034,
     "section": "00024",
@@ -46086,7 +45895,7 @@
       }
     ]
   },
-  "1035": {
+  "1030": {
     "program": "Physical Education",
     "count": 1035,
     "section": "00025",
@@ -46121,7 +45930,7 @@
       }
     ]
   },
-  "1036": {
+  "1031": {
     "program": "Physical Education",
     "count": 1036,
     "section": "00026",
@@ -46156,7 +45965,7 @@
       }
     ]
   },
-  "1037": {
+  "1032": {
     "program": "Physical Education",
     "count": 1037,
     "section": "00027",
@@ -46191,7 +46000,7 @@
       }
     ]
   },
-  "1038": {
+  "1033": {
     "program": "Physical Education",
     "count": 1038,
     "section": "00028",
@@ -46226,7 +46035,7 @@
       }
     ]
   },
-  "1039": {
+  "1034": {
     "program": "Physical Education",
     "count": 1039,
     "section": "00060",
@@ -46261,15 +46070,15 @@
       }
     ]
   },
-  "1040": {
+  "1035": {
     "program": "Complementary Courses",
     "count": 1040,
     "section": "00001",
     "course": "",
     "code": "387-DFF-AB",
     "lecture": {
-      "title": "Sociologie de la sant\u00e9",
-      "prof": "L\u00e9g\u00e8re, Jessica",
+      "title": "Sociologie de la santé",
+      "prof": "Légère, Jessica",
       "time": {
         "TR": [
           "1130-1300"
@@ -46282,7 +46091,7 @@
         "takeAgain": 73,
         "difficulty": 3.1,
         "status": "found",
-        "prof": "L\u00e9g\u00e8re, Jessica"
+        "prof": "Légère, Jessica"
       }
     },
     "lab": null,
@@ -46302,14 +46111,14 @@
       }
     ]
   },
-  "1041": {
+  "1036": {
     "program": "Complementary Courses",
     "count": 1041,
     "section": "00001",
     "course": "",
     "code": "203-DFB-AB",
     "lecture": {
-      "title": "Sports et conception d'\u00e9quipements sportifs",
+      "title": "Sports et conception d'équipements sportifs",
       "prof": "Portelance, Etienne",
       "time": {
         "TR": [
@@ -46343,14 +46152,14 @@
       }
     ]
   },
-  "1042": {
+  "1037": {
     "program": "Complementary Courses",
     "count": 1042,
     "section": "00001",
     "course": "",
     "code": "420-DFF-AB",
     "lecture": {
-      "title": "Introduction \u00e0 la programmation",
+      "title": "Introduction à la programmation",
       "prof": "Fulleringer, Alexander",
       "time": {
         "TR": [
@@ -46384,14 +46193,14 @@
       }
     ]
   },
-  "1043": {
+  "1038": {
     "program": "Complementary Courses",
     "count": 1043,
     "section": "00001",
     "course": "",
     "code": "570-DFA-AB",
     "lecture": {
-      "title": "Fa\u00e7onnage",
+      "title": "Façonnage",
       "prof": "Horlik, Veronika",
       "time": {
         "W": [
@@ -46419,14 +46228,14 @@
       }
     ]
   },
-  "1044": {
+  "1039": {
     "program": "Complementary Courses",
     "count": 1044,
     "section": "00002",
     "course": "",
     "code": "570-DFA-AB",
     "lecture": {
-      "title": "Fa\u00e7onnage",
+      "title": "Façonnage",
       "prof": "Horlik, Veronika",
       "time": {
         "F": [
@@ -46454,7 +46263,7 @@
       }
     ]
   },
-  "1045": {
+  "1040": {
     "program": "Complementary Courses",
     "count": 1045,
     "section": "00001",
@@ -46495,7 +46304,7 @@
       }
     ]
   },
-  "1046": {
+  "1041": {
     "program": "Complementary Courses",
     "count": 1046,
     "section": "00001",
@@ -46530,14 +46339,14 @@
       }
     ]
   },
-  "1047": {
+  "1042": {
     "program": "Complementary Courses",
     "count": 1047,
     "section": "00001",
     "course": "",
     "code": "101-DFA-AB",
     "lecture": {
-      "title": "Biologie du sexe et de la sexualit\u00e9",
+      "title": "Biologie du sexe et de la sexualité",
       "prof": "Daoust, Simon",
       "time": {
         "MR": [
@@ -46571,14 +46380,14 @@
       }
     ]
   },
-  "1048": {
+  "1043": {
     "program": "Complementary Courses",
     "count": 1048,
     "section": "00001",
     "course": "",
     "code": "120-DFB-AB",
     "lecture": {
-      "title": "Nutrition pour le sport et l\u2019exercice",
+      "title": "Nutrition pour le sport et l’exercice",
       "prof": "Fahmy, Magda",
       "time": {
         "MW": [
@@ -46612,14 +46421,14 @@
       }
     ]
   },
-  "1049": {
+  "1044": {
     "program": "Complementary Courses",
     "count": 1049,
     "section": "00002",
     "course": "",
     "code": "120-DFB-AB",
     "lecture": {
-      "title": "Nutrition pour le sport et l\u2019exercice",
+      "title": "Nutrition pour le sport et l’exercice",
       "prof": "Fahmy, Magda",
       "time": {
         "TR": [
@@ -46653,7 +46462,7 @@
       }
     ]
   },
-  "1050": {
+  "1045": {
     "program": "Complementary Courses",
     "count": 1050,
     "section": "00001",
@@ -46697,7 +46506,7 @@
       }
     ]
   },
-  "1051": {
+  "1046": {
     "program": "Complementary Courses",
     "count": 1051,
     "section": "00001",
@@ -46738,7 +46547,7 @@
       }
     ]
   },
-  "1052": {
+  "1047": {
     "program": "Complementary Courses",
     "count": 1052,
     "section": "00001",
@@ -46779,55 +46588,14 @@
       }
     ]
   },
-  "1053": {
-    "program": "Complementary Courses",
-    "count": 1053,
-    "section": "00001",
-    "course": "",
-    "code": "350-DFA-AB",
-    "lecture": {
-      "title": "Initiation \u00e0 la psychologie",
-      "prof": "Caouette, Julie",
-      "time": {
-        "TR": [
-          "1600-1730"
-        ]
-      },
-      "rating": {
-        "score": 68.6,
-        "avg": 3.6,
-        "nRating": 11,
-        "takeAgain": 75,
-        "difficulty": 2.6,
-        "status": "found",
-        "prof": "Caouette, Julie"
-      }
-    },
-    "lab": null,
-    "more": "",
-    "viewData": [
-      {
-        "2": [
-          17,
-          20
-        ]
-      },
-      {
-        "4": [
-          17,
-          20
-        ]
-      }
-    ]
-  },
-  "1054": {
+  "1048": {
     "program": "Complementary Courses",
     "count": 1054,
     "section": "00001",
     "course": "",
     "code": "530-DFA-AB",
     "lecture": {
-      "title": "Cin\u00e9ma d\u2019animation en stop motion",
+      "title": "Cinéma d’animation en stop motion",
       "prof": "Schorr, Daniel",
       "time": {
         "T": [
@@ -46855,7 +46623,7 @@
       }
     ]
   },
-  "1055": {
+  "1049": {
     "program": "Complementary Courses",
     "count": 1055,
     "section": "00001",
@@ -46890,7 +46658,7 @@
       }
     ]
   },
-  "1056": {
+  "1050": {
     "program": "Complementary Courses",
     "count": 1056,
     "section": "00002",
@@ -46925,7 +46693,7 @@
       }
     ]
   },
-  "1057": {
+  "1051": {
     "program": "Complementary Courses",
     "count": 1057,
     "section": "00001",
@@ -46960,7 +46728,7 @@
       }
     ]
   },
-  "1058": {
+  "1052": {
     "program": "Complementary Courses",
     "count": 1058,
     "section": "00001",
@@ -46995,7 +46763,7 @@
       }
     ]
   },
-  "1059": {
+  "1053": {
     "program": "Complementary Courses",
     "count": 1059,
     "section": "00001",
@@ -47036,7 +46804,7 @@
       }
     ]
   },
-  "1060": {
+  "1054": {
     "program": "Complementary Courses",
     "count": 1060,
     "section": "00002",
@@ -47077,7 +46845,7 @@
       }
     ]
   },
-  "1061": {
+  "1055": {
     "program": "Complementary Courses",
     "count": 1061,
     "section": "00001",
@@ -47118,7 +46886,7 @@
       }
     ]
   },
-  "1062": {
+  "1056": {
     "program": "Complementary Courses",
     "count": 1062,
     "section": "00002",
@@ -47159,7 +46927,7 @@
       }
     ]
   },
-  "1063": {
+  "1057": {
     "program": "Complementary Courses",
     "count": 1063,
     "section": "00001",
@@ -47200,14 +46968,14 @@
       }
     ]
   },
-  "1064": {
+  "1058": {
     "program": "Complementary Courses",
     "count": 1064,
     "section": "00001",
     "course": "",
     "code": "381-DFD-AB",
     "lecture": {
-      "title": "Introduction \u00e0 la mus\u00e9ologie",
+      "title": "Introduction à la muséologie",
       "prof": "Gloux, Sabrina",
       "time": {
         "TR": [
@@ -47241,14 +47009,14 @@
       }
     ]
   },
-  "1065": {
+  "1059": {
     "program": "Complementary Courses",
     "count": 1065,
     "section": "00001",
     "course": "",
     "code": "401-DFC-AB",
     "lecture": {
-      "title": "Art oratoire en public pour des pr\u00e9sentations puissantes et",
+      "title": "Art oratoire en public pour des présentations puissantes et",
       "prof": "Raymond, Darcy Gabriel",
       "time": {
         "T": [
@@ -47276,7 +47044,7 @@
       }
     ]
   },
-  "1066": {
+  "1060": {
     "program": "Complementary Courses",
     "count": 1066,
     "section": "00001",
@@ -47301,7 +47069,7 @@
       }
     },
     "lab": null,
-    "more": "For all programs.  Intensive course: includes 9 classes on campus and 1 weekend trip, Oct.24-26 in Foret Ouareau.  Students must provide suitable hiking boots (some pairs available to rent), appropriate clothing. Some equipment available to rent from college \u2013 tents, stoves, sleeping bags, back packs (max. $15). ",
+    "more": "For all programs.  Intensive course: includes 9 classes on campus and 1 weekend trip, Oct.24-26 in Foret Ouareau.  Students must provide suitable hiking boots (some pairs available to rent), appropriate clothing. Some equipment available to rent from college – tents, stoves, sleeping bags, back packs (max. $15). ",
     "viewData": [
       {
         "1": [
@@ -47311,7 +47079,7 @@
       }
     ]
   },
-  "1067": {
+  "1061": {
     "program": "Complementary Courses",
     "count": 1067,
     "section": "00002",
@@ -47336,7 +47104,7 @@
       }
     },
     "lab": null,
-    "more": "For all programs.  Intensive course: includes 9 classes on campus and 1 weekend trip, Oct.10-12 in Foret Ouareau.  Students must provide suitable hiking boots (some pairs available to rent), appropriate clothing. Some equipment available to rent from college \u2013 tents, stoves, sleeping bags, back packs (max. $15). ",
+    "more": "For all programs.  Intensive course: includes 9 classes on campus and 1 weekend trip, Oct.10-12 in Foret Ouareau.  Students must provide suitable hiking boots (some pairs available to rent), appropriate clothing. Some equipment available to rent from college – tents, stoves, sleeping bags, back packs (max. $15). ",
     "viewData": [
       {
         "1": [
@@ -47346,7 +47114,7 @@
       }
     ]
   },
-  "1068": {
+  "1062": {
     "program": "Complementary Courses",
     "count": 1068,
     "section": "00001",
@@ -47386,5 +47154,238 @@
         ]
       }
     ]
+  },
+  "3063": {
+    "program": "Arts, Literature & Communication",
+    "count": 563,
+    "section": "00002",
+    "course": "",
+    "code": "608-T1A-AB",
+    "lecture": {
+      "title": "Beginners Italian 101",
+      "prof": "",
+      "time": {
+        "F": [
+          "1130-1430"
+        ]
+      },
+      "rating": null
+    },
+    "lab": null,
+    "more": "*** Not open, may open during registration ***\n",
+    "viewData": [
+      {
+        "5": [
+          8,
+          14
+        ]
+      }
+    ]
+  },
+  "3064": {
+    "program": "English",
+    "count": 705,
+    "section": "00060",
+    "course": "ENGLISH",
+    "code": "603-103-MQ",
+    "lecture": {
+      "title": "Writing Tutors",
+      "prof": "Eberle, Wendy",
+      "time": {
+        "TR": [
+          "1230-1430"
+        ]
+      },
+      "rating": {
+        "score": 55.1,
+        "avg": 2.8,
+        "nRating": 12,
+        "takeAgain": 25,
+        "difficulty": 3.3,
+        "status": "found",
+        "prof": "Eberle, Wendy"
+      }
+    },
+    "lab": null,
+    "more": "",
+    "viewData": [
+      {
+        "2": [
+          10,
+          14
+        ]
+      },
+      {
+        "4": [
+          10,
+          14
+        ]
+      }
+    ]
+  },
+  "3065": {
+    "program": "English",
+    "count": 706,
+    "section": "00061",
+    "course": "ENGLISH",
+    "code": "603-103-MQ",
+    "lecture": {
+      "title": "A Godlike Science (Writing Tutors)",
+      "prof": "Lepine, Anna",
+      "time": {
+        "WF": [
+          "1030-1230"
+        ]
+      },
+      "rating": {
+        "score": 75.5,
+        "avg": 3.9,
+        "nRating": 20,
+        "takeAgain": 72,
+        "difficulty": 3.4,
+        "status": "found",
+        "prof": "Lepine, Anna"
+      }
+    },
+    "lab": null,
+    "more": "As part of the college's Climate Action Plan, these courses will be covering the four Climate and Ecological Emergency Learning Objectives in their content. Depending on the discipline, these Learning Objectives will be woven into the course competencies in various ways, and assessed by the teacher as part of the course evaluation plan. ",
+    "viewData": [
+      {
+        "3": [
+          6,
+          10
+        ]
+      },
+      {
+        "5": [
+          6,
+          10
+        ]
+      }
+    ]
+  },
+  "3066": {
+    "program": "English",
+    "count": 724,
+    "section": "00060",
+    "course": "ENGLISH",
+    "code": "603-200-AB",
+    "lecture": {
+      "title": "Writing Tutors",
+      "prof": "Eberle, Wendy",
+      "time": {
+        "TR": [
+          "1230-1430"
+        ]
+      },
+      "rating": {
+        "score": 55.1,
+        "avg": 2.8,
+        "nRating": 12,
+        "takeAgain": 25,
+        "difficulty": 3.3,
+        "status": "found",
+        "prof": "Eberle, Wendy"
+      }
+    },
+    "lab": null,
+    "more": "",
+    "viewData": [
+      {
+        "2": [
+          10,
+          14
+        ]
+      },
+      {
+        "4": [
+          10,
+          14
+        ]
+      }
+    ]
+  },
+  "3067": {
+    "program": "English",
+    "count": 725,
+    "section": "00061",
+    "course": "ENGLISH",
+    "code": "603-200-AB",
+    "lecture": {
+      "title": "A Godlike Science (Writing Tutors)",
+      "prof": "Lepine, Anna",
+      "time": {
+        "WF": [
+          "1030-1230"
+        ]
+      },
+      "rating": {
+        "score": 75.5,
+        "avg": 3.9,
+        "nRating": 20,
+        "takeAgain": 72,
+        "difficulty": 3.4,
+        "status": "found",
+        "prof": "Lepine, Anna"
+      }
+    },
+    "lab": null,
+    "more": "As part of the college's Climate Action Plan, these courses will be covering the four Climate and Ecological Emergency Learning Objectives in their content. Depending on the discipline, these Learning Objectives will be woven into the course competencies in various ways, and assessed by the teacher as part of the course evaluation plan. ",
+    "viewData": [
+      {
+        "3": [
+          6,
+          10
+        ]
+      },
+      {
+        "5": [
+          6,
+          10
+        ]
+      }
+    ]
+  },
+  "3068": {
+    "program": "Complementary Courses",
+    "count": 1053,
+    "section": "00001",
+    "course": "",
+    "code": "350-DFA-AB",
+    "lecture": {
+      "title": "Initiation à la psychologie",
+      "prof": "Caouette, Julie",
+      "time": {
+        "TR": [
+          "1600-1730"
+        ]
+      },
+      "rating": {
+        "score": 68.6,
+        "avg": 3.6,
+        "nRating": 11,
+        "takeAgain": 75,
+        "difficulty": 2.6,
+        "status": "found",
+        "prof": "Caouette, Julie"
+      }
+    },
+    "lab": null,
+    "more": "",
+    "viewData": [
+      {
+        "2": [
+          17,
+          20
+        ]
+      },
+      {
+        "4": [
+          17,
+          20
+        ]
+      }
+    ]
   }
 }
+
