@@ -10,7 +10,7 @@ import { Class } from "@/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import Image from "next/image";
-import { faPhone, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { faPhone } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   allClasses: Record<string, Class>;
