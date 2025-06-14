@@ -15,3 +15,8 @@ Dream schedule builder is an improved version of my [Jac Mock Schedule Maker](ht
 3. Schedule saving (account creation).
 4. Sharing schedules to your friends.
 5. Autobuilder (input codes and generate schedules).
+
+## Contributing
+If you found an issue with the data or a bug in the website, open a new issue describing the issue and the steps to reproduce it if it's a bug. Please be clear and provide as much context as possible.
+
+If you wish to directly contribute to it (I welcome it), fork the repo, make changes, and open a pull request.
