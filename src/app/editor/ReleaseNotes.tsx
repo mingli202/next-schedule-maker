@@ -11,8 +11,8 @@ const versionHistory = [
     "Fall2025 June 6, v1",
     [
       "Updated with the latest June 6 pdf.",
-      "Schedules are broken due to the two version being too different.",
-      "Users can edit sections locally by holding the warning icon at the bottom left of a section in the search results.",
+      "Career Programs are gone.",
+      "Should have much less wrong info overall.",
     ],
   ],
   [
