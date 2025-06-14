@@ -12,7 +12,7 @@ const versionHistory = [
     [
       "Updated with the latest June 6 pdf.",
       "Career Programs are gone.",
-      "Should have much less wrong info overall.",
+      "Should have much less wrong sections overall.",
     ],
   ],
   [
@@ -57,7 +57,7 @@ export default function ReleaseNotes() {
           <div className="flex w-[min(35rem,80%)] flex-col gap-2 rounded-md border-[4px] border-solid border-primary bg-bgPrimary p-2 md:gap-4 md:p-4">
             <div>
               <div className="flex items-center justify-between gap-2 text-xl md:text-2xl">
-                <h1>What{"'"}s new in Fall2025</h1>
+                <h1>What{"'"}s new in Fall 2025</h1>
                 <Button
                   variant="basic"
                   className="p-0"

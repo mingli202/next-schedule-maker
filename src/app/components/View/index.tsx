@@ -37,7 +37,7 @@ function View({
       {!disableTime && (
         <>
           <p className="absolute left-0 top-0 col-span-1 row-span-1 p-2 text-[0.5rem] md:text-xs">
-            Fall 2025
+            Fall 2025 (June 6 pdf)
           </p>
           <div className="grid-rows-[repeat(20,1fr) col-span-1 row-[span_21/span_21] mr-4 grid grid-cols-1">
             <Hours />
