@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 
 type Props = {
@@ -20,6 +21,15 @@ function Error({ error, reset }: Props) {
       <button className="underline" onClick={() => reset()}>
         Try Again
       </button>
+      <div className="text-center">
+        Want to fix it yourself? Consider contributing!{" "}
+        <Link
+          className="text-primary underline"
+          href="https://github.com/mingli202/next-schedule-maker?tab=readme-ov-file#contributing"
+        >
+          README
+        </Link>
+      </div>
     </div>
   );
 }
