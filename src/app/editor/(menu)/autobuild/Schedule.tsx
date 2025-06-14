@@ -48,6 +48,10 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
     >
       <div className="grid h-[10rem] w-full grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md bg-slate">
         {schedule.map(({ id, bgColor, textColor }, index) => {
+          if (!Object.hasOwn(allClasses, id)) {
+            return null;
+          }
+
           const cl = allClasses[id];
 
           return (
@@ -78,6 +82,10 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
 
       <div>
         {schedule.map(({ bgColor, id, textColor }, i) => {
+          if (!Object.hasOwn(allClasses, id)) {
+            return null;
+          }
+
           const { section, code, lecture } = allClasses[id];
 
           return (

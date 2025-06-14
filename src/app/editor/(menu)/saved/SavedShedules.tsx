@@ -52,9 +52,13 @@ function SavedSchedules({ allClasses }: Props) {
     const auth = getAuth(app);
     const user = auth.currentUser;
     if (!user) {
-      setSavedSchedules(
-        JSON.parse(localStorage.getItem("savedSchedulesfall2025") ?? "{}"),
-      );
+      const schedules: Record<string, Saved> = Object.fromEntries(
+        Object.entries(
+          JSON.parse(localStorage.getItem("savedSchedulesfall2025") ?? "{}"),
+        ).filter(([id]) => Object.hasOwn(allClasses, id)),
+      ) as Record<string, Saved>;
+      setSavedSchedules(schedules);
+
       return;
     }
 
@@ -116,6 +120,9 @@ function SavedSchedules({ allClasses }: Props) {
           </div>
 
           {currentClasses.map((cl, i) => {
+            if (!Object.hasOwn(allClasses, cl.id)) {
+              return null;
+            }
             const c = allClasses[cl.id];
             return (
               <div

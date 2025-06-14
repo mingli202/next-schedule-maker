@@ -11,6 +11,10 @@ function isValid(
   const classToCheckTimes = getSectionTimes(classToCheck);
 
   for (const { id } of scheduleToCompare) {
+    if (!Object.hasOwn(allClasses, id)) {
+      return false;
+    }
+
     const againstClass = allClasses[id];
     if (classToCheck.code === againstClass.code) return false;
 
