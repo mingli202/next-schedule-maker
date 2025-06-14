@@ -162,6 +162,10 @@ function ScheduleCard({
       >
         {schedule.data &&
           schedule.data.map(({ bgColor, id }) => {
+            if (!Object.hasOwn(allClasses, id)) {
+              return null;
+            }
+
             const sch = allClasses[id];
 
             return sch.viewData.map((s, i) => {

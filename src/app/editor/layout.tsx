@@ -7,6 +7,7 @@ import { getLocalJsonData } from "@/lib";
 import { Class } from "@/types";
 
 import { Metadata } from "next";
+import ReleaseNotes from "./ReleaseNotes";
 // import ReleaseNotes from "./ReleaseNotes";
 export const metadata: Metadata = {
   robots: "robots.txt",
@@ -59,7 +60,7 @@ async function Layout({ children }: Props) {
           <ViewWrapper allClasses={allClasses} />
         </div>
       </main>
-      {/* <ReleaseNotes /> */}
+      <ReleaseNotes />
     </ScheduleContextProvider>
   );
 }

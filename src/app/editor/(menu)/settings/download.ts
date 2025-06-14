@@ -68,6 +68,11 @@ async function download(currentSchedule: SharedCurrentClasses[]) {
   // add all classes
   for (const schedule of currentSchedule) {
     const { id, textColor, bgColor } = schedule;
+
+    if (!Object.hasOwn(allClasses, id)) {
+      continue;
+    }
+
     const cl = allClasses[id];
 
     for (const time of cl.viewData) {

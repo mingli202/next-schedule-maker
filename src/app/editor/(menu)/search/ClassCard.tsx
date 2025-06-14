@@ -145,10 +145,11 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
               const alreadyPresentNext = { ...alreadyPresent, [id]: true };
               setAlreadyPresent(alreadyPresentNext);
 
-              localStorage.setItem(
+              sessionStorage.setItem(
                 "fall2025ReportedClasses",
                 JSON.stringify(alreadyPresentNext),
               );
+              localStorage.removeItem("fall2025ReportedClasses");
             }
 
             const f = () => {
