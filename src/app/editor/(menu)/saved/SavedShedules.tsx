@@ -52,11 +52,10 @@ function SavedSchedules({ allClasses }: Props) {
     const auth = getAuth(app);
     const user = auth.currentUser;
     if (!user) {
-      const schedules: Record<string, Saved> = Object.fromEntries(
-        Object.entries(
-          JSON.parse(localStorage.getItem("savedSchedulesfall2025") ?? "{}"),
-        ).filter(([id]) => Object.hasOwn(allClasses, id)),
-      ) as Record<string, Saved>;
+      const schedules: Record<string, Saved> = JSON.parse(
+        localStorage.getItem("savedSchedulesfall2025") ?? "{}",
+      );
+
       setSavedSchedules(schedules);
 
       return;
