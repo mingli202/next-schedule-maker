@@ -11,6 +11,7 @@ async function generate(
   dayOff: string[],
   time: [string, string],
 ) {
+  console.log({ codes });
   const allClasses: Record<string, Class> =
     await getLocalJsonData("allClasses");
 
@@ -55,10 +56,8 @@ async function generate(
 
       if (code.professors && code.professors.length > 0) {
         if (
-          cl.lecture &&
-          !code.professors.includes(cl.lecture.prof) &&
-          cl.lab &&
-          !code.professors.includes(cl.lab.prof)
+          !code.professors.includes(cl.lecture?.prof ?? "asdfqwer") &&
+          !code.professors.includes(cl.lab?.prof ?? "asdfqwer")
         ) {
           return false;
         }
