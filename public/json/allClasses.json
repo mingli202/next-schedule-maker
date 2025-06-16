@@ -10901,64 +10901,6 @@
       }
     ]
   },
-  "192": {
-    "program": "Science Courses",
-    "count": 192,
-    "section": "00005",
-    "course": "PHYSICS",
-    "code": "203-SF2-AB",
-    "lecture": {
-      "title": "Électricité et magnétisme",
-      "prof": "Pare, Nanouk",
-      "time": {
-        "R": [
-          "0830-1030"
-        ]
-      },
-      "rating": {
-        "score": 75.8,
-        "avg": 3.9,
-        "nRating": 24,
-        "takeAgain": 73,
-        "difficulty": 2.5,
-        "status": "found",
-        "prof": "Pare, Nanouk"
-      }
-    },
-    "lab": {
-      "title": "Électricité et magnétisme",
-      "prof": "Camirand, Hubert",
-      "time": {
-        "M": [
-          "0830-1030"
-        ]
-      },
-      "rating": {
-        "score": 63.2,
-        "avg": 3.2,
-        "nRating": 34,
-        "takeAgain": 59,
-        "difficulty": 3.5,
-        "status": "found",
-        "prof": "Camirand, Hubert"
-      }
-    },
-    "more": "",
-    "viewData": [
-      {
-        "4": [
-          2,
-          6
-        ]
-      },
-      {
-        "1": [
-          2,
-          6
-        ]
-      }
-    ]
-  },
   "193": {
     "program": "Science Courses",
     "count": 193,
@@ -47388,4 +47330,3 @@
     ]
   }
 }
-
