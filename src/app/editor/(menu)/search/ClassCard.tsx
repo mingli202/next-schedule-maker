@@ -13,12 +13,12 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter, useSearchParams } from "next/navigation";
 import isValid from "./checkValid";
-import { useContext, useLayoutEffect, useState } from "react";
+import { useContext, useLayoutEffect, useRef, useState } from "react";
 import { ScheduleDispatchContext } from "../../ScheduleContext";
 import { motion } from "framer-motion";
 import LecLab from "@/app/components/LecLab";
 import { db } from "@/backend";
-import { ref, update } from "firebase/database";
+import { push, ref, set, update } from "firebase/database";
 import "firebase/compat/database";
 import firebase from "firebase/compat/app";
 
@@ -45,13 +45,15 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
   const [reportedCoordinates, setReportedCoordinates] = useState<Point | null>(
     null,
   );
-  const [reportedState, setReportedState] = useState<"loading" | string>(
-    "loading",
-  );
+  const [reportedState, setReportedState] = useState<
+    "loading" | "reason" | "Reported again!" | "Reported!"
+  >("reason");
 
   const [alreadyPresent, setAlreadyPresent] = useState<Record<string, boolean>>(
     {},
   );
+
+  const reportedRef = useRef<HTMLDivElement>(null!);
 
   function handleHoverEnter() {
     if (searchParams.get("previewHover") !== "true") return;
@@ -90,13 +92,59 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
     >
       {reportedCoordinates ? (
         <div
-          className="absolute z-10 -translate-y-full rounded-sm bg-bgPrimary p-1 text-sm"
+          className="absolute z-10 -translate-x-[1rem] -translate-y-3/4 rounded-[0.375rem] bg-bgPrimary p-1 text-sm"
           style={{ top: reportedCoordinates.y, left: reportedCoordinates.x }}
+          ref={reportedRef}
+          onClick={(e) => e.stopPropagation()}
+          onMouseMove={(e) => e.stopPropagation()}
         >
           {reportedState === "loading" ? (
             <div>
               <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
             </div>
+          ) : reportedState === "reason" ? (
+            <form
+              className="flex flex-col gap-1"
+              onSubmit={() => {
+                setReportedState("loading");
+              }}
+              action={async (formData: FormData) => {
+                const reason = formData.get("reason")?.toString() ?? "";
+
+                const ServerValue = firebase.database.ServerValue;
+
+                await update(ref(db, `reports/${id}`), {
+                  count: ServerValue.increment(1),
+                });
+
+                await set(push(ref(db, `/reports/${id}/reasons`)), reason);
+
+                if (alreadyPresent[id]) {
+                  setReportedState("Reported again!");
+                } else {
+                  setReportedState("Reported!");
+                  const alreadyPresentNext = { ...alreadyPresent, [id]: true };
+                  setAlreadyPresent(alreadyPresentNext);
+
+                  sessionStorage.setItem(
+                    "fall2025ReportedClasses",
+                    JSON.stringify(alreadyPresentNext),
+                  );
+                  localStorage.removeItem("fall2025ReportedClasses");
+                }
+              }}
+            >
+              <label htmlFor="reason">Reason (enter to submit)</label>
+              <input
+                className="rounded-sm bg-bgSecondary outline-none"
+                id="reason"
+                name="reason"
+                title="reason"
+                required
+                placeholder="What's wrong?"
+                autoFocus
+              />
+            </form>
           ) : (
             <div className="flex items-center justify-center gap-2">
               <p>{reportedState}</p>
@@ -128,34 +176,17 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
           }
           className="flex items-center justify-center"
           onClick={async (e) => {
+            e.stopPropagation();
+
             setReportedCoordinates({
               x: e.clientX,
               y: e.clientY,
             });
-            const ServerValue = firebase.database.ServerValue;
-
-            await update(ref(db, "reports"), {
-              [id]: ServerValue.increment(1),
-            });
-
-            if (alreadyPresent[id]) {
-              setReportedState("Reported again!");
-            } else {
-              setReportedState("Reported!");
-              const alreadyPresentNext = { ...alreadyPresent, [id]: true };
-              setAlreadyPresent(alreadyPresentNext);
-
-              sessionStorage.setItem(
-                "fall2025ReportedClasses",
-                JSON.stringify(alreadyPresentNext),
-              );
-              localStorage.removeItem("fall2025ReportedClasses");
-            }
+            setReportedState("reason");
 
             const f = () => {
               window.removeEventListener("mousemove", f);
               window.removeEventListener("click", f);
-              setReportedState("loading");
               setReportedCoordinates(null);
             };
 
