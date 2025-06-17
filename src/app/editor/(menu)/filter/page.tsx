@@ -1,10 +1,9 @@
 import { Class } from "@/types";
 import Form from "./Form";
-import { getLocalJsonData } from "@/lib";
+import { getRemoteJson } from "@/lib";
 
 async function Filter() {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+  const allClasses: Record<string, Class> = await getRemoteJson("allClasses");
 
   return <Form allClasses={allClasses} />;
 }

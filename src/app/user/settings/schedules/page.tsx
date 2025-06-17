@@ -1,10 +1,9 @@
-import { cn, getLocalJsonData } from "@/lib";
+import { cn, getRemoteJson } from "@/lib";
 import PublicSchedules from "./PublicSchedules";
 import { Class } from "@/types";
 
 async function Page() {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+  const allClasses: Record<string, Class> = await getRemoteJson("allClasses");
 
   return (
     <div className="relative flex h-full w-full flex-col gap-2 rounded-md bg-black/30 p-3 shadow-[rgba(156,205,220,0.24)_0px_3px_8px]">

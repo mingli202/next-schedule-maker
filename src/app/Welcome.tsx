@@ -5,15 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { HTMLAttributes } from "react";
 import { Class } from "@/types";
-import { getLocalJsonData } from "@/lib";
+import { getRemoteJson } from "@/lib";
 import BgAnimation from "./BgAnimation";
 
 async function Welcome({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+  const allClasses: Record<string, Class> = await getRemoteJson("allClasses");
 
   return (
     <div

@@ -1,12 +1,11 @@
-import { getLocalJsonData } from "@/lib";
+import { getRemoteJson } from "@/lib";
 import Banner from "./Banner";
 import FollowingsPreview from "./FollowingsPreview";
 import SavedPreview from "./SavedPreview";
 import { Class } from "@/types";
 
 async function Page() {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+  const allClasses: Record<string, Class> = await getRemoteJson("allClasses");
 
   return (
     <div className="flex w-full basis-full flex-col gap-2 overflow-hidden p-2 md:h-full md:gap-4 md:p-4">

@@ -1,6 +1,6 @@
 import { Class, Code, SharedCurrentClasses } from "@/types";
 import isValid from "../search/checkValid";
-import { getLocalJsonData } from "@/lib";
+import { getRemoteJson } from "@/lib";
 import { getSectionTimes } from "@/lib/util";
 
 async function generate(
@@ -12,8 +12,7 @@ async function generate(
   time: [string, string],
 ) {
   console.log({ codes });
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+  const allClasses: Record<string, Class> = await getRemoteJson("allClasses");
 
   const classes = Object.entries(allClasses).filter(([, cl]) =>
     codes.some((c) => c.code === cl.code),

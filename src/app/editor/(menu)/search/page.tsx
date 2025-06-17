@@ -1,15 +1,14 @@
-import { getLocalJsonData } from "@/lib";
+import { getRemoteJson } from "@/lib";
 import SearchBar from "./SearchBar";
 import SearchedClasses from "./SearchedClasses";
 import { Class } from "@/types";
 
 async function Search() {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+  const allClasses: Record<string, Class> = await getRemoteJson("allClasses");
 
-  const professors: string[] = await getLocalJsonData("professors");
+  const professors: string[] = await getRemoteJson("professors");
 
-  const colors: string[] = await getLocalJsonData("colors");
+  const colors: string[] = await getRemoteJson("colors");
 
   return (
     <>

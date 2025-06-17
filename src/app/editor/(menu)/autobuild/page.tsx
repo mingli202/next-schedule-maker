@@ -1,12 +1,11 @@
-import { getLocalJsonData } from "@/lib";
+import { getRemoteJson } from "@/lib";
 import Autobuild from "./Autobuild";
 import { Class } from "@/types";
 
 async function Page() {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+  const allClasses: Record<string, Class> = await getRemoteJson("allClasses");
 
-  const colors: string[] = await getLocalJsonData("colors");
+  const colors: string[] = await getRemoteJson("colors");
 
   return <Autobuild allClasses={allClasses} colors={colors} />;
 }

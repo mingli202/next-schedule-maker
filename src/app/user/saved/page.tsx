@@ -1,4 +1,4 @@
-import { getLocalJsonData } from "@/lib";
+import { getRemoteJson } from "@/lib";
 import RightNavbar from "./RightNavbar";
 import { Class } from "@/types";
 import { Metadata } from "next";
@@ -33,8 +33,7 @@ export const metadata: Metadata = {
 };
 
 async function Page() {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+  const allClasses: Record<string, Class> = await getRemoteJson("allClasses");
 
   return (
     <div className="h-full w-full overflow-hidden p-2">

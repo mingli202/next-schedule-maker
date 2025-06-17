@@ -3,7 +3,7 @@ import ScheduleContextProvider from "./ScheduleContext";
 import DragIndicator from "./DragIndicator";
 import "./styles.css";
 import ViewWrapper from "./ViewWrapper";
-import { getLocalJsonData } from "@/lib";
+import { getRemoteJson } from "@/lib";
 import { Class } from "@/types";
 
 import { Metadata } from "next";
@@ -40,8 +40,7 @@ type Props = {
 };
 
 async function Layout({ children }: Props) {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+  const allClasses: Record<string, Class> = await getRemoteJson("allClasses");
 
   return (
     <ScheduleContextProvider>

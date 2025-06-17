@@ -1,11 +1,10 @@
-import { getLocalJsonData } from "@/lib";
+import { getRemoteJson } from "@/lib";
 import { Class, SharedCurrentClasses } from "@/types";
 import ExcelJS from "exceljs";
 import FileSaver from "file-saver";
 
 async function download(currentSchedule: SharedCurrentClasses[]) {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+  const allClasses: Record<string, Class> = await getRemoteJson("allClasses");
   const workbook = new ExcelJS.Workbook();
 
   workbook.creator = "Unknown";

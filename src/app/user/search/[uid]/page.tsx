@@ -1,4 +1,4 @@
-import { getLocalJsonData } from "@/lib";
+import { getRemoteJson } from "@/lib";
 import { Class } from "@/types";
 import UserCard from "./UserCard";
 
@@ -9,8 +9,7 @@ type Props = {
 };
 
 async function Page({ params }: Props) {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+  const allClasses: Record<string, Class> = await getRemoteJson("allClasses");
 
   return <UserCard allClasses={allClasses} uid={params.uid} />;
 }
