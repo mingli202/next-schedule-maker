@@ -9,7 +9,7 @@ export const DataFilename = {
 export type DataFilename = (typeof DataFilename)[keyof typeof DataFilename];
 
 export async function getRemoteJson(name: DataFilename) {
-  const url = `https://raw.githubusercontent.com/mingli202/next-schedule-maker/${SemesterNames.current}/public/json/${name.filename}.json`;
+  const url = `https://raw.githubusercontent.com/mingli202/next-schedule-maker/${SemesterNames.Current}/public/json/${name.filename}.json`;
 
   const res = await fetch(url, { cache: "no-cache" });
   if (!res.ok) throw new Error("fetch failed: " + res.statusText);

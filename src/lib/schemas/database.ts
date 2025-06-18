@@ -10,7 +10,7 @@ export const Saved = z.object({
 export const SavedScheduleData = z.object({
   data: z.array(Saved),
   name: z.string(),
-  semester: z.literal(SemesterNames.current),
+  semester: z.literal(SemesterNames.Current),
 });
 
 export const Database = z.object({

@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
+import { SemesterNames } from "../util/semesterNames";
+import { RecordValues } from "../util";
 
-export function useSessionStorage<T>(defaultValue: T, key: string) {
+export function useSessionStorage<T>(
+  defaultValue: T,
+  key: RecordValues<typeof SemesterNames.SessionStorage>,
+) {
   const [state, setState] = useState<T>(defaultValue);
 
   useEffect(() => {
-    const data = sessionStorage.getItem(key + "fall2025");
+    const data = sessionStorage.getItem(key);
 
     if (data) {
       setState(JSON.parse(data));
@@ -12,18 +17,21 @@ export function useSessionStorage<T>(defaultValue: T, key: string) {
   }, [key]);
 
   function update(newValue: T) {
-    sessionStorage.setItem(key + "fall2025", JSON.stringify(newValue));
+    sessionStorage.setItem(key, JSON.stringify(newValue));
     setState(newValue);
   }
 
   return [state, update] as const;
 }
 
-export function useLocalStorage<T>(defaultValue: T, key: string) {
+export function useLocalStorage<T>(
+  defaultValue: T,
+  key: RecordValues<typeof SemesterNames.LocalStorage>,
+) {
   const [state, setState] = useState<T>(defaultValue);
 
   useEffect(() => {
-    const data = localStorage.getItem(key + "fall2025");
+    const data = localStorage.getItem(key);
 
     if (data) {
       setState(JSON.parse(data));
@@ -31,7 +39,7 @@ export function useLocalStorage<T>(defaultValue: T, key: string) {
   }, [key]);
 
   function update(newValue: T) {
-    sessionStorage.setItem(key + "fall2025", JSON.stringify(newValue));
+    localStorage.setItem(key, JSON.stringify(newValue));
     setState(newValue);
   }
 
