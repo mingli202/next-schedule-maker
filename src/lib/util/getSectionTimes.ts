@@ -1,4 +1,4 @@
-import { Section } from "../schemas";
+import { Section } from "../schemas/pdf";
 
 export function getSectionTimes(
   section: Section,
