@@ -18,9 +18,7 @@ import { ScheduleDispatchContext } from "../../ScheduleContext";
 import { motion } from "framer-motion";
 import LecLab from "@/app/components/LecLab";
 import { db } from "@/backend";
-import { push, ref, set, update } from "firebase/database";
-import "firebase/compat/database";
-import firebase from "firebase/compat/app";
+import { increment, push, ref, set, update } from "firebase/database";
 
 type Props = {
   id: string;
@@ -111,10 +109,8 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
               action={async (formData: FormData) => {
                 const reason = formData.get("reason")?.toString() ?? "";
 
-                const ServerValue = firebase.database.ServerValue;
-
                 await update(ref(db, `reports/${id}`), {
-                  count: ServerValue.increment(1),
+                  count: increment(1),
                 });
 
                 await set(push(ref(db, `/reports/${id}/reasons`)), reason);
