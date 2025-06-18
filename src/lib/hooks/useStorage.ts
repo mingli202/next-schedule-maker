@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { SemesterNames } from "../util/semesterNames";
 import { RecordValues } from "../util";
 
@@ -8,7 +8,7 @@ export function useSessionStorage<T>(
 ) {
   const [state, setState] = useState<T>(defaultValue);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const data = sessionStorage.getItem(key);
 
     if (data) {
@@ -30,7 +30,7 @@ export function useLocalStorage<T>(
 ) {
   const [state, setState] = useState<T>(defaultValue);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const data = localStorage.getItem(key);
 
     if (data) {
