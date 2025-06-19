@@ -13,21 +13,24 @@ export const SavedScheduleData = z.object({
   semester: z.literal(SemesterNames.Current),
 });
 
+export const Report = z.record(
+  z.number(),
+  z.object({
+    count: z.number(),
+    reason: z.string(),
+  }),
+);
+
+export const User = z.object({
+  schedules: SavedScheduleData,
+});
+
 export const Database = z.object({
-  users: z.record(
-    z.string(),
-    z.object({
-      schedules: SavedScheduleData,
-    }),
-  ),
-  reports: z.record(
-    z.number(),
-    z.object({
-      count: z.number(),
-      reason: z.string(),
-    }),
-  ),
+  users: z.record(z.string(), User),
+  reports: Report,
 });
 
 export type SavedScheduleData = z.infer<typeof SavedScheduleData>;
+export type Report = z.infer<typeof Report>;
+export type User = z.infer<typeof User>;
 export type Database = z.infer<typeof Database>;
