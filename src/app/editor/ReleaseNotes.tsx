@@ -8,6 +8,13 @@ import { useLayoutEffect, useState } from "react";
 
 const versionHistory = [
   [
+    "Fall2025 June 17, v1",
+    [
+      "Updated with the latest June 17 pdf.",
+      "Schedules might be broken, double check your schedules.",
+    ],
+  ],
+  [
     "Fall2025 June 6, v1",
     [
       "Updated with the latest June 6 pdf.",
