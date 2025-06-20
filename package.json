@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -28,22 +30,23 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
     "@types/file-saver": "^2.0.7",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
     "eslint-plugin-tsdoc": "^0.4.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.13",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
-  },
-  "trustedDependencies": [
-    "@firebase/util",
-    "@tailwindcss/oxide",
-    "@vercel/speed-insights",
-    "protobufjs"
-  ]
+  }
 }
