@@ -46,10 +46,6 @@ function SearchedClasses({ allClasses, professors, colors }: Props) {
 
       {filterClasses.length === 0 && (
         <div className="box-border w-full overflow-y-auto p-4">
-          <div className="mb-4 flex flex-col items-center justify-center rounded-md border border-red-300 p-2 text-red-300">
-            <p>IMPORTANT!</p>
-            <p>Updated with latest June 6 schedule pdf.</p>
-          </div>
           <h2 className="text-center font-heading text-xl">Guidelines:</h2>
           <ul className="list-disc pl-4">
             <li>
