@@ -145,18 +145,3 @@ export class Err<T, E> extends ResultBase<T, E> {
 }
 
 export type Result<T, E> = Ok<T, E> | Err<T, E>;
-
-function isThisFive(n: number): Result<boolean, string> {
-  if (n !== 5) {
-    return new Err("This number is not five what");
-  }
-
-  return new Ok(true);
-}
-
-const clearlyFive = isThisFive(5).map(() => 5);
-console.log(clearlyFive.unwrap());
-console.log(clearlyFive.isOk());
-
-const notFive = isThisFive(0);
-console.log(notFive.unwrapOrElse((e) => e.length === 5));
