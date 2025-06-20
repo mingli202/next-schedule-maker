@@ -6,7 +6,7 @@ export const DataFilename = {
 export type DataFilename = (typeof DataFilename)[keyof typeof DataFilename];
 
 export const getLocalJsonData = async <T>(name: string): Promise<T> => {
-  const commit = "7461c29a3ea4f4648a7424d4246fbf417fe4877d";
+  const commit = "a712b17dd7c7142cc7e22d66e8fcc0590639a882";
   const url = `https://raw.githubusercontent.com/mingli202/next-schedule-maker/${commit}/public/json/${name}.json`;
 
   const res = await fetch(url);
