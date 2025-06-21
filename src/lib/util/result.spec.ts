@@ -69,6 +69,18 @@ describe("testing Result enum", () => {
     });
   });
 
+  describe("testing mapOr", () => {
+    test("maps Ok value", () => {
+      const n = parseInt("5").mapOr(10, (val) => val * 5);
+      expect(n).toBe(25);
+    });
+
+    test("maps Err value", () => {
+      const n = parseInt("asf").mapOr(10, (val) => val * 5);
+      expect(n).toBe(10);
+    });
+  });
+
   describe("testing mapErr", () => {
     const f = (e: string) => `The error was ${e}`;
 
