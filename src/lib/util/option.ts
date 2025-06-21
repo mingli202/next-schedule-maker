@@ -134,6 +134,21 @@ abstract class OptionBase<T> extends Object {
   public okOrElse<E>(err: () => E): Result<T, E> {
     return this.#val === undefined ? new Err(err()) : new Ok(this.#val);
   }
+
+  /**
+   * @returnss the option if it contains a value, otherwise returns optb
+   * */
+  public or(optB: Option<T>): Option<T> {
+    return this.#val === undefined ? optB : this;
+  }
+
+  /**
+   * @returns the option if it contains a value, otherwise calls `f` and returns the result
+   * */
+  public orElse(f: () => Option<T>): Option<T> {
+    return this.#val === undefined ? f() : this;
+  }
+
 }
 
 export class Some<T> extends OptionBase<T> {
