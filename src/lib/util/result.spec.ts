@@ -69,18 +69,6 @@ describe("testing Result enum", () => {
     });
   });
 
-  describe("testing mapOr", () => {
-    test("maps Ok value", () => {
-      const n = parseInt("5").mapOr(10, (val) => val * 5);
-      expect(n).toBe(25);
-    });
-
-    test("maps Err value", () => {
-      const n = parseInt("asf").mapOr(10, (val) => val * 5);
-      expect(n).toBe(10);
-    });
-  });
-
   describe("testing mapErr", () => {
     const f = (e: string) => `The error was ${e}`;
 
@@ -94,6 +82,36 @@ describe("testing Result enum", () => {
       const res = parseInt("asdf").mapErr(f);
 
       assertResult(new Err("The error was Could not parse input asdf"), res);
+    });
+  });
+
+  describe("testing mapOr", () => {
+    test("maps Ok value", () => {
+      const n = parseInt("5").mapOr(10, (val) => val * 5);
+      expect(n).toBe(25);
+    });
+
+    test("maps Err value", () => {
+      const n = parseInt("asf").mapOr(10, (val) => val * 5);
+      expect(n).toBe(10);
+    });
+  });
+
+  describe("testing mapOrElse", () => {
+    test("maps Ok value", () => {
+      const n = parseInt("5").mapOrElse(
+        () => "Not sucessful",
+        (val) => `${val * 5}`,
+      );
+      expect(n).toBe("25");
+    });
+
+    test("maps Err value", () => {
+      const n = parseInt("asdf").mapOrElse(
+        () => "Not successful",
+        (val) => `${val * 5}`,
+      );
+      expect(n).toBe("Not successful");
     });
   });
 });
