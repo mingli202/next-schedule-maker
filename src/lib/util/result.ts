@@ -4,6 +4,18 @@ abstract class ResultBase<T, E> {
     protected _val: T | E,
   ) {}
 
+  valueOf(): string {
+    return this.toString();
+  }
+
+  toString(): string {
+    if (this._ok) {
+      return `Ok(${this._val})`;
+    } else {
+      return `Err(${this._val})`;
+    }
+  }
+
   /**
    * @returns the contained `Ok` value
    * @throws an `Error` with `msg` if the contained value is an `Err`
