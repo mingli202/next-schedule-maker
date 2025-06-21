@@ -6,6 +6,18 @@ abstract class OptionBase<T> {
   }
 
   /**
+   * @returns the contained `Some` value
+   * @throws if the value if a `None` with a custom error message provided by `msg`
+   * */
+  public expect(msg: string): T {
+    if (this.#val) {
+      return this.#val;
+    }
+
+    throw new Error(msg);
+  }
+
+  /**
    * @returns `None` if the option is `None`, otherwise calls `predicate` with the wrapped value and returns:
    * - `Some(t)` if `predicate` returns `true` (where `t` is the wrapped value), and
    * - `None` if `predicate` returns `false`
