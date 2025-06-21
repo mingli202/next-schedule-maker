@@ -19,6 +19,26 @@ abstract class OptionBase<T> extends Object {
   }
 
   /**
+   * @returns `None` if the option is `None`, otherwise returns `optB`
+   * */
+  public and<U>(optB: Option<U>): Option<U> {
+    if (this.#val === undefined) {
+      return new None();
+    }
+    return optB;
+  }
+
+  /**
+   * @returns `None` if the option is `None`, otherwise call `f` with the wrapped value and returns the result
+   * */
+  public andThen<U>(f: (val: T) => Option<U>): Option<U> {
+    if (this.#val === undefined) {
+      return new None();
+    }
+    return f(this.#val);
+  }
+
+  /**
    * @returns the contained `Some` value
    * @throws if the value if a `None` with a custom error message provided by `msg`
    * */
@@ -65,7 +85,7 @@ abstract class OptionBase<T> extends Object {
   }
 
   /**
-   * @returns `true` if the option is a some and the value inside of it matches a predicate
+   * @returns `true` if the option is a `Some` and the value inside of it matches a predicate
    * */
   public isSomeAnd(f: (val: T) => boolean): boolean {
     return this.#val !== undefined && f(this.#val);
