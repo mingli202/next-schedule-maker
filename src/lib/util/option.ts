@@ -220,6 +220,30 @@ abstract class OptionBase<T> extends Object {
     return this.#val;
   }
 
+  /**
+   * Zips `this` with another `Option`.
+   * If `this` is `Some(s)` and other is `Some(o)`, this method returns `Some([s, o])`. Otherwise, `None` is returned.
+   * */
+  public zip<U>(other: Option<U>): Option<[T, U]> {
+    if (this.#val === undefined || other.isNone()) {
+      return new None();
+    }
+
+    return new Some([this.#val, other.unwrap()]);
+  }
+
+  /**
+   * @returns `Some` if exactly one of `this`, `optB` is `Some`, otherwise returns `None`.
+   * */
+  public xor(optB: Option<T>): Option<T> {
+    if (this.isSome() && optB.isNone()) {
+      return this;
+    } else if (this.isNone() && optB.isSome()) {
+      return optB;
+    } else {
+      return new None();
+    }
+  }
 }
 
 export class Some<T> extends OptionBase<T> {
