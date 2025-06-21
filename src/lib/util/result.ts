@@ -87,7 +87,7 @@ abstract class ResultBase<T, E> {
     }
   }
 
-  /*
+  /**
    * Calls `op` if the result is `Err`, otherwise returns the `Ok` value of `Self`
    * */
   public orElse<F>(op: (e: E) => Result<T, F>): Result<T, F> {
