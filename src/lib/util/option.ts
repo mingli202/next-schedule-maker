@@ -187,6 +187,39 @@ abstract class OptionBase<T> extends Object {
 
     return toReturn;
   }
+
+  /**
+   * @returns the contained `Some` value.
+   * @throws if value is `None`.
+   * */
+  public unwrap(): T {
+    if (this.#val === undefined) {
+      throw new Error("Unwrapped a None value");
+    }
+    return this.#val;
+  }
+
+  /**
+   * @returns the contained `Some` value or a provided fallback.
+   * */
+  public unwrapOr(fallback: T): T {
+    if (this.#val === undefined) {
+      return fallback;
+    }
+
+    return this.#val;
+  }
+
+  /**
+   * @returns the contained `Some` value or computes it from a fallback function.
+   * */
+  public unwrapOrElse(f: () => T) {
+    if (this.#val === undefined) {
+      return f();
+    }
+    return this.#val;
+  }
+
 }
 
 export class Some<T> extends OptionBase<T> {
