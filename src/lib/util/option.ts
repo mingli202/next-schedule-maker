@@ -90,6 +90,27 @@ abstract class OptionBase<T> extends Object {
   public isSomeAnd(f: (val: T) => boolean): boolean {
     return this.#val !== undefined && f(this.#val);
   }
+
+  /**
+   * Maps an `Option<T>` to `Option<U>` by applying a function to a contained value (if `Some`) or returns `None` (if `None`).
+   * */
+  public map<U>(f: (val: T) => U): Option<U> {
+    return this.#val !== undefined ? new Some(f(this.#val)) : new None();
+  }
+
+  /**
+   * @returns the provided fallback result (if none), or applies a function to the contained value (if any)
+   * */
+  public mapOr<U>(fallback: U, f: (val: T) => U): U {
+    return this.#val === undefined ? fallback : f(this.#val);
+  }
+
+  /**
+   * Computes a fallback function result (if none), or applies a different function to the contained value (if any)
+   * */
+  public mapOrElse<U>(fallback: () => U, f: (val: T) => U): U {
+    return this.#val === undefined ? fallback() : f(this.#val);
+  }
 }
 
 export class Some<T> extends OptionBase<T> {
