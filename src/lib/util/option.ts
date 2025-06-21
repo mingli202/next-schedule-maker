@@ -5,7 +5,12 @@ abstract class OptionBase<T> {
     this.#val = val;
   }
 
-  filter(predicate: (val: T) => boolean): Option<T> {
+  /**
+   * @returns `None` if the option is `None`, otherwise calls `predicate` with the wrapped value and returns:
+   * - `Some(t)` if `predicate` returns `true` (where `t` is the wrapped value), and
+   * - `None` if `predicate` returns `false`
+   * */
+  public filter(predicate: (val: T) => boolean): Option<T> {
     if (this.#val && predicate(this.#val)) {
       return new Some(this.#val);
     }
