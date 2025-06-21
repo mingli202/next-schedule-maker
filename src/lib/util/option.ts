@@ -1,27 +1,9 @@
-class Ref<T> {
-  #val: T;
-
-  constructor(val: T) {
-    this.#val = val;
-  }
-
-  public set(newVal: T) {
-    this.#val = newVal;
-  }
-
-  public get(): T {
-    return this.#val;
-  }
-}
-
 abstract class OptionBase<T> extends Object {
-  #val?: Ref<T>;
+  #val?: T;
 
   constructor(val?: T) {
     super();
-    if (val) {
-      this.#val = new Ref(val);
-    }
+    this.#val = val;
   }
 
   valueOf(): string {
@@ -32,7 +14,7 @@ abstract class OptionBase<T> extends Object {
     if (this.#val === undefined) {
       return "None";
     } else {
-      return `Some(${this.#val.get()})`;
+      return `Some(${this.#val})`;
     }
   }
 
@@ -42,7 +24,7 @@ abstract class OptionBase<T> extends Object {
    * */
   public expect(msg: string): T {
     if (this.#val) {
-      return this.#val.get();
+      return this.#val;
     }
 
     throw new Error(msg);
@@ -54,18 +36,11 @@ abstract class OptionBase<T> extends Object {
    * - `None` if `predicate` returns `false`
    * */
   public filter(predicate: (val: T) => boolean): Option<T> {
-    if (this.#val && predicate(this.#val.get())) {
-      return new Some(this.#val.get());
+    if (this.#val && predicate(this.#val)) {
+      return new Some(this.#val);
     }
 
     return new None();
-  }
-
-  public getOrInsert(value: T): Ref<T> {
-    if (this.#val === undefined) {
-      this.#val = new Ref(value);
-    }
-    return this.#val;
   }
 }
 
@@ -82,13 +57,3 @@ export class None<T> extends OptionBase<T> {
 }
 
 export type Option<T> = Some<T> | None<T>;
-
-const x = new None<number>();
-const y = x.getOrInsert(10);
-
-console.log(x.valueOf());
-console.log(y.get());
-
-y.set(15);
-console.log(x.valueOf());
-console.log(y.get());
