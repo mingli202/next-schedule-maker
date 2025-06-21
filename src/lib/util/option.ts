@@ -160,6 +160,33 @@ abstract class OptionBase<T> extends Object {
 
     return returnOpt;
   }
+
+  /**
+   * Takes the value out of the option, leaving a `None` in its place.
+   * */
+  public take(): Option<T> {
+    const toReturn =
+      this.#val === undefined ? new None<T>() : new Some<T>(this.#val);
+
+    this.#val = undefined;
+
+    return toReturn;
+  }
+
+  /**
+   * Takes the value out of the option, but only if the predicate evaluates to `true`.
+   * In other words, replaces `this` with `None` if the predicate returns `true`.
+   * */
+  public takeIf(predicate: (val: T) => boolean): Option<T> {
+    const toReturn =
+      this.#val !== undefined && predicate(this.#val)
+        ? new Some<T>(this.#val)
+        : new None<T>();
+
+    this.#val = undefined;
+
+    return toReturn;
+  }
 }
 
 export class Some<T> extends OptionBase<T> {
