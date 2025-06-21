@@ -126,4 +126,54 @@ describe("testing Result enum", () => {
       assertResult(new Ok(10), res);
     });
   });
+
+  describe("testing unwrap", () => {
+    test("on Ok value", () => {
+      const res = parseInt("5");
+      expect(res.unwrap()).toBe(5);
+    });
+
+    test("on Err value", () => {
+      const res = parseInt("asdf");
+      expect(() => {
+        res.unwrap();
+      }).toThrow();
+    });
+  });
+
+  describe("testing unwrapErr", () => {
+    test("on Ok value", () => {
+      const res = parseInt("5");
+      expect(() => res.unwrapErr()).toThrow();
+    });
+
+    test("on Err value", () => {
+      const res = parseInt("asdf");
+      expect(res.unwrapErr()).toBe("Could not parse input asdf");
+    });
+  });
+
+  describe("testing unwrapOr", () => {
+    test("on Ok value", () => {
+      const res = parseInt("5");
+      expect(res.unwrapOr(10)).toBe(5);
+    });
+
+    test("on Err value", () => {
+      const res = parseInt("asdjfk");
+      expect(res.unwrapOr(10)).toBe(10);
+    });
+  });
+
+  describe("testing unwrapOrElse", () => {
+    test("on Ok value", () => {
+      const res = parseInt("5");
+      expect(res.unwrapOrElse(() => 10)).toBe(5);
+    });
+
+    test("on Err value", () => {
+      const res = parseInt("asdjf");
+      expect(res.unwrapOrElse(() => 10)).toBe(10);
+    });
+  });
 });
