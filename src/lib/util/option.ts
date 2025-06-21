@@ -42,6 +42,34 @@ abstract class OptionBase<T> extends Object {
 
     return new None();
   }
+
+  /**
+   * @returns `true` if the option is a `None` value
+   * */
+  public isNone(): boolean {
+    return this.#val === undefined;
+  }
+
+  /**
+   * @returns `true` if the option is a `None` value or the value inside of it matches a predicate
+   * */
+  public isNoneOr(f: (val: T) => boolean): boolean {
+    return this.#val === undefined || f(this.#val);
+  }
+
+  /**
+   * @returns `true` if the option is a `Some` value
+   * */
+  public isSome(): boolean {
+    return this.#val !== undefined;
+  }
+
+  /**
+   * @returns `true` if the option is a some and the value inside of it matches a predicate
+   * */
+  public isSomeAnd(f: (val: T) => boolean): boolean {
+    return this.#val !== undefined && f(this.#val);
+  }
 }
 
 export class Some<T> extends OptionBase<T> {
