@@ -6,8 +6,12 @@ function parseInt(input: string): Result<number, string> {
   if (/^\d+$/.test(input)) {
     return new Ok(v);
   } else {
-    return new Err("Could not parse input");
+    return new Err(`Could not parse input ${input}`);
   }
+}
+
+function assertResult<T, E>(expected: Result<T, E>, actual: Result<T, E>) {
+  expect(actual.toString()).toBe(expected.toString());
 }
 
 describe("testing Result enum", () => {
@@ -56,12 +60,28 @@ describe("testing Result enum", () => {
   describe("testing map", () => {
     test("maps Ok value leaving Err untouched", () => {
       const okRes = parseInt("50").map((v) => v * 5);
-      expect(okRes.unwrap()).toBe(250);
+      assertResult(new Ok(250), okRes);
     });
 
     test("maps Err value", () => {
       const errRes = parseInt("asdf").map((v) => v * 10);
-      expect(errRes.unwrapErr()).toBe("Could not parse input");
+      assertResult(new Err("Could not parse input asdf"), errRes);
+    });
+  });
+
+  describe("testing mapErr", () => {
+    const f = (e: string) => `The error was ${e}`;
+
+    test("maps Ok value, leaving it untouched", () => {
+      const res = parseInt("5").mapErr(f);
+
+      assertResult(new Ok(5), res);
+    });
+
+    test("maps Err value", () => {
+      const res = parseInt("asdf").mapErr(f);
+
+      assertResult(new Err("The error was Could not parse input asdf"), res);
     });
   });
 });
