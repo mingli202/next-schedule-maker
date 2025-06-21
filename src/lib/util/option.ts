@@ -1,3 +1,5 @@
+import { Err, Ok, Result } from "./result";
+
 abstract class OptionBase<T> extends Object {
   #val?: T;
 
@@ -16,6 +18,13 @@ abstract class OptionBase<T> extends Object {
     } else {
       return `Some(${this.#val})`;
     }
+  }
+
+  public clone(): Option<T> {
+    if (this.#val === undefined) {
+      return new None();
+    }
+    return new Some(structuredClone(this.#val));
   }
 
   /**
@@ -110,6 +119,20 @@ abstract class OptionBase<T> extends Object {
    * */
   public mapOrElse<U>(fallback: () => U, f: (val: T) => U): U {
     return this.#val === undefined ? fallback() : f(this.#val);
+  }
+
+  /**
+   * Transforms the `Option<T>` into a `Result<T, E>` mapping `Some(v)` to `Ok(v)` and `None` to `Err(err)`
+   * */
+  public ok_or<E>(err: E): Result<T, E> {
+    return this.#val === undefined ? new Err(err) : new Ok(this.#val);
+  }
+
+  /**
+   * Transforms the `Option<T>` into a `Result<T, E>`, mapping `Some(v)` to `Ok(v)` and `None` to `Err(err())`
+   * */
+  public okOrElse<E>(err: () => E): Result<T, E> {
+    return this.#val === undefined ? new Err(err()) : new Ok(this.#val);
   }
 }
 
