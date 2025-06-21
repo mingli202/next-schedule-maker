@@ -149,6 +149,17 @@ abstract class OptionBase<T> extends Object {
     return this.#val === undefined ? f() : this;
   }
 
+  /**
+   * Replaces the actual value in the option by the value given in parameter, returning the old value if present, leaving a `Some` in its place without deinitializing either one.
+   * */
+  public replace(value: T): Option<T> {
+    const returnOpt =
+      this.#val === undefined ? new None<T>() : new Some<T>(this.#val);
+
+    this.#val = value;
+
+    return returnOpt;
+  }
 }
 
 export class Some<T> extends OptionBase<T> {
