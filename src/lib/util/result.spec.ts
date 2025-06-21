@@ -114,4 +114,16 @@ describe("testing Result enum", () => {
       expect(n).toBe("Not successful");
     });
   });
+
+  describe("testing orElse", () => {
+    test("on Ok value", () => {
+      const res = parseInt("5").orElse(() => new Ok(10));
+      assertResult(new Ok(5), res);
+    });
+
+    test("on Err value", () => {
+      const res = parseInt("asfd").orElse(() => new Ok(10));
+      assertResult(new Ok(10), res);
+    });
+  });
 });
