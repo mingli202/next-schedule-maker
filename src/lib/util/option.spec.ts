@@ -178,4 +178,14 @@ given("an Option enum", () => {
       ).toBe("hello");
     });
   });
+
+  when("calling okOr", () => {
+    then("maps Some(v) to Ok(v)", () => {
+      assertResult(new Ok(0), someValue.okOr("hello"));
+    });
+
+    then("maps None to Err(e)", () => {
+      assertResult(new Err("hello"), noneValue.okOr("hello"));
+    });
+  });
 });
