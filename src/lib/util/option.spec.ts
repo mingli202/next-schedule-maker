@@ -134,7 +134,7 @@ given("an Option enum", () => {
   });
 
   when("calling map", () => {
-    then("on Some(v) returns f(v)", () => {
+    then("on Some(v) returns Some(f(v))", () => {
       assertOption(
         new Some(10),
         someValue.map((v) => v + 10),
