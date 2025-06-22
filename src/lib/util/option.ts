@@ -177,14 +177,14 @@ abstract class OptionBase<T> extends Object {
    * In other words, replaces `this` with `None` if the predicate returns `true`.
    * */
   public takeIf(predicate: (val: T) => boolean): Option<T> {
-    const toReturn =
-      this.#val !== undefined && predicate(this.#val)
-        ? new Some<T>(this.#val)
-        : new None<T>();
+    if (this.#val !== undefined && predicate(this.#val)) {
+      const toReturn = new Some(this.#val);
+      this.#val = undefined;
 
-    this.#val = undefined;
+      return toReturn;
+    }
 
-    return toReturn;
+    return new None();
   }
 
   /**
