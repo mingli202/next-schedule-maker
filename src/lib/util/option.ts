@@ -123,7 +123,7 @@ abstract class OptionBase<T> extends Object {
   /**
    * Transforms the `Option<T>` into a `Result<T, E>` mapping `Some(v)` to `Ok(v)` and `None` to `Err(err)`
    * */
-  public ok_or<E>(err: E): Result<T, E> {
+  public okOr<E>(err: E): Result<T, E> {
     return this.#val === undefined ? new Err(err) : new Ok(this.#val);
   }
 
