@@ -1,6 +1,6 @@
 "use client";
 
-import { Variants, motion } from "framer-motion";
+import { Variants, motion } from "motion/react";
 
 function PageLoading() {
   const children: Variants = {
@@ -25,7 +25,7 @@ function PageLoading() {
         {[...Array(9).keys()].map((i) => (
           <motion.div
             key={i}
-            className="h-8 w-8 rounded-sm bg-bgSecondary"
+            className="bg-bgSecondary h-8 w-8 rounded-sm"
             variants={children}
             initial="initial"
             animate="animate"
