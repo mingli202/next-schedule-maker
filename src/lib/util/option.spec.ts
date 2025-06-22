@@ -188,4 +188,20 @@ given("an Option enum", () => {
       assertResult(new Err("hello"), noneValue.okOr("hello"));
     });
   });
+
+  when("calling okOrElse", () => {
+    then("maps Some(v) to Ok(v)", () => {
+      assertResult(
+        new Ok(0),
+        someValue.okOrElse(() => "hello"),
+      );
+    });
+
+    then("maps None to Err(err())", () => {
+      assertResult(
+        new Err("hello"),
+        noneValue.okOrElse(() => "hello"),
+      );
+    });
+  });
 });
