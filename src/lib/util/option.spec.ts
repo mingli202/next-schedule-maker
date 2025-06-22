@@ -304,4 +304,14 @@ given("an Option enum", () => {
       );
     });
   });
+
+  when("calling unwrapOr", () => {
+    then("on Some(v) returns v", () => {
+      expect(someValue.unwrapOr(5)).toBe(0);
+    });
+
+    then("on None returns fallback", () => {
+      expect(noneValue.unwrapOr(5)).toBe(5);
+    });
+  });
 });
