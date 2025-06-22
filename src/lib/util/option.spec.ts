@@ -314,4 +314,14 @@ given("an Option enum", () => {
       expect(noneValue.unwrapOr(5)).toBe(5);
     });
   });
+
+  when("calling unwrapOrElse", () => {
+    then("on Some(v) returns v", () => {
+      expect(someValue.unwrapOrElse(() => 15)).toBe(0);
+    });
+
+    then("on None returns f()", () => {
+      expect(noneValue.unwrapOrElse(() => 15)).toBe(15);
+    });
+  });
 });
