@@ -148,4 +148,14 @@ given("an Option enum", () => {
       );
     });
   });
+
+  when("calling mapOr", () => {
+    then("on Some(v) returns f(v)", () => {
+      expect(someValue.mapOr(10, (v) => v + 15)).toBe(15);
+    });
+
+    then("on None returns fallback", () => {
+      expect(noneValue.mapOr(10, (v) => v + 15)).toBe(10);
+    });
+  });
 });
