@@ -258,4 +258,38 @@ given("an Option enum", () => {
       assertOption(new None(), noneValue);
     });
   });
+
+  when("calling takeIf", () => {
+    then("on Some takes if predicate is true", () => {
+      assertOption(
+        new Some(0),
+        someValue.takeIf((v) => v === 0),
+      );
+      assertOption(new None(), someValue);
+    });
+
+    then("on Some don't takes if predicate is false", () => {
+      assertOption(
+        new None(),
+        someValue.takeIf((v) => v !== 0),
+      );
+      assertOption(new Some(0), someValue);
+    });
+
+    then("on None nothing happens if predicate is true", () => {
+      assertOption(
+        new None(),
+        noneValue.takeIf((v) => v === 0),
+      );
+      assertOption(new None(), noneValue);
+    });
+
+    then("on None nothing happens if predicate is false", () => {
+      assertOption(
+        new None(),
+        noneValue.takeIf((v) => v !== 0),
+      );
+      assertOption(new None(), noneValue);
+    });
+  });
 });
