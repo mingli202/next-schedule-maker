@@ -98,4 +98,14 @@ given("an Option enum", () => {
       expect(noneValue.isNone()).toBe(true);
     });
   });
+
+  when("calling isSome", () => {
+    then("on Some returns true", () => {
+      expect(someValue.isSome()).toBe(true);
+    });
+
+    then("on None returns false", () => {
+      expect(noneValue.isSome()).toBe(false);
+    });
+  });
 });
