@@ -52,11 +52,10 @@ abstract class OptionBase<T> extends Object {
    * @throws if the value if a `None` with a custom error message provided by `msg`
    * */
   public expect(msg: string): T {
-    if (this.#val) {
-      return this.#val;
+    if (this.#val === undefined) {
+      throw new Error(msg);
     }
-
-    throw new Error(msg);
+    return this.#val;
   }
 
   /**
