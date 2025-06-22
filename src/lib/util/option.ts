@@ -135,7 +135,7 @@ abstract class OptionBase<T> extends Object {
   }
 
   /**
-   * @returnss the option if it contains a value, otherwise returns optb
+   * @returns the option if it contains a value, otherwise returns optB
    * */
   public or(optB: Option<T>): Option<T> {
     return this.#val === undefined ? optB : this;
