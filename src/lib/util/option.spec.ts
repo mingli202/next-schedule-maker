@@ -246,4 +246,16 @@ given("an Option enum", () => {
       assertOption(new Some(25), noneValue);
     });
   });
+
+  when("calling take", () => {
+    then("on Some works as expected", () => {
+      assertOption(new Some(0), someValue.take());
+      assertOption(new None(), someValue);
+    });
+
+    then("on None works as expected", () => {
+      assertOption(new None(), noneValue.take());
+      assertOption(new None(), noneValue);
+    });
+  });
 });
