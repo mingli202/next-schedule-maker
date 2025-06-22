@@ -99,6 +99,18 @@ given("an Option enum", () => {
     });
   });
 
+  when("calling isNoneOr(f)", () => {
+    then("on Some(v) returns true if f(v) true", () => {
+      expect(someValue.isNoneOr((v) => v === 0)).toBe(true);
+    });
+    then("on Some(v) returns true if f(v) is false", () => {
+      expect(someValue.isNoneOr((v) => v !== 0)).toBe(false);
+    });
+    then("on None returns true", () => {
+      expect(noneValue.isNoneOr((v) => v === 0)).toBe(true);
+    });
+  });
+
   when("calling isSome", () => {
     then("on Some returns true", () => {
       expect(someValue.isSome()).toBe(true);
