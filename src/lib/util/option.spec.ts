@@ -292,4 +292,16 @@ given("an Option enum", () => {
       assertOption(new None(), noneValue);
     });
   });
+
+  when("calling unwrap", () => {
+    then("on Some(v) returns v", () => {
+      expect(someValue.unwrap()).toBe(0);
+    });
+
+    then("on None throws", () => {
+      expect(() => noneValue.unwrap()).toThrow(
+        new Error("Unwrapped a None value"),
+      );
+    });
+  });
 });
