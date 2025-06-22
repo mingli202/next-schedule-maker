@@ -354,4 +354,22 @@ given("an Option enum", () => {
       );
     });
   });
+
+  when("calling xor", () => {
+    then("Some xor Some returns None", () => {
+      assertOption(new None(), someValue.xor(new Some(10)));
+    });
+
+    then("Some(a) xor None returns Some(a)", () => {
+      assertOption(new Some(0), someValue.xor(new None()));
+    });
+
+    then("None xor Some)b returns Some(b)", () => {
+      assertOption(new Some(10), noneValue.xor(new Some(10)));
+    });
+
+    then("None xor None returns None", () => {
+      assertOption(new None(), noneValue.xor(new None()));
+    });
+  });
 });
