@@ -120,4 +120,16 @@ given("an Option enum", () => {
       expect(noneValue.isSome()).toBe(false);
     });
   });
+
+  when("calling isSomeAnd", () => {
+    then("on Some returns true of f(v) is true", () => {
+      expect(someValue.isSomeAnd((v) => v === 0)).toBe(true);
+    });
+    then("on Some returns false of f(v) is false", () => {
+      expect(someValue.isSomeAnd((v) => v !== 0)).toBe(false);
+    });
+    then("on Some returns false", () => {
+      expect(noneValue.isSomeAnd((v) => v === 0)).toBe(false);
+    });
+  });
 });
