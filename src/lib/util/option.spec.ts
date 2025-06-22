@@ -132,4 +132,20 @@ given("an Option enum", () => {
       expect(noneValue.isSomeAnd((v) => v === 0)).toBe(false);
     });
   });
+
+  when("calling map", () => {
+    then("on Some(v) returns f(v)", () => {
+      assertOption(
+        new Some(10),
+        someValue.map((v) => v + 10),
+      );
+    });
+
+    then("on None returns None", () => {
+      assertOption(
+        new None(),
+        noneValue.map((v) => v + 10),
+      );
+    });
+  });
 });
