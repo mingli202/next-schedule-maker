@@ -1,4 +1,6 @@
 import { None, Option, Some } from "./option";
+import { Err, Ok } from "./result";
+import { assertResult } from "./result.spec";
 import { given, then, when } from "./test-util";
 
 function getIndex(index: number): Option<number> {
