@@ -230,4 +230,20 @@ given("an Option enum", () => {
       );
     });
   });
+
+  when("calling replace", () => {
+    then("on Some works as expected", () => {
+      const optSome = someValue.replace(50);
+
+      assertOption(new Some(0), optSome);
+      assertOption(new Some(50), someValue);
+    });
+
+    then("on None works as expected", () => {
+      const optNone = noneValue.replace(25);
+
+      assertOption(new None(), optNone);
+      assertOption(new Some(25), noneValue);
+    });
+  });
 });
