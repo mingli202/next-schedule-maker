@@ -10,7 +10,10 @@ function parseInt(input: string): Result<number, string> {
   }
 }
 
-function assertResult<T, E>(expected: Result<T, E>, actual: Result<T, E>) {
+export function assertResult<T, E>(
+  expected: Result<T, E>,
+  actual: Result<T, E>,
+) {
   expect(actual.toString()).toBe(expected.toString());
 }
 
