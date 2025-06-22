@@ -214,4 +214,20 @@ given("an Option enum", () => {
       assertOption(new Some(50), noneValue.or(new Some(50)));
     });
   });
+
+  when("calling orElse", () => {
+    then("on Some(v) returns Some(v)", () => {
+      assertOption(
+        new Some(0),
+        someValue.orElse(() => new Some(50)),
+      );
+    });
+
+    then("on None returns f())", () => {
+      assertOption(
+        new Some(50),
+        noneValue.orElse(() => new Some(50)),
+      );
+    });
+  });
 });
