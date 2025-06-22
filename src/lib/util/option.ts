@@ -64,7 +64,7 @@ abstract class OptionBase<T> extends Object {
    * - `None` if `predicate` returns `false`
    * */
   public filter(predicate: (val: T) => boolean): Option<T> {
-    if (this.#val && predicate(this.#val)) {
+    if (this.#val !== undefined && predicate(this.#val)) {
       return new Some(this.#val);
     }
 
