@@ -324,4 +324,34 @@ given("an Option enum", () => {
       expect(noneValue.unwrapOrElse(() => 15)).toBe(15);
     });
   });
+
+  when("calling zip", () => {
+    then("on Some(a) and Some(b) returns [Some(a), Some(b)]", () => {
+      assertOption(
+        new Some([10, 15]),
+        someValue.map((v) => v + 10).zip(someValue.map((v) => v + 15)),
+      );
+    });
+
+    then("on None and None returns None", () => {
+      assertOption(
+        new None(),
+        noneValue.map((v) => v + 10).zip(noneValue.map((v) => v + 15)),
+      );
+    });
+
+    then("on Some(a) and None returns None", () => {
+      assertOption(
+        new None(),
+        someValue.map((v) => v + 10).zip(noneValue.map((v) => v + 15)),
+      );
+    });
+
+    then("on None and Some(b) returns None", () => {
+      assertOption(
+        new None(),
+        noneValue.map((v) => v + 10).zip(someValue.map((v) => v + 15)),
+      );
+    });
+  });
 });
