@@ -31,7 +31,7 @@ abstract class ResultBase<T, E> {
   }
 
   /**
-   * @returns `true` if the result is`Ok`
+   * @returns `true` if the result is `Ok`
    * */
   public isOk(): boolean {
     return this.#ok;
