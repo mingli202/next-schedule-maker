@@ -1,3 +1,5 @@
+"use server";
+
 import {
   ReportSchema,
   SavedScheduleDataSchema,
@@ -73,11 +75,19 @@ class SavedScheduleData extends Table<SavedScheduleDataSchema> {
   }
 }
 
-const db: Record<TableNames, Table<unknown>> = {
+const db = {
   users: new Users(),
   reports: new Reports(),
   savedSchedules: new SavedSchedules(),
   savedScheduleData: new SavedScheduleData(),
 } as const;
 
-export { app, provider, db };
+export async function getDb() {
+  return db;
+}
+export async function getApp() {
+  return app;
+}
+export async function getProvider() {
+  return provider;
+}
