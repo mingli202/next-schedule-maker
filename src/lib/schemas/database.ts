@@ -1,36 +1,45 @@
 import { z } from "zod/v4";
 import { SemesterNames } from "../util/semesterNames";
 
-export const Saved = z.object({
+export const SavedScheduleDataSchema = z.object({
   bgColor: z.string(),
   textColor: z.string(),
-  id: z.number(),
+  dataId: z.number(),
 });
 
-export const SavedScheduleData = z.object({
-  data: z.array(Saved),
+export const ReportSchema = z.object({
+  count: z.number(),
+  reason: z.string(),
+});
+
+export const UserSchema = z.object({
+  userId: z.string(),
+  lastSignedIn: z.string(),
+  email: z.string(),
+  name: z.string(),
+});
+
+export const SavedScheduleSchema = z.object({
+  scheduleId: z.string(),
   name: z.string(),
   semester: z.literal(SemesterNames.Current),
+  userId: UserSchema.shape.userId,
 });
 
-export const Report = z.record(
-  z.number(),
-  z.object({
-    count: z.number(),
-    reason: z.string(),
-  }),
-);
+function table<T extends z.ZodType>(schema: T) {
+  return z.record(z.string(), schema);
+}
 
-export const User = z.object({
-  schedules: SavedScheduleData,
+export const DatabaseSchema = z.object({
+  users: table(UserSchema),
+  reports: table(ReportSchema),
+  savedSchedules: table(SavedScheduleSchema), // scheduleId: SavedScheduleSchema
+  savedScheduleData: table(SavedScheduleDataSchema), // dataId: SavedDataSchema
 });
 
-export const Database = z.object({
-  users: z.record(z.string(), User),
-  reports: Report,
-});
-
-export type SavedScheduleData = z.infer<typeof SavedScheduleData>;
-export type Report = z.infer<typeof Report>;
-export type User = z.infer<typeof User>;
-export type Database = z.infer<typeof Database>;
+export type SavedScheduleDataSchema = z.infer<typeof SavedScheduleDataSchema>;
+export type SavedScheduleSchema = z.infer<typeof SavedScheduleSchema>;
+export type ReportSchema = z.infer<typeof ReportSchema>;
+export type UserSchema = z.infer<typeof UserSchema>;
+export type DatabaseSchema = z.infer<typeof DatabaseSchema>;
+export type TableNames = keyof DatabaseSchema;

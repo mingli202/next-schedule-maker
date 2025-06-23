@@ -1,7 +1,15 @@
-import { Database, User } from "@/lib/schemas/database";
+import {
+  ReportSchema,
+  SavedScheduleDataSchema,
+  SavedScheduleSchema,
+  TableNames,
+  UserSchema,
+} from "@/lib/schemas/database";
+import { None, Option, Some } from "@/lib/util/option";
 import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider } from "firebase/auth";
 import { get, getDatabase, ref } from "firebase/database";
+import { z } from "zod/v4";
 
 const config = {
   apiKey: process.env.apiKey,
@@ -14,49 +22,62 @@ const config = {
 };
 
 const app = initializeApp(config);
-const db = getDatabase(app);
+const _db = getDatabase(app);
 const provider = new GoogleAuthProvider();
 
-class Base {}
+abstract class Table<T> {
+  #name: TableNames;
+  get name() {
+    return this.#name;
+  }
 
-class Save extends Base {}
+  #schema: z.ZodType<z.output<T>>;
+  get schema() {
+    return this.#schema;
+  }
 
-class SavedSchedule extends Base {
-  private _data: Save[];
-  private _textColor: string;
-  private _id: number;
+  constructor(name: TableNames, schema: z.ZodType<z.output<T>>) {
+    this.#name = name;
+    this.#schema = schema;
+  }
+
+  async get(primaryKey: string): Promise<Option<T>> {
+    const snapshot = await get(ref(_db, `${this.#name}/${primaryKey}`));
+
+    if (snapshot.exists()) {
+      return new Some(this.#schema.parse(snapshot.val()) as T);
+    }
+
+    return new None();
+  }
 }
 
-class Db extends Base {
-  private _schema = Database;
-  private _db;
-
+class Users extends Table<UserSchema> {
   constructor() {
-    super();
-    this._db = getDatabase(app);
+    super("users", UserSchema);
   }
-
-  public async users(): Promise<Record<string, User>> {
-    const snapshot = await get(ref(this._db, "users"));
-
-    if (!snapshot.exists()) {
-      return {};
-    }
-
-    const users = this._schema.shape.users.parse(snapshot.val());
-
-    return users;
+}
+class Reports extends Table<ReportSchema> {
+  constructor() {
+    super("reports", ReportSchema);
   }
-
-  public async users(uid: string): Promise<User | null> {
-    const snapshot = await get(ref(this._db, `users/${uid}`));
-
-    if (!snapshot.exists()) {
-      return null;
-    }
-
-    return User.parse(snapshot.val());
+}
+class SavedSchedules extends Table<SavedScheduleSchema> {
+  constructor() {
+    super("savedSchedules", SavedScheduleSchema);
+  }
+}
+class SavedScheduleData extends Table<SavedScheduleDataSchema> {
+  constructor() {
+    super("savedScheduleData", SavedScheduleDataSchema);
   }
 }
 
-export { app, db, provider };
+const db: Record<TableNames, Table<unknown>> = {
+  users: new Users(),
+  reports: new Reports(),
+  savedSchedules: new SavedSchedules(),
+  savedScheduleData: new SavedScheduleData(),
+} as const;
+
+export { app, provider, db };
