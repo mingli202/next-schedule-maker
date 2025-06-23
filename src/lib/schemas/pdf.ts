@@ -1,9 +1,6 @@
 import { z } from "zod/v4";
 
-export const Time = z.record(
-  z.enum(["M", "T", "W", "R", "F"]),
-  z.array(z.string()),
-);
+export const Time = z.record(z.string(), z.array(z.string()));
 
 export const Rating = z.object({
   score: z.number().min(0.0).max(100.0),
@@ -19,11 +16,14 @@ export const LecLab = z.object({
   title: z.string(),
   prof: z.string(),
   time: Time,
-  rating: Rating.optional(),
+  rating: Rating.nullish(),
 });
 
 export const ViewData = z.array(
-  z.record(z.number().min(1).max(5), z.array(z.number().min(1).max(20))),
+  z.record(
+    z.string().transform((v) => Number(v)),
+    z.array(z.coerce.number().min(1).max(21)),
+  ),
 );
 
 export const Section = z.object({
@@ -32,15 +32,18 @@ export const Section = z.object({
   section: z.string().regex(/^[0-9]{5}$/),
   course: z.string(),
   code: z.string().regex(/\w{3}-\w{3}-\w{1,2}/),
-  lecture: LecLab.optional(),
-  lab: LecLab.optional(),
+  lecture: LecLab.nullish(),
+  lab: LecLab.nullish(),
   more: z.string(),
   viewData: ViewData,
 });
 
 export const Professors = z.array(z.string());
 export const Colors = z.array(z.string());
-export const AllClasses = z.record(z.number(), Section);
+export const AllClasses = z.record(
+  z.string().transform((v) => Number(v)),
+  Section,
+);
 
 export type Time = z.infer<typeof Time>;
 export type Rating = z.infer<typeof Rating>;
