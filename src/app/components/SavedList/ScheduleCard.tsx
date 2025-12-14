@@ -128,7 +128,7 @@ function ScheduleCard({
         stateType.dispatch(schedule.data);
       }
     } catch {
-      alert("Only Fall 2025 Classes are allowed.");
+      alert("Only Winter2026 Classes are allowed.");
     }
   }
 
