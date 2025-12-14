@@ -4,9 +4,12 @@ import { useState } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { AnimatePresence, Variants } from "framer-motion";
+import { Button } from "@/ui";
+import { useRouter } from "next/navigation";
 
 function Login() {
   const [window, setWindow] = useState<"signin" | "signup">("signin");
+  const router = useRouter();
 
   const variants: Variants = {
     initial: {
@@ -24,7 +27,7 @@ function Login() {
   };
 
   return (
-    <div className="relative flex h-screen w-screen items-center justify-center">
+    <div className="relative flex h-screen w-screen flex-col items-center justify-center">
       <AnimatePresence>
         {window === "signin" && (
           <SignIn
@@ -49,6 +52,15 @@ function Login() {
           />
         )}
       </AnimatePresence>
+      <Button
+        onClick={() => {
+          router.push("/editor");
+        }}
+        className="absolute bottom-0"
+        variant="basic"
+      >
+        Try without an account
+      </Button>
     </div>
   );
 }

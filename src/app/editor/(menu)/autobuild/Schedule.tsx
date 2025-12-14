@@ -123,16 +123,16 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
               const newSchedule: Saved = {
                 data: schedule,
                 name: `Generated ${index + 1}`,
-                semester: "fall2025",
+                semester: "winter2026",
               } as const;
 
               if (!user) {
                 const savedSchedules = JSON.parse(
-                  localStorage.getItem("savedSchedulesfall2025") ?? "{}",
+                  localStorage.getItem("savedScheduleswinter2026") ?? "{}",
                 );
                 savedSchedules[Math.random().toString()] = newSchedule;
                 localStorage.setItem(
-                  "savedSchedulesfall2025",
+                  "savedScheduleswinter2026",
                   JSON.stringify(savedSchedules),
                 );
 
