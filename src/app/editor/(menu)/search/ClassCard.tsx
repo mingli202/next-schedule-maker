@@ -74,10 +74,10 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
   }
 
   useLayoutEffect(() => {
-    let reportedClasses = localStorage.getItem("fall2025ReportedClasses");
+    let reportedClasses = localStorage.getItem("winter2026ReportedClasses");
     if (reportedClasses === null) {
       reportedClasses = "{}";
-      localStorage.setItem("fall2025ReportedClasses", "{}");
+      localStorage.setItem("winter2026ReportedClasses", "{}");
     }
 
     setAlreadyPresent(JSON.parse(reportedClasses));
@@ -127,10 +127,10 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
                   setAlreadyPresent(alreadyPresentNext);
 
                   sessionStorage.setItem(
-                    "fall2025ReportedClasses",
+                    "winter2026ReportedClasses",
                     JSON.stringify(alreadyPresentNext),
                   );
-                  localStorage.removeItem("fall2025ReportedClasses");
+                  localStorage.removeItem("winter2026ReportedClasses");
                 }
               }}
             >

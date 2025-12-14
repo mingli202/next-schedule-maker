@@ -64,7 +64,7 @@ function ScheduleCard({
           };
 
           localStorage.setItem(
-            "savedSchedulesfall2025",
+            "savedScheduleswinter2026",
             JSON.stringify(newSavedSchedules),
           );
 
@@ -92,7 +92,7 @@ function ScheduleCard({
           delete savedSchedules[schId];
 
           localStorage.setItem(
-            "savedSchedulesfall2025",
+            "savedScheduleswinter2026",
             JSON.stringify(savedSchedules),
           );
 

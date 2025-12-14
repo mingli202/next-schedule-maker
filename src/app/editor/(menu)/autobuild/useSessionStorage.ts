@@ -4,7 +4,7 @@ function useSessionStorage<T>(defaultValue: T, key: string) {
   const [state, setState] = useState<T>(defaultValue);
 
   useEffect(() => {
-    const data = sessionStorage.getItem(key + "fall2025");
+    const data = sessionStorage.getItem(key + "winter2026");
 
     if (data) {
       setState(JSON.parse(data));
@@ -12,7 +12,7 @@ function useSessionStorage<T>(defaultValue: T, key: string) {
   }, [key]);
 
   function update(newValue: T) {
-    sessionStorage.setItem(key + "fall2025", JSON.stringify(newValue));
+    sessionStorage.setItem(key + "winter2026", JSON.stringify(newValue));
     setState(newValue);
   }
 

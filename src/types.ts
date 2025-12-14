@@ -85,7 +85,7 @@ export type Saved = {
   id?: string;
   data?: SharedCurrentClasses[];
   name?: string;
-  semester?: "fall2025";
+  semester?: "winter2026";
 };
 
 export type Code = {
