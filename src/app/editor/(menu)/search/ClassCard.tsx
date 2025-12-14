@@ -117,7 +117,10 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
                   count: ServerValue.increment(1),
                 });
 
-                await set(push(ref(db, `/reports/${id}/reasons`)), reason);
+                await set(push(ref(db, `/reports/${id}/reasons`)), {
+                  reason,
+                  timestamp: new Date().toString(),
+                });
 
                 if (alreadyPresent[id]) {
                   setReportedState("Reported again!");
