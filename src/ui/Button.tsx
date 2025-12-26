@@ -1,9 +1,9 @@
 "use client";
 
-import { twMerge } from "tailwind-merge";
 import { ButtonHTMLAttributes, useRef } from "react";
 import { HTMLMotionProps, motion, useAnimate } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib";
 
 type Props = {
   variant?: "basic" | "special";
@@ -79,7 +79,7 @@ function Button({
   return (
     <motion.button
       {...props}
-      className={twMerge(
+      className={cn(
         "relative overflow-hidden rounded-lg p-2",
         variant === "basic" && "bg-transparent opacity-50",
         variant === "special" && "text-bg-primary z-10 bg-yellow-400",
@@ -111,8 +111,8 @@ function Button({
 
       <motion.div
         ref={scope}
-        className={twMerge(
-          "absolute top-0 left-0 z-[-1] aspect-square w-full scale-0 rounded-full bg-white opacity-1",
+        className={cn(
+          "absolute top-0 left-0 z-[-1] aspect-square w-full rounded-full bg-white opacity-1",
           variant === "special" && "bg-bg-primary",
         )}
       />
