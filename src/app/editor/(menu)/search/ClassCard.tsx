@@ -86,13 +86,13 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
   return (
     <motion.div
       key={id}
-      className="box-border rounded-md bg-bgSecondary p-2"
+      className="bg-bg-secondary box-border rounded-md p-2"
       onHoverStart={handleHoverEnter}
       onHoverEnd={handleHoverEnd}
     >
       {reportedCoordinates ? (
         <div
-          className="absolute z-10 -translate-x-[1rem] -translate-y-3/4 rounded-[0.375rem] bg-bgPrimary p-1 text-sm"
+          className="bg-bg-primary absolute z-10 -translate-x-[1rem] -translate-y-3/4 rounded-[0.375rem] p-1 text-sm"
           style={{ top: reportedCoordinates.y, left: reportedCoordinates.x }}
           ref={reportedRef}
           onClick={(e) => e.stopPropagation()}
@@ -139,7 +139,7 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
             >
               <label htmlFor="reason">Reason (enter to submit)</label>
               <input
-                className="rounded-sm bg-bgSecondary outline-none"
+                className="bg-bg-secondary rounded-sm outline-none"
                 id="reason"
                 name="reason"
                 title="reason"
@@ -168,7 +168,7 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
       <LecLab cl={cl} leclab="lecture" />
       <LecLab cl={cl} leclab="laboratory" />
 
-      {cl.more !== "" && <p className="mt-2 text-third">{cl.more}</p>}
+      {cl.more !== "" && <p className="text-third mt-2">{cl.more}</p>}
       <div className="flex items-center justify-between pt-2">
         <Button
           variant="basic"

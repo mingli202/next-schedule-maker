@@ -25,7 +25,7 @@ function PageLoading() {
         {[...Array(9).keys()].map((i) => (
           <motion.div
             key={i}
-            className="h-8 w-8 rounded-sm bg-bgSecondary"
+            className="bg-bg-secondary h-8 w-8 rounded-sm"
             variants={children}
             initial="initial"
             animate="animate"

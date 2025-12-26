@@ -15,10 +15,10 @@ function Loading() {
           .map((_, i) => (
             <div
               key={i}
-              className="flex flex-col gap-2 rounded-md bg-bgSecondary p-1"
+              className="bg-bg-secondary flex flex-col gap-2 rounded-md p-1"
             >
-              <div className="h-20 rounded-md bg-slate" />
-              <div className="h-4 rounded-full bg-slate/50" />
+              <div className="bg-slate h-20 rounded-md" />
+              <div className="bg-slate/50 h-4 rounded-full" />
             </div>
           ))}
         <div className="col-span-full h-0 bg-transparent" />

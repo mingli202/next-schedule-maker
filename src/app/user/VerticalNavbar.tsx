@@ -18,10 +18,10 @@ type Props = HTMLAttributes<HTMLDivElement>;
 function VerticalNavbar({ className, ...props }: Props) {
   return (
     <div
-      className={cn("z-10 box-border bg-bgPrimary p-1 md:p-2", className)}
+      className={cn("bg-bg-primary z-10 box-border p-1 md:p-2", className)}
       {...props}
     >
-      <div className="box-border flex h-full items-center gap-2 rounded-md bg-bgSecondary p-1 max-md:justify-between md:flex-col md:p-2">
+      <div className="bg-bg-secondary box-border flex h-full items-center gap-2 rounded-md p-1 max-md:justify-between md:flex-col md:p-2">
         <Link href="/user" className="shrink-0" title="dashboard">
           <Button
             className="p-1 max-md:flex max-md:items-center md:p-2"

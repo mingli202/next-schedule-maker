@@ -96,7 +96,7 @@ function FollowingsPreview({ className, ...props }: Props) {
           Object.entries(results).map(([id, user]) => (
             <div
               key={id}
-              className="flex items-center gap-2 rounded-md bg-bgSecondary p-2"
+              className="bg-bg-secondary flex items-center gap-2 rounded-md p-2"
             >
               <Link href={`/user/search/${user.uid}`} className="basis-full">
                 {user.name}

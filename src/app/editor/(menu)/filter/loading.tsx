@@ -13,32 +13,32 @@ function Loading() {
       {[...Array(4).keys()].map((i) => (
         <div
           key={i}
-          className="flex flex-col gap-2 rounded-md bg-bgSecondary p-2"
+          className="bg-bg-secondary flex flex-col gap-2 rounded-md p-2"
         >
-          <div className="h-4 w-1/5 rounded-full bg-text" />
-          <div className="h-10 rounded-md bg-bgPrimary" />
+          <div className="bg-text h-4 w-1/5 rounded-full" />
+          <div className="bg-bg-primary h-10 rounded-md" />
         </div>
       ))}
 
       <div className="flex gap-2">
-        <div className="flex basis-1/2 flex-col gap-2 rounded-md bg-bgSecondary p-2">
-          <div className="h-4 w-1/3 rounded-full bg-text" />
-          <div className="h-10 rounded-md bg-bgPrimary" />
+        <div className="bg-bg-secondary flex basis-1/2 flex-col gap-2 rounded-md p-2">
+          <div className="bg-text h-4 w-1/3 rounded-full" />
+          <div className="bg-bg-primary h-10 rounded-md" />
         </div>
-        <div className="flex basis-1/2 flex-col gap-2 rounded-md bg-bgSecondary p-2">
-          <div className="h-4 w-1/3 rounded-full bg-text" />
-          <div className="h-10 rounded-md bg-bgPrimary" />
+        <div className="bg-bg-secondary flex basis-1/2 flex-col gap-2 rounded-md p-2">
+          <div className="bg-text h-4 w-1/3 rounded-full" />
+          <div className="bg-bg-primary h-10 rounded-md" />
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 rounded-md bg-bgSecondary p-2">
-        <div className="h-4 w-1/5 rounded-full bg-text" />
-        <div className="h-10 rounded-md bg-bgPrimary" />
+      <div className="bg-bg-secondary flex flex-col gap-2 rounded-md p-2">
+        <div className="bg-text h-4 w-1/5 rounded-full" />
+        <div className="bg-bg-primary h-10 rounded-md" />
       </div>
 
-      <div className="flex flex-col gap-2 rounded-md bg-bgSecondary p-2">
-        <div className="h-4 w-1/5 rounded-full bg-text" />
-        <div className="h-10 rounded-md bg-bgPrimary" />
+      <div className="bg-bg-secondary flex flex-col gap-2 rounded-md p-2">
+        <div className="bg-text h-4 w-1/5 rounded-full" />
+        <div className="bg-bg-primary h-10 rounded-md" />
       </div>
     </motion.div>
   );

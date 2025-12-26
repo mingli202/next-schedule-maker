@@ -82,7 +82,7 @@ function Button({
       className={twMerge(
         "relative overflow-hidden rounded-lg p-2",
         variant === "basic" && "bg-transparent opacity-50",
-        variant === "special" && "z-10 bg-yellow-400 text-bgPrimary",
+        variant === "special" && "text-bg-primary z-10 bg-yellow-400",
         className,
       )}
       animate={{
@@ -112,8 +112,8 @@ function Button({
       <motion.div
         ref={scope}
         className={twMerge(
-          "opacity-1 absolute left-0 top-0 z-[-1] aspect-square w-full scale-0 rounded-full bg-white",
-          variant === "special" && "bg-bgPrimary",
+          "absolute top-0 left-0 z-[-1] aspect-square w-full scale-0 rounded-full bg-white opacity-1",
+          variant === "special" && "bg-bg-primary",
         )}
       />
     </motion.button>

@@ -81,7 +81,7 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
         return (
           <div
             key={code.code}
-            className="flex flex-col rounded-md bg-bgSecondary p-2 transition hover:bg-secondary [&_*]:outline-none"
+            className="bg-bg-secondary hover:bg-secondary flex flex-col rounded-md p-2 transition [&_*]:outline-none"
           >
             <div className="flex items-center justify-between">
               <p className="font-bold">{code.code}</p>
@@ -112,7 +112,7 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
 
               <form
                 id={"teacherdialog" + code.code}
-                className="absolute z-10 hidden flex-col rounded-md bg-primary p-2 text-black no-underline shadow shadow-black"
+                className="bg-primary absolute z-10 hidden flex-col rounded-md p-2 text-black no-underline shadow shadow-black"
               >
                 {professors.map((p) => (
                   <label key={p} className="flex gap-1">
@@ -159,7 +159,7 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
 
               <form
                 id={"ratingdialog" + code.code}
-                className="absolute z-10 hidden flex-col gap-2 rounded-md bg-primary p-2 text-black no-underline shadow shadow-black"
+                className="bg-primary absolute z-10 hidden flex-col gap-2 rounded-md p-2 text-black no-underline shadow shadow-black"
               >
                 <label className="flex gap-1">
                   from
@@ -240,7 +240,7 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
 
               <form
                 id={"scoredialog" + code.code}
-                className="absolute z-10 hidden flex-col gap-2 rounded-md bg-primary p-2 text-black no-underline shadow shadow-black"
+                className="bg-primary absolute z-10 hidden flex-col gap-2 rounded-md p-2 text-black no-underline shadow shadow-black"
               >
                 <label className="flex gap-1">
                   from
@@ -308,7 +308,7 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
       })}
 
       <form
-        className="group flex items-center gap-2 rounded-md bg-bgSecondary p-2 transition hover:bg-secondary"
+        className="group bg-bg-secondary hover:bg-secondary flex items-center gap-2 rounded-md p-2 transition"
         action={action}
         ref={ref}
       >
@@ -316,7 +316,7 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
           <input
             id="extraCode"
             name="extraCode"
-            className="w-full rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
+            className="bg-bg-primary group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
             placeholder="Add code..."
             list="codes"
           />

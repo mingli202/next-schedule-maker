@@ -99,18 +99,18 @@ function Form({ allClasses }: Props) {
 
   return (
     <form
-      className="relative flex h-full w-full flex-col gap-2 overflow-y-auto overflow-x-hidden"
+      className="relative flex h-full w-full flex-col gap-2 overflow-x-hidden overflow-y-auto"
       action={action}
     >
       <label
-        className="group rounded-md bg-bgSecondary p-2 transition hover:bg-secondary"
+        className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
         htmlFor="course"
       >
         <h2 className="font-bold">Course Name</h2>
         <input
           name="course"
           id="course"
-          className="w-full rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
+          className="bg-bg-primary group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
           placeholder="e.g. English"
           onChange={(e) => setCourseName(e.target.value)}
           list="a"
@@ -133,14 +133,14 @@ function Form({ allClasses }: Props) {
       </label>
 
       <label
-        className="group rounded-md bg-bgSecondary p-2 transition hover:bg-secondary"
+        className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
         htmlFor="code"
       >
         <h2 className="font-bold">Code</h2>
         <input
           name="code"
           id="code"
-          className="w-full rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
+          className="bg-bg-primary group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
           placeholder="e.g. 603-103-MQ"
           autoComplete="off"
           onChange={(e) => setCode(e.target.value)}
@@ -156,14 +156,14 @@ function Form({ allClasses }: Props) {
       </label>
 
       <label
-        className="group rounded-md bg-bgSecondary p-2 transition hover:bg-secondary"
+        className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
         htmlFor="title"
       >
         <h2 className="font-bold">Title</h2>
         <input
           name="title"
           id="title"
-          className="w-full rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
+          className="bg-bg-primary group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
           placeholder="e.g. Hockey is everything"
           autoComplete="off"
           list="c"
@@ -186,14 +186,14 @@ function Form({ allClasses }: Props) {
       </label>
 
       <label
-        className="group rounded-md bg-bgSecondary p-2 transition hover:bg-secondary"
+        className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
         htmlFor="prof"
       >
         <h2 className="font-bold">Teacher</h2>
         <input
           name="prof"
           id="prof"
-          className="w-full rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
+          className="bg-bg-primary group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
           placeholder="e.g. Patrick Burger"
           list="d"
           autoComplete="off"
@@ -215,14 +215,14 @@ function Form({ allClasses }: Props) {
       </label>
 
       <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2">
-        <div className="group basis-1/2 rounded-md bg-bgSecondary p-2 transition hover:bg-secondary">
+        <div className="group bg-bg-secondary hover:bg-secondary basis-1/2 rounded-md p-2 transition">
           <h2 className="font-bold">Rating /5</h2>
           <div className="flex items-center gap-4">
             <label htmlFor="ratingMin">
               <input
                 name="ratingMin"
                 id="ratingMin"
-                className="rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
+                className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
                 type="number"
                 min={0}
                 max={5}
@@ -242,7 +242,7 @@ function Form({ allClasses }: Props) {
               <input
                 name="ratingMax"
                 id="ratingMax"
-                className="rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
+                className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
                 type="number"
                 min={0}
                 max={5}
@@ -260,14 +260,14 @@ function Form({ allClasses }: Props) {
           </div>
         </div>
 
-        <div className="group basis-1/2 rounded-md bg-bgSecondary p-2 transition hover:bg-secondary">
+        <div className="group bg-bg-secondary hover:bg-secondary basis-1/2 rounded-md p-2 transition">
           <h2 className="font-bold">Score /100</h2>
           <div className="flex items-center gap-4">
             <label htmlFor="scoreMin">
               <input
                 name="scoreMin"
                 id="scoreMin"
-                className="rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
+                className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
                 type="number"
                 min={0}
                 max={100}
@@ -287,7 +287,7 @@ function Form({ allClasses }: Props) {
               <input
                 name="scoreMax"
                 id="scoreMax"
-                className="rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
+                className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
                 type="number"
                 min={0}
                 max={100}
@@ -306,12 +306,12 @@ function Form({ allClasses }: Props) {
         </div>
       </div>
 
-      <div className="group rounded-md bg-bgSecondary p-2 transition hover:bg-secondary">
+      <div className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition">
         <p className="font-bold">Days Off</p>
         <div className="flex gap-2">
           <label
             htmlFor="M"
-            className="flex gap-2 rounded-md bg-bgPrimary p-2 group-hover:bg-bgSecondary"
+            className="bg-bg-primary group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
           >
             <input
               name="day"
@@ -325,7 +325,7 @@ function Form({ allClasses }: Props) {
           </label>
           <label
             htmlFor="T"
-            className="flex gap-2 rounded-md bg-bgPrimary p-2 group-hover:bg-bgSecondary"
+            className="bg-bg-primary group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
           >
             <input
               name="day"
@@ -339,7 +339,7 @@ function Form({ allClasses }: Props) {
           </label>
           <label
             htmlFor="W"
-            className="flex gap-2 rounded-md bg-bgPrimary p-2 group-hover:bg-bgSecondary"
+            className="bg-bg-primary group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
           >
             <input
               name="day"
@@ -353,7 +353,7 @@ function Form({ allClasses }: Props) {
           </label>
           <label
             htmlFor="R"
-            className="flex gap-2 rounded-md bg-bgPrimary p-2 group-hover:bg-bgSecondary"
+            className="bg-bg-primary group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
           >
             <input
               name="day"
@@ -367,7 +367,7 @@ function Form({ allClasses }: Props) {
           </label>
           <label
             htmlFor="F"
-            className="flex gap-2 rounded-md bg-bgPrimary p-2 group-hover:bg-bgSecondary"
+            className="bg-bg-primary group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
           >
             <input
               name="day"
@@ -382,14 +382,14 @@ function Form({ allClasses }: Props) {
         </div>
       </div>
 
-      <div className="group rounded-md bg-bgSecondary p-2 transition hover:bg-secondary">
+      <div className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition">
         <h2 className="font-bold">Time Range</h2>
         <div className="flex items-center gap-4">
           <label htmlFor="timeMin">
             <input
               name="time"
               id="timeMin"
-              className="rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
+              className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
               type="time"
               min="08:00"
               max="18:00"
@@ -404,7 +404,7 @@ function Form({ allClasses }: Props) {
             <input
               name="time"
               id="timeMax"
-              className="rounded-md bg-bgPrimary p-2 outline-none transition group-hover:bg-bgSecondary"
+              className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
               type="time"
               min="08:00"
               max="18:00"

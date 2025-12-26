@@ -10,16 +10,16 @@ function Loading() {
       animate={{ opacity: 0.5 }}
       transition={{ repeat: Infinity, repeatType: "mirror", duration: 0.5 }}
     >
-      <div className="h-6 w-1/3 rounded-full bg-slate" />
+      <div className="bg-slate h-6 w-1/3 rounded-full" />
       {[...Array(3).keys()].map((i) => (
         <div
           key={i}
-          className="flex flex-col gap-2 rounded-md bg-bgSecondary p-2"
+          className="bg-bg-secondary flex flex-col gap-2 rounded-md p-2"
         >
-          <div className="h-5 w-1/2 rounded-full bg-slate" />
-          <div className="h-4 rounded-full bg-slate/90" />
-          <div className="h-4 rounded-full bg-slate/90" />
-          <div className="h-4 rounded-full bg-slate/90" />
+          <div className="bg-slate h-5 w-1/2 rounded-full" />
+          <div className="bg-slate/90 h-4 rounded-full" />
+          <div className="bg-slate/90 h-4 rounded-full" />
+          <div className="bg-slate/90 h-4 rounded-full" />
         </div>
       ))}
     </motion.div>

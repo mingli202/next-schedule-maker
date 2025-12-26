@@ -25,7 +25,7 @@ function View({
     <div
       className={cn(
         "relative box-border grid w-full",
-        "rounded-md bg-primary p-2 text-bgPrimary md:p-4",
+        "bg-primary text-bg-primary rounded-md p-2 md:p-4",
 
         disableTime
           ? "h-full grid-cols-5 grid-rows-[repeat(20,1fr)] md:h-full md:w-full md:p-2"
@@ -36,7 +36,7 @@ function View({
     >
       {!disableTime && (
         <>
-          <p className="absolute left-0 top-0 col-span-1 row-span-1 p-2 text-[0.5rem] md:text-xs">
+          <p className="absolute top-0 left-0 col-span-1 row-span-1 p-2 text-[0.5rem] md:text-xs">
             Winter 2026 (December 11 pdf)
           </p>
           <div className="grid-rows-[repeat(20,1fr) col-span-1 row-[span_21/span_21] mr-4 grid grid-cols-1">
@@ -58,7 +58,7 @@ function View({
       <div
         className={cn(
           "relative grid grid-cols-5 grid-rows-[repeat(20,1fr)]",
-          "h-full rounded-md bg-slate shadow-lg shadow-bgPrimary/30",
+          "bg-slate shadow-bg-primary/30 h-full rounded-md shadow-lg",
           "text-[8px] leading-[10px] md:text-[14px] md:leading-[14px]",
 
           disableTime
@@ -66,7 +66,7 @@ function View({
             : "col-span-5 row-[span_20/span_20]",
         )}
       >
-        <div className="absolute left-0 top-0 grid h-full w-full grid-cols-5 grid-rows-[repeat(20,1fr)]">
+        <div className="absolute top-0 left-0 grid h-full w-full grid-cols-5 grid-rows-[repeat(20,1fr)]">
           <div className="col-span-full row-span-1" />
           {Array(19)
             .fill(0)
@@ -80,7 +80,7 @@ function View({
             })}
         </div>
 
-        <div className="absolute left-0 top-0 grid h-full w-full grid-cols-5 grid-rows-[repeat(20,1fr)]">
+        <div className="absolute top-0 left-0 grid h-full w-full grid-cols-5 grid-rows-[repeat(20,1fr)]">
           <div className="invisible row-span-full" />
           {Array(4)
             .fill(0)

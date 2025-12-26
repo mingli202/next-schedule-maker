@@ -16,14 +16,14 @@ function Card({ title, desc, param }: CardProps) {
   const q = searchParams.get(param);
 
   return (
-    <div className="flex shrink-0 justify-between gap-2 rounded-md bg-bgSecondary p-2">
+    <div className="bg-bg-secondary flex shrink-0 justify-between gap-2 rounded-md p-2">
       <div>
         <h2 className="text-base font-bold md:text-xl">{title}</h2>
         <p className="opacity-90 max-md:text-sm">{desc}</p>
       </div>
       <div className="flex shrink-0 items-center justify-center">
         <div
-          className="flex h-6 w-6 items-center justify-center rounded-md bg-secondary transition hover:bg-third md:h-8 md:w-8"
+          className="bg-secondary hover:bg-third flex h-6 w-6 items-center justify-center rounded-md transition md:h-8 md:w-8"
           onClick={() => {
             const url = new URL(window.location.href);
 

@@ -37,7 +37,10 @@ function SavedSchedules({ allClasses }: Props) {
       const schedules = { ...(savedSchedules ?? {}) };
       schedules[Math.random().toString()] = newSchedule;
 
-      localStorage.setItem("savedScheduleswinter2026", JSON.stringify(schedules));
+      localStorage.setItem(
+        "savedScheduleswinter2026",
+        JSON.stringify(schedules),
+      );
 
       setSavedSchedules(schedules);
       return;
@@ -101,9 +104,9 @@ function SavedSchedules({ allClasses }: Props) {
         }}
       />
 
-      <div className="shrink-0 basis-1/3 overflow-y-auto overflow-x-hidden">
+      <div className="shrink-0 basis-1/3 overflow-x-hidden overflow-y-auto">
         <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-1 text-sm">
-          <div className="col-span-full flex h-fit gap-2 rounded-md bg-bgSecondary p-2">
+          <div className="bg-bg-secondary col-span-full flex h-fit gap-2 rounded-md p-2">
             <p className="basis-full">Course Count: {currentClasses.length}</p>
 
             <Button

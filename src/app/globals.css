@@ -1,6 +1,16 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg-primary: #02131d;
+  --color-bg-secondary: #062c43;
+  --color-primary: #9ccddc;
+  --color-secondary: #054569;
+  --color-third: #5591a9;
+  --color-slate: #ced7e0;
+  --color-text: #e2f1ff;
+  --font-heading: "Fraunces";
+  --font-body: "Poppins";
+}
 
 * {
   min-width: 0;

@@ -15,16 +15,16 @@ function Loading() {
         .map((_, i) => (
           <div
             key={i}
-            className="w-full grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-2 rounded-md bg-bgSecondary p-2"
+            className="bg-bg-secondary w-full grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-2 rounded-md p-2"
           >
-            <div className="h-[10rem] w-full rounded-md bg-slate" />
+            <div className="bg-slate h-[10rem] w-full rounded-md" />
             <div className="mt-2 flex flex-col gap-2">
               {Array(6)
                 .fill(0)
                 .map((_, k) => (
                   <div
                     key={k}
-                    className="flex h-5 w-full rounded-full bg-slate/50"
+                    className="bg-slate/50 flex h-5 w-full rounded-full"
                   ></div>
                 ))}
             </div>

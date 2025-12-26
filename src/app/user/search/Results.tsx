@@ -74,15 +74,12 @@ function Results({ allUsers, q }: Props) {
   };
 
   return (
-    <div
-      className="box-border flex flex-col gap-2 overflow-y-auto overflow-x-hidden rounded-md
-    max-md:h-full md:grid md:grid-cols-[repeat(auto-fit,minmax(20rem,1fr))]"
-    >
+    <div className="box-border flex flex-col gap-2 overflow-x-hidden overflow-y-auto rounded-md max-md:h-full md:grid md:grid-cols-[repeat(auto-fit,minmax(20rem,1fr))]">
       <AnimatePresence>
         {results.map((usr, i) => (
           <motion.div
             key={i.toString() + usr.uid}
-            className="flex h-fit w-full cursor-pointer items-center gap-2 rounded-md bg-bgSecondary p-2"
+            className="bg-bg-secondary flex h-fit w-full cursor-pointer items-center gap-2 rounded-md p-2"
             initial={{ opacity: 0, y: 5 }}
             animate={{
               opacity: 1,
@@ -92,11 +89,11 @@ function Results({ allUsers, q }: Props) {
               },
             }}
           >
-            <div className="basis-full text-sm text-text/70">
+            <div className="text-text/70 basis-full text-sm">
               <div className="flex items-center justify-between gap-2">
                 <Link
                   href={`/user/search/${usr.uid}`}
-                  className="text-xl font-bold text-text"
+                  className="text-text text-xl font-bold"
                 >
                   {usr.name}
                 </Link>

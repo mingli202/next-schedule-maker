@@ -35,14 +35,14 @@ function Search({ className, ...props }: Props) {
 
   return (
     <div className={cn("flex flex-col gap-2", className)} {...props}>
-      <h2 className="shrink-0 font-heading text-3xl">Search Users</h2>
+      <h2 className="font-heading shrink-0 text-3xl">Search Users</h2>
       <form
         className="flex w-full shrink-0 gap-2"
         action={action}
         ref={formRef}
       >
         <input
-          className="basis-full rounded-md border border-third bg-bgPrimary p-2 outline-none placeholder:italic focus:border-primary focus:bg-bgSecondary"
+          className="border-third bg-bg-primary focus:border-primary focus:bg-bg-secondary basis-full rounded-md border p-2 outline-none placeholder:italic"
           name="q"
           id="q"
           type="text"

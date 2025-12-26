@@ -39,7 +39,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
-        className={`${fraunces.variable} ${poppins.variable} overflow-x-hidden bg-bgPrimary font-body text-sm text-text antialiased md:text-base`}
+        className={`${fraunces.variable} ${poppins.variable} bg-bg-primary font-body text-text overflow-x-hidden text-sm antialiased md:text-base`}
       >
         {children}
         <SpeedInsights />

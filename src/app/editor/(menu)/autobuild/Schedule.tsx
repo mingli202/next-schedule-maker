@@ -42,11 +42,11 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
     <div
       className={cn(
         "relative box-border grid w-full grid-cols-[repeat(auto-fit,minmax(20rem,1fr))]",
-        "gap-2 rounded-md bg-bgSecondary p-2",
+        "bg-bg-secondary gap-2 rounded-md p-2",
       )}
       ref={divRef}
     >
-      <div className="grid h-[10rem] w-full grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md bg-slate">
+      <div className="bg-slate grid h-[10rem] w-full grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md">
         {schedule.map(({ id, bgColor, textColor }, index) => {
           if (!Object.hasOwn(allClasses, id)) {
             return null;

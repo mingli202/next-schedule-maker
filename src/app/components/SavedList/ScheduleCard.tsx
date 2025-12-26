@@ -135,7 +135,7 @@ function ScheduleCard({
   return (
     <motion.div
       className={cn(
-        "flex h-fit w-full flex-col gap-1 rounded-md bg-bgSecondary p-1 transition",
+        "bg-bg-secondary flex h-fit w-full flex-col gap-1 rounded-md p-1 transition",
         {
           "bg-secondary": highlight === schId,
         },
@@ -148,7 +148,7 @@ function ScheduleCard({
     >
       <div
         className={cn(
-          "col-span-5 row-[span_20/span_20] grid h-20 w-full shrink-0 cursor-pointer grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md bg-slate transition hover:bg-slate/90",
+          "bg-slate hover:bg-slate/90 col-span-5 row-[span_20/span_20] grid h-20 w-full shrink-0 cursor-pointer grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md transition",
         )}
         title="select"
         onClick={() => {
@@ -190,7 +190,7 @@ function ScheduleCard({
       <div className="flex h-full items-center justify-between gap-2">
         {editName ? (
           <form
-            className="box-border flex basis-full items-center overflow-hidden rounded-md bg-bgPrimary"
+            className="bg-bg-primary box-border flex basis-full items-center overflow-hidden rounded-md"
             action={async (f) => {
               if (noEdit) return;
               await nameChange(f);
@@ -199,7 +199,7 @@ function ScheduleCard({
             <input
               name="name"
               id="name"
-              className="w-full bg-bgPrimary outline-none"
+              className="bg-bg-primary w-full outline-none"
               defaultValue={schedule.name}
               autoFocus
             />

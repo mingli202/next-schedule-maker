@@ -43,11 +43,11 @@ function Slider() {
   return (
     <div
       className={cn(
-        "flex w-full items-center overflow-hidden rounded-md bg-bgSecondary p-1 md:p-2",
+        "bg-bg-secondary flex w-full items-center overflow-hidden rounded-md p-1 md:p-2",
       )}
     >
       <div
-        className={`relative h-7 w-[min(30%,_15rem)] shrink-0 overflow-x-auto overflow-y-hidden text-primary md:h-10`}
+        className={`text-primary relative h-7 w-[min(30%,_15rem)] shrink-0 overflow-x-auto overflow-y-hidden md:h-10`}
       >
         <AnimatePresence>
           {isVisible ? (

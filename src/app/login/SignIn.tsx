@@ -45,7 +45,7 @@ function SignIn({
   return (
     <motion.div
       className={cn(
-        "flex w-[min(20rem,80%)] flex-col items-center gap-2 rounded-md p-2 shadow-lg shadow-primary max-md:text-sm md:w-[min(25rem,80%)] md:gap-4 md:p-4",
+        "shadow-primary flex w-[min(20rem,80%)] flex-col items-center gap-2 rounded-md p-2 shadow-lg max-md:text-sm md:w-[min(25rem,80%)] md:gap-4 md:p-4",
         className,
       )}
       {...props}
@@ -60,7 +60,7 @@ function SignIn({
           <p>Email</p>
           <input
             className={cn(
-              "box-border w-full rounded-md border-4 border-solid border-secondary bg-bgPrimary p-2 outline-none transition placeholder:italic focus:border-primary focus:bg-bgSecondary",
+              "border-secondary bg-bg-primary focus:border-primary focus:bg-bg-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
               {
                 "border-red-900 bg-red-950 focus:border-red-300 focus:bg-red-900":
                   error !== "",
@@ -87,7 +87,7 @@ function SignIn({
           <div className="flex gap-2">
             <input
               className={cn(
-                "box-border w-full rounded-md border-4 border-solid border-secondary bg-bgPrimary p-2 outline-none transition placeholder:italic focus:border-primary focus:bg-bgSecondary",
+                "border-secondary bg-bg-primary focus:border-primary focus:bg-bg-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
                 {
                   "border-red-900 bg-red-950 focus:border-red-300 focus:bg-red-900":
                     error !== "",
@@ -133,9 +133,9 @@ function SignIn({
       </form>
 
       <div className="flex w-full items-center gap-2">
-        <div className="h-1 basis-full rounded-full bg-bgSecondary" />
+        <div className="bg-bg-secondary h-1 basis-full rounded-full" />
         <p className="text-third">or</p>
-        <div className="h-1 basis-full rounded-full bg-bgSecondary" />
+        <div className="bg-bg-secondary h-1 basis-full rounded-full" />
       </div>
 
       <Button
@@ -161,7 +161,7 @@ function SignIn({
       <div className="flex gap-2">
         Don{"'"}t have and account?{" "}
         <Button
-          className="p-0 text-primary underline"
+          className="text-primary p-0 underline"
           onClick={() => setWindow("signup")}
         >
           Sign Up

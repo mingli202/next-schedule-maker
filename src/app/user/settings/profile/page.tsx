@@ -39,10 +39,10 @@ function Page() {
         <>
           <div>
             <h1 className="font-heading text-xl md:text-3xl">Profile</h1>
-            <p className={cn("text-sm text-text/70")}>Manage your profile</p>
+            <p className={cn("text-text/70 text-sm")}>Manage your profile</p>
           </div>
 
-          <div className="h-0.5 w-full rounded-full bg-third/50" />
+          <div className="bg-third/50 h-0.5 w-full rounded-full" />
 
           <div className="p-1 md:p-2">
             <h2 className="text-base md:text-xl">Basic Info</h2>
@@ -71,7 +71,7 @@ function Page() {
               />
               <div
                 className={cn(
-                  "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-2 max-md:gap-2 md:items-center",
+                  "bg-bg-secondary flex w-100 overflow-hidden rounded-md p-2 max-md:gap-2 md:items-center",
                   ...["w-full", "flex-col", "items-start", "p-3"].map(
                     (c) => "max-md:" + c,
                   ),
@@ -79,7 +79,7 @@ function Page() {
               >
                 <p
                   className={cn(
-                    "w-[min(30%,15rem)] shrink-0 overflow-x-auto text-primary md:p-2",
+                    "text-primary w-[min(30%,15rem)] shrink-0 overflow-x-auto md:p-2",
                     ...["w-full"].map((c) => "max-md:" + c),
                   )}
                 >
@@ -90,7 +90,7 @@ function Page() {
 
               <div
                 className={cn(
-                  "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-2 max-md:gap-2 md:items-center",
+                  "bg-bg-secondary flex w-100 overflow-hidden rounded-md p-2 max-md:gap-2 md:items-center",
                   ...["w-full", "flex-col", "items-start", "p-3"].map(
                     (c) => "max-md:" + c,
                   ),
@@ -98,7 +98,7 @@ function Page() {
               >
                 <p
                   className={cn(
-                    "w-[min(30%,15rem)] shrink-0 overflow-x-auto text-primary md:p-2",
+                    "text-primary w-[min(30%,15rem)] shrink-0 overflow-x-auto md:p-2",
                     ...["w-full"].map((c) => "max-md:" + c),
                   )}
                 >
@@ -109,11 +109,11 @@ function Page() {
             </div>
           </div>
 
-          <div className="h-0.5 w-full rounded-full bg-third/50" />
+          <div className="bg-third/50 h-0.5 w-full rounded-full" />
 
           <div className="p-1 md:p-2">
             <h2 className="text-base md:text-xl">Visibility</h2>
-            <p className={cn("text-xs text-text/70 md:text-sm")}>
+            <p className={cn("text-text/70 text-xs md:text-sm")}>
               Whether you are searchable by other users
             </p>
             <div className="mt-2 flex flex-col gap-2">
@@ -121,19 +121,19 @@ function Page() {
             </div>
           </div>
 
-          <div className="h-0.5 w-full rounded-full bg-third/50" />
+          <div className="bg-third/50 h-0.5 w-full rounded-full" />
 
           <div className="p-1 md:p-2">
             <h2 className="text-base md:text-xl">Other</h2>
             <div className="mt-2 flex flex-col gap-2">
               <div
                 className={cn(
-                  "flex w-full items-center overflow-hidden rounded-md bg-bgSecondary p-1 md:p-2",
+                  "bg-bg-secondary flex w-full items-center overflow-hidden rounded-md p-1 md:p-2",
                 )}
               >
                 <p
                   className={cn(
-                    "shrink-0 p-1 text-primary md:w-[min(30%,15rem)] md:overflow-x-auto md:p-2",
+                    "text-primary shrink-0 p-1 md:w-[min(30%,15rem)] md:overflow-x-auto md:p-2",
                   )}
                 >
                   Password
@@ -198,7 +198,7 @@ function Input({
   return (
     <div
       className={cn(
-        "w-100 flex overflow-hidden rounded-md bg-bgSecondary p-2 md:items-center",
+        "bg-bg-secondary flex w-100 overflow-hidden rounded-md p-2 md:items-center",
         ...["w-full", "flex-col", "items-start", "gap-2"].map(
           (c) => "max-md:" + c,
         ),
@@ -206,7 +206,7 @@ function Input({
     >
       <p
         className={cn(
-          "w-[min(30%,15rem)] shrink-0 overflow-x-auto text-primary md:p-2",
+          "text-primary w-[min(30%,15rem)] shrink-0 overflow-x-auto md:p-2",
           ...["w-full"].map((c) => "max-md:" + c),
         )}
       >
@@ -214,14 +214,14 @@ function Input({
       </p>
       {editName ? (
         <form
-          className="box-border flex items-center overflow-hidden rounded-md bg-bgPrimary max-md:w-full"
+          className="bg-bg-primary box-border flex items-center overflow-hidden rounded-md max-md:w-full"
           action={(f: FormData) => {
             setEditName(false);
             action(f);
           }}
         >
           <input
-            className="bg-bgPrimary p-2 outline-none max-md:basis-full md:w-fit"
+            className="bg-bg-primary p-2 outline-none max-md:basis-full md:w-fit"
             autoFocus
             defaultValue={value}
             name={k}

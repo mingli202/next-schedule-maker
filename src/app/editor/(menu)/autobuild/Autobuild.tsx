@@ -31,12 +31,12 @@ function Autobuild({ allClasses, colors }: Props) {
   >([]);
 
   return (
-    <div className="relative box-border flex h-full w-full flex-col items-center gap-2 overflow-y-auto overflow-x-hidden p-2">
+    <div className="relative box-border flex h-full w-full flex-col items-center gap-2 overflow-x-hidden overflow-y-auto p-2">
       {isBuilding === "form" && (
         <>
           <div className="flex w-full flex-col gap-2">
             <div>
-              <h1 className="text-center font-heading text-xl">Auto Builder</h1>
+              <h1 className="font-heading text-center text-xl">Auto Builder</h1>
             </div>
             <label htmlFor="useCurrent" className="flex items-center gap-2">
               <input
@@ -125,7 +125,7 @@ function Autobuild({ allClasses, colors }: Props) {
               />
             </div>
           </div>
-          <div className="relative bottom-0 z-[5] flex items-center justify-center bg-bgPrimary">
+          <div className="bg-bg-primary relative bottom-0 z-[5] flex items-center justify-center">
             <Button
               variant="special"
               className="w-fit"
@@ -155,7 +155,7 @@ function Autobuild({ allClasses, colors }: Props) {
             allClasses={allClasses}
           />
 
-          <div className="z-10 flex w-full items-center justify-center bg-bgPrimary max-md:order-first">
+          <div className="bg-bg-primary z-10 flex w-full items-center justify-center max-md:order-first">
             <Button
               variant="special"
               className="w-fit"

@@ -74,7 +74,7 @@ function UserCard({ className, allClasses, uid, ...props }: Props) {
   return (
     <div
       className={cn(
-        "h-full w-full overflow-y-auto overflow-x-hidden",
+        "h-full w-full overflow-x-hidden overflow-y-auto",
         className,
       )}
       {...props}
@@ -83,7 +83,7 @@ function UserCard({ className, allClasses, uid, ...props }: Props) {
         showUser && allUsers ? (
           <div
             className={cn(
-              "w-full gap-2 rounded-md bg-bgSecondary p-1 md:flex md:h-full md:gap-3 md:p-3",
+              "bg-bg-secondary w-full gap-2 rounded-md p-1 md:flex md:h-full md:gap-3 md:p-3",
             )}
           >
             <div className="shrink-0 overflow-x-hidden overflow-y-hidden md:order-2 md:h-full md:basis-3/4 md:overflow-x-auto">
@@ -140,7 +140,7 @@ function UserCard({ className, allClasses, uid, ...props }: Props) {
                 )}
               </div>
 
-              <div className="flex w-full basis-full flex-col overflow-hidden rounded-md bg-bgPrimary p-2">
+              <div className="bg-bg-primary flex w-full basis-full flex-col overflow-hidden rounded-md p-2">
                 {allUsers[uid].schedules ? (
                   <SavedList
                     savedSchedules={allUsers[uid].schedules ?? {}}
