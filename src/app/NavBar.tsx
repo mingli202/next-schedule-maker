@@ -32,7 +32,7 @@ function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
       )}
     >
       <div className="flex items-center justify-between">
-        <Link href="/" className="flex h-[40px] items-center gap-4">
+        <Link href="/" className="flex h-10 items-center gap-4">
           <Image src="/assets/logo.png" alt="Logo" width={36} height={36} />
           <span className="font-heading text-lg md:text-3xl">
             Dream Builder
