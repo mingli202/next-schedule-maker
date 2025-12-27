@@ -50,16 +50,12 @@ function miniGenerate(allClasses: Record<string, Class>) {
 
   const nCore = Math.ceil(n / 2);
 
-  const coreCodes = [
-    ...Array(nCore)
-      .fill(0)
-      .map(
-        () =>
-          allCodes[program][
-            Math.floor(Math.random() * allCodes[program].length)
-          ],
-      ),
-  ];
+  const coreCodes = Array(nCore)
+    .fill(0)
+    .map(
+      () =>
+        allCodes[program][Math.floor(Math.random() * allCodes[program].length)],
+    );
 
   const generalClasses = ["english", "humanities", "french", "complementary"];
 
