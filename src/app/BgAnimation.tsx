@@ -14,25 +14,17 @@ function BgAnimation({ allClasses }: Props) {
   const pause = useRef(false);
 
   const [vw, setVw] = useState(Infinity);
-  const workerRef = useRef<Worker>(null);
+  const [worker, setWorker] = useState<Worker>();
 
   useEffect(() => {
-    console.log(import.meta.url);
-    console.log(new URL("../workers/myWorker.ts", import.meta.url));
     const worker = new Worker(
       new URL("../workers/myWorker.ts", import.meta.url),
     );
-    const anotherWorker = new Worker(
-      new URL("../workers/anotherWorker.js", import.meta.url),
-    );
-    console.log({ anotherWorker });
-    workerRef.current = worker;
-    console.log({ worker });
+    setWorker(worker);
     setVw(window.innerWidth);
 
     return () => {
       worker.terminate();
-      workerRef.current = null;
     };
   }, []);
 
@@ -40,7 +32,7 @@ function BgAnimation({ allClasses }: Props) {
     <>
       <div className="from-bg-primary/75 to-primary/50 absolute top-0 left-0 -z-10 h-[200%] w-full bg-linear-to-b" />
       <div className="absolute top-0 left-0 -z-20 h-full w-full">
-        {Array(vw > 768 ? 1 : 1)
+        {Array(vw > 768 ? 10 : 1)
           .fill(0)
           .map((_, i) => (
             <MovingSchedule
@@ -49,7 +41,7 @@ function BgAnimation({ allClasses }: Props) {
               index={i}
               lastRef={last}
               pauseRef={pause}
-              workerRef={workerRef}
+              worker={worker}
             />
           ))}
       </div>

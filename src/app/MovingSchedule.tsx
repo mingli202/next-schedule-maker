@@ -3,14 +3,14 @@
 import { Class, SharedCurrentClasses } from "@/types";
 import View from "./components/View";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
-import type { WorkerResponse } from "@/workers/myWorker";
+import type { WorkerRequest, WorkerResponse } from "@/workers/myWorker";
 
 type Props = {
   allClasses: Record<string, Class>;
   index: number;
   lastRef: RefObject<number>;
   pauseRef: RefObject<boolean>;
-  workerRef: RefObject<Worker | null>;
+  worker: Worker | undefined;
 };
 
 function MovingSchedule({
@@ -18,32 +18,53 @@ function MovingSchedule({
   index,
   lastRef,
   pauseRef,
-  workerRef,
+  worker,
 }: Props) {
-  // const [hidden, setHidden] = useState(true);
   const [schedule, setSchedule] = useState<SharedCurrentClasses[]>([]);
+  const isGenerating = useRef(false);
+  const isStopped = useRef(false);
   const ref = useRef<HTMLDivElement>(null!);
 
-  const animationFrames = useRef<number[]>([]);
   const now = useRef<DOMHighResTimeStamp>(0);
+  const speedData = useRef<{ dx: number; x0: number }>({
+    dx: 0,
+    x0: 0,
+  });
+  const deltaT = 1 / 120;
 
   const requestNewSchedule = useCallback(() => {
     console.log("request new schedule");
-    workerRef.current?.postMessage({
+    worker?.postMessage({
       type: "mini-generate",
       allClasses,
-    });
-  }, [workerRef, allClasses]);
+      index,
+    } satisfies WorkerRequest);
+  }, [worker, allClasses, index]);
 
-  const handleNewSchedule = useCallback(
-    (sch: SharedCurrentClasses[] = []) => {
-      console.log("handle new schedule", sch);
-      if (sch.length === 0) {
-        requestNewSchedule();
-        return;
-      }
-      setSchedule(sch);
+  function nextFrame(t: DOMHighResTimeStamp) {
+    if (!isStopped.current) {
+      requestAnimationFrame(nextFrame);
+    }
 
+    if (pauseRef.current) {
+      return;
+    }
+
+    const dt = t - now.current;
+
+    if (dt < deltaT * 1000) {
+      return;
+    }
+
+    now.current = t;
+
+    const bounds = ref.current.getBoundingClientRect();
+    const left = bounds.left;
+
+    /* eslint-disable react-hooks/purity */
+    if (left > window.innerWidth + 50) {
+      console.log("out of bounds");
+      isGenerating.current = true;
       let ind = lastRef.current;
 
       while (ind === lastRef.current) {
@@ -52,66 +73,59 @@ function MovingSchedule({
       lastRef.current = ind;
 
       const top = `${[-20, 10, 40][ind] + Math.random() * 10}%`;
-      const dx = 0.5 * (0.5 * Math.random() + 1);
       const zIndex = Math.floor(Math.random() * 1000);
-      const newLeft = 1200 + Math.random() * 600;
+
+      const dx = 0.03 * (0.5 * Math.random() + 1);
+      const newLeft = -(1200 + Math.random() * 600);
+
+      speedData.current.dx = dx;
+      speedData.current.x0 = newLeft;
 
       ref.current.style.top = top;
-      ref.current.style.left = `-${newLeft}px`;
+      ref.current.style.left = `${newLeft}px`;
       ref.current.style.zIndex = `${zIndex}`;
-
-      function updateFrame(t: DOMHighResTimeStamp) {
-        const id = requestAnimationFrame(updateFrame);
-        const time = t - now.current;
-
-        if (pauseRef.current) {
-          return;
-        }
-
-        const bounds = ref.current.getBoundingClientRect();
-        const left = bounds.left;
-
-        if (left > window.innerWidth + 50) {
-          cancelAnimationFrame(id);
-          workerRef.current?.postMessage({
-            type: "mini-generate",
-            allClasses,
-          });
-        }
-
-        ref.current.style.left = `${left + dx * time}px`;
-      }
-
-      now.current = performance.now();
-      const id = requestAnimationFrame(updateFrame);
-      animationFrames.current.push(id);
-    },
-
-    [requestNewSchedule, lastRef, pauseRef, workerRef, allClasses],
-  );
+      requestNewSchedule();
+    } else if (!isGenerating.current) {
+      ref.current.style.left = `${left + speedData.current.dx / deltaT}px`;
+    }
+  }
 
   useEffect(() => {
-    const onMessage = (e: MessageEvent<WorkerResponse>) => {
-      handleNewSchedule(e.data.schedule);
-    };
-    const worker = workerRef.current;
-    worker?.addEventListener("message", onMessage);
+    isStopped.current = false;
 
-    const id = setTimeout(() => {
-      requestNewSchedule();
-    }, 1000 * index);
+    const onMessage = (e: MessageEvent<WorkerResponse>) => {
+      if (e.data.index !== index) {
+        return;
+      }
+      if (e.data.schedule.length === 0) {
+        requestNewSchedule();
+        return;
+      }
+      setSchedule(e.data.schedule);
+      console.log("received new schedule");
+      isGenerating.current = false;
+    };
+    let id: number;
+    let animationId: number;
+    if (worker) {
+      worker.addEventListener("message", onMessage);
+      id = window.setTimeout(() => {
+        animationId = requestAnimationFrame(nextFrame);
+      }, 1000 * index);
+    }
 
     return () => {
       worker?.removeEventListener("message", onMessage);
+      isStopped.current = true;
       clearTimeout(id);
+      cancelAnimationFrame(animationId);
     };
-  }, [workerRef, handleNewSchedule, requestNewSchedule, index]);
+  }, [worker, index, requestNewSchedule]);
 
   return (
     <div
-      className="absolute h-160 w-[64.7rem] overflow-hidden shadow-[rgba(0,0,0,0.56)_0px_22px_70px_4px]"
+      className="absolute left-[110vw] h-160 w-[64.7rem] overflow-hidden shadow-[rgba(0,0,0,0.56)_0px_22px_70px_4px]"
       ref={ref}
-      style={{ left: -1200 }}
     >
       <View
         allClasses={allClasses}
