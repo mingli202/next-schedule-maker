@@ -4,6 +4,7 @@ import { fraunces, poppins } from "./fonts";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { ConvexClientProvider } from "@/integrations/ConvexClientProvider";
+import { ClerkClientProvider } from "@/integrations/ClerkClientProvider";
 
 export const metadata: Metadata = {
   title: "JAC Dream Schedule Builder",
@@ -41,7 +42,9 @@ function RootLayout({ children }: { children: React.ReactNode }) {
       <body
         className={`${fraunces.variable} ${poppins.variable} bg-bg-primary font-body text-text overflow-x-hidden text-sm antialiased md:text-base`}
       >
-        <ConvexClientProvider>{children}</ConvexClientProvider>
+        <ClerkClientProvider>
+          <ConvexClientProvider>{children}</ConvexClientProvider>
+        </ClerkClientProvider>
         <SpeedInsights />
         <Analytics />
       </body>
