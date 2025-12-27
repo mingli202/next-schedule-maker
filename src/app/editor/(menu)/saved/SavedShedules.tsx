@@ -7,7 +7,7 @@ import { getAuth } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import { onValue, push, ref, set } from "firebase/database";
 
-import { Button } from "@/ui";
+import { Button } from "@/components";
 import {
   ScheduleClassesContext,
   ScheduleDispatchContext,

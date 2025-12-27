@@ -5,7 +5,7 @@ import generate from "./generate";
 import { Code, SharedCurrentClasses } from "@/types";
 import { useContext } from "react";
 import { ScheduleClassesContext } from "../../ScheduleContext";
-import { PageLoading } from "@/ui";
+import { PageLoading } from "@/components";
 
 type Props = {
   setGeneratedSchedules: React.Dispatch<

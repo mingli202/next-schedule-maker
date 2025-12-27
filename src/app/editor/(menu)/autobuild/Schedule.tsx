@@ -1,7 +1,7 @@
 "use client";
 
 import { Class, Saved, SharedCurrentClasses } from "@/types";
-import { Button } from "@/ui";
+import { Button } from "@/components";
 import { faChevronRight, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

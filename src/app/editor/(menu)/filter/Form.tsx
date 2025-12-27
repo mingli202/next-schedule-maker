@@ -1,7 +1,7 @@
 "use client";
 
 import { Class } from "@/types";
-import { Button } from "@/ui";
+import { Button } from "@/components";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 

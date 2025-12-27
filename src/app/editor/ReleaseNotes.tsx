@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/ui";
+import { Button } from "@/components";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";

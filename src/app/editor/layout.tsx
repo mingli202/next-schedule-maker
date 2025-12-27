@@ -3,7 +3,7 @@ import ScheduleContextProvider from "./ScheduleContext";
 import DragIndicator from "./DragIndicator";
 import "./styles.css";
 import ViewWrapper from "./ViewWrapper";
-import { getLocalJsonData } from "@/lib";
+import { getLocalJsonData } from "@/lib/getLocalJson";
 import { Class } from "@/types";
 
 import { Metadata } from "next";
@@ -45,7 +45,7 @@ async function Layout({ children }: Props) {
 
   return (
     <ScheduleContextProvider>
-      <main className="box-border flex w-screen gap-2 overflow-y-auto overflow-x-hidden p-2 text-sm text-text max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
+      <main className="text-text box-border flex w-screen gap-2 overflow-x-hidden overflow-y-auto p-2 text-sm max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
         <div
           className="overflow-x-hidden overflow-y-hidden max-md:order-2 md:h-full md:overflow-x-auto"
           id="menu"

@@ -3,7 +3,7 @@
 import { Class, Code, SharedCurrentClasses } from "@/types";
 import { useState } from "react";
 import Form from "./Form";
-import { Button } from "@/ui";
+import { Button } from "@/components";
 import Loader from "./Loader";
 import Results from "./Results";
 import useSessionStorage from "./useSessionStorage";

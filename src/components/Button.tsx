@@ -8,7 +8,7 @@ import {
   useAnimate,
 } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib";
+import cn from "@/lib/cn";
 
 type Props = {
   variant?: "basic" | "special";

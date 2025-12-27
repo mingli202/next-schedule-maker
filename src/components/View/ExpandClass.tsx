@@ -1,12 +1,12 @@
 "use client";
 
 import { Class, SharedCurrentClasses, StateType } from "@/types";
-import { Button } from "@/ui";
 import { faCompress } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Variants, motion } from "framer-motion";
-import { cn } from "@/lib";
 import LecLab from "../LecLab";
+import Button from "../Button";
+import cn from "@/lib/cn";
 
 type MergedClass = Class & SharedCurrentClasses;
 
@@ -41,7 +41,7 @@ function ExpandClass({
 
   return (
     <motion.div
-      className="absolute left-0 top-0 z-30 flex h-full w-full items-center justify-center rounded-md bg-white/30 text-xs backdrop-blur-md backdrop-filter md:text-base"
+      className="absolute top-0 left-0 z-30 flex h-full w-full items-center justify-center rounded-md bg-white/30 text-xs backdrop-blur-md backdrop-filter md:text-base"
       initial="initial"
       animate="animate"
       exit="initial"

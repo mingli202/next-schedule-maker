@@ -2,7 +2,7 @@
 
 import { app, provider } from "@/backend";
 import { cn } from "@/lib";
-import { Button } from "@/ui";
+import { Button } from "@/components";
 import {
   createUserWithEmailAndPassword,
   getAuth,

@@ -1,7 +1,7 @@
 "use client";
 
 import { Class, SharedCurrentClasses } from "@/types";
-import View from "./components/View";
+import View from "@/components/View";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import type { WorkerRequest, WorkerResponse } from "@/workers/myWorker";
 

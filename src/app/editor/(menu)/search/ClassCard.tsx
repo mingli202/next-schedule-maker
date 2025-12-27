@@ -1,7 +1,7 @@
 "use client";
 
 import { ActionType, Class, SharedCurrentClasses } from "@/types";
-import { Button } from "@/ui";
+import { Button } from "@/components";
 import {
   faCheck,
   faEye,

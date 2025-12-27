@@ -1,4 +1,4 @@
-import { PageLoading } from "@/ui";
+import { PageLoading } from "@/components";
 
 function Loading() {
   return <PageLoading />;

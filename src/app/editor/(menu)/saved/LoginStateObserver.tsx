@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Button } from "@/ui";
+import { Button } from "@/components";
 
 function LoginStateObserver({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -38,7 +38,7 @@ function LoginStateObserver({ children }: { children: React.ReactNode }) {
   }, [router]);
 
   return (
-    <div className="h-full w-full font-body text-text">
+    <div className="font-body text-text h-full w-full">
       {loginState === "loading" && (
         <div className="flex h-full w-full items-center justify-center">
           Verifying...

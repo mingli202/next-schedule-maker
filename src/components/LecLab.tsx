@@ -4,7 +4,7 @@ import { faClock, faUser } from "@fortawesome/free-solid-svg-icons";
 import { getSectionTimes } from "@/lib/util";
 import type { Class } from "@/types";
 import type { HTMLProps } from "react";
-import { cn } from "@/lib";
+import cn from "@/lib/cn";
 
 type Props = {
   cl: Class;

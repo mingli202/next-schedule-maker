@@ -1,8 +1,8 @@
 "use client";
 
-import { cn } from "@/lib";
+import Button from "../Button";
+import cn from "@/lib/cn";
 import { Class, Saved, StateType } from "@/types";
-import { Button } from "@/ui";
 import {
   faCheckCircle,
   faTrash,
@@ -119,7 +119,7 @@ function ScheduleCard({
     }
 
     try {
-      if (stateType.type == "dispatch") {
+      if (stateType.type === "dispatch") {
         stateType.dispatch({
           type: "set",
           schedule: schedule.data,

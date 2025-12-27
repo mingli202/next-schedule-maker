@@ -2,8 +2,8 @@
 
 import GridView from "./GridView";
 import PreviewHover from "./PreviewHover";
-import { Class, SharedCurrentClasses, StateType } from "@/types";
-import { cn } from "@/lib";
+import type { Class, SharedCurrentClasses, StateType } from "@/types";
+import cn from "@/lib/cn";
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   disableRemove?: boolean;

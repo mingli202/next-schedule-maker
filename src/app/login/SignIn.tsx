@@ -3,7 +3,7 @@
 import { cn } from "@/lib";
 import { Dispatch, HTMLAttributes, SetStateAction, useState } from "react";
 import { HTMLMotionProps, motion } from "framer-motion";
-import { Button } from "@/ui";
+import { Button } from "@/components";
 import Image from "next/image";
 import {
   getAuth,

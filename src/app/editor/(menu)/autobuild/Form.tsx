@@ -1,7 +1,7 @@
 "use client";
 
 import { Class, Code } from "@/types";
-import { Button } from "@/ui";
+import { Button } from "@/components";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useMemo, useRef } from "react";

@@ -3,7 +3,7 @@
 import type { Class } from "@/types";
 import MovingSchedule from "./MovingSchedule";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/ui";
+import Button from "@/components/Button";
 
 type Props = {
   allClasses: Record<string, Class>;

@@ -5,9 +5,9 @@ import { Fragment, useState } from "react";
 import { AnimatePresence, Variants, motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faMinus } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@/ui";
 import ExpandClass from "./ExpandClass";
-import { cn } from "@/lib";
+import Button from "../Button";
+import cn from "@/lib/cn";
 
 type MergedClass = Class & SharedCurrentClasses;
 

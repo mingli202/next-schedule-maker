@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib";
-import { Button } from "@/ui";
+import cn from "@/lib/cn";
+import Button from "@/components/Button";
 import Link from "next/link";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { app } from "@/backend";

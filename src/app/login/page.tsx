@@ -4,7 +4,7 @@ import { useState } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { AnimatePresence, Variants } from "framer-motion";
-import { Button } from "@/ui";
+import { Button } from "@/components";
 import { useRouter } from "next/navigation";
 
 function Login() {
