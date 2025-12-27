@@ -18,7 +18,7 @@ function BgAnimation({ allClasses }: Props) {
 
   useEffect(() => {
     const worker = new Worker(
-      new URL("../workers/myWorker.ts", import.meta.url),
+      new URL("../../workers/myWorker.ts", import.meta.url),
     );
     setWorker(worker);
     setVw(window.innerWidth);

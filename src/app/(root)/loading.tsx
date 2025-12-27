@@ -1,4 +1,4 @@
-import { PageLoading } from "@/components";
+import PageLoading from "@/components/PageLoading";
 
 function Loading() {
   return <PageLoading />;

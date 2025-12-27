@@ -3,7 +3,7 @@ import ScheduleContextProvider from "./ScheduleContext";
 import DragIndicator from "./DragIndicator";
 import "./styles.css";
 import ViewWrapper from "./ViewWrapper";
-import { getLocalJsonData } from "@/lib/getLocalJson";
+import { getLocalJsonData } from "@/lib";
 import { Class } from "@/types";
 
 import { Metadata } from "next";

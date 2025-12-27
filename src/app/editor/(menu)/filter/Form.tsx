@@ -1,7 +1,7 @@
 "use client";
 
 import { Class } from "@/types";
-import { Button } from "@/components";
+import Button from "@/components/Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { Class, Saved, SharedCurrentClasses } from "@/types";
-import { Button } from "@/components";
+import Button from "@/components/Button";
 import { faChevronRight, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,7 +16,7 @@ import { ScheduleDispatchContext } from "../../ScheduleContext";
 import { app, db } from "@/backend";
 import { push, ref, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { cn } from "@/lib";
+import cn from "@/lib/cn";
 
 type Props = {
   schedule: SharedCurrentClasses[];

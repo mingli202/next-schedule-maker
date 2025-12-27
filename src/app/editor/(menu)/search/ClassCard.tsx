@@ -1,7 +1,8 @@
 "use client";
 
 import { ActionType, Class, SharedCurrentClasses } from "@/types";
-import { Button } from "@/components";
+import Button from "@/components/Button";
+import LecLab from "@/components/LecLab";
 import {
   faCheck,
   faEye,
@@ -16,7 +17,6 @@ import isValid from "./checkValid";
 import { useContext, useLayoutEffect, useRef, useState } from "react";
 import { ScheduleDispatchContext } from "../../ScheduleContext";
 import { motion } from "framer-motion";
-import LecLab from "@/app/components/LecLab";
 import { db } from "@/backend";
 import { push, ref, set, update } from "firebase/database";
 import "firebase/compat/database";

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { HTMLAttributes } from "react";
 import { Class } from "@/types";
-import { getLocalJsonData } from "@/lib/getLocalJson";
+import { getLocalJsonData } from "@/lib";
 import BgAnimation from "./BgAnimation";
 import cn from "@/lib/cn";
 

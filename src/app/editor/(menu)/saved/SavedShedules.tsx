@@ -7,13 +7,13 @@ import { getAuth } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import { onValue, push, ref, set } from "firebase/database";
 
-import { Button } from "@/components";
+import Button from "@/components/Button";
 import {
   ScheduleClassesContext,
   ScheduleDispatchContext,
 } from "../../ScheduleContext";
 
-import SavedList from "../../../components/SavedList";
+import SavedList from "@/components/SavedList";
 
 type Props = {
   allClasses: Record<string, Class>;
@@ -34,7 +34,7 @@ function SavedSchedules({ allClasses }: Props) {
     } as const;
 
     if (!user) {
-      const schedules = { ...(savedSchedules ?? {}) };
+      const schedules = { ...savedSchedules };
       schedules[Math.random().toString()] = newSchedule;
 
       localStorage.setItem(

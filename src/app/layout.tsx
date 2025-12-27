@@ -1,10 +1,24 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import { fraunces, poppins } from "./fonts";
+import "./(root)/globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { ConvexClientProvider } from "@/integrations/ConvexClientProvider";
 import { ClerkClientProvider } from "@/integrations/ClerkClientProvider";
+
+import { Fraunces, Poppins } from "next/font/google";
+
+// headings
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--fraunces",
+});
+
+// body text
+const poppins = Poppins({
+  weight: ["100", "400", "700"],
+  subsets: ["latin"],
+  variable: "--poppins",
+});
 
 export const metadata: Metadata = {
   title: "JAC Dream Schedule Builder",

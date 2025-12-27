@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@/lib";
-import { Button } from "@/components";
+import cn from "@/lib/cn";
+import Button from "@/components/Button";
 import {
   faFilter,
   faFolder,

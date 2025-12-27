@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Button } from "@/components";
+import Button from "@/components/Button";
 
 function LoginStateObserver({ children }: { children: React.ReactNode }) {
   const router = useRouter();

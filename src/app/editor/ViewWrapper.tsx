@@ -1,7 +1,7 @@
 "use client";
 
 import { Class } from "@/types";
-import View from "../components/View";
+import View from "@/components/View";
 import { useContext } from "react";
 import {
   ScheduleClassesContext,
