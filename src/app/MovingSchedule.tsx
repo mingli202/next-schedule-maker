@@ -33,7 +33,6 @@ function MovingSchedule({
   const deltaT = 1 / 120;
 
   const requestNewSchedule = useCallback(() => {
-    console.log("request new schedule");
     worker?.postMessage({
       type: "mini-generate",
       allClasses,
@@ -63,7 +62,6 @@ function MovingSchedule({
 
     /* eslint-disable react-hooks/purity */
     if (left > window.innerWidth + 50) {
-      console.log("out of bounds");
       isGenerating.current = true;
       let ind = lastRef.current;
 
@@ -102,7 +100,6 @@ function MovingSchedule({
         return;
       }
       setSchedule(e.data.schedule);
-      console.log("received new schedule");
       isGenerating.current = false;
     };
     let id: number;
