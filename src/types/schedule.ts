@@ -54,3 +54,12 @@ export const ClassesDataSchema = z.object({
   commitId: z.string(),
 });
 export type ClassesData = z.infer<typeof ClassesDataSchema>;
+
+export const ScheduleOfClassesSchema = z.record(z.string(), ClassSchema);
+export type ScheduleOfClasses = z.infer<typeof ScheduleOfClassesSchema>;
+
+export const ScheduleOfClassesDataSchema = z.object({
+  scheduleOfClasses: ScheduleOfClassesSchema,
+  commitId: z.string(),
+});
+export type ScheduleOfClassesData = z.infer<typeof ScheduleOfClassesDataSchema>;

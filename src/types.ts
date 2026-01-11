@@ -94,3 +94,6 @@ export type Code = {
   ratingRange?: { from?: number; to?: number };
   scoreRange?: { from?: number; to?: number };
 };
+
+export type RecordValues<T extends Record<string | number | symbol, unknown>> =
+  T[keyof T];
