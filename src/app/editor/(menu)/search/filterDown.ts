@@ -1,4 +1,4 @@
-import { Class, SharedCurrentClasses } from "@/types";
+import type { Class, SharedCurrentClasses } from "@/types";
 import isValid from "./checkValid";
 import { getSectionTimes } from "@/lib/util";
 
