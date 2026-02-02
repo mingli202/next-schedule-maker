@@ -3,7 +3,6 @@ import "./(root)/globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { ConvexClientProvider } from "@/integrations/ConvexClientProvider";
-import { ClerkClientProvider } from "@/integrations/ClerkClientProvider";
 
 import { Fraunces, Poppins } from "next/font/google";
 
@@ -56,9 +55,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
       <body
         className={`${fraunces.variable} ${poppins.variable} bg-bg-primary font-body text-text overflow-x-hidden text-sm antialiased md:text-base`}
       >
-        <ClerkClientProvider>
-          <ConvexClientProvider>{children}</ConvexClientProvider>
-        </ClerkClientProvider>
+        <ConvexClientProvider>{children}</ConvexClientProvider>
         <SpeedInsights />
         <Analytics />
       </body>
