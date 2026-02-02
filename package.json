@@ -30,14 +30,15 @@
     "file-saver": "^2.0.5",
     "firebase": "^12.8.0",
     "framer-motion": "^12.29.2",
+    "lucide-react": "^0.563.0",
     "nitro": "npm:nitro-nightly@latest",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
+    "vite-tsconfig-paths": "^6.0.5",
     "zod": "^4.3.6",
-    "zustand": "^5.0.11",
-    "vite-tsconfig-paths": "^6.0.5"
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.13",

@@ -1,9 +1,9 @@
 "use client";
 
-import { Class, SharedCurrentClasses } from "@/types";
-import View from "@/components/View";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import type { Class, SharedCurrentClasses } from "@/types";
 import type { WorkerRequest, WorkerResponse } from "@/workers/myWorker";
+import View from "@/components/View";
 
 type Props = {
   allClasses: Record<string, Class>;
@@ -20,7 +20,7 @@ function MovingSchedule({
   pauseRef,
   worker,
 }: Props) {
-  const [schedule, setSchedule] = useState<SharedCurrentClasses[]>([]);
+  const [schedule, setSchedule] = useState<Array<SharedCurrentClasses>>([]);
   const isGenerating = useRef(false);
   const isStopped = useRef(false);
   const ref = useRef<HTMLDivElement>(null!);
@@ -60,7 +60,6 @@ function MovingSchedule({
     const bounds = ref.current.getBoundingClientRect();
     const left = bounds.left;
 
-    /* eslint-disable react-hooks/purity */
     if (left > window.innerWidth + 50) {
       isGenerating.current = true;
       let ind = lastRef.current;

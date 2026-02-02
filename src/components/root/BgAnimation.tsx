@@ -1,8 +1,8 @@
 "use client";
 
-import type { Class } from "@/types";
-import MovingSchedule from "./MovingSchedule";
 import { useEffect, useRef, useState } from "react";
+import MovingSchedule from "./MovingSchedule";
+import type { Class } from "@/types";
 import Button from "@/components/Button";
 
 type Props = {

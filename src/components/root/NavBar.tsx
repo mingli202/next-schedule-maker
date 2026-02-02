@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { twMerge } from "tailwind-merge";
-import Image from "next/image";
+import { Link } from "@tanstack/react-router";
 
 function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   return (
@@ -11,8 +10,8 @@ function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
       )}
     >
       <div className="flex items-center">
-        <Link href="/" className="flex h-10 items-center gap-4">
-          <Image src="/assets/logo.png" alt="Logo" width={36} height={36} />
+        <Link to="/" className="flex h-10 items-center gap-4">
+          <img src="/assets/logo.png" alt="Logo" width={36} height={36} />
           <span className="font-heading text-lg md:text-3xl">
             Dream Builder
           </span>

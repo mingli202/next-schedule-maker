@@ -1,11 +1,10 @@
-import Button from "@/components/Button";
-import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { HTMLAttributes } from "react";
-import { Class } from "@/types";
-import { getLocalJsonData } from "@/lib";
+import { Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import BgAnimation from "./BgAnimation";
+import type { Class } from "@/types";
+import type { HTMLAttributes } from "react";
+import Button from "@/components/Button";
+import { getLocalJsonData } from "@/lib";
 import cn from "@/lib/cn";
 
 async function Welcome({
@@ -30,14 +29,14 @@ async function Welcome({
         <p className="text-center drop-shadow-[#000_0_0_20px]">
           The schedule builder you deserve
         </p>
-        <Link href="/editor" className="w-fit">
+        <Link to="/editor" className="w-fit">
           <Button
             variant="special"
             className="drop-shadow-[rgba(0,0,0,0.5)_0_0_20px] max-md:p-1"
           >
             <div className="flex items-center gap-2 p-1 tracking-tight">
               <span>Give it a try</span>
-              <FontAwesomeIcon icon={faArrowRight} className="h-5 md:h-7" />
+              <ArrowRight className="h-5 md:h-7" />
             </div>
           </Button>
         </Link>
