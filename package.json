@@ -1,20 +1,26 @@
 {
   "name": "next-schedule-maker",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite dev --port 3000",
     "build": "vite build",
-    "start": "node .output/server/index.mjs",
-    "lint": "biome lint"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "lint": "eslint",
+    "format": "prettier",
+    "check": "prettier --write . && eslint --fix"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@fortawesome/react-fontawesome": "^3.1.1",
+    "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/react-devtools": "^0.9.4",
     "@tanstack/react-query": "^5.90.20",
     "@tanstack/react-router": "^1.157.18",
+    "@tanstack/react-router-devtools": "^1.132.0",
+    "@tanstack/react-router-ssr-query": "^1.131.7",
     "@tanstack/react-start": "^1.157.18",
+    "@tanstack/router-plugin": "^1.132.0",
     "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.3.1",
     "@workos-inc/authkit-react": "^0.16.0",
@@ -24,40 +30,33 @@
     "file-saver": "^2.0.5",
     "firebase": "^12.8.0",
     "framer-motion": "^12.29.2",
-    "nitro": "^3.0.1-alpha.2",
+    "nitro": "npm:nitro-nightly@latest",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.18",
     "zod": "^4.3.6",
-    "zustand": "^5.0.11"
+    "zustand": "^5.0.11",
+    "vite-tsconfig-paths": "^6.0.5"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.13",
-    "@tailwindcss/vite": "^4.1.18",
     "@tanstack/devtools-vite": "0.5.0",
+    "@tanstack/eslint-config": "0.3.4",
+    "@testing-library/dom": "10.4.1",
+    "@testing-library/react": "16.3.2",
     "@types/file-saver": "^2.0.7",
     "@types/node": "^25.2.0",
     "@types/react": "19.2.10",
     "@types/react-dom": "19.2.3",
-    "@typescript-eslint/eslint-plugin": "^8.54.0",
-    "@typescript-eslint/parser": "^8.54.0",
     "@vitejs/plugin-react": "^5.1.2",
     "eslint": "^9.39.2",
-    "eslint-config-next": "^16.1.6",
+    "jsdom": "27.4.0",
     "postcss": "^8.5.6",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
-    "vite-tsconfig-paths": "^6.0.5"
-  },
-  "ignoreScripts": [
-    "sharp",
-    "unrs-resolver"
-  ],
-  "trustedDependencies": [
-    "sharp",
-    "unrs-resolver"
-  ]
+    "web-vitals": "5.1.0"
+  }
 }
