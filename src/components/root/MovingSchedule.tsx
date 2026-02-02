@@ -1,6 +1,7 @@
 "use client";
 
-import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { RefObject } from "react";
 import type { Class, SharedCurrentClasses } from "@/types";
 import type { WorkerRequest, WorkerResponse } from "@/workers/myWorker";
 import View from "@/components/View";
@@ -23,7 +24,7 @@ function MovingSchedule({
   const [schedule, setSchedule] = useState<Array<SharedCurrentClasses>>([]);
   const isGenerating = useRef(false);
   const isStopped = useRef(false);
-  const ref = useRef<HTMLDivElement>(null!);
+  const ref = useRef<HTMLDivElement>(null);
 
   const now = useRef<DOMHighResTimeStamp>(0);
   const speedData = useRef<{ dx: number; x0: number }>({
@@ -40,52 +41,59 @@ function MovingSchedule({
     } satisfies WorkerRequest);
   }, [worker, allClasses, index]);
 
-  function nextFrame(t: DOMHighResTimeStamp) {
-    if (!isStopped.current) {
-      requestAnimationFrame(nextFrame);
-    }
-
-    if (pauseRef.current) {
-      return;
-    }
-
-    const dt = t - now.current;
-
-    if (dt < deltaT * 1000) {
-      return;
-    }
-
-    now.current = t;
-
-    const bounds = ref.current.getBoundingClientRect();
-    const left = bounds.left;
-
-    if (left > window.innerWidth + 50) {
-      isGenerating.current = true;
-      let ind = lastRef.current;
-
-      while (ind === lastRef.current) {
-        ind = Math.floor(Math.random() * 3);
+  const nextFrame = useCallback(
+    (t: DOMHighResTimeStamp) => {
+      if (!ref.current) {
+        return;
       }
-      lastRef.current = ind;
 
-      const top = `${[-20, 10, 40][ind] + Math.random() * 10}%`;
-      const zIndex = Math.floor(Math.random() * 1000);
+      if (!isStopped.current) {
+        requestAnimationFrame(nextFrame);
+      }
 
-      const dx = 0.03 * (0.5 * Math.random() + 1);
-      const newLeft = -(1200 + Math.random() * 600);
+      if (pauseRef.current) {
+        return;
+      }
 
-      speedData.current.dx = dx;
-      speedData.current.x0 = newLeft;
+      const dt = t - now.current;
 
-      ref.current.style.top = top;
-      ref.current.style.left = `${newLeft}px`;
-      ref.current.style.zIndex = `${zIndex}`;
-      requestNewSchedule();
-    } else if (!isGenerating.current) {
-      ref.current.style.left = `${left + speedData.current.dx / deltaT}px`;
-    }
-  }
+      if (dt < deltaT * 1000) {
+        return;
+      }
+
+      now.current = t;
+
+      const bounds = ref.current.getBoundingClientRect();
+      const left = bounds.left;
+
+      if (left > window.innerWidth + 50) {
+        isGenerating.current = true;
+        let ind = lastRef.current;
+
+        while (ind === lastRef.current) {
+          ind = Math.floor(Math.random() * 3);
+        }
+        lastRef.current = ind;
+
+        const top = `${[-20, 10, 40][ind] + Math.random() * 10}%`;
+        const zIndex = Math.floor(Math.random() * 1000);
+
+        const dx = 0.03 * (0.5 * Math.random() + 1);
+        const newLeft = -(1200 + Math.random() * 600);
+
+        speedData.current.dx = dx;
+        speedData.current.x0 = newLeft;
+
+        ref.current.style.top = top;
+        ref.current.style.left = `${newLeft}px`;
+        ref.current.style.zIndex = `${zIndex}`;
+        requestNewSchedule();
+      } else if (!isGenerating.current) {
+        ref.current.style.left = `${left + speedData.current.dx / deltaT}px`;
+      }
+    },
+    [lastRef, lastRef.current, pauseRef, requestNewSchedule],
+  );
 
   useEffect(() => {
     isStopped.current = false;
@@ -116,7 +124,7 @@ function MovingSchedule({
       clearTimeout(id);
       cancelAnimationFrame(animationId);
     };
-  }, [worker, index, requestNewSchedule]);
+  }, [worker, index, requestNewSchedule, nextFrame]);
 
   return (
     <div
