@@ -1,13 +1,12 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TeacherStats from "./TeacherStats";
-import { faClock, faUser } from "@fortawesome/free-solid-svg-icons";
-import { getSectionTimes } from "@/lib/util";
-import type { Class } from "@/types";
+import { Clock, User } from "lucide-react";
 import type { HTMLProps } from "react";
 import cn from "@/lib/cn";
+import { getSectionTimes } from "@/lib/util";
+import type { Section } from "@/types/generated";
+import TeacherStats from "./TeacherStats";
 
 type Props = {
-  cl: Class;
+  cl: Section;
   leclab: "lecture" | "laboratory";
 } & HTMLProps<HTMLDivElement>;
 export default function LecLab({ cl, className, leclab }: Props) {
@@ -16,7 +15,7 @@ export default function LecLab({ cl, className, leclab }: Props) {
       <h4 className="italic">Lecture</h4>
 
       <div className="relative flex items-center gap-2">
-        <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
+        <User className="h-4 opacity-50" />
         {cl.lecture.prof}
         <TeacherStats rating={cl.lecture.rating} />
       </div>
@@ -35,7 +34,7 @@ export default function LecLab({ cl, className, leclab }: Props) {
       <h4 className="italic">Lab</h4>
 
       <div className="relative flex items-center gap-2">
-        <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
+        <User className="h-4 opacity-50" />
         {cl.lab.prof}
         <TeacherStats rating={cl.lab.rating} />
       </div>
@@ -43,7 +42,7 @@ export default function LecLab({ cl, className, leclab }: Props) {
       {getSectionTimes({ ...cl, lecture: null }).map((j, index) => {
         return (
           <p className="flex items-center gap-2" key={index}>
-            <FontAwesomeIcon icon={faClock} className="h-4 opacity-50" />
+            <Clock className="h-4 opacity-50" />
             {j[0]} {j[1]}
           </p>
         );
