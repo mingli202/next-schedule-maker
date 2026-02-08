@@ -3,9 +3,9 @@ import cn from "@/lib/cn";
 import type { Rating } from "@/types/generated";
 
 type Props = {
-  rating: Rating | null;
+  teacher: string;
 } & HTMLProps<HTMLDivElement>;
-export default function TeacherStats({ rating, className }: Props) {
+export default function TeacherStats({ teacher, className }: Props) {
   return (
     <div
       className={cn("group relative flex cursor-default font-bold", className)}

@@ -6,8 +6,9 @@ import cn from "@/lib/cn";
 import type { Section } from "@/types/generated";
 import Button from "../Button";
 import LecLab from "../LecLab";
+import SectionCard from "../SectionCard";
 
-type ExpandClassProps = {
+type ExpandSectionProps = {
   section: Section;
   bgColor: string;
   textColor: string;
@@ -15,13 +16,13 @@ type ExpandClassProps = {
   onMinimizeClicked: () => void;
 };
 
-function ExpandClass({
+function ExpandClassSection({
   section,
   bgColor,
   textColor,
   onRemoveSectionClicked,
   onMinimizeClicked,
-}: ExpandClassProps) {
+}: ExpandSectionProps) {
   const expandVariants: Variants = {
     initial: {
       opacity: 0,
@@ -83,30 +84,16 @@ function ExpandClass({
           </Button>
         </div>
 
-        <div className="flex flex-col p-1">
-          <h2>
-            {section.course}: {section.domain} {section.code}
-          </h2>
-
-          <h1 className="font-heading text-base font-bold md:text-2xl">
-            {section.section} {section.title}
-          </h1>
-
-          <LecLab
-            section={section}
-            className={cn("mt-2 rounded-md p-2", {
-              "bg-black/10": textColor === "#000",
-              "bg-white/10": textColor === "#FFF",
-            })}
-          />
-
-          {section.more !== "" && (
-            <p className="mt-2 opacity-70">{section.more}</p>
-          )}
-        </div>
+        <SectionCard
+          section={section}
+          className={cn({
+            "bg-black/10": textColor === "#000",
+            "bg-white/10": textColor === "#FFF",
+          })}
+        />
       </motion.div>
     </motion.div>
   );
 }
 
-export default ExpandClass;
+export default ExpandClassSection;
