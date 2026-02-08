@@ -3,7 +3,7 @@ import z from "zod";
 
 const EditorViewParams = z.array(
   z.object({
-    sectionId: z.string(),
+    sectionId: z.number(),
     colorIndex: z.string(),
   }),
 );
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/editor")({
       },
     ],
   }),
-  validateSearch: EditorViewParams,
+  validateSearch: z.array(EditorViewParams).catch([]),
   component: RouteComponent,
 });
 
