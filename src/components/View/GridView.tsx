@@ -1,17 +1,18 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
+import { useSearch } from "@tanstack/react-router";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { Maximize, Minus } from "lucide-react";
 import { Fragment, useState } from "react";
+import z from "zod";
+import { getSectionSectionsSectionIdGet } from "@/client";
 import cn from "@/lib/cn";
+import { getColorFromIndex } from "@/lib/colors";
+import { EditorInViewParams } from "@/routes/editor/route";
+import { Section } from "@/types/generated";
 import Button from "../Button";
 import ExpandSection from "./ExpandSection";
-import { useSearch } from "@tanstack/react-router";
-import { EditorInViewParams } from "@/routes/editor/route";
-import { useQuery } from "@tanstack/react-query";
-import { getSectionSectionsSectionIdGet } from "@/client";
-import { getColorFromIndex } from "@/lib/colors";
-import { Section } from "@/types/generated";
-import { Maximize, Minus } from "lucide-react";
 
 type Props = {
   disableRemove?: boolean;
@@ -22,29 +23,30 @@ type Props = {
 function GridView({ disableRemove, disableTime }: Props) {
   const search = useSearch({ strict: false });
 
-  const res = EditorInViewParams.safeParse(search);
+  const res = z.array(EditorInViewParams).safeParse(search);
 
   const sectionsInView = res.success ? res.data : [];
 
   return disableTime ? (
-    sectionsInView.map((cl, index) => (
+    sectionsInView.map((param) => (
       <SectionBlock
-        key={cl.code + cl.section + index}
-        cl={cl}
+        key={param.sectionId}
+        {...param}
         disableRemove={disableRemove}
-        stateType={stateType}
         disableTime={disableTime}
+        onRemoveSectionClicked={() => {}}
       />
     ))
   ) : (
+    // TODO: onRemoveSectionClicked
     <AnimatePresence>
-      {fullClasses.map((cl, index) => (
+      {sectionsInView.map((param) => (
         <SectionBlock
-          key={cl.code + cl.section + index}
-          cl={cl}
+          key={param.sectionId}
+          {...param}
           disableRemove={disableRemove}
-          stateType={stateType}
           disableTime={disableTime}
+          onRemoveSectionClicked={() => {}}
         />
       ))}
     </AnimatePresence>
