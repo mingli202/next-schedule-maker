@@ -1,26 +1,27 @@
 "use client";
 
-import { Class, SharedCurrentClasses, StateType } from "@/types";
-import { faCompress } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Variants, motion } from "framer-motion";
-import LecLab from "../LecLab";
-import Button from "../Button";
+import { motion, type Variants } from "framer-motion";
+import { Minimize } from "lucide-react";
 import cn from "@/lib/cn";
+import type { Section } from "@/types/generated";
+import Button from "../Button";
+import LecLab from "../LecLab";
 
-type MergedClass = Class & SharedCurrentClasses;
+type ExpandClassProps = {
+  section: Section;
+  bgColor: string;
+  textColor: string;
+  onRemoveSectionClicked: () => void;
+  onMinimizeClicked: () => void;
+};
 
 function ExpandClass({
-  cl,
-  setExpand,
-  stateType,
-  disableRemove,
-}: {
-  cl: MergedClass;
-  setExpand: React.Dispatch<React.SetStateAction<boolean>>;
-  stateType: StateType;
-  disableRemove?: boolean;
-}) {
+  section,
+  bgColor,
+  textColor,
+  onRemoveSectionClicked,
+  onMinimizeClicked,
+}: ExpandClassProps) {
   const expandVariants: Variants = {
     initial: {
       opacity: 0,
@@ -47,14 +48,14 @@ function ExpandClass({
       exit="initial"
       variants={expandVariants}
       onClick={() => {
-        setExpand(false);
+        onMinimizeClicked();
       }}
     >
       <motion.div
         className="flex w-4/5 flex-col rounded-md p-1 shadow-xl"
         style={{
-          backgroundColor: cl.bgColor,
-          color: cl.textColor,
+          backgroundColor: bgColor,
+          color: textColor,
         }}
         onClick={(e) => {
           e.stopPropagation();
@@ -62,64 +63,46 @@ function ExpandClass({
         variants={cardVariants}
       >
         <div className="flex w-full items-center justify-between">
-          {!disableRemove && stateType !== "none" ? (
-            <Button
-              variant="basic"
-              className="p-1 italic"
-              onClick={() => {
-                setExpand(false);
-                if (stateType.type === "dispatch") {
-                  stateType.dispatch({ type: "delete", id: cl.id });
-                } else {
-                  stateType.dispatch((sch) =>
-                    sch.filter((s) => s.id !== cl.id),
-                  );
-                }
-              }}
-            >
-              Remove Class
-            </Button>
-          ) : (
-            <div className="invisible bg-transparent" />
-          )}
           <Button
             variant="basic"
-            onClick={() => setExpand(false)}
+            className="p-1 italic"
+            onClick={() => {
+              onRemoveSectionClicked();
+              onMinimizeClicked();
+            }}
+          >
+            Remove Class
+          </Button>
+          <Button
+            variant="basic"
+            onClick={onMinimizeClicked}
             className="p-1"
             title="minimize"
           >
-            <FontAwesomeIcon icon={faCompress} />
+            <Minimize />
           </Button>
         </div>
 
         <div className="flex flex-col p-1">
           <h2>
-            {cl.program}: {cl.course} {cl.code}
+            {section.course}: {section.domain} {section.code}
           </h2>
 
           <h1 className="font-heading text-base font-bold md:text-2xl">
-            {cl.section} {cl.lecture?.title}
+            {section.section} {section.title}
           </h1>
 
           <LecLab
-            cl={cl}
-            leclab="lecture"
+            section={section}
             className={cn("mt-2 rounded-md p-2", {
-              "bg-black/10": cl.textColor === "#000",
-              "bg-white/10": cl.textColor === "#FFF",
+              "bg-black/10": textColor === "#000",
+              "bg-white/10": textColor === "#FFF",
             })}
           />
 
-          <LecLab
-            cl={cl}
-            leclab="laboratory"
-            className={cn("mt-2 rounded-md p-2", {
-              "bg-black/10": cl.textColor === "#000",
-              "bg-white/10": cl.textColor === "#FFF",
-            })}
-          />
-
-          {cl.more !== "" && <p className="mt-2 opacity-70">{cl.more}</p>}
+          {section.more !== "" && (
+            <p className="mt-2 opacity-70">{section.more}</p>
+          )}
         </div>
       </motion.div>
     </motion.div>
