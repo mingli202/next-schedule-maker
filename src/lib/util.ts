@@ -1,21 +1,11 @@
-import { Class } from "@/types";
+import type { Time } from "@/types/generated";
 
-export function getSectionTimes(section: Class): string[][] {
-  let times: string[][] = [];
+export function getSectionTimes(times: Time): string[][] {
+  return Object.entries(times).flatMap(([day, time]) =>
+    time.map((t) => [day, t]),
+  );
+}
 
-  if (section.lecture) {
-    const time = Object.entries(section.lecture.time).flatMap(([d, ts]) =>
-      ts.map((t) => [d, t]),
-    );
-    times = [...times, ...time];
-  }
-
-  if (section.lab) {
-    const time = Object.entries(section.lab.time).flatMap(([d, ts]) =>
-      ts.map((t) => [d, t]),
-    );
-    times = [...times, ...time];
-  }
-
-  return times;
+export function capitalize(s: string): string {
+  return s.slice(0, 1).toUpperCase() + s.slice(1);
 }
