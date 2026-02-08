@@ -2,8 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import z from "zod";
 
 export const EditorInViewParams = z.object({
-  sectionId: z.number(),
-  colorIndex: z.number(),
+  sections: z
+    .array(
+      z.object({
+        sectionId: z.number(),
+        colorIndex: z.number(),
+      }),
+    )
+    .catch([]),
+  previewSectionId: z.number().optional(),
 });
 export type EditorInViewParams = z.infer<typeof EditorInViewParams>;
 
@@ -18,7 +25,7 @@ export const Route = createFileRoute("/editor")({
       },
     ],
   }),
-  validateSearch: z.array(EditorInViewParams).catch([]),
+  validateSearch: EditorInViewParams,
   component: RouteComponent,
 });
 

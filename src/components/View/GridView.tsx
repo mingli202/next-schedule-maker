@@ -2,7 +2,6 @@
 
 import { useSearch } from "@tanstack/react-router";
 import { AnimatePresence } from "framer-motion";
-import z from "zod";
 import { EditorInViewParams } from "@/routes/editor/route";
 import SectionBlock from "./SectionBlock";
 
@@ -15,9 +14,9 @@ type Props = {
 export default function GridView({ disableRemove, disableTime }: Props) {
   const search = useSearch({ strict: false });
 
-  const res = z.array(EditorInViewParams).safeParse(search);
+  const res = EditorInViewParams.safeParse(search);
 
-  const sectionsInView = res.success ? res.data : [];
+  const sectionsInView = res.success ? res.data.sections : [];
 
   return disableTime ? (
     sectionsInView.map((param) => (

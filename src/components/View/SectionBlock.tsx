@@ -1,11 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Maximize, Minus } from "lucide-react";
 import { Fragment, useState } from "react";
-import { getSectionSectionsSectionIdGet } from "@/client";
+import { useSection } from "@/hooks";
 import { cn } from "@/lib";
 import { getColorFromIndex } from "@/lib/colors";
-import { Section } from "@/types/generated";
 import Button from "../Button";
 import ExpandSection from "./ExpandSection";
 
@@ -26,35 +24,9 @@ export default function SectionBlock({
 }: SectionBlockProps) {
   const [expand, setExpand] = useState(false);
 
-  const {
-    data: section,
-    isPending,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["section", sectionId],
-    queryFn: async () => {
-      const res = await getSectionSectionsSectionIdGet({
-        path: { section_id: sectionId },
-      });
+  const { data: section } = useSection(sectionId);
 
-      if (res.error) {
-        throw new Error(JSON.stringify(res.error.detail));
-      }
-
-      return Section.parse(res.data);
-    },
-    staleTime: Infinity,
-  });
-
-  if (isPending) {
-    return null;
-  }
-
-  if (isError) {
-    console.trace(`Section ${sectionId} failed to load. Error ${error}`);
-    return null;
-  }
+  if (!section) return null;
 
   const card: Variants = {
     hover: {
