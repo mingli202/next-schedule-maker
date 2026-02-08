@@ -1,6 +1,6 @@
-import type { Rating } from "@/types/generated";
 import type { HTMLProps } from "react";
 import cn from "@/lib/cn";
+import type { Rating } from "@/types/generated";
 
 type Props = {
   rating: Rating | null;
