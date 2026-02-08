@@ -1,40 +1,34 @@
 "use client";
 
-import { Class, SharedCurrentClasses, StateType } from "@/types";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Fragment, useState } from "react";
-import { AnimatePresence, Variants, motion } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExpand, faMinus } from "@fortawesome/free-solid-svg-icons";
-import ExpandClass from "./ExpandClass";
-import Button from "../Button";
 import cn from "@/lib/cn";
-
-type MergedClass = Class & SharedCurrentClasses;
+import Button from "../Button";
+import ExpandSection from "./ExpandSection";
+import { useSearch } from "@tanstack/react-router";
+import { EditorInViewParams } from "@/routes/editor/route";
+import { useQuery } from "@tanstack/react-query";
+import { getSectionSectionsSectionIdGet } from "@/client";
+import { getColorFromIndex } from "@/lib/colors";
+import { Section } from "@/types/generated";
+import { Maximize, Minus } from "lucide-react";
 
 type Props = {
-  allClasses: Record<string, Class>;
   disableRemove?: boolean;
 } & {
-  stateType: StateType;
-  scheduleClasses: SharedCurrentClasses[];
   disableTime?: boolean;
 };
 
-function GridView({
-  allClasses,
-  disableRemove,
-  scheduleClasses,
-  stateType,
-  disableTime,
-}: Props) {
-  const fullClasses: MergedClass[] = scheduleClasses.map((cl) => {
-    const toReturn: MergedClass = { ...allClasses[cl.id], ...cl };
-    return toReturn;
-  });
+function GridView({ disableRemove, disableTime }: Props) {
+  const search = useSearch({ strict: false });
+
+  const res = EditorInViewParams.safeParse(search);
+
+  const sectionsInView = res.success ? res.data : [];
 
   return disableTime ? (
-    fullClasses.map((cl, index) => (
-      <ClassBlock
+    sectionsInView.map((cl, index) => (
+      <SectionBlock
         key={cl.code + cl.section + index}
         cl={cl}
         disableRemove={disableRemove}
@@ -45,7 +39,7 @@ function GridView({
   ) : (
     <AnimatePresence>
       {fullClasses.map((cl, index) => (
-        <ClassBlock
+        <SectionBlock
           key={cl.code + cl.section + index}
           cl={cl}
           disableRemove={disableRemove}
@@ -57,33 +51,69 @@ function GridView({
   );
 }
 
-function ClassBlock({
-  cl,
-  disableRemove,
-  stateType,
-  disableTime,
-}: {
-  cl: MergedClass;
+type SectionBlockProps = {
+  sectionId: number;
+  colorIndex: number;
   disableRemove?: boolean;
-  stateType: StateType;
   disableTime?: boolean;
-}) {
+  onRemoveSectionClicked: () => void;
+};
+
+function SectionBlock({
+  sectionId,
+  colorIndex,
+  disableRemove,
+  disableTime,
+  onRemoveSectionClicked,
+}: SectionBlockProps) {
+  const [expand, setExpand] = useState(false);
+
+  const {
+    data: section,
+    isPending,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["section", sectionId],
+    queryFn: async () => {
+      const res = await getSectionSectionsSectionIdGet({
+        path: { section_id: sectionId },
+      });
+
+      if (res.error) {
+        throw new Error(JSON.stringify(res.error.detail));
+      }
+
+      return Section.parse(res.data);
+    },
+    staleTime: Infinity,
+  });
+
+  if (isPending) {
+    return null;
+  }
+
+  if (isError) {
+    console.trace(`Section ${sectionId} failed to load. Error ${error}`);
+    return null;
+  }
+
   const card: Variants = {
     hover: {
       opacity: 1,
     },
   };
 
-  const [expand, setExpand] = useState(false);
+  const { textColor, bgColor } = getColorFromIndex(colorIndex);
 
   return (
-    <Fragment key={cl.code + cl.section + "fragment"}>
-      {cl.viewData.map((times, index) => {
+    <Fragment key={`${section.code}-${section.section}-fragment`}>
+      {section.viewData.map((times, index) => {
         const [d, [start, end]] = Object.entries(times)[0];
 
         return (
           <motion.div
-            key={cl.code + d + cl.section + index}
+            key={section.code + d + section.section + index.toString()}
             className={cn(
               "relative z-10 box-border overflow-hidden rounded-md border-[3px]",
               "border-solid border-black/20 p-1",
@@ -92,8 +122,8 @@ function ClassBlock({
               gridColumn: d,
               gridRowStart: start,
               gridRowEnd: end,
-              color: cl.textColor,
-              backgroundColor: cl.bgColor,
+              color: textColor,
+              backgroundColor: bgColor,
             }}
             initial={disableTime ? undefined : { opacity: 0, scale: 0.9 }}
             animate={disableTime ? undefined : { opacity: 1, scale: 1 }}
@@ -102,10 +132,10 @@ function ClassBlock({
             variants={disableTime ? undefined : card}
             whileHover="hover"
           >
-            <p className="line-clamp-2 font-bold">{cl.lecture?.title}</p>
-            <p className="mt-1 line-clamp-1">{cl.code}</p>
-            <p className="font">{cl.section}</p>
-            <p className="mt-1 line-clamp-2">{cl.lecture?.prof}</p>
+            <p className="line-clamp-2 font-bold">{section.title}</p>
+            <p className="mt-1 line-clamp-1">{section.code}</p>
+            <p className="font">{section.section}</p>
+            <p className="mt-1 line-clamp-2">{section.times[0]?.prof}</p>
             {disableTime ? null : (
               <motion.div
                 className="absolute bottom-0 left-0 flex w-full justify-between bg-white/10 p-2 backdrop-blur-sm backdrop-filter"
@@ -118,14 +148,11 @@ function ClassBlock({
                     className="rounded-none p-0"
                     onClick={() => {
                       if (disableRemove || disableTime) return;
-                      if (stateType === "none") return;
-                      if (stateType.type == "dispatch") {
-                        stateType.dispatch({ type: "delete", id: cl.id });
-                      }
+                      onRemoveSectionClicked();
                     }}
                     title="remove"
                   >
-                    <FontAwesomeIcon icon={faMinus} />
+                    <Minus />
                   </Button>
                 ) : (
                   <div className="basis-full" />
@@ -139,7 +166,7 @@ function ClassBlock({
                   }}
                   title="expand"
                 >
-                  <FontAwesomeIcon icon={faExpand} />
+                  <Maximize />
                 </Button>
               </motion.div>
             )}
@@ -147,14 +174,14 @@ function ClassBlock({
         );
       })}
       {disableTime ? null : (
-        <AnimatePresence key={cl.code + cl.section + "expanded"}>
+        <AnimatePresence>
           {expand && (
-            <ExpandClass
-              cl={cl}
-              setExpand={setExpand}
-              key={cl.code + cl.section + "expanded"}
-              stateType={stateType}
-              disableRemove={disableRemove}
+            <ExpandSection
+              section={section}
+              bgColor={bgColor}
+              textColor={textColor}
+              onMinimizeClicked={() => setExpand(false)}
+              onRemoveSectionClicked={onRemoveSectionClicked}
             />
           )}
         </AnimatePresence>
