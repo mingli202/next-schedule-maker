@@ -5,7 +5,6 @@ import { Minimize } from "lucide-react";
 import cn from "@/lib/cn";
 import type { Section } from "@/types/generated";
 import Button from "../Button";
-import LecLab from "../LecLab";
 import SectionCard from "../SectionCard";
 
 type ExpandSectionProps = {
@@ -16,7 +15,7 @@ type ExpandSectionProps = {
   onMinimizeClicked: () => void;
 };
 
-function ExpandClassSection({
+export default function ExpandSection({
   section,
   bgColor,
   textColor,
@@ -95,5 +94,3 @@ function ExpandClassSection({
     </motion.div>
   );
 }
-
-export default ExpandClassSection;
