@@ -1,4 +1,4 @@
-import miniGenerate from "@/app/mini-generate";
+import miniGenerate from "@/lib/mini-generate";
 import type { Class, SharedCurrentClasses } from "@/types";
 
 export type WorkerRequest = {
