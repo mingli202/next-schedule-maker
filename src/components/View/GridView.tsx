@@ -2,7 +2,7 @@
 
 import { useSearch } from "@tanstack/react-router";
 import { AnimatePresence } from "framer-motion";
-import { EditorInViewParams } from "@/routes/editor/route";
+import { EditorInViewParams } from "@/types/schedule";
 import SectionBlock from "./SectionBlock";
 
 type Props = {
