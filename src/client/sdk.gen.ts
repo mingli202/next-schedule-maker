@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetRatingsRatingsProfGetData, GetRatingsRatingsProfGetErrors, GetRatingsRatingsProfGetResponses, GetSectionSectionsSectionIdGetData, GetSectionSectionsSectionIdGetErrors, GetSectionSectionsSectionIdGetResponses, GetSectionsSectionsGetData, GetSectionsSectionsGetErrors, GetSectionsSectionsGetResponses, RootGetData, RootGetResponses } from './types.gen';
+import type { GetManySectionsPostData, GetManySectionsPostErrors, GetManySectionsPostResponses, GetRatingsRatingsProfGetData, GetRatingsRatingsProfGetErrors, GetRatingsRatingsProfGetResponses, GetSectionSectionsSectionIdGetData, GetSectionSectionsSectionIdGetErrors, GetSectionSectionsSectionIdGetResponses, GetSectionsSectionsGetData, GetSectionsSectionsGetErrors, GetSectionsSectionsGetResponses, HealthHealthGetData, HealthHealthGetResponses, RootGetData, RootGetResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -24,6 +24,18 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 export const getSectionsSectionsGet = <ThrowOnError extends boolean = false>(options?: Options<GetSectionsSectionsGetData, ThrowOnError>) => (options?.client ?? client).get<GetSectionsSectionsGetResponses, GetSectionsSectionsGetErrors, ThrowOnError>({ url: '/sections/', ...options });
 
 /**
+ * Get Many
+ */
+export const getManySectionsPost = <ThrowOnError extends boolean = false>(options: Options<GetManySectionsPostData, ThrowOnError>) => (options.client ?? client).post<GetManySectionsPostResponses, GetManySectionsPostErrors, ThrowOnError>({
+    url: '/sections/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
  * Get Section
  */
 export const getSectionSectionsSectionIdGet = <ThrowOnError extends boolean = false>(options: Options<GetSectionSectionsSectionIdGetData, ThrowOnError>) => (options.client ?? client).get<GetSectionSectionsSectionIdGetResponses, GetSectionSectionsSectionIdGetErrors, ThrowOnError>({ url: '/sections/{section_id}', ...options });
@@ -32,6 +44,11 @@ export const getSectionSectionsSectionIdGet = <ThrowOnError extends boolean = fa
  * Root
  */
 export const rootGet = <ThrowOnError extends boolean = false>(options?: Options<RootGetData, ThrowOnError>) => (options?.client ?? client).get<RootGetResponses, unknown, ThrowOnError>({ url: '/', ...options });
+
+/**
+ * Health
+ */
+export const healthHealthGet = <ThrowOnError extends boolean = false>(options?: Options<HealthHealthGetData, ThrowOnError>) => (options?.client ?? client).get<HealthHealthGetResponses, unknown, ThrowOnError>({ url: '/health', ...options });
 
 /**
  * Get Ratings

@@ -15,28 +15,13 @@ export type HttpValidationError = {
 };
 
 /**
- * LecLab
+ * Rating
  */
-export type LecLab = {
-    /**
-     * Title
-     */
-    title?: string;
-    /**
-     * Type
-     */
-    type?: 'lecture' | 'laboratory' | null;
+export type Rating = {
     /**
      * Prof
      */
     prof?: string;
-    time?: Time;
-};
-
-/**
- * Rating
- */
-export type Rating = {
     /**
      * Score
      */
@@ -57,14 +42,7 @@ export type Rating = {
      * Difficulty
      */
     difficulty?: number;
-    /**
-     * Status
-     */
-    status?: 'found' | 'foundn\'t';
-    /**
-     * Prof
-     */
-    prof?: string;
+    status?: Status;
     /**
      * Pid
      */
@@ -100,19 +78,16 @@ export type Section = {
      */
     title?: string;
     /**
-     * Times
-     */
-    times?: Array<LecLab>;
-    /**
      * More
      */
     more?: string;
-    viewData?: ViewData;
+    view_data?: ViewData;
 };
 
-export type Time = {
-    [key: string]: Array<string>;
-};
+/**
+ * Status
+ */
+export type Status = 'found' | 'foundn\'t';
 
 /**
  * ValidationError
@@ -185,13 +160,13 @@ export type GetSectionsSectionsGetData = {
          */
         days_off?: string | null;
         /**
-         * Time Start
+         * Time Start Query
          */
-        time_start?: string | null;
+        time_start_query?: string | null;
         /**
-         * Time End
+         * Time End Query
          */
-        time_end?: string | null;
+        time_end_query?: string | null;
         /**
          * Blended
          */
@@ -223,6 +198,36 @@ export type GetSectionsSectionsGetResponses = {
 };
 
 export type GetSectionsSectionsGetResponse = GetSectionsSectionsGetResponses[keyof GetSectionsSectionsGetResponses];
+
+export type GetManySectionsPostData = {
+    /**
+     * Ids
+     */
+    body: Array<number>;
+    path?: never;
+    query?: never;
+    url: '/sections/';
+};
+
+export type GetManySectionsPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetManySectionsPostError = GetManySectionsPostErrors[keyof GetManySectionsPostErrors];
+
+export type GetManySectionsPostResponses = {
+    /**
+     * Response Get Many Sections  Post
+     *
+     * Successful Response
+     */
+    200: Array<Section>;
+};
+
+export type GetManySectionsPostResponse = GetManySectionsPostResponses[keyof GetManySectionsPostResponses];
 
 export type GetSectionSectionsSectionIdGetData = {
     body?: never;
@@ -262,6 +267,20 @@ export type RootGetData = {
 };
 
 export type RootGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type HealthHealthGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/health';
+};
+
+export type HealthHealthGetResponses = {
     /**
      * Successful Response
      */
