@@ -21,32 +21,32 @@ export type Rating = {
     /**
      * Prof
      */
-    prof?: string;
+    prof: string;
     /**
      * Score
      */
-    score?: number;
+    score: number;
     /**
      * Avg
      */
-    avg?: number;
+    avg: number;
     /**
      * Nrating
      */
-    nRating?: number;
+    nRating: number;
     /**
      * Takeagain
      */
-    takeAgain?: number;
+    takeAgain: number;
     /**
      * Difficulty
      */
-    difficulty?: number;
-    status?: Status;
+    difficulty: number;
+    status: Status;
     /**
      * Pid
      */
-    pId?: string | null;
+    pId: string | null;
 };
 
 /**
@@ -56,32 +56,32 @@ export type Section = {
     /**
      * Id
      */
-    id?: number;
+    id: number;
     /**
      * Course
      */
-    course?: string;
+    course: string;
     /**
      * Section
      */
-    section?: string;
+    section: string;
     /**
      * Domain
      */
-    domain?: string;
+    domain: string;
     /**
      * Code
      */
-    code?: string;
+    code: string;
     /**
      * Title
      */
-    title?: string;
+    title: string;
     /**
      * More
      */
-    more?: string;
-    view_data?: ViewData;
+    more: string;
+    view_data: ViewData;
 };
 
 /**
