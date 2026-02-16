@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetManySectionsPostData, GetManySectionsPostErrors, GetManySectionsPostResponses, GetRatingsRatingsProfGetData, GetRatingsRatingsProfGetErrors, GetRatingsRatingsProfGetResponses, GetSectionSectionsSectionIdGetData, GetSectionSectionsSectionIdGetErrors, GetSectionSectionsSectionIdGetResponses, GetSectionsSectionsGetData, GetSectionsSectionsGetErrors, GetSectionsSectionsGetResponses, HealthHealthGetData, HealthHealthGetResponses, RootGetData, RootGetResponses } from './types.gen';
+import type { GetLeclabLeclabSectionIdGetData, GetLeclabLeclabSectionIdGetErrors, GetLeclabLeclabSectionIdGetResponses, GetManySectionsPostData, GetManySectionsPostErrors, GetManySectionsPostResponses, GetRatingsRatingsProfGetData, GetRatingsRatingsProfGetErrors, GetRatingsRatingsProfGetResponses, GetSectionSectionsSectionIdGetData, GetSectionSectionsSectionIdGetErrors, GetSectionSectionsSectionIdGetResponses, GetSectionsSectionsGetData, GetSectionsSectionsGetErrors, GetSectionsSectionsGetResponses, HealthHealthGetData, HealthHealthGetResponses, RootGetData, RootGetResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -54,3 +54,8 @@ export const healthHealthGet = <ThrowOnError extends boolean = false>(options?: 
  * Get Ratings
  */
 export const getRatingsRatingsProfGet = <ThrowOnError extends boolean = false>(options: Options<GetRatingsRatingsProfGetData, ThrowOnError>) => (options.client ?? client).get<GetRatingsRatingsProfGetResponses, GetRatingsRatingsProfGetErrors, ThrowOnError>({ url: '/ratings/{prof}', ...options });
+
+/**
+ * Get Leclab
+ */
+export const getLeclabLeclabSectionIdGet = <ThrowOnError extends boolean = false>(options: Options<GetLeclabLeclabSectionIdGetData, ThrowOnError>) => (options.client ?? client).get<GetLeclabLeclabSectionIdGetResponses, GetLeclabLeclabSectionIdGetErrors, ThrowOnError>({ url: '/leclab/{section_id}', ...options });

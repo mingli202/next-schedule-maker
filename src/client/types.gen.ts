@@ -15,6 +15,35 @@ export type HttpValidationError = {
 };
 
 /**
+ * LecLab
+ */
+export type LecLab = {
+    /**
+     * Id
+     */
+    id?: number;
+    /**
+     * Title
+     */
+    title: string;
+    type: LecLabType | null;
+    time: Time;
+    /**
+     * Section Id
+     */
+    section_id: number;
+    /**
+     * Prof
+     */
+    prof: string;
+};
+
+/**
+ * LecLabType
+ */
+export type LecLabType = 'lecture' | 'laboratory';
+
+/**
  * Rating
  */
 export type Rating = {
@@ -88,6 +117,10 @@ export type Section = {
  * Status
  */
 export type Status = 'found' | 'foundn\'t';
+
+export type Time = {
+    [key: string]: Array<string>;
+};
 
 /**
  * ValidationError
@@ -318,3 +351,35 @@ export type GetRatingsRatingsProfGetResponses = {
 };
 
 export type GetRatingsRatingsProfGetResponse = GetRatingsRatingsProfGetResponses[keyof GetRatingsRatingsProfGetResponses];
+
+export type GetLeclabLeclabSectionIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Section Id
+         */
+        section_id: number;
+    };
+    query?: never;
+    url: '/leclab/{section_id}';
+};
+
+export type GetLeclabLeclabSectionIdGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetLeclabLeclabSectionIdGetError = GetLeclabLeclabSectionIdGetErrors[keyof GetLeclabLeclabSectionIdGetErrors];
+
+export type GetLeclabLeclabSectionIdGetResponses = {
+    /**
+     * Response Get Leclab Leclab  Section Id  Get
+     *
+     * Successful Response
+     */
+    200: Array<LecLab>;
+};
+
+export type GetLeclabLeclabSectionIdGetResponse = GetLeclabLeclabSectionIdGetResponses[keyof GetLeclabLeclabSectionIdGetResponses];

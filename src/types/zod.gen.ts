@@ -3,6 +3,11 @@
 import * as z from 'zod';
 
 /**
+ * LecLabType
+ */
+export const zLecLabType = z.enum(['lecture', 'laboratory']);
+
+/**
  * Status
  */
 export const zStatus = z.enum(['found', 'foundn\'t']);
@@ -22,6 +27,23 @@ export const zRating = z.object({
         z.string(),
         z.null()
     ])
+});
+
+export const zTime = z.record(z.string(), z.array(z.string()));
+
+/**
+ * LecLab
+ */
+export const zLecLab = z.object({
+    id: z.optional(z.int()),
+    title: z.string(),
+    type: z.union([
+        zLecLabType,
+        z.null()
+    ]),
+    time: zTime,
+    section_id: z.int(),
+    prof: z.string()
 });
 
 /**
@@ -179,3 +201,18 @@ export const zGetRatingsRatingsProfGetResponse = z.union([
     zRating,
     z.null()
 ]);
+
+export const zGetLeclabLeclabSectionIdGetData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        section_id: z.int()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Response Get Leclab Leclab  Section Id  Get
+ *
+ * Successful Response
+ */
+export const zGetLeclabLeclabSectionIdGetResponse = z.array(zLecLab);
