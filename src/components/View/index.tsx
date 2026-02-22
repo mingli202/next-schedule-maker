@@ -1,40 +1,31 @@
 "use client";
 
+import cn from "@/lib/cn";
+import type { SavedSection } from "@/types/schedule";
 import GridView from "./GridView";
 import PreviewHover from "./PreviewHover";
-import type { Class, SharedCurrentClasses, StateType } from "@/types";
-import cn from "@/lib/cn";
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   disableRemove?: boolean;
-  allClasses: Record<string, Class>;
-  stateType: StateType;
-  scheduleClasses: SharedCurrentClasses[];
-  disableTime?: boolean;
+  miniView?: boolean;
+  savedSections: SavedSection[];
 };
 
-function View({
-  className,
-  disableRemove,
-  allClasses,
-  stateType,
-  scheduleClasses,
-  disableTime,
-}: Props) {
+function View({ className, disableRemove, miniView, savedSections }: Props) {
   return (
     <div
       className={cn(
         "relative box-border grid w-full",
         "bg-primary text-bg-primary rounded-md p-2 md:p-4",
 
-        disableTime
+        miniView
           ? "h-full grid-cols-5 grid-rows-[repeat(20,1fr)] md:h-full md:w-full md:p-2"
-          : "h-[40rem] grid-cols-[2rem_repeat(5,1fr)] grid-rows-[repeat(21,1fr)] md:h-full md:min-w-[40rem] md:grid-cols-[3rem_repeat(5,1fr)]",
+          : "h-160 grid-cols-[2rem_repeat(5,1fr)] grid-rows-[repeat(21,1fr)] md:h-full md:min-w-160 md:grid-cols-[3rem_repeat(5,1fr)]",
 
         className,
       )}
     >
-      {!disableTime && (
+      {!miniView && (
         <>
           <p className="absolute top-0 left-0 col-span-1 row-span-1 p-2 text-[0.5rem] md:text-xs">
             Winter 2026 (December 11 pdf)
@@ -59,10 +50,10 @@ function View({
         className={cn(
           "relative grid grid-cols-5 grid-rows-[repeat(20,1fr)]",
           "bg-slate shadow-bg-primary/30 h-full rounded-md shadow-lg",
-          "text-[8px] leading-[10px] md:text-[14px] md:leading-[14px]",
+          "text-[8px] leading-2.5 md:text-[14px] md:leading-3.5",
 
-          disableTime
-            ? "col-span-full row-span-full md:text-[10px] md:leading-[10px]"
+          miniView
+            ? "col-span-full row-span-full md:text-[10px] md:leading-2.5"
             : "col-span-5 row-[span_20/span_20]",
         )}
       >
@@ -73,8 +64,8 @@ function View({
             .map((_, index) => {
               return (
                 <div
-                  key={index}
-                  className="col-span-full row-span-1 mx-2 box-border h-[1px] -translate-y-1/2 rounded-full bg-gray-400"
+                  key={index.toString()}
+                  className="col-span-full row-span-1 mx-2 box-border h-px -translate-y-1/2 rounded-full bg-gray-400"
                 ></div>
               );
             })}
@@ -87,21 +78,19 @@ function View({
             .map((_, index) => {
               return (
                 <div
-                  key={index}
-                  className="row-span-full my-2 box-border w-[1px] -translate-x-1/2 rounded-full bg-gray-400"
+                  key={index.toString()}
+                  className="row-span-full my-2 box-border w-px -translate-x-1/2 rounded-full bg-gray-400"
                 ></div>
               );
             })}
         </div>
 
         <GridView
-          allClasses={allClasses}
-          stateType={stateType}
           disableRemove={disableRemove}
-          scheduleClasses={scheduleClasses}
-          disableExpandSection={disableTime}
+          savedSections={savedSections}
+          miniView={miniView}
         />
-        <PreviewHover allClasses={allClasses} />
+        <PreviewHover />
       </div>
     </div>
   );

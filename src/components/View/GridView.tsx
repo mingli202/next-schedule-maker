@@ -1,24 +1,18 @@
 "use client";
 
-import { useSearch } from "@tanstack/react-router";
 import { AnimatePresence } from "framer-motion";
-import { EditorInViewParams } from "@/types/schedule";
+import type { SavedSection } from "@/types/schedule";
 import SectionBlock from "./SectionBlock";
 
 type Props = {
   disableRemove?: boolean;
-  disableControls?: boolean;
+  miniView?: boolean;
+  savedSections: SavedSection[];
 };
 
-export default function GridView(props: Props) {
-  const search = useSearch({ strict: false });
-
-  const res = EditorInViewParams.safeParse(search);
-
-  const sectionsInView = res.success ? res.data.sections : [];
-
-  return props.disableControls ? (
-    sectionsInView.map((param) => (
+export default function GridView({ savedSections, ...props }: Props) {
+  return props.miniView ? (
+    savedSections.map((param) => (
       <SectionBlock
         key={param.sectionId}
         {...param}
@@ -29,7 +23,7 @@ export default function GridView(props: Props) {
   ) : (
     // TODO: onRemoveSectionClicked
     <AnimatePresence>
-      {sectionsInView.map((param) => (
+      {savedSections.map((param) => (
         <SectionBlock
           key={param.sectionId}
           {...param}

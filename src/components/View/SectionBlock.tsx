@@ -14,8 +14,8 @@ type SectionBlockProps = {
   colorIndex: number;
   // can't remove class from current schedule in view
   disableRemove?: boolean;
-  // can't expand the class either
-  disableControls?: boolean;
+  // mini view like in auto generate
+  miniView?: boolean;
   onRemoveSectionClicked: () => void;
 };
 
@@ -23,7 +23,7 @@ export default function SectionBlock({
   sectionId,
   colorIndex,
   disableRemove,
-  disableControls,
+  miniView,
   onRemoveSectionClicked,
 }: SectionBlockProps) {
   const [expand, setExpand] = useState(false);
@@ -59,18 +59,18 @@ export default function SectionBlock({
               color: textColor,
               backgroundColor: bgColor,
             }}
-            initial={disableControls ? undefined : { opacity: 0, scale: 0.9 }}
-            animate={disableControls ? undefined : { opacity: 1, scale: 1 }}
-            exit={disableControls ? undefined : { opacity: 0, scale: 0.9 }}
-            transition={disableControls ? undefined : { delay: index * 0.05 }}
-            variants={disableControls ? undefined : card}
+            initial={miniView ? undefined : { opacity: 0, scale: 0.9 }}
+            animate={miniView ? undefined : { opacity: 1, scale: 1 }}
+            exit={miniView ? undefined : { opacity: 0, scale: 0.9 }}
+            transition={miniView ? undefined : { delay: index * 0.05 }}
+            variants={miniView ? undefined : card}
             whileHover="hover"
           >
             <p className="line-clamp-2 font-bold">{section.title}</p>
             <p className="mt-1 line-clamp-1">{section.code}</p>
             <p className="font">{section.section}</p>
             <p className="mt-1 line-clamp-2">{section.leclabs[0]?.prof}</p>
-            {disableControls ? null : (
+            {miniView ? null : (
               <motion.div
                 className="absolute bottom-0 left-0 flex w-full justify-between bg-white/10 p-2 backdrop-blur-sm backdrop-filter"
                 variants={card}
@@ -81,7 +81,7 @@ export default function SectionBlock({
                     variant="basic"
                     className="rounded-none p-0"
                     onClick={() => {
-                      if (disableRemove || disableControls) return;
+                      if (disableRemove || miniView) return;
                       onRemoveSectionClicked();
                     }}
                     title="remove"
@@ -95,7 +95,7 @@ export default function SectionBlock({
                   variant="basic"
                   className="shrink-0 rounded-none p-0"
                   onClick={() => {
-                    if (disableControls) return;
+                    if (miniView) return;
                     setExpand(true);
                   }}
                   title="expand"
@@ -107,7 +107,7 @@ export default function SectionBlock({
           </motion.div>
         );
       })}
-      {disableControls ? null : (
+      {miniView ? null : (
         <AnimatePresence>
           {expand && (
             <ExpandSection

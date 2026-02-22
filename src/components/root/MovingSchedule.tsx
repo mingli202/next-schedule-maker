@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import type { RefObject } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import View from "@/components/View";
 import type { Class, SharedCurrentClasses } from "@/types";
 import type { WorkerRequest, WorkerResponse } from "@/workers/myWorker";
-import View from "@/components/View";
 
 type Props = {
   allClasses: Record<string, Class>;
@@ -135,7 +135,7 @@ function MovingSchedule({
         allClasses={allClasses}
         scheduleClasses={schedule}
         stateType="none"
-        disableTime
+        disableControlsionControls
       />
     </div>
   );
