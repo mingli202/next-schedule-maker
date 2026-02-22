@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import Button from "@/components/Button";
-import MovingSchedule from "./MovingSchedule";
+import { MovingSchedule } from "./MovingSchedule";
 
-function BgAnimation() {
+export function BgAnimation() {
   const last = useRef(1);
   const pause = useRef(false);
 
@@ -51,5 +51,3 @@ function BgAnimation() {
     </>
   );
 }
-
-export default BgAnimation;

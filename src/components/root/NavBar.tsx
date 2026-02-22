@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib";
 
-function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
+export function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
@@ -20,5 +20,3 @@ function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
     </div>
   );
 }
-
-export default Navbar;

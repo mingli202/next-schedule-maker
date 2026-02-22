@@ -3,9 +3,12 @@ import { ArrowRight } from "lucide-react";
 import type { HTMLAttributes } from "react";
 import Button from "@/components/Button";
 import cn from "@/lib/cn";
-import BgAnimation from "./BgAnimation";
+import { BgAnimation } from "./BgAnimation";
 
-function Welcome({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+export function Welcome({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
@@ -37,5 +40,3 @@ function Welcome({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
     </div>
   );
 }
-
-export default Welcome;

@@ -13,7 +13,7 @@ type Props = {
   worker: Worker | undefined;
 };
 
-function MovingSchedule({ index, lastRef, pauseRef, worker }: Props) {
+export function MovingSchedule({ index, lastRef, pauseRef, worker }: Props) {
   const [schedule, setSchedule] = useState<Array<SavedSection>>([]);
   const isGenerating = useRef(false);
   const isStopped = useRef(false);
@@ -127,5 +127,3 @@ function MovingSchedule({ index, lastRef, pauseRef, worker }: Props) {
     </div>
   );
 }
-
-export default MovingSchedule;
