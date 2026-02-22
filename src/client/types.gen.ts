@@ -174,6 +174,24 @@ export type ViewData = Array<{
     [key: string]: Array<number>;
 }>;
 
+export type GetAllSectionsAllGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/sections/all';
+};
+
+export type GetAllSectionsAllGetResponses = {
+    /**
+     * Response Get All Sections All Get
+     *
+     * Successful Response
+     */
+    200: Array<SectionResponse>;
+};
+
+export type GetAllSectionsAllGetResponse = GetAllSectionsAllGetResponses[keyof GetAllSectionsAllGetResponses];
+
 export type GetSectionsSectionsGetData = {
     body?: never;
     path?: never;

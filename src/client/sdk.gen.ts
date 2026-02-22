@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetLeclabLeclabSectionIdGetData, GetLeclabLeclabSectionIdGetErrors, GetLeclabLeclabSectionIdGetResponses, GetManySectionsPostData, GetManySectionsPostErrors, GetManySectionsPostResponses, GetRatingsRatingsProfGetData, GetRatingsRatingsProfGetErrors, GetRatingsRatingsProfGetResponses, GetSectionSectionsSectionIdGetData, GetSectionSectionsSectionIdGetErrors, GetSectionSectionsSectionIdGetResponses, GetSectionsSectionsGetData, GetSectionsSectionsGetErrors, GetSectionsSectionsGetResponses, HealthHealthGetData, HealthHealthGetResponses, RootGetData, RootGetResponses } from './types.gen';
+import type { GetAllSectionsAllGetData, GetAllSectionsAllGetResponses, GetLeclabLeclabSectionIdGetData, GetLeclabLeclabSectionIdGetErrors, GetLeclabLeclabSectionIdGetResponses, GetManySectionsPostData, GetManySectionsPostErrors, GetManySectionsPostResponses, GetRatingsRatingsProfGetData, GetRatingsRatingsProfGetErrors, GetRatingsRatingsProfGetResponses, GetSectionSectionsSectionIdGetData, GetSectionSectionsSectionIdGetErrors, GetSectionSectionsSectionIdGetResponses, GetSectionsSectionsGetData, GetSectionsSectionsGetErrors, GetSectionsSectionsGetResponses, HealthHealthGetData, HealthHealthGetResponses, RootGetData, RootGetResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -17,6 +17,11 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: Record<string, unknown>;
 };
+
+/**
+ * Get All
+ */
+export const getAllSectionsAllGet = <ThrowOnError extends boolean = false>(options?: Options<GetAllSectionsAllGetData, ThrowOnError>) => (options?.client ?? client).get<GetAllSectionsAllGetResponses, unknown, ThrowOnError>({ url: '/sections/all', ...options });
 
 /**
  * Get Sections
