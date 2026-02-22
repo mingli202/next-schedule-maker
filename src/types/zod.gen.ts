@@ -140,11 +140,11 @@ export const zGetSectionsSectionsGetData = z.object({
             z.string().regex(/^[MWTRF]{1,5}$/),
             z.null()
         ])),
-        time_start_query: z.optional(z.union([
+        time_start: z.optional(z.union([
             z.string().regex(/^\d{4}$/),
             z.null()
         ])),
-        time_end_query: z.optional(z.union([
+        time_end: z.optional(z.union([
             z.string().regex(/^\d{4}$/),
             z.null()
         ])),

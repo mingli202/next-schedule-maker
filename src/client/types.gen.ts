@@ -223,13 +223,13 @@ export type GetSectionsSectionsGetData = {
          */
         days_off?: string | null;
         /**
-         * Time Start Query
+         * Time Start
          */
-        time_start_query?: string | null;
+        time_start?: string | null;
         /**
-         * Time End Query
+         * Time End
          */
-        time_end_query?: string | null;
+        time_end?: string | null;
         /**
          * Blended
          */
