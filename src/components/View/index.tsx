@@ -90,7 +90,7 @@ function View({ className, disableRemove, miniView, savedSections }: Props) {
           savedSections={savedSections}
           miniView={miniView}
         />
-        <PreviewHover />
+        {!miniView && <PreviewHover />}
       </div>
     </div>
   );

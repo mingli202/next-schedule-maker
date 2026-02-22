@@ -2,16 +2,11 @@
 
 import { useSearch } from "@tanstack/react-router";
 import { useSection } from "@/hooks";
-import { EditorInViewParams } from "@/routes/editor/route";
 
 export default function PreviewHover() {
   const search = useSearch({ strict: false });
 
-  const res = EditorInViewParams.safeParse(search);
-
-  if (!res.success) return null;
-
-  const previewSectionId = res.data.previewSectionId;
+  const previewSectionId = search.previewSectionId;
 
   if (!previewSectionId) return null;
 
@@ -43,7 +38,7 @@ function PreviewHoverInner({ previewSectionId }: PreviewHoverInnerProps) {
             <p className="line-clamp-2 font-bold">{section.title}</p>
             <p className="mt-1 line-clamp-1">{section.code}</p>
             <p className="font">{section.section}</p>
-            <p className="mt-1 line-clamp-2">{section.times[0]?.prof}</p>
+            <p className="mt-1 line-clamp-2">{section.leclabs[0]?.prof}</p>
           </div>
         );
       })}
