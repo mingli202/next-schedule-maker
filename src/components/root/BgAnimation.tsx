@@ -31,7 +31,7 @@ export function BgAnimation() {
           .fill(0)
           .map((_, i) => (
             <MovingSchedule
-              key={i}
+              key={i.toString()}
               index={i}
               lastRef={last}
               pauseRef={pause}
