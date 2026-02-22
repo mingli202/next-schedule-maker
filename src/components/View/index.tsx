@@ -99,7 +99,7 @@ function View({
           stateType={stateType}
           disableRemove={disableRemove}
           scheduleClasses={scheduleClasses}
-          disableTime={disableTime}
+          disableExpandSection={disableTime}
         />
         <PreviewHover allClasses={allClasses} />
       </div>

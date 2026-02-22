@@ -7,24 +7,22 @@ import SectionBlock from "./SectionBlock";
 
 type Props = {
   disableRemove?: boolean;
-} & {
-  disableTime?: boolean;
+  disableControls?: boolean;
 };
 
-export default function GridView({ disableRemove, disableTime }: Props) {
+export default function GridView(props: Props) {
   const search = useSearch({ strict: false });
 
   const res = EditorInViewParams.safeParse(search);
 
   const sectionsInView = res.success ? res.data.sections : [];
 
-  return disableTime ? (
+  return props.disableControls ? (
     sectionsInView.map((param) => (
       <SectionBlock
         key={param.sectionId}
         {...param}
-        disableRemove={disableRemove}
-        disableTime={disableTime}
+        {...props}
         onRemoveSectionClicked={() => {}}
       />
     ))
@@ -35,8 +33,7 @@ export default function GridView({ disableRemove, disableTime }: Props) {
         <SectionBlock
           key={param.sectionId}
           {...param}
-          disableRemove={disableRemove}
-          disableTime={disableTime}
+          {...props}
           onRemoveSectionClicked={() => {}}
         />
       ))}
