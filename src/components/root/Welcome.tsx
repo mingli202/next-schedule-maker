@@ -1,19 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import BgAnimation from "./BgAnimation";
-import type { Class } from "@/types";
 import type { HTMLAttributes } from "react";
 import Button from "@/components/Button";
-import { getLocalJsonData } from "@/lib";
 import cn from "@/lib/cn";
+import BgAnimation from "./BgAnimation";
 
-async function Welcome({
-  className,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
-
+function Welcome({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(
@@ -29,7 +21,7 @@ async function Welcome({
         <p className="text-center drop-shadow-[#000_0_0_20px]">
           The schedule builder you deserve
         </p>
-        <Link to="/editor" className="w-fit">
+        <Link to="/editor" search={{ sections: [] }} className="w-fit">
           <Button
             variant="special"
             className="drop-shadow-[rgba(0,0,0,0.5)_0_0_20px] max-md:p-1"
@@ -41,7 +33,7 @@ async function Welcome({
           </Button>
         </Link>
       </div>
-      <BgAnimation allClasses={allClasses} />
+      <BgAnimation />
     </div>
   );
 }

@@ -1,15 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import MovingSchedule from "./MovingSchedule";
-import type { Class } from "@/types";
 import Button from "@/components/Button";
+import MovingSchedule from "./MovingSchedule";
 
-type Props = {
-  allClasses: Record<string, Class>;
-};
-
-function BgAnimation({ allClasses }: Props) {
+function BgAnimation() {
   const last = useRef(1);
   const pause = useRef(false);
 
@@ -36,7 +31,6 @@ function BgAnimation({ allClasses }: Props) {
           .fill(0)
           .map((_, i) => (
             <MovingSchedule
-              allClasses={allClasses}
               key={i}
               index={i}
               lastRef={last}

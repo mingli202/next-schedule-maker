@@ -3,25 +3,18 @@
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import View from "@/components/View";
-import type { Class, SharedCurrentClasses } from "@/types";
+import type { SavedSection } from "@/types/schedule";
 import type { WorkerRequest, WorkerResponse } from "@/workers/myWorker";
 
 type Props = {
-  allClasses: Record<string, Class>;
   index: number;
   lastRef: RefObject<number>;
   pauseRef: RefObject<boolean>;
   worker: Worker | undefined;
 };
 
-function MovingSchedule({
-  allClasses,
-  index,
-  lastRef,
-  pauseRef,
-  worker,
-}: Props) {
-  const [schedule, setSchedule] = useState<Array<SharedCurrentClasses>>([]);
+function MovingSchedule({ index, lastRef, pauseRef, worker }: Props) {
+  const [schedule, setSchedule] = useState<Array<SavedSection>>([]);
   const isGenerating = useRef(false);
   const isStopped = useRef(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -36,10 +29,9 @@ function MovingSchedule({
   const requestNewSchedule = useCallback(() => {
     worker?.postMessage({
       type: "mini-generate",
-      allClasses,
       index,
     } satisfies WorkerRequest);
-  }, [worker, allClasses, index]);
+  }, [worker, index]);
 
   const nextFrame = useCallback(
     (t: DOMHighResTimeStamp) => {
@@ -131,12 +123,7 @@ function MovingSchedule({
       className="absolute left-[110vw] h-160 w-[64.7rem] overflow-hidden shadow-[rgba(0,0,0,0.56)_0px_22px_70px_4px]"
       ref={ref}
     >
-      <View
-        allClasses={allClasses}
-        scheduleClasses={schedule}
-        stateType="none"
-        disableControlsionControls
-      />
+      <View savedSections={schedule} disableControls />
     </div>
   );
 }

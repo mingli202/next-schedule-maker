@@ -1,10 +1,10 @@
-import { twMerge } from "tailwind-merge";
 import { Link } from "@tanstack/react-router";
+import { cn } from "@/lib";
 
 function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={twMerge(
+      className={cn(
         className,
         "bg-bg-primary bg-opacity-50 z-50 box-border flex flex-col gap-4 p-4 backdrop-blur-lg backdrop-filter",
       )}
