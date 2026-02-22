@@ -149,7 +149,12 @@ export const zGetSectionsSectionsGetData = z.object({
             z.null()
         ])),
         blended: z.optional(z.boolean()).default(false),
-        honours: z.optional(z.boolean()).default(false)
+        honours: z.optional(z.boolean()).default(false),
+        limit: z.optional(z.union([
+            z.int().gte(1).lte(500),
+            z.null()
+        ])),
+        offset: z.optional(z.int().gte(0)).default(0)
     }))
 });
 

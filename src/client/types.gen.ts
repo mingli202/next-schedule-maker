@@ -238,6 +238,14 @@ export type GetSectionsSectionsGetData = {
          * Honours
          */
         honours?: boolean;
+        /**
+         * Limit
+         */
+        limit?: number | null;
+        /**
+         * Offset
+         */
+        offset?: number;
     };
     url: '/sections/';
 };
