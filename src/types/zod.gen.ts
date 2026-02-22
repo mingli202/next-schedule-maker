@@ -3,6 +3,17 @@
 import * as z from 'zod';
 
 /**
+ * DayTimeResponse
+ */
+export const zDayTimeResponse = z.object({
+    id: z.int(),
+    day: z.string(),
+    startTimeHhmm: z.string(),
+    endTimeHhmm: z.string(),
+    leclabId: z.int()
+});
+
+/**
  * LecLabType
  */
 export const zLecLabType = z.enum(['lecture', 'laboratory']);
@@ -13,9 +24,9 @@ export const zLecLabType = z.enum(['lecture', 'laboratory']);
 export const zStatus = z.enum(['found', 'foundn\'t']);
 
 /**
- * Rating
+ * RatingResponse
  */
-export const zRating = z.object({
+export const zRatingResponse = z.object({
     prof: z.string(),
     score: z.number(),
     avg: z.number(),
@@ -29,21 +40,23 @@ export const zRating = z.object({
     ])
 });
 
-export const zTime = z.record(z.string(), z.array(z.string()));
-
 /**
- * LecLab
+ * LecLabResponse
  */
-export const zLecLab = z.object({
-    id: z.optional(z.int()),
+export const zLecLabResponse = z.object({
+    id: z.int(),
     title: z.string(),
     type: z.union([
         zLecLabType,
         z.null()
     ]),
-    time: zTime,
-    section_id: z.int(),
-    prof: z.string()
+    sectionId: z.int(),
+    prof: z.string(),
+    rating: z.union([
+        zRatingResponse,
+        z.null()
+    ]),
+    dayTimes: z.array(zDayTimeResponse)
 });
 
 /**
@@ -65,17 +78,18 @@ export const zHttpValidationError = z.object({
 export const zViewData = z.array(z.record(z.string(), z.array(z.int())));
 
 /**
- * Section
+ * SectionResponse
  */
-export const zSection = z.object({
+export const zSectionResponse = z.object({
     id: z.int(),
     course: z.string(),
     section: z.string(),
     domain: z.string(),
     code: z.string(),
     title: z.string(),
+    leclabs: z.array(zLecLabResponse),
     more: z.string(),
-    view_data: zViewData
+    viewData: zViewData
 });
 
 export const zGetSectionsSectionsGetData = z.object({
@@ -144,7 +158,7 @@ export const zGetSectionsSectionsGetData = z.object({
  *
  * Successful Response
  */
-export const zGetSectionsSectionsGetResponse = z.array(zSection);
+export const zGetSectionsSectionsGetResponse = z.array(zSectionResponse);
 
 export const zGetManySectionsPostData = z.object({
     body: z.array(z.int()),
@@ -157,7 +171,7 @@ export const zGetManySectionsPostData = z.object({
  *
  * Successful Response
  */
-export const zGetManySectionsPostResponse = z.array(zSection);
+export const zGetManySectionsPostResponse = z.array(zSectionResponse);
 
 export const zGetSectionSectionsSectionIdGetData = z.object({
     body: z.optional(z.never()),
@@ -170,7 +184,7 @@ export const zGetSectionSectionsSectionIdGetData = z.object({
 /**
  * Successful Response
  */
-export const zGetSectionSectionsSectionIdGetResponse = zSection;
+export const zGetSectionSectionsSectionIdGetResponse = zSectionResponse;
 
 export const zRootGetData = z.object({
     body: z.optional(z.never()),
@@ -193,14 +207,9 @@ export const zGetRatingsRatingsProfGetData = z.object({
 });
 
 /**
- * Response Get Ratings Ratings  Prof  Get
- *
  * Successful Response
  */
-export const zGetRatingsRatingsProfGetResponse = z.union([
-    zRating,
-    z.null()
-]);
+export const zGetRatingsRatingsProfGetResponse = zRatingResponse;
 
 export const zGetLeclabLeclabSectionIdGetData = z.object({
     body: z.optional(z.never()),
@@ -215,4 +224,4 @@ export const zGetLeclabLeclabSectionIdGetData = z.object({
  *
  * Successful Response
  */
-export const zGetLeclabLeclabSectionIdGetResponse = z.array(zLecLab);
+export const zGetLeclabLeclabSectionIdGetResponse = z.array(zLecLabResponse);

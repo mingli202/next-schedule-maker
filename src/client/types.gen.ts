@@ -5,6 +5,32 @@ export type ClientOptions = {
 };
 
 /**
+ * DayTimeResponse
+ */
+export type DayTimeResponse = {
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Day
+     */
+    day: string;
+    /**
+     * Starttimehhmm
+     */
+    startTimeHhmm: string;
+    /**
+     * Endtimehhmm
+     */
+    endTimeHhmm: string;
+    /**
+     * Leclabid
+     */
+    leclabId: number;
+};
+
+/**
  * HTTPValidationError
  */
 export type HttpValidationError = {
@@ -15,27 +41,31 @@ export type HttpValidationError = {
 };
 
 /**
- * LecLab
+ * LecLabResponse
  */
-export type LecLab = {
+export type LecLabResponse = {
     /**
      * Id
      */
-    id?: number;
+    id: number;
     /**
      * Title
      */
     title: string;
     type: LecLabType | null;
-    time: Time;
     /**
-     * Section Id
+     * Sectionid
      */
-    section_id: number;
+    sectionId: number;
     /**
      * Prof
      */
     prof: string;
+    rating: RatingResponse | null;
+    /**
+     * Daytimes
+     */
+    dayTimes: Array<DayTimeResponse>;
 };
 
 /**
@@ -44,9 +74,9 @@ export type LecLab = {
 export type LecLabType = 'lecture' | 'laboratory';
 
 /**
- * Rating
+ * RatingResponse
  */
-export type Rating = {
+export type RatingResponse = {
     /**
      * Prof
      */
@@ -79,9 +109,9 @@ export type Rating = {
 };
 
 /**
- * Section
+ * SectionResponse
  */
-export type Section = {
+export type SectionResponse = {
     /**
      * Id
      */
@@ -107,20 +137,20 @@ export type Section = {
      */
     title: string;
     /**
+     * Leclabs
+     */
+    leclabs: Array<LecLabResponse>;
+    /**
      * More
      */
     more: string;
-    view_data: ViewData;
+    viewData: ViewData;
 };
 
 /**
  * Status
  */
 export type Status = 'found' | 'foundn\'t';
-
-export type Time = {
-    [key: string]: Array<string>;
-};
 
 /**
  * ValidationError
@@ -227,7 +257,7 @@ export type GetSectionsSectionsGetResponses = {
      *
      * Successful Response
      */
-    200: Array<Section>;
+    200: Array<SectionResponse>;
 };
 
 export type GetSectionsSectionsGetResponse = GetSectionsSectionsGetResponses[keyof GetSectionsSectionsGetResponses];
@@ -257,7 +287,7 @@ export type GetManySectionsPostResponses = {
      *
      * Successful Response
      */
-    200: Array<Section>;
+    200: Array<SectionResponse>;
 };
 
 export type GetManySectionsPostResponse = GetManySectionsPostResponses[keyof GetManySectionsPostResponses];
@@ -287,7 +317,7 @@ export type GetSectionSectionsSectionIdGetResponses = {
     /**
      * Successful Response
      */
-    200: Section;
+    200: SectionResponse;
 };
 
 export type GetSectionSectionsSectionIdGetResponse = GetSectionSectionsSectionIdGetResponses[keyof GetSectionSectionsSectionIdGetResponses];
@@ -343,11 +373,9 @@ export type GetRatingsRatingsProfGetError = GetRatingsRatingsProfGetErrors[keyof
 
 export type GetRatingsRatingsProfGetResponses = {
     /**
-     * Response Get Ratings Ratings  Prof  Get
-     *
      * Successful Response
      */
-    200: Rating | null;
+    200: RatingResponse;
 };
 
 export type GetRatingsRatingsProfGetResponse = GetRatingsRatingsProfGetResponses[keyof GetRatingsRatingsProfGetResponses];
@@ -379,7 +407,7 @@ export type GetLeclabLeclabSectionIdGetResponses = {
      *
      * Successful Response
      */
-    200: Array<LecLab>;
+    200: Array<LecLabResponse>;
 };
 
 export type GetLeclabLeclabSectionIdGetResponse = GetLeclabLeclabSectionIdGetResponses[keyof GetLeclabLeclabSectionIdGetResponses];
