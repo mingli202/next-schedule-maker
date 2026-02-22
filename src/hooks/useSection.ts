@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { getSectionSectionsSectionIdGet } from "@/client";
-import { Section } from "@/types/generated";
 
 export function useSection(sectionId: number) {
   const res = useQuery({
@@ -14,7 +13,7 @@ export function useSection(sectionId: number) {
         throw new Error(JSON.stringify(res.error.detail));
       }
 
-      return Section.parse(res.data);
+      return res.data;
     },
     staleTime: Infinity,
   });
