@@ -6,12 +6,12 @@ import SectionBlock from "./SectionBlock";
 
 type Props = {
   disableRemove?: boolean;
-  miniView?: boolean;
+  disableControls?: boolean;
   savedSections: SavedSection[];
 };
 
 export default function GridView({ savedSections, ...props }: Props) {
-  return props.miniView ? (
+  return props.disableControls ? (
     savedSections.map((param) => (
       <SectionBlock
         key={param.sectionId}
