@@ -17,6 +17,7 @@ let allSections: SectionResponse[] | null = null;
 
 self.onmessage = async (e: MessageEvent<WorkerRequest>) => {
   if (!allSections) {
+    console.log("fetching sections");
     const res = await getAllSectionsAllGet();
 
     if (!res.data) return;
