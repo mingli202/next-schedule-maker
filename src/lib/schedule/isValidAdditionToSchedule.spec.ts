@@ -36,7 +36,7 @@ given.each([
   ],
 ])("two overlapping dayTimes, %p %p", (d1, d2) => {
   when("isOverlap is called on them", () => {
-    then("should be false", () => {
+    then("overlap should be true", () => {
       // arrange
       const dayTimes1: DayTimeResponse = dayTimeFrom(d1[0], d1[1], d1[2]);
       const dayTimes2: DayTimeResponse = dayTimeFrom(d2[0], d2[1], d2[2]);
