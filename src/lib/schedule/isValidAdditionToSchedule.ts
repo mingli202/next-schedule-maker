@@ -16,7 +16,7 @@ export default function isValidAdditionToSchedule(
   });
 }
 
-function isValidDayTimes(dayTimes: DayTimeResponse[]): boolean {
+export function isValidDayTimes(dayTimes: DayTimeResponse[]): boolean {
   const byDay: Record<string, DayTimeResponse[]> = dayTimes.reduce(
     (acc, dayTime) => {
       if (!(dayTime.day in acc)) {
@@ -42,7 +42,7 @@ function isValidDayTimes(dayTimes: DayTimeResponse[]): boolean {
   return true;
 }
 
-function isOverlap(
+export function isOverlap(
   dayTime1: DayTimeResponse,
   dayTime2: DayTimeResponse,
 ): boolean {
