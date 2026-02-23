@@ -14,6 +14,9 @@ export function BgAnimation() {
   useEffect(() => {
     const worker = new Worker(
       new URL("../../workers/myWorker.ts", import.meta.url),
+      {
+        type: "module",
+      },
     );
     setWorker(worker);
     setVw(window.innerWidth);
