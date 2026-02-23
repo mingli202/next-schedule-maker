@@ -22,9 +22,12 @@ function withPrefixedName<T>(fn: T, prefix: string): T {
 		},
 		get(target, prop, receiver) {
 			const value = Reflect.get(target, prop, receiver);
-			return typeof value === "function"
-				? withPrefixedName(value, prefix)
-				: value;
+			if (typeof value !== "function") {
+				return value;
+			}
+
+			const boundValue = value.bind(target);
+			return withPrefixedName(boundValue, prefix);
 		},
 	}) as T;
 }
