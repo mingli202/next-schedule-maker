@@ -27,12 +27,11 @@ export default function isValidAdditionToSchedule(
         const d2Reg = new RegExp(`[${d2}]`, "g");
 
         if (
-          d1.match(d2Reg) ||
-          (d2.match(d1Reg) &&
-            (t1Start === t2Start ||
-              t1End === t2End ||
-              (t1Start > t2Start && t2End > t1Start) ||
-              (t2Start > t1Start && t1End > t2Start)))
+          (d1.match(d2Reg) || d2.match(d1Reg)) &&
+          (t1Start === t2Start ||
+            t1End === t2End ||
+            (t1Start > t2Start && t2End > t1Start) ||
+            (t2Start > t1Start && t1End > t2Start))
         ) {
           return false;
         }
