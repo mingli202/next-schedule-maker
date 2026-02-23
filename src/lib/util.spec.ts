@@ -19,6 +19,11 @@ given.each([1, 41, 235, 900])("an existing section %p", (sectionId) => {
       }
 
       expect(allSections.length).toBeGreaterThan(0);
+
+      for (let i = 0; i < allSections.length - 2; i++) {
+        expect(allSections[i].id).toBeLessThan(allSections[i + 1].id);
+      }
+
       const section = getSectionFromSortedListWithId(sectionId, allSections);
       expect(section).toBeTruthy();
       expect(section?.id).toBe(sectionId);
