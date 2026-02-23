@@ -11,7 +11,7 @@ export function getSectionFromSortedListWithId(
   let l = 0;
   let r = sortedSections.length - 1;
 
-  while (l < r) {
+  while (l <= r) {
     const mid = Math.floor((l + r) / 2);
     const section = sortedSections[mid];
 
