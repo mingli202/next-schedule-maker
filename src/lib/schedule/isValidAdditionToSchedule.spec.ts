@@ -17,12 +17,29 @@ const dayTimeFrom = (
   leclabId: -1,
 });
 
-given("two overlapping dayTimes", () => {
+given.each([
+  [
+    ["M", "0830", "1000"],
+    ["M", "0830", "1000"],
+  ],
+  [
+    ["M", "0830", "1000"],
+    ["M", "0900", "0930"],
+  ],
+  [
+    ["M", "0830", "1000"],
+    ["M", "0900", "1030"],
+  ],
+  [
+    ["M", "0830", "1000"],
+    ["M", "0800", "0930"],
+  ],
+])("two overlapping dayTimes, %p %p", (d1, d2) => {
   when("isOverlap is called on them", () => {
     then("should be false", () => {
       // arrange
-      const dayTimes1: DayTimeResponse = dayTimeFrom("M", "0830", "1000");
-      const dayTimes2: DayTimeResponse = dayTimeFrom("M", "0830", "1000");
+      const dayTimes1: DayTimeResponse = dayTimeFrom(d1[0], d1[1], d1[2]);
+      const dayTimes2: DayTimeResponse = dayTimeFrom(d2[0], d2[1], d2[2]);
       // act
       const res = isOverlap(dayTimes1, dayTimes2);
       // assert
