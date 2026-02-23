@@ -41,9 +41,11 @@ given.each([
       const dayTimes1: DayTimeResponse = dayTimeFrom(d1[0], d1[1], d1[2]);
       const dayTimes2: DayTimeResponse = dayTimeFrom(d2[0], d2[1], d2[2]);
       // act
-      const res = isOverlap(dayTimes1, dayTimes2);
+      const res1 = isOverlap(dayTimes1, dayTimes2);
+      const res2 = isOverlap(dayTimes2, dayTimes1);
       // assert
-      expect(res).toBeTruthy();
+      expect(res1).toBeTruthy();
+      expect(res2).toBeTruthy();
     });
   });
 });
