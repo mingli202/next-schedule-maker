@@ -12,9 +12,7 @@ export const getRouter = () => {
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
 
-    defaultErrorComponent: ({ error, reset }) => (
-      <ErrorComponent error={error} />
-    ),
+    defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
   });
 
   return router;
