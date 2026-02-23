@@ -1,4 +1,4 @@
-import type { SectionResponse } from "@/client";
+import type { DayTimeResponse, SectionResponse } from "@/client";
 
 export default function isValidAdditionToSchedule(
   sectionToCheck: SectionResponse,
@@ -6,33 +6,33 @@ export default function isValidAdditionToSchedule(
 ) {
   if (schedule.length === 0) return true;
 
-  for (const section of schedule) {
+  return schedule.every((section) => {
     if (section.code === sectionToCheck.code) return false;
 
     const dayTimes1 = sectionToCheck.leclabs.flatMap((l) => l.dayTimes);
     const dayTimes2 = section.leclabs.flatMap((l) => l.dayTimes);
 
-    for (const {
-      day: d1,
-      startTimeHhmm: t1Start,
-      endTimeHhmm: t1End,
-    } of dayTimes1) {
-      const d1Reg = new RegExp(`[${d1}]`, "g");
+    return isValidDayTimes([...dayTimes1, ...dayTimes2]);
+  });
+}
 
-      for (const {
-        day: d2,
-        startTimeHhmm: t2Start,
-        endTimeHhmm: t2End,
-      } of dayTimes2) {
-        const d2Reg = new RegExp(`[${d2}]`, "g");
+function isValidDayTimes(dayTimes: DayTimeResponse[]): boolean {
+  const byDay: Record<string, DayTimeResponse[]> = dayTimes.reduce(
+    (acc, dayTime) => {
+      if (!(dayTime.day in acc)) {
+        acc[dayTime.day] = [];
+      }
 
-        if (
-          (d1.match(d2Reg) || d2.match(d1Reg)) &&
-          (t1Start === t2Start ||
-            t1End === t2End ||
-            (t1Start > t2Start && t2End > t1Start) ||
-            (t2Start > t1Start && t1End > t2Start))
-        ) {
+      acc[dayTime.day] = [...acc[dayTime.day], dayTime];
+      return acc;
+    },
+    {} as Record<string, DayTimeResponse[]>,
+  );
+
+  for (const dayTimesByDay of Object.values(byDay)) {
+    for (let i = 0; i < dayTimesByDay.length; i++) {
+      for (let k = i + 1; k < dayTimesByDay.length; k++) {
+        if (isOverlap(dayTimesByDay[i], dayTimesByDay[k])) {
           return false;
         }
       }
@@ -40,4 +40,19 @@ export default function isValidAdditionToSchedule(
   }
 
   return true;
+}
+
+function isOverlap(
+  dayTime1: DayTimeResponse,
+  dayTime2: DayTimeResponse,
+): boolean {
+  const { startTimeHhmm: t1Start, endTimeHhmm: t1End } = dayTime1;
+  const { startTimeHhmm: t2Start, endTimeHhmm: t2End } = dayTime2;
+
+  return (
+    t1Start === t2Start ||
+    t1End === t2End ||
+    (t1Start > t2Start && t2End > t1Start) ||
+    (t2Start > t1Start && t1End > t2Start)
+  );
 }
