@@ -71,26 +71,31 @@ function getCodes(allSections: SectionResponse[], prefix = "") {
 
 function generate(codes: string[], allSections: SectionResponse[]) {
   const sections = allSections.filter((section) =>
-    codes.some((c) => c === section.code),
+    codes.includes(section.code),
   );
 
   let toReturn: SavedSection[] = [];
 
   for (const code of codes) {
-    const classesForCode = sections.filter((section) => section.code === code);
+    const sectionsForCode = sections.filter((section) => section.code === code);
 
-    const schedule = toReturn
-      .map((section) =>
-        getSectionFromSortedListWithId(section.sectionId, allSections),
-      )
-      .filter((section) => !!section);
+    const schedule = toReturn.map((section) => {
+      const s = getSectionFromSortedListWithId(section.sectionId, allSections);
 
-    const validClasses = classesForCode.filter((section) =>
+      if (!s) {
+        console.log(allSections);
+        throw new Error(`Could not find section ${section.sectionId}`);
+      }
+
+      return s;
+    });
+
+    const validClasses = sectionsForCode.filter((section) =>
       isValidAdditionToSchedule(section, schedule),
     );
 
     if (validClasses.length === 0) {
-      return [];
+      continue;
     }
 
     const next = validClasses[Math.floor(Math.random() * validClasses.length)];
