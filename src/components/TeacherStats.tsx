@@ -1,15 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
 import type { HTMLProps } from "react";
-import { getRatingsRatingsProfGet } from "@/client";
+import { getRatingsRatingsProfGet, type LecLabResponse } from "@/client";
 import cn from "@/lib/cn";
 
 type Props = {
-  teacher: string;
+  leclab: LecLabResponse;
 } & HTMLProps<HTMLDivElement>;
-export default function TeacherStats({ teacher, className }: Props) {
+export default function TeacherStats({ leclab, className }: Props) {
   const { data, isPending, isError } = useQuery({
-    queryKey: ["rating", teacher],
-    queryFn: () => getRatingsRatingsProfGet({ path: { prof: teacher } }),
+    queryKey: ["rating", leclab.prof],
+    queryFn: async () => {
+      if (leclab.rating) {
+        return leclab.rating;
+      }
+
+      const res = await getRatingsRatingsProfGet({
+        path: { prof: leclab.prof },
+      });
+
+      if (res.error) {
+        throw new Error(JSON.stringify(res.error.detail));
+      }
+
+      return res.data;
+    },
     staleTime: Infinity,
   });
 
@@ -17,7 +31,7 @@ export default function TeacherStats({ teacher, className }: Props) {
     return null;
   }
 
-  const rating = data?.data;
+  const rating = data;
 
   if (isError || !rating || rating.status === "foundn't") {
     return <p className="font-bold">N/A</p>;

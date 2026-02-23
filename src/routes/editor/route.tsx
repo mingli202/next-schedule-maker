@@ -1,18 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import z from "zod";
-
-export const EditorInViewParams = z.object({
-  sections: z
-    .array(
-      z.object({
-        sectionId: z.number(),
-        colorIndex: z.number(),
-      }),
-    )
-    .catch([]),
-  previewSectionId: z.number().optional(),
-});
-export type EditorInViewParams = z.infer<typeof EditorInViewParams>;
+import { EditorInViewParams } from "@/types/schedule";
 
 export const Route = createFileRoute("/editor")({
   head: () => ({

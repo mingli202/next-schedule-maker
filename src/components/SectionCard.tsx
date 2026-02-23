@@ -1,10 +1,10 @@
 import type { HTMLProps } from "react";
+import type { SectionResponse } from "@/client";
 import { cn } from "@/lib";
-import type { Section } from "@/types/generated";
 import LecLab from "./LecLab";
 
 type SectionCardProps = {
-  section: Section;
+  section: SectionResponse;
 } & HTMLProps<HTMLDivElement>;
 
 export default function SectionCard({
@@ -22,7 +22,13 @@ export default function SectionCard({
         {section.section} {section.title}
       </h1>
 
-      <LecLab section={section} className={cn("mt-2 rounded-md p-2")} />
+      {section.leclabs.map((leclab) => (
+        <LecLab
+          key={leclab.id}
+          leclab={leclab}
+          className={cn("mt-2 rounded-md p-2")}
+        />
+      ))}
 
       {section.more !== "" && <p className="mt-2 opacity-70">{section.more}</p>}
     </div>

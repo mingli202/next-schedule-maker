@@ -16,7 +16,8 @@
       "DOM.Iterable"
     ],
     "types": [
-      "vite/client"
+      "vite/client",
+      "bun-types"
     ],
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -30,8 +31,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "baseUrl": ".",
     "paths": {
+      "*": [
+        "./*"
+      ],
       "@/*": [
         "./src/*"
       ]

@@ -1,9 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQueries, useQuery } from "@tanstack/react-query";
 import { getSectionSectionsSectionIdGet } from "@/client";
-import { Section } from "@/types/generated";
 
-export function useSection(sectionId: number) {
-  const res = useQuery({
+export function sectionOptions(sectionId: number) {
+  return queryOptions({
     queryKey: ["section", sectionId],
     queryFn: async () => {
       const res = await getSectionSectionsSectionIdGet({
@@ -14,14 +13,26 @@ export function useSection(sectionId: number) {
         throw new Error(JSON.stringify(res.error.detail));
       }
 
-      return Section.parse(res.data);
+      return res.data;
     },
     staleTime: Infinity,
   });
+}
+
+export function useSection(sectionId: number) {
+  const res = useQuery(sectionOptions(sectionId));
 
   if (res.isError) {
     console.trace(`Section ${sectionId} failed to load. Error ${res.error}`);
   }
+
+  return res;
+}
+
+export function useSections(sectionIds: number[]) {
+  const res = useQueries({
+    queries: sectionIds.map((sectionId) => sectionOptions(sectionId)),
+  });
 
   return res;
 }

@@ -8,10 +8,14 @@ import Button from "../Button";
 import ExpandSection from "./ExpandSection";
 
 type SectionBlockProps = {
+  // section id to show
   sectionId: number;
+  // section color
   colorIndex: number;
+  // can't remove class from current schedule in view
   disableRemove?: boolean;
-  disableTime?: boolean;
+  // mini view like in auto generate
+  disableControls?: boolean;
   onRemoveSectionClicked: () => void;
 };
 
@@ -19,7 +23,7 @@ export default function SectionBlock({
   sectionId,
   colorIndex,
   disableRemove,
-  disableTime,
+  disableControls,
   onRemoveSectionClicked,
 }: SectionBlockProps) {
   const [expand, setExpand] = useState(false);
@@ -55,18 +59,18 @@ export default function SectionBlock({
               color: textColor,
               backgroundColor: bgColor,
             }}
-            initial={disableTime ? undefined : { opacity: 0, scale: 0.9 }}
-            animate={disableTime ? undefined : { opacity: 1, scale: 1 }}
-            exit={disableTime ? undefined : { opacity: 0, scale: 0.9 }}
-            transition={disableTime ? undefined : { delay: index * 0.05 }}
-            variants={disableTime ? undefined : card}
+            initial={disableControls ? undefined : { opacity: 0, scale: 0.9 }}
+            animate={disableControls ? undefined : { opacity: 1, scale: 1 }}
+            exit={disableControls ? undefined : { opacity: 0, scale: 0.9 }}
+            transition={disableControls ? undefined : { delay: index * 0.05 }}
+            variants={disableControls ? undefined : card}
             whileHover="hover"
           >
             <p className="line-clamp-2 font-bold">{section.title}</p>
             <p className="mt-1 line-clamp-1">{section.code}</p>
             <p className="font">{section.section}</p>
-            <p className="mt-1 line-clamp-2">{section.times[0]?.prof}</p>
-            {disableTime ? null : (
+            <p className="mt-1 line-clamp-2">{section.leclabs[0]?.prof}</p>
+            {disableControls ? null : (
               <motion.div
                 className="absolute bottom-0 left-0 flex w-full justify-between bg-white/10 p-2 backdrop-blur-sm backdrop-filter"
                 variants={card}
@@ -77,7 +81,7 @@ export default function SectionBlock({
                     variant="basic"
                     className="rounded-none p-0"
                     onClick={() => {
-                      if (disableRemove || disableTime) return;
+                      if (disableRemove || disableControls) return;
                       onRemoveSectionClicked();
                     }}
                     title="remove"
@@ -91,7 +95,7 @@ export default function SectionBlock({
                   variant="basic"
                   className="shrink-0 rounded-none p-0"
                   onClick={() => {
-                    if (disableTime) return;
+                    if (disableControls) return;
                     setExpand(true);
                   }}
                   title="expand"
@@ -103,7 +107,7 @@ export default function SectionBlock({
           </motion.div>
         );
       })}
-      {disableTime ? null : (
+      {disableControls ? null : (
         <AnimatePresence>
           {expand && (
             <ExpandSection

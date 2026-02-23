@@ -4,7 +4,7 @@ export function useSessionStorage<T>(defaultValue: T, key: string) {
   const [state, setState] = useState<T>(defaultValue);
 
   useEffect(() => {
-    const data = sessionStorage.getItem(key + "winter2026");
+    const data = sessionStorage.getItem(`${key}winter2026`);
 
     if (data) {
       setState(JSON.parse(data));
@@ -12,7 +12,7 @@ export function useSessionStorage<T>(defaultValue: T, key: string) {
   }, [key]);
 
   function update(newValue: T) {
-    sessionStorage.setItem(key + "winter2026", JSON.stringify(newValue));
+    sessionStorage.setItem(`${key}winter2026`, JSON.stringify(newValue));
     setState(newValue);
   }
 
@@ -23,7 +23,7 @@ export function useLocalStorage<T>(defaultValue: T, key: string) {
   const [state, setState] = useState<T>(defaultValue);
 
   useEffect(() => {
-    const data = localStorage.getItem(key + "winter2026");
+    const data = localStorage.getItem(`${key}winter2026`);
 
     if (data) {
       setState(JSON.parse(data));
@@ -31,7 +31,7 @@ export function useLocalStorage<T>(defaultValue: T, key: string) {
   }, [key]);
 
   function update(newValue: T) {
-    sessionStorage.setItem(key + "winter2026", JSON.stringify(newValue));
+    sessionStorage.setItem(`${key}winter2026`, JSON.stringify(newValue));
     setState(newValue);
   }
 

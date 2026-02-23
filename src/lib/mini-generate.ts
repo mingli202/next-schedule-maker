@@ -1,5 +1,8 @@
-import { Class, Code, SharedCurrentClasses } from "@/types";
-import isValid from "./editor/(menu)/search/checkValid";
+import type { SectionResponse } from "@/client";
+import type { SavedSection } from "@/types/schedule";
+import { getNextAvailableColorIndex } from "./colors";
+import isValidAdditionToSchedule from "./schedule/isValidAdditionToSchedule";
+import { getSectionFromSortedListWithId } from "./util";
 
 const prefix = {
   french: "602",
@@ -19,29 +22,9 @@ const programs = [
   ...Array(2).fill("visual"),
 ];
 
-const colors = [
-  "#ff7a7a",
-  "#ffbd7a",
-  "#e9ff7a",
-  "#91ff7a",
-  "#7affe9",
-  "#7aadff",
-  "#b37aff",
-  "#ff7ade",
-  "#990000",
-  "#994d00",
-  "#7f9900",
-  "#1a9900",
-  "#009980",
-  "#003b99",
-  "#400099",
-  "#990073",
-  "#4d4d4d",
-];
-
-function miniGenerate(allClasses: Record<string, Class>) {
+function miniGenerate(allSections: SectionResponse[]) {
   const allCodes = Object.fromEntries(
-    Object.entries(prefix).map(([n, p]) => [n, getCodes(allClasses, p)]),
+    Object.entries(prefix).map(([n, p]) => [n, getCodes(allSections, p)]),
   );
 
   const program = programs[Math.floor(Math.random() * programs.length)];
@@ -67,22 +50,18 @@ function miniGenerate(allClasses: Record<string, Class>) {
     (c) => allCodes[c][Math.floor(Math.random() * allCodes[c].length)],
   );
 
-  const codes = [...coreCodes, ...g].map((code) => {
-    return {
-      code,
-    };
-  });
+  const codes = [...coreCodes, ...g];
 
-  return generate(codes, colors, allClasses);
+  return generate(codes, allSections);
 }
 
-function getCodes(data: Record<string, Class>, prefix = "") {
+function getCodes(allSections: SectionResponse[], prefix = "") {
   return [
     ...new Set(
-      Object.values(data)
+      allSections
         .filter(
           (d) =>
-            (d.code.startsWith(prefix) || d.program.startsWith(prefix)) &&
+            (d.code.startsWith(prefix) || d.course.startsWith(prefix)) &&
             d.code !== "120-DAC-AB",
         )
         .map((d) => d.code),
@@ -90,49 +69,42 @@ function getCodes(data: Record<string, Class>, prefix = "") {
   ];
 }
 
-function generate(
-  codes: Code[],
-  colors: string[],
-  allClasses: Record<string, Class>,
-) {
-  const classes = Object.entries(allClasses).filter(([, cl]) =>
-    codes.some((c) => c.code === cl.code),
+function generate(codes: string[], allSections: SectionResponse[]) {
+  const sections = allSections.filter((section) =>
+    codes.includes(section.code),
   );
 
-  let toReturn: SharedCurrentClasses[] = [];
+  let toReturn: SavedSection[] = [];
 
   for (const code of codes) {
-    const classesForCode = classes.filter(([, cl]) => {
-      if (cl.code !== code.code) {
-        return false;
+    const sectionsForCode = sections.filter((section) => section.code === code);
+
+    const schedule = toReturn.map((section) => {
+      const s = getSectionFromSortedListWithId(section.sectionId, allSections);
+
+      if (!s) {
+        console.log(allSections);
+        throw new Error(`Could not find section ${section.sectionId}`);
       }
 
-      return true;
+      return s;
     });
 
-    const validClasses = classesForCode.filter(([, cl]) =>
-      isValid(cl, toReturn, allClasses),
+    const validClasses = sectionsForCode.filter((section) =>
+      isValidAdditionToSchedule(section, schedule),
     );
 
     if (validClasses.length === 0) {
-      return [];
+      continue;
     }
 
     const next = validClasses[Math.floor(Math.random() * validClasses.length)];
+    const nextColorIndex = getNextAvailableColorIndex(toReturn);
 
-    let bgColor = "";
-    let textColor = "#000";
-    const pickedColors = toReturn.map((cl) => cl.bgColor);
-
-    for (let i = 0; i < colors.length; i++) {
-      if (!pickedColors.includes(colors[i])) {
-        if (i > 7) textColor = "#FFF";
-        bgColor = colors[i];
-        break;
-      }
-    }
-
-    toReturn = [...toReturn, { id: next[0], textColor, bgColor }];
+    toReturn = [
+      ...toReturn,
+      { sectionId: next.id, colorIndex: nextColorIndex },
+    ];
   }
 
   return toReturn;

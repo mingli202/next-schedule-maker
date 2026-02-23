@@ -1,4 +1,5 @@
 import z from "zod";
+import type { SavedSection } from "@/types/schedule";
 
 const colors = [
   "#ff7a7a",
@@ -35,4 +36,14 @@ export function getColorFromIndex(colorIndex: number): SectionColor {
     textColor: colorIndex > 7 ? "#FFF" : "#000",
     bgColor: colors[colorIndex],
   };
+}
+
+export function getNextAvailableColorIndex(sections: SavedSection[]): number {
+  let i = 0;
+
+  while (sections.some((section) => section.colorIndex === i)) {
+    i++;
+  }
+
+  return i;
 }
