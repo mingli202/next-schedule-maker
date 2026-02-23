@@ -1,5 +1,9 @@
 import type { DayTimeResponse, SectionResponse } from "@/client";
 
+/**
+ * Test whether a section to be added to a schedule will
+ * not overlap any other sections
+ * */
 export default function isValidAdditionToSchedule(
   sectionToCheck: SectionResponse,
   schedule: SectionResponse[],
@@ -16,25 +20,14 @@ export default function isValidAdditionToSchedule(
   });
 }
 
+/**
+ * Check if the given dayTimes array are all non-overlapping
+ * */
 export function isValidDayTimes(dayTimes: DayTimeResponse[]): boolean {
-  const byDay: Record<string, DayTimeResponse[]> = dayTimes.reduce(
-    (acc, dayTime) => {
-      if (!(dayTime.day in acc)) {
-        acc[dayTime.day] = [];
-      }
-
-      acc[dayTime.day] = [...acc[dayTime.day], dayTime];
-      return acc;
-    },
-    {} as Record<string, DayTimeResponse[]>,
-  );
-
-  for (const dayTimesByDay of Object.values(byDay)) {
-    for (let i = 0; i < dayTimesByDay.length; i++) {
-      for (let k = i + 1; k < dayTimesByDay.length; k++) {
-        if (isOverlap(dayTimesByDay[i], dayTimesByDay[k])) {
-          return false;
-        }
+  for (let i = 0; i < dayTimes.length; i++) {
+    for (let k = i + 1; k < dayTimes.length; k++) {
+      if (isOverlap(dayTimes[i], dayTimes[k])) {
+        return false;
       }
     }
   }
@@ -42,12 +35,19 @@ export function isValidDayTimes(dayTimes: DayTimeResponse[]): boolean {
   return true;
 }
 
+/**
+ * Check if the two given day times overlap each other
+ * They overlap each other if they have at least one day they share in common
+ * and that their times are overlapping
+ * */
 export function isOverlap(
   dayTime1: DayTimeResponse,
   dayTime2: DayTimeResponse,
 ): boolean {
-  const { startTimeHhmm: t1Start, endTimeHhmm: t1End } = dayTime1;
-  const { startTimeHhmm: t2Start, endTimeHhmm: t2End } = dayTime2;
+  const { day: day1, startTimeHhmm: t1Start, endTimeHhmm: t1End } = dayTime1;
+  const { day: day2, startTimeHhmm: t2Start, endTimeHhmm: t2End } = dayTime2;
+
+  if (!day1.split("").some((c) => day2.includes(c))) return false;
 
   return (
     t1Start === t2Start ||
