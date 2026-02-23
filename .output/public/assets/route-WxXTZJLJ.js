@@ -1,0 +1,1 @@
+import{c as t,j as n}from"./main-C89q-grd.js";function c(){const o=t.c(1);let e;return o[0]===Symbol.for("react.memo_cache_sentinel")?(e=n.jsx("div",{children:'Hello "/editor"!'}),o[0]=e):e=o[0],e}export{c as component};
