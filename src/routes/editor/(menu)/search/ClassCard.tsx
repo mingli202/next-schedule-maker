@@ -1,31 +1,22 @@
 "use client";
 
-import { ActionType, Class, SharedCurrentClasses } from "@/types";
+import { push, ref, set, update } from "firebase/database";
+import { motion } from "framer-motion";
+import { useContext, useLayoutEffect, useRef, useState } from "react";
+import { db } from "@/backend";
 import Button from "@/components/Button";
 import LecLab from "@/components/LecLab";
-import {
-  faCheck,
-  faEye,
-  faMinus,
-  faPlus,
-  faSpinner,
-  faWarning,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRouter, useSearchParams } from "next/navigation";
-import isValid from "./checkValid";
-import { useContext, useLayoutEffect, useRef, useState } from "react";
 import { ScheduleDispatchContext } from "../../ScheduleContext";
-import { motion } from "framer-motion";
-import { db } from "@/backend";
-import { push, ref, set, update } from "firebase/database";
+import isValid from "./checkValid";
 import "firebase/compat/database";
 import firebase from "firebase/compat/app";
+import { Section } from "@/types/generated";
+import { useNavigate, useParams } from "@tanstack/react-router";
 
 type Props = {
   id: string;
-  cl: Class;
-  allClasses: Record<string, Class>;
+  section: Section;
+  allClasses: Record<string, Section>;
   colors: string[];
   currentClasses: SharedCurrentClasses[];
 };
@@ -35,10 +26,10 @@ type Point = {
   y: number;
 };
 
-function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
-  const searchParams = useSearchParams();
+function ClassCard({ id, section, allClasses, colors, currentClasses }: Props) {
+  const searchParams = useParams({ strict: false });
 
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const dispatch = useContext(ScheduleDispatchContext);
 
@@ -53,7 +44,7 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
     {},
   );
 
-  const reportedRef = useRef<HTMLDivElement>(null!);
+  const reportedRef = useRef<HTMLDivElement>(null);
 
   function handleHoverEnter() {
     if (searchParams.get("previewHover") !== "true") return;
@@ -165,8 +156,8 @@ function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
         {cl.section} {cl.lecture?.title}
       </h3>
 
-      <LecLab cl={cl} leclab="lecture" />
-      <LecLab cl={cl} leclab="laboratory" />
+      <LecLab section={cl} leclab="lecture" />
+      <LecLab section={cl} leclab="laboratory" />
 
       {cl.more !== "" && <p className="text-third mt-2">{cl.more}</p>}
       <div className="flex items-center justify-between pt-2">

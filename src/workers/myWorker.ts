@@ -1,26 +1,40 @@
-import miniGenerate from "@/app/mini-generate";
-import type { Class, SharedCurrentClasses } from "@/types";
+import type { SectionResponse } from "@/client";
+import { getAllSectionsAllGet } from "@/client";
+import miniGenerate from "@/lib/mini-generate";
+import type { SavedSection } from "@/types/schedule";
 
 export type WorkerRequest = {
   type: "mini-generate";
-  allClasses: Record<string, Class>;
   index: number;
 };
 
 export type WorkerResponse = {
-  schedule: SharedCurrentClasses[];
+  schedule: SavedSection[];
   index: number;
 };
 
-self.onmessage = (e: MessageEvent<WorkerRequest>) => {
+let allSections: SectionResponse[] | null = null;
+
+self.onmessage = async (e: MessageEvent<WorkerRequest>) => {
+  if (!allSections) {
+    console.log("fetching sections");
+    const res = await getAllSectionsAllGet();
+
+    if (!res.data) return;
+
+    allSections = res.data;
+  }
+
   const { type } = e.data;
 
-  if (type === "mini-generate") {
-    const sch = miniGenerate(e.data.allClasses);
+  switch (type) {
+    case "mini-generate": {
+      const sch = miniGenerate(allSections);
 
-    self.postMessage({
-      schedule: sch,
-      index: e.data.index,
-    } satisfies WorkerResponse);
+      self.postMessage({
+        schedule: sch,
+        index: e.data.index,
+      } satisfies WorkerResponse);
+    }
   }
 };

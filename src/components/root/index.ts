@@ -1,4 +1,3 @@
-import Navbar from "./NavBar";
-import Welcome from "./Welcome";
-
-export { Navbar, Welcome };
+export * from "./NavBar";
+export * from "./NotFound";
+export * from "./Welcome";

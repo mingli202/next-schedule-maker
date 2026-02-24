@@ -1,18 +1,16 @@
 "use client";
 
-import { ButtonHTMLAttributes, useRef, useState } from "react";
 import {
   AnimatePresence,
-  HTMLMotionProps,
+  type HTMLMotionProps,
   motion,
   useAnimate,
 } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { type ButtonHTMLAttributes, useRef, useState } from "react";
 import cn from "@/lib/cn";
 
 type Props = {
   variant?: "basic" | "special";
-  targetPath?: string;
 } & {
   disableBgEffect?: boolean;
   disableScaleEffect?: boolean;
@@ -25,7 +23,6 @@ function Button({
   variant,
   disableBgEffect,
   disableScaleEffect,
-  targetPath,
   ...props
 }: Props) {
   const yellow = "#facc15";
@@ -43,9 +40,8 @@ function Button({
       boxShadow: `0 0 1rem ${yellow}`,
     },
   };
-  const currentPath = usePathname();
 
-  const ref = useRef<HTMLButtonElement>(null!);
+  const ref = useRef<HTMLButtonElement>(null);
   const [scope, animate] = useAnimate();
 
   const [circleSize, setCircleSize] = useState<number>();
@@ -57,7 +53,11 @@ function Button({
       scale: [0, 3],
     };
 
-    const bounds = ref.current.getBoundingClientRect();
+    const bounds = ref.current?.getBoundingClientRect();
+
+    if (!bounds) {
+      return;
+    }
 
     const offset = bounds.width / 2;
     const x = e.clientX - bounds.x - offset;
@@ -77,7 +77,11 @@ function Button({
     e: React.PointerEvent<HTMLButtonElement>,
   ) => {
     updateMousePosition(e);
-    const bounds = ref.current.getBoundingClientRect();
+    const bounds = ref.current?.getBoundingClientRect();
+
+    if (!bounds) {
+      return;
+    }
 
     const x = e.clientX - bounds.x;
     const y = e.clientY - bounds.y;
@@ -93,7 +97,12 @@ function Button({
   };
 
   const updateMousePosition = (e: React.PointerEvent<HTMLButtonElement>) => {
-    const bounds = ref.current.getBoundingClientRect();
+    const bounds = ref.current?.getBoundingClientRect();
+
+    if (!bounds) {
+      return;
+    }
+
     const x = e.clientX - bounds.x;
     const y = e.clientY - bounds.y;
     setMousePosition({ x, y });
@@ -114,9 +123,6 @@ function Button({
           "--mouse-y": `${mousePosition.y}px`,
         } as React.CSSProperties
       }
-      animate={{
-        opacity: currentPath === targetPath ? 1 : undefined,
-      }}
       whileHover={variant}
       whileTap={{
         scale: 1,

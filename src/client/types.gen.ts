@@ -5,6 +5,32 @@ export type ClientOptions = {
 };
 
 /**
+ * DayTimeResponse
+ */
+export type DayTimeResponse = {
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Day
+     */
+    day: string;
+    /**
+     * Starttimehhmm
+     */
+    startTimeHhmm: string;
+    /**
+     * Endtimehhmm
+     */
+    endTimeHhmm: string;
+    /**
+     * Leclabid
+     */
+    leclabId: number;
+};
+
+/**
  * HTTPValidationError
  */
 export type HttpValidationError = {
@@ -15,104 +41,116 @@ export type HttpValidationError = {
 };
 
 /**
- * LecLab
+ * LecLabResponse
  */
-export type LecLab = {
-    /**
-     * Title
-     */
-    title?: string;
-    /**
-     * Type
-     */
-    type?: 'lecture' | 'laboratory' | null;
-    /**
-     * Prof
-     */
-    prof?: string;
-    time?: Time;
-};
-
-/**
- * Rating
- */
-export type Rating = {
-    /**
-     * Score
-     */
-    score?: number;
-    /**
-     * Avg
-     */
-    avg?: number;
-    /**
-     * Nrating
-     */
-    nRating?: number;
-    /**
-     * Takeagain
-     */
-    takeAgain?: number;
-    /**
-     * Difficulty
-     */
-    difficulty?: number;
-    /**
-     * Status
-     */
-    status?: 'found' | 'foundn\'t';
-    /**
-     * Prof
-     */
-    prof?: string;
-    /**
-     * Pid
-     */
-    pId?: string | null;
-};
-
-/**
- * Section
- */
-export type Section = {
+export type LecLabResponse = {
     /**
      * Id
      */
-    id?: number;
-    /**
-     * Course
-     */
-    course?: string;
-    /**
-     * Section
-     */
-    section?: string;
-    /**
-     * Domain
-     */
-    domain?: string;
-    /**
-     * Code
-     */
-    code?: string;
+    id: number;
     /**
      * Title
      */
-    title?: string;
+    title: string;
+    type: LecLabType | null;
     /**
-     * Times
+     * Sectionid
      */
-    times?: Array<LecLab>;
+    sectionId: number;
+    /**
+     * Prof
+     */
+    prof: string;
+    rating: RatingResponse | null;
+    /**
+     * Daytimes
+     */
+    dayTimes: Array<DayTimeResponse>;
+};
+
+/**
+ * LecLabType
+ */
+export type LecLabType = 'lecture' | 'laboratory';
+
+/**
+ * RatingResponse
+ */
+export type RatingResponse = {
+    /**
+     * Prof
+     */
+    prof: string;
+    /**
+     * Score
+     */
+    score: number;
+    /**
+     * Avg
+     */
+    avg: number;
+    /**
+     * Nrating
+     */
+    nRating: number;
+    /**
+     * Takeagain
+     */
+    takeAgain: number;
+    /**
+     * Difficulty
+     */
+    difficulty: number;
+    status: Status;
+    /**
+     * Pid
+     */
+    pId: string | null;
+};
+
+/**
+ * SectionResponse
+ */
+export type SectionResponse = {
+    /**
+     * Id
+     */
+    id: number;
+    /**
+     * Course
+     */
+    course: string;
+    /**
+     * Section
+     */
+    section: string;
+    /**
+     * Domain
+     */
+    domain: string;
+    /**
+     * Code
+     */
+    code: string;
+    /**
+     * Title
+     */
+    title: string;
+    /**
+     * Leclabs
+     */
+    leclabs: Array<LecLabResponse>;
     /**
      * More
      */
-    more?: string;
-    viewData?: ViewData;
+    more: string;
+    viewData: ViewData;
 };
 
-export type Time = {
-    [key: string]: Array<string>;
-};
+/**
+ * Status
+ */
+export type Status = 'found' | 'foundn\'t';
 
 /**
  * ValidationError
@@ -135,6 +173,24 @@ export type ValidationError = {
 export type ViewData = Array<{
     [key: string]: Array<number>;
 }>;
+
+export type GetAllSectionsAllGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/sections/all';
+};
+
+export type GetAllSectionsAllGetResponses = {
+    /**
+     * Response Get All Sections All Get
+     *
+     * Successful Response
+     */
+    200: Array<SectionResponse>;
+};
+
+export type GetAllSectionsAllGetResponse = GetAllSectionsAllGetResponses[keyof GetAllSectionsAllGetResponses];
 
 export type GetSectionsSectionsGetData = {
     body?: never;
@@ -200,6 +256,14 @@ export type GetSectionsSectionsGetData = {
          * Honours
          */
         honours?: boolean;
+        /**
+         * Limit
+         */
+        limit?: number | null;
+        /**
+         * Offset
+         */
+        offset?: number;
     };
     url: '/sections/';
 };
@@ -219,10 +283,40 @@ export type GetSectionsSectionsGetResponses = {
      *
      * Successful Response
      */
-    200: Array<Section>;
+    200: Array<SectionResponse>;
 };
 
 export type GetSectionsSectionsGetResponse = GetSectionsSectionsGetResponses[keyof GetSectionsSectionsGetResponses];
+
+export type GetManySectionsPostData = {
+    /**
+     * Ids
+     */
+    body: Array<number>;
+    path?: never;
+    query?: never;
+    url: '/sections/';
+};
+
+export type GetManySectionsPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetManySectionsPostError = GetManySectionsPostErrors[keyof GetManySectionsPostErrors];
+
+export type GetManySectionsPostResponses = {
+    /**
+     * Response Get Many Sections  Post
+     *
+     * Successful Response
+     */
+    200: Array<SectionResponse>;
+};
+
+export type GetManySectionsPostResponse = GetManySectionsPostResponses[keyof GetManySectionsPostResponses];
 
 export type GetSectionSectionsSectionIdGetData = {
     body?: never;
@@ -249,7 +343,7 @@ export type GetSectionSectionsSectionIdGetResponses = {
     /**
      * Successful Response
      */
-    200: Section;
+    200: SectionResponse;
 };
 
 export type GetSectionSectionsSectionIdGetResponse = GetSectionSectionsSectionIdGetResponses[keyof GetSectionSectionsSectionIdGetResponses];
@@ -262,6 +356,20 @@ export type RootGetData = {
 };
 
 export type RootGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type HealthHealthGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/health';
+};
+
+export type HealthHealthGetResponses = {
     /**
      * Successful Response
      */
@@ -291,11 +399,41 @@ export type GetRatingsRatingsProfGetError = GetRatingsRatingsProfGetErrors[keyof
 
 export type GetRatingsRatingsProfGetResponses = {
     /**
-     * Response Get Ratings Ratings  Prof  Get
-     *
      * Successful Response
      */
-    200: Rating | null;
+    200: RatingResponse;
 };
 
 export type GetRatingsRatingsProfGetResponse = GetRatingsRatingsProfGetResponses[keyof GetRatingsRatingsProfGetResponses];
+
+export type GetLeclabLeclabSectionIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Section Id
+         */
+        section_id: number;
+    };
+    query?: never;
+    url: '/leclab/{section_id}';
+};
+
+export type GetLeclabLeclabSectionIdGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetLeclabLeclabSectionIdGetError = GetLeclabLeclabSectionIdGetErrors[keyof GetLeclabLeclabSectionIdGetErrors];
+
+export type GetLeclabLeclabSectionIdGetResponses = {
+    /**
+     * Response Get Leclab Leclab  Section Id  Get
+     *
+     * Successful Response
+     */
+    200: Array<LecLabResponse>;
+};
+
+export type GetLeclabLeclabSectionIdGetResponse = GetLeclabLeclabSectionIdGetResponses[keyof GetLeclabLeclabSectionIdGetResponses];

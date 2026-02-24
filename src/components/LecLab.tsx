@@ -1,53 +1,32 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TeacherStats from "./TeacherStats";
-import { faClock, faUser } from "@fortawesome/free-solid-svg-icons";
-import { getSectionTimes } from "@/lib/util";
-import type { Class } from "@/types";
+import { Clock, User } from "lucide-react";
 import type { HTMLProps } from "react";
+import type { LecLabResponse } from "@/client";
 import cn from "@/lib/cn";
+import { capitalize } from "@/lib/util";
+import TeacherStats from "./TeacherStats";
 
 type Props = {
-  cl: Class;
-  leclab: "lecture" | "laboratory";
+  leclab: LecLabResponse;
 } & HTMLProps<HTMLDivElement>;
-export default function LecLab({ cl, className, leclab }: Props) {
-  return leclab === "lecture" && cl.lecture ? (
+export default function LecLab({ leclab, className }: Props) {
+  return (
     <div className={cn("bg-secondary mt-2 rounded-md p-2", className)}>
-      <h4 className="italic">Lecture</h4>
+      <h4 className="italic">{capitalize(leclab.type ?? "lecture")}</h4>
 
       <div className="relative flex items-center gap-2">
-        <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
-        {cl.lecture.prof}
-        <TeacherStats rating={cl.lecture.rating} />
+        <User className="h-4 opacity-50" />
+        {leclab.prof}
+        <TeacherStats leclab={leclab} />
       </div>
 
-      {getSectionTimes({ ...cl, lab: null }).map((j, index) => {
+      {leclab.dayTimes.map((dayTime) => {
         return (
-          <p className="flex items-center gap-2" key={index}>
-            <FontAwesomeIcon icon={faClock} className="h-4 opacity-50" />
-            {j[0]} {j[1]}
+          <p className="flex items-center gap-2" key={dayTime.id}>
+            <Clock className="h-4 opacity-50" />
+            {dayTime.day} {dayTime.startTimeHhmm}-{dayTime.endTimeHhmm}
           </p>
         );
       })}
     </div>
-  ) : leclab === "laboratory" && cl.lab ? (
-    <div className={cn("bg-secondary mt-2 rounded-md p-2", className)}>
-      <h4 className="italic">Lab</h4>
-
-      <div className="relative flex items-center gap-2">
-        <FontAwesomeIcon icon={faUser} className="h-4 opacity-50" />
-        {cl.lab.prof}
-        <TeacherStats rating={cl.lab.rating} />
-      </div>
-
-      {getSectionTimes({ ...cl, lecture: null }).map((j, index) => {
-        return (
-          <p className="flex items-center gap-2" key={index}>
-            <FontAwesomeIcon icon={faClock} className="h-4 opacity-50" />
-            {j[0]} {j[1]}
-          </p>
-        );
-      })}
-    </div>
-  ) : null;
+  );
 }
