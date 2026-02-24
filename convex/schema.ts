@@ -8,7 +8,16 @@ const schema = defineSchema({
 
   schedules: defineTable({
     userId: v.id("users"),
-  }).index("by_userId", ["userId"]),
+    name: v.string(),
+    semester: v.string(),
+  }).index("by_userId_semester", ["userId", "semester"]),
+
+  sections: defineTable({
+    userId: v.id("users"),
+    scheduleId: v.id("schedules"),
+    sectionId: v.number(),
+    colorIndex: v.number(),
+  }).index("by_userId_scheduleId", ["userId", "scheduleId"]),
 });
 
 export default schema;
