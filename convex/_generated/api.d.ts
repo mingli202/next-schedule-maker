@@ -8,13 +8,17 @@
  * @module
  */
 
+import type * as user_queries from "../user/queries.js";
+
 import type {
   ApiFromModules,
   FilterApi,
   FunctionReference,
 } from "convex/server";
 
-declare const fullApi: ApiFromModules<{}>;
+declare const fullApi: ApiFromModules<{
+  "user/queries": typeof user_queries;
+}>;
 
 /**
  * A utility for referencing Convex functions in your app's public API.
