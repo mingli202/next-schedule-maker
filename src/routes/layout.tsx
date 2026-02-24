@@ -1,0 +1,66 @@
+import type { Metadata } from "next";
+import "./(root)/globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
+import { ConvexClientProvider } from "@/integrations/ConvexClientProvider";
+
+import { Fraunces, Poppins } from "next/font/google";
+
+// headings
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--fraunces",
+});
+
+// body text
+const poppins = Poppins({
+  weight: ["100", "400", "700"],
+  subsets: ["latin"],
+  variable: "--poppins",
+});
+
+export const metadata: Metadata = {
+  title: "JAC Dream Schedule Builder",
+  description:
+    "John Abbott College (JAC) Dream Schedule Builder Home Page. An interactive schedule builder for John Abbott College (JAC) students. By using our advanced filtering options, you can make your dream schedule in seconds!",
+  authors: { name: "Ming Li Liu" },
+  creator: "Ming Li Liu",
+  generator: "Next.js",
+  applicationName: "Javascript",
+  keywords: [
+    "Schedule Maker",
+    "Schedule Builder",
+    "Schedule Visualiser",
+    "John Abbott College",
+    "JAC",
+    "Dream Schedule Maker",
+    "Editor",
+    "Schedule Planner",
+    "Next Js",
+    "React",
+    "Javascript",
+    "JS",
+    "TailwindCss",
+  ],
+  robots: "robots.txt",
+  manifest: "manifest.json",
+  other: {
+    "google-site-verification": "cSh40L1cc_UacQ_WYgMrNFYCIdZcRopjr8AWnUyDCoY",
+  },
+};
+
+function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body
+        className={`${fraunces.variable} ${poppins.variable} bg-bg-primary font-body text-text overflow-x-hidden text-sm antialiased md:text-base`}
+      >
+        <ConvexClientProvider>{children}</ConvexClientProvider>
+        <SpeedInsights />
+        <Analytics />
+      </body>
+    </html>
+  );
+}
+
+export default RootLayout;

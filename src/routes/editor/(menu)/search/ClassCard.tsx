@@ -1,0 +1,290 @@
+"use client";
+
+import { ActionType, Class, SharedCurrentClasses } from "@/types";
+import Button from "@/components/Button";
+import LecLab from "@/components/LecLab";
+import {
+  faCheck,
+  faEye,
+  faMinus,
+  faPlus,
+  faSpinner,
+  faWarning,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter, useSearchParams } from "next/navigation";
+import isValid from "./checkValid";
+import { useContext, useLayoutEffect, useRef, useState } from "react";
+import { ScheduleDispatchContext } from "../../ScheduleContext";
+import { motion } from "framer-motion";
+import { db } from "@/backend";
+import { push, ref, set, update } from "firebase/database";
+import "firebase/compat/database";
+import firebase from "firebase/compat/app";
+
+type Props = {
+  id: string;
+  cl: Class;
+  allClasses: Record<string, Class>;
+  colors: string[];
+  currentClasses: SharedCurrentClasses[];
+};
+
+type Point = {
+  x: number;
+  y: number;
+};
+
+function ClassCard({ id, cl, allClasses, colors, currentClasses }: Props) {
+  const searchParams = useSearchParams();
+
+  const router = useRouter();
+
+  const dispatch = useContext(ScheduleDispatchContext);
+
+  const [reportedCoordinates, setReportedCoordinates] = useState<Point | null>(
+    null,
+  );
+  const [reportedState, setReportedState] = useState<
+    "loading" | "reason" | "Reported again!" | "Reported!"
+  >("reason");
+
+  const [alreadyPresent, setAlreadyPresent] = useState<Record<string, boolean>>(
+    {},
+  );
+
+  const reportedRef = useRef<HTMLDivElement>(null!);
+
+  function handleHoverEnter() {
+    if (searchParams.get("previewHover") !== "true") return;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("hoverId", id);
+
+    router.push(`/editor/search?${url.searchParams}`);
+  }
+
+  function handleHoverEnd() {
+    if (searchParams.get("previewHover") !== "true") return;
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete("hoverId");
+
+    router.push(`/editor/search?${url.searchParams}`);
+  }
+
+  useLayoutEffect(() => {
+    let reportedClasses = localStorage.getItem("winter2026ReportedClasses");
+    if (reportedClasses === null) {
+      reportedClasses = "{}";
+      localStorage.setItem("winter2026ReportedClasses", "{}");
+    }
+
+    setAlreadyPresent(JSON.parse(reportedClasses));
+  }, []);
+
+  return (
+    <motion.div
+      key={id}
+      className="bg-bg-secondary box-border rounded-md p-2"
+      onHoverStart={handleHoverEnter}
+      onHoverEnd={handleHoverEnd}
+    >
+      {reportedCoordinates ? (
+        <div
+          className="bg-bg-primary absolute z-10 -translate-x-[1rem] -translate-y-3/4 rounded-[0.375rem] p-1 text-sm"
+          style={{ top: reportedCoordinates.y, left: reportedCoordinates.x }}
+          ref={reportedRef}
+          onClick={(e) => e.stopPropagation()}
+          onMouseMove={(e) => e.stopPropagation()}
+        >
+          {reportedState === "loading" ? (
+            <div>
+              <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
+            </div>
+          ) : reportedState === "reason" ? (
+            <form
+              className="flex flex-col gap-1"
+              onSubmit={() => {
+                setReportedState("loading");
+              }}
+              action={async (formData: FormData) => {
+                const reason = formData.get("reason")?.toString() ?? "";
+
+                const ServerValue = firebase.database.ServerValue;
+
+                await update(ref(db, `reports/${id}`), {
+                  count: ServerValue.increment(1),
+                });
+
+                await set(push(ref(db, `/reports/${id}/reasons`)), {
+                  reason,
+                  timestamp: new Date().toString(),
+                });
+
+                if (alreadyPresent[id]) {
+                  setReportedState("Reported again!");
+                } else {
+                  setReportedState("Reported!");
+                  const alreadyPresentNext = { ...alreadyPresent, [id]: true };
+                  setAlreadyPresent(alreadyPresentNext);
+
+                  sessionStorage.setItem(
+                    "winter2026ReportedClasses",
+                    JSON.stringify(alreadyPresentNext),
+                  );
+                  localStorage.removeItem("winter2026ReportedClasses");
+                }
+              }}
+            >
+              <label htmlFor="reason">Reason (enter to submit)</label>
+              <input
+                className="bg-bg-secondary rounded-sm outline-none"
+                id="reason"
+                name="reason"
+                title="reason"
+                required
+                placeholder="What's wrong?"
+                autoFocus
+              />
+            </form>
+          ) : (
+            <div className="flex items-center justify-center gap-2">
+              <p>{reportedState}</p>
+              <FontAwesomeIcon icon={faCheck} />
+            </div>
+          )}
+        </div>
+      ) : null}
+
+      <p className="font-light">
+        {cl.program}: {cl.course} {cl.code}
+      </p>
+
+      <h3 className="font-heading text-xl font-bold">
+        {cl.section} {cl.lecture?.title}
+      </h3>
+
+      <LecLab cl={cl} leclab="lecture" />
+      <LecLab cl={cl} leclab="laboratory" />
+
+      {cl.more !== "" && <p className="text-third mt-2">{cl.more}</p>}
+      <div className="flex items-center justify-between pt-2">
+        <Button
+          variant="basic"
+          title={
+            alreadyPresent[id]
+              ? "Report wrong info (again)"
+              : "Report wrong info"
+          }
+          className="flex items-center justify-center"
+          onClick={async (e) => {
+            e.stopPropagation();
+
+            setReportedCoordinates({
+              x: e.clientX,
+              y: e.clientY,
+            });
+            setReportedState("reason");
+
+            const f = () => {
+              window.removeEventListener("mousemove", f);
+              window.removeEventListener("click", f);
+              setReportedCoordinates(null);
+            };
+
+            window.addEventListener("mousemove", f, { once: true });
+            window.addEventListener("click", f, { once: true });
+          }}
+        >
+          <FontAwesomeIcon icon={faWarning} />
+        </Button>
+
+        <div className="flex justify-end">
+          <Button
+            variant="basic"
+            className="flex items-center justify-center"
+            title="preview"
+            onClick={() => {
+              const hover = searchParams.get("previewHover");
+
+              const url = new URL(window.location.href);
+
+              if (hover !== "true") {
+                url.searchParams.set("previewHover", "true");
+                url.searchParams.set("hoverId", id);
+
+                router.push(`/editor/search?${url.searchParams}`);
+              } else {
+                url.searchParams.delete("previewHover");
+                url.searchParams.delete("hoverId");
+
+                router.push(`/editor/search?${url.searchParams}`);
+              }
+            }}
+          >
+            <FontAwesomeIcon icon={faEye} />
+          </Button>
+
+          {isValid(cl, currentClasses, allClasses) ? (
+            <Button
+              variant="basic"
+              className="flex items-center justify-center"
+              title="add"
+              onClick={() => {
+                const checkValid = searchParams.get("checkValid");
+
+                if (checkValid === "true") {
+                  handleHoverEnd();
+                }
+
+                let bgColor = "";
+                let textColor = "#000";
+                const pickedColors = currentClasses.map((cl) => cl.bgColor);
+
+                for (let i = 0; i < colors.length; i++) {
+                  if (!pickedColors.includes(colors[i])) {
+                    if (i > 7) textColor = "#FFF";
+                    bgColor = colors[i];
+                    break;
+                  }
+                }
+
+                const action: ActionType = {
+                  type: "add",
+                  cl: {
+                    id,
+                    bgColor,
+                    textColor,
+                  },
+                };
+
+                dispatch(action);
+              }}
+            >
+              <FontAwesomeIcon icon={faPlus} />
+            </Button>
+          ) : (
+            currentClasses.some(
+              ({ id: savedId }): boolean => savedId === id,
+            ) && (
+              <Button
+                variant="basic"
+                className="flex items-center justify-center"
+                title="remove"
+                onClick={() => {
+                  const action: ActionType = { type: "delete", id };
+                  dispatch(action);
+                }}
+              >
+                <FontAwesomeIcon icon={faMinus} />
+              </Button>
+            )
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export default ClassCard;

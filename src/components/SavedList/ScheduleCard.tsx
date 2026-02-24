@@ -1,0 +1,271 @@
+"use client";
+
+import Button from "../Button";
+import cn from "@/lib/cn";
+import { Class, Saved, StateType } from "@/types";
+import {
+  faCheckCircle,
+  faTrash,
+  faXmarkCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { HTMLAttributes, useState } from "react";
+import { ref, remove, update } from "firebase/database";
+import { app, db } from "@/backend";
+import { HTMLMotionProps, motion } from "framer-motion";
+
+import { getAuth } from "firebase/auth";
+
+type Props = {
+  schedule: Saved;
+  setSavedSchedules?: React.Dispatch<
+    React.SetStateAction<Record<string, Saved> | undefined>
+  >;
+  allClasses: Record<string, Class>;
+  handleHighlight: () => void;
+  highlight?: string;
+  noEdit?: boolean;
+  schId: string;
+  customSelect?: (id: string, s: Saved) => void;
+  stateType: StateType;
+};
+
+function ScheduleCard({
+  schedule,
+  setSavedSchedules,
+  className,
+  allClasses,
+  handleHighlight,
+  schId,
+  stateType,
+  noEdit,
+  highlight,
+  customSelect,
+  ...props
+}: Props & HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div">) {
+  const [editName, setEditName] = useState(false);
+
+  async function nameChange(formdata: FormData) {
+    setEditName(false);
+    const name = formdata.get("name")?.toString() ?? "Untitled";
+
+    const user = getAuth(app).currentUser;
+    if (!user) {
+      if (setSavedSchedules) {
+        setSavedSchedules((savedSchedules) => {
+          if (!savedSchedules) return undefined;
+
+          const newSavedSchedules = {
+            ...savedSchedules,
+            [schId]: {
+              ...savedSchedules[schId],
+              name,
+            },
+          };
+
+          localStorage.setItem(
+            "savedScheduleswinter2026",
+            JSON.stringify(newSavedSchedules),
+          );
+
+          return newSavedSchedules;
+        });
+      }
+
+      return;
+    }
+
+    const dbRef = ref(db, `/users/${user.uid}/schedules`);
+
+    await update(dbRef, {
+      [schId]: { ...schedule, name },
+    }).catch((err) => console.log(err));
+  }
+
+  async function deleteSchedule() {
+    const user = getAuth(app).currentUser;
+    if (!user) {
+      if (setSavedSchedules) {
+        setSavedSchedules((savedSchedules) => {
+          if (!savedSchedules) return undefined;
+
+          delete savedSchedules[schId];
+
+          localStorage.setItem(
+            "savedScheduleswinter2026",
+            JSON.stringify(savedSchedules),
+          );
+
+          return { ...savedSchedules };
+        });
+      }
+      return;
+    }
+
+    const dbref = ref(db, `/users/${user.uid}/schedules/${schId}`);
+    await remove(dbref);
+  }
+
+  function select() {
+    if (stateType === "none") return;
+
+    if (!schedule.data) {
+      if (stateType.type == "dispatch") {
+        stateType.dispatch({ type: "set", schedule: [] });
+      } else {
+        stateType.dispatch([]);
+      }
+      return;
+    }
+
+    try {
+      if (stateType.type === "dispatch") {
+        stateType.dispatch({
+          type: "set",
+          schedule: schedule.data,
+        });
+      } else {
+        stateType.dispatch(schedule.data);
+      }
+    } catch {
+      alert("Only Winter2026 Classes are allowed.");
+    }
+  }
+
+  return (
+    <motion.div
+      className={cn(
+        "bg-bg-secondary flex h-fit w-full flex-col gap-1 rounded-md p-1 transition",
+        {
+          "bg-secondary": highlight === schId,
+        },
+        className,
+      )}
+      onClick={(e) => {
+        e.nativeEvent.stopImmediatePropagation();
+      }}
+      {...props}
+    >
+      <div
+        className={cn(
+          "bg-slate hover:bg-slate/90 col-span-5 row-[span_20/span_20] grid h-20 w-full shrink-0 cursor-pointer grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md transition",
+        )}
+        title="select"
+        onClick={() => {
+          handleHighlight();
+          select();
+
+          if (customSelect) {
+            customSelect(schId, schedule);
+          }
+        }}
+      >
+        {schedule.data &&
+          schedule.data.map(({ bgColor, id }) => {
+            if (!Object.hasOwn(allClasses, id)) {
+              return null;
+            }
+
+            const sch = allClasses[id];
+
+            return sch.viewData.map((s, i) => {
+              const [day, [start, end]] = Object.entries(s)[0];
+
+              return (
+                <div
+                  className="rounded-sm"
+                  style={{
+                    gridColumn: day,
+                    gridRowStart: start,
+                    gridRowEnd: end,
+                    backgroundColor: bgColor,
+                  }}
+                  key={sch.code + sch.section + day + `${i}`}
+                />
+              );
+            });
+          })}
+      </div>
+
+      <div className="flex h-full items-center justify-between gap-2">
+        {editName ? (
+          <form
+            className="bg-bg-primary box-border flex basis-full items-center overflow-hidden rounded-md"
+            action={async (f) => {
+              if (noEdit) return;
+              await nameChange(f);
+            }}
+          >
+            <input
+              name="name"
+              id="name"
+              className="bg-bg-primary w-full outline-none"
+              defaultValue={schedule.name}
+              autoFocus
+            />
+            <Button variant="basic" type="submit" className="shrink-0 p-1">
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                className="h-3 w-3 md:h-4 md:w-4"
+              />
+            </Button>
+
+            <Button
+              variant="basic"
+              type="button"
+              onClick={() => setEditName(false)}
+              className="shrink-0 p-1"
+            >
+              <FontAwesomeIcon
+                icon={faXmarkCircle}
+                className="h-3 w-3 md:h-4 md:w-4"
+              />
+            </Button>
+          </form>
+        ) : (
+          <>
+            <p
+              className={cn(!noEdit && "cursor-pointer", "line-clamp-1")}
+              onClick={() => {
+                if (noEdit) return;
+
+                document.getRootNode().addEventListener(
+                  "click",
+                  () => {
+                    setEditName(false);
+                  },
+                  { once: true },
+                );
+
+                setEditName(true);
+              }}
+              title="edit"
+            >
+              {schedule.name && schedule.name !== ""
+                ? schedule.name
+                : "Untitled"}
+            </p>
+            {noEdit !== true && (
+              <Button
+                title="delete"
+                variant="basic"
+                className="shrink-0 p-1"
+                onClick={async () => {
+                  if (noEdit) return;
+                  await deleteSchedule();
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className="h-3 w-3 md:h-4 md:w-4"
+                />
+              </Button>
+            )}
+          </>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+export default ScheduleCard;

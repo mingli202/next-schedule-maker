@@ -1,4 +1,4 @@
-import { getLocalJsonData, DataFilename } from "./getLocalJson";
 import cn from "./cn";
+import getLocalJsonData from "./getLocalJson";
 
-export { getLocalJsonData, cn, DataFilename };
+export { cn, getLocalJsonData };
