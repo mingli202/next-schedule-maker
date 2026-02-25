@@ -8,7 +8,9 @@
  * @module
  */
 
-import type * as user_queries from "../user/queries.js";
+import type * as types from "../types.js";
+import type * as user_helpers from "../user/helpers.js";
+import type * as user_mutations from "../user/mutations.js";
 
 import type {
   ApiFromModules,
@@ -17,7 +19,9 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
-  "user/queries": typeof user_queries;
+  types: typeof types;
+  "user/helpers": typeof user_helpers;
+  "user/mutations": typeof user_mutations;
 }>;
 
 /**

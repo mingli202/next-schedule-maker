@@ -1,9 +1,11 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { CollectionPolicy } from "./types";
 
 const schema = defineSchema({
   users: defineTable({
     firebaseId: v.string(),
+    collectionPolicy: CollectionPolicy,
   }).index("by_firebaseId", ["firebaseId"]),
 
   schedules: defineTable({
