@@ -2,11 +2,10 @@ import { ConvexQueryClient } from "@convex-dev/react-query";
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter, ErrorComponent } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import { ConvexProvider } from "convex/react";
 import { NotFound } from "./components/root";
+import { ConvexClientProvider } from "./integrations/ConvexClientProvider";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
-import { ConvexClientProvider } from "./integrations/ConvexClientProvider";
 
 // Create a new router instance
 export const getRouter = () => {
