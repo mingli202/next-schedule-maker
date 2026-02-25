@@ -1,9 +1,6 @@
-import { GenericMutationCtx, GenericQueryCtx } from "convex/server";
-import { DataModel } from "../_generated/dataModel";
+import { MutationCtx, QueryCtx } from "../_generated/server";
 
-export async function getUserIdFromFirebaseId(
-  ctx: GenericMutationCtx<DataModel> | GenericQueryCtx<DataModel>,
-) {
+export async function getUserIdFromFirebaseId(ctx: MutationCtx | QueryCtx) {
   const iden = await ctx.auth.getUserIdentity();
   if (!iden) throw new Error("Unauthenticated");
 
