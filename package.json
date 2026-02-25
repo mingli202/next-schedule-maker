@@ -13,6 +13,7 @@
     "check": "prettier --write . && eslint --fix"
   },
   "dependencies": {
+    "@convex-dev/react-query": "^0.1.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "^0.9.4",
     "@tanstack/react-query": "^5.90.20",
