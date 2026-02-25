@@ -6,6 +6,7 @@ import { ConvexProvider } from "convex/react";
 import { NotFound } from "./components/root";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
+import { ConvexClientProvider } from "./integrations/ConvexClientProvider";
 
 // Create a new router instance
 export const getRouter = () => {
@@ -40,9 +41,9 @@ export const getRouter = () => {
     defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
 
     Wrap: ({ children }) => (
-      <ConvexProvider client={convexQueryClient.convexClient}>
+      <ConvexClientProvider client={convexQueryClient.convexClient}>
         {children}
-      </ConvexProvider>
+      </ConvexClientProvider>
     ),
   });
   setupRouterSsrQueryIntegration({

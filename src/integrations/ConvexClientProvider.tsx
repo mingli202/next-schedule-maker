@@ -1,14 +1,37 @@
-"use client";
+import { ConvexProviderWithAuth, type ConvexReactClient } from "convex/react";
+import { getAuth } from "firebase/auth";
+import { type ReactNode, useCallback } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { app } from "src/integrations/firebase";
 
-import { ConvexProvider, ConvexReactClient } from "convex/react";
-import { ReactNode } from "react";
+type Props = {
+  children?: ReactNode;
+  client: ConvexReactClient;
+};
 
-if (!process.env.NEXT_PUBLIC_CONVEX_URL!) {
-  throw new Error("NEXT_PUBLIC_CONVEX_URL is not defined");
+function useAuthFromFirebase() {
+  const auth = getAuth(app);
+  const [user, loading] = useAuthState(auth);
+
+  const fetchAccessToken = useCallback(
+    async ({ forceRefreshToken }: { forceRefreshToken: boolean }) => {
+      if (!user) return null;
+      return await user.getIdToken(forceRefreshToken);
+    },
+    [user],
+  );
+
+  return {
+    isLoading: loading,
+    isAuthenticated: !!user,
+    fetchAccessToken,
+  };
 }
 
-const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
-
-export function ConvexClientProvider({ children }: { children: ReactNode }) {
-  return <ConvexProvider client={convex}>{children}</ConvexProvider>;
+export function ConvexClientProvider({ children, client }: Props) {
+  return (
+    <ConvexProviderWithAuth client={client} useAuth={useAuthFromFirebase}>
+      {children}
+    </ConvexProviderWithAuth>
+  );
 }
