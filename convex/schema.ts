@@ -11,8 +11,8 @@ const schema = defineSchema({
   schedules: defineTable({
     userId: v.id("users"),
     name: v.string(),
-    semester: v.string(),
-  }).index("by_userId_semester", ["userId", "semester"]),
+    source: v.string(), // source of data
+  }).index("by_userId_source", ["userId", "source"]),
 
   sections: defineTable({
     userId: v.id("users"),
