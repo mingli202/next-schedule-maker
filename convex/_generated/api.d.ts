@@ -8,9 +8,12 @@
  * @module
  */
 
+import type * as sections_helpers from "../sections/helpers.js";
+import type * as sections_mutations from "../sections/mutations.js";
 import type * as types from "../types.js";
 import type * as user_helpers from "../user/helpers.js";
 import type * as user_mutations from "../user/mutations.js";
+import type * as util from "../util.js";
 
 import type {
   ApiFromModules,
@@ -19,9 +22,12 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  "sections/helpers": typeof sections_helpers;
+  "sections/mutations": typeof sections_mutations;
   types: typeof types;
   "user/helpers": typeof user_helpers;
   "user/mutations": typeof user_mutations;
+  util: typeof util;
 }>;
 
 /**
