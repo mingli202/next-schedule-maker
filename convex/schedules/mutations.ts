@@ -62,7 +62,7 @@ export const updateSchedule = mutation({
   },
 });
 
-export const deleteShedule = mutation({
+export const deleteSchedule = mutation({
   args: {
     scheduleId: v.id("schedules"),
   },
