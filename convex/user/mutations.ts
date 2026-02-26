@@ -4,7 +4,7 @@ import { mutation } from "../_generated/server";
 import { CollectionPolicy } from "../types";
 import { getUserIdFromFirebaseId } from "./helpers";
 import { withoutUndefined } from "../util";
-import { deleteAllSections } from "../sections/helpers";
+import { deleteAllSectionsOfUser } from "../sections/helpers";
 import { deleteAllSchedules } from "../schedules/helpers";
 
 export const createUser = mutation({
@@ -38,11 +38,9 @@ export const deleteUser = mutation({
 
     if (!user) return;
 
-
-
     const userId = user._id;
 
-    await deleteAllSections(ctx, userId)j
+    await deleteAllSectionsOfUser(ctx, userId);
     await deleteAllSchedules(ctx, userId);
 
     await ctx.db.delete(user._id);

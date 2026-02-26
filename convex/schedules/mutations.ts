@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import { mutation } from "../_generated/server";
 import { getUserIdFromFirebaseId } from "../user/helpers";
-import { saveSection } from "../sections/helpers";
+import { deleteAllSectionsOfSchedule, saveSection } from "../sections/helpers";
 import { withoutUndefined } from "../util";
 
 export const createSchedule = mutation({
@@ -76,6 +76,8 @@ export const deleteShedule = mutation({
     const schedule = await ctx.db.get("schedules", scheduleId);
 
     if (!schedule || schedule.userId !== user._id) return;
+
+    await deleteAllSectionsOfSchedule(ctx, scheduleId);
 
     return ctx.db.delete("schedules", scheduleId);
   },

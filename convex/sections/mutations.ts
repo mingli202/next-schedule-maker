@@ -1,8 +1,6 @@
 import { v } from "convex/values";
 import { mutation } from "../_generated/server";
 import { getUserIdFromFirebaseId } from "../user/helpers";
-import { saveSection } from "./helpers";
-import { withoutUndefined } from "../util";
 
 export const deleteSection = mutation({
   args: {
@@ -19,6 +17,6 @@ export const deleteSection = mutation({
 
     if (!section || section.userId !== user._id) return;
 
-    return await ctx.db.delete("sections", sectionId);
+    return await ctx.db.delete(sectionId);
   },
 });
