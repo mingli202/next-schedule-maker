@@ -19,7 +19,9 @@ const schema = defineSchema({
     scheduleId: v.id("schedules"),
     sectionId: v.number(),
     colorIndex: v.number(),
-  }).index("by_userId_scheduleId", ["userId", "scheduleId"]),
+  })
+    .index("by_userId", ["userId"])
+    .index("by_scheduleId", ["scheduleId"]),
 });
 
 export default schema;
