@@ -15,3 +15,14 @@ export async function saveSection(
     userId,
   });
 }
+
+export async function deleteAllSections(ctx: MutationCtx, userId: Id<"users">) {
+  const sections = await ctx.db
+    .query("sections")
+    .withIndex("by_userId_scheduleId", (q) => q.eq("userId", userId))
+    .collect();
+
+  return await Promise.all(
+    sections.map((section) => ctx.db.delete(section._id)),
+  );
+}
