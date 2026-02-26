@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as schedules_mutations from "../schedules/mutations.js";
 import type * as sections_helpers from "../sections/helpers.js";
 import type * as sections_mutations from "../sections/mutations.js";
 import type * as types from "../types.js";
@@ -22,6 +23,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  "schedules/mutations": typeof schedules_mutations;
   "sections/helpers": typeof sections_helpers;
   "sections/mutations": typeof sections_mutations;
   types: typeof types;
