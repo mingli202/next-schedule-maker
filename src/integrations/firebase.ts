@@ -2,16 +2,28 @@ import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
-const config = {
-  apiKey: "AIzaSyAG8LJPNXNgDKnfopB-c1CVX-Uew4uRyqU",
-  authDomain: "schedule-maker-8675b.firebaseapp.com",
-  databaseURL: "https://schedule-maker-8675b-default-rtdb.firebaseio.com",
-  projectId: "schedule-maker-8675b",
-  storageBucket: "schedule-maker-8675b.appspot.com",
-  messagingSenderId: "198447247334",
-  appId: "1:198447247334:web:314fe11a846b7f973cf027",
-  measurementId: "G-VHKK3NNF8T",
-};
+const isProd = import.meta.env.PROD;
+
+const config = isProd
+  ? {
+      apiKey: import.meta.env.apiKey,
+      authDomain: import.meta.env.authDomain,
+      databaseURL: import.meta.env.databaseURL,
+      projectId: import.meta.env.projectId,
+      storageBucket: import.meta.env.storageBucket,
+      messagingSenderId: import.meta.env.messagingSenderId,
+      appId: import.meta.env.appId,
+      measurementId: import.meta.env.measurementId,
+    }
+  : {
+      apiKey: import.meta.env.DEV_apiKey,
+      authDomain: import.meta.env.DEV_authDomain,
+      databaseURL: import.meta.env.DEV_databaseURL,
+      projectId: import.meta.env.DEV_projectId,
+      storageBucket: import.meta.env.DEV_storageBucket,
+      messagingSenderId: import.meta.env.DEV_messagingSenderId,
+      appId: import.meta.env.DEV_appId,
+    };
 
 const app = initializeApp(config);
 const db = getDatabase(app);
