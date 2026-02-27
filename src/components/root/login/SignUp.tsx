@@ -1,45 +1,45 @@
 "use client";
 
-import { cn } from "@/lib";
-import { Dispatch, HTMLAttributes, SetStateAction, useState } from "react";
-import { HTMLMotionProps, motion } from "framer-motion";
-import { Button } from "@/components";
-import Image from "next/image";
 import {
+  createUserWithEmailAndPassword,
   getAuth,
-  signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { app, provider } from "@/backend";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
+import { type HTMLMotionProps, motion } from "framer-motion";
+import { type HTMLAttributes, useState } from "react";
+import { Button } from "@/components";
+import { app, provider } from "@/integrations/firebase";
+import { cn } from "@/lib";
 
 type Props = {
-  setWindow: Dispatch<SetStateAction<"signin" | "signup">>;
+  setWindow: React.Dispatch<React.SetStateAction<"signin" | "signup">>;
 };
 
-function SignIn({
+function SignUp({
   className,
   setWindow,
   ...props
 }: HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div"> & Props) {
   const [error, setError] = useState("");
-  const [type, setType] = useState<"password" | "text">("password");
 
-  async function action(formData: FormData) {
-    const email = formData.get("signinEmail");
-    const password = formData.get("signinPassword");
-
-    if (!email || !password) return;
-
+  async function action(formdata: FormData) {
     const auth = getAuth(app);
 
-    await signInWithEmailAndPassword(
+    const email = formdata.get("signupEmail");
+    const password = formdata.get("signupPassword");
+    const passwordConfirm = formdata.get("password-confirm");
+
+    if (!email || !password || !passwordConfirm) return;
+    if (password.toString() !== passwordConfirm.toString()) {
+      setError("Password must match");
+      return;
+    }
+
+    await createUserWithEmailAndPassword(
       auth,
       email.toString(),
       password.toString(),
-    ).catch(() => setError("Invalid Email or Password"));
+    ).catch(() => setError("An error occured. Try again."));
   }
 
   return (
@@ -50,13 +50,13 @@ function SignIn({
       )}
       {...props}
     >
-      <h2 className="font-heading text-xl md:text-3xl">Sign In</h2>
+      <h2 className="font-heading text-xl md:text-3xl">Sign Up</h2>
 
       <form
         className="flex w-full flex-col gap-2 [&>label>p]:opacity-50"
         action={action}
       >
-        <label className="box-border w-full" htmlFor="signinEmail">
+        <label className="box-border w-full" htmlFor="signupEmail">
           <p>Email</p>
           <input
             className={cn(
@@ -67,22 +67,16 @@ function SignIn({
               },
             )}
             placeholder="example@gmail.com"
-            name="signinEmail"
-            id="signinEmail"
+            name="signupEmail"
+            id="signupEmail"
             type="email"
             required
           />
         </label>
 
-        <label className="box-border w-full" htmlFor="signinPassword">
+        <label className="box-border w-full" htmlFor="signupPassword">
           <div className="flex justify-between">
             <p className="opacity-50">Password</p>
-            <Link
-              href="/forgot"
-              className="opacity-50 transition hover:opacity-100"
-            >
-              Forgot?
-            </Link>
           </div>
           <div className="flex gap-2">
             <input
@@ -93,33 +87,32 @@ function SignIn({
                     error !== "",
                 },
               )}
-              name="signinPassword"
+              name="signupPassword"
               autoComplete="off"
-              id="signinPassword"
-              type={type}
+              id="signupPassword"
               required
             />
-            <Button
-              variant="basic"
-              type="button"
-              onClick={() => {
-                if (type === "password") {
-                  setType("text");
-                } else {
-                  setType("password");
-                }
-              }}
-            >
-              {type === "password" ? (
-                <FontAwesomeIcon icon={faEye} className="h-4" title="reveal" />
-              ) : (
-                <FontAwesomeIcon
-                  icon={faEyeSlash}
-                  className="h-4"
-                  title="hide"
-                />
+          </div>
+        </label>
+
+        <label className="box-border w-full" htmlFor="password-confirm">
+          <div className="flex justify-between">
+            <p className="opacity-50">Confirm Password</p>
+          </div>
+          <div className="flex gap-2">
+            <input
+              className={cn(
+                "border-secondary bg-bg-primary focus:border-primary focus:bg-bg-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
+                {
+                  "border-red-900 bg-red-950 focus:border-red-300 focus:bg-red-900":
+                    error !== "",
+                },
               )}
-            </Button>
+              name="password-confirm"
+              autoComplete="off"
+              id="password-confirm"
+              required
+            />
           </div>
         </label>
 
@@ -127,7 +120,7 @@ function SignIn({
 
         <div className="flex w-full justify-center">
           <Button variant="special" type="submit" className="w-full">
-            Login
+            Sign Up
           </Button>
         </div>
       </form>
@@ -148,7 +141,7 @@ function SignIn({
         }}
         variant="basic"
       >
-        <Image
+        <img
           src="/assets/google icon.png"
           alt="google icon"
           width={20}
@@ -159,16 +152,16 @@ function SignIn({
       </Button>
 
       <div className="flex gap-2">
-        Don{"'"}t have and account?{" "}
+        Back to
         <Button
           className="text-primary p-0 underline"
-          onClick={() => setWindow("signup")}
+          onClick={() => setWindow("signin")}
         >
-          Sign Up
+          Sign In
         </Button>
       </div>
     </motion.div>
   );
 }
 
-export default SignIn;
+export default SignUp;

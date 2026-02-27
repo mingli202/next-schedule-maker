@@ -1,46 +1,46 @@
-"use client";
-
-import { app, provider } from "@/backend";
-import { cn } from "@/lib";
-import { Button } from "@/components";
+import { Link } from "@tanstack/react-router";
 import {
-  createUserWithEmailAndPassword,
   getAuth,
+  signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { HTMLMotionProps, motion } from "framer-motion";
-import { HTMLAttributes, useState } from "react";
-import Image from "next/image";
+import { type HTMLMotionProps, motion } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react";
+import {
+  type Dispatch,
+  type HTMLAttributes,
+  type SetStateAction,
+  useState,
+} from "react";
+import { app, provider } from "src/integrations/firebase";
+import { Button } from "@/components";
+import { cn } from "@/lib";
 
 type Props = {
-  setWindow: React.Dispatch<React.SetStateAction<"signin" | "signup">>;
+  setWindow: Dispatch<SetStateAction<"signin" | "signup">>;
 };
 
-function SignUp({
+function SignIn({
   className,
   setWindow,
   ...props
 }: HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div"> & Props) {
   const [error, setError] = useState("");
+  const [type, setType] = useState<"password" | "text">("password");
 
-  async function action(formdata: FormData) {
+  async function action(formData: FormData) {
+    const email = formData.get("signinEmail");
+    const password = formData.get("signinPassword");
+
+    if (!email || !password) return;
+
     const auth = getAuth(app);
 
-    const email = formdata.get("signupEmail");
-    const password = formdata.get("signupPassword");
-    const passwordConfirm = formdata.get("password-confirm");
-
-    if (!email || !password || !passwordConfirm) return;
-    if (password.toString() !== passwordConfirm.toString()) {
-      setError("Password must match");
-      return;
-    }
-
-    await createUserWithEmailAndPassword(
+    await signInWithEmailAndPassword(
       auth,
       email.toString(),
       password.toString(),
-    ).catch(() => setError("An error occured. Try again."));
+    ).catch(() => setError("Invalid Email or Password"));
   }
 
   return (
@@ -51,13 +51,13 @@ function SignUp({
       )}
       {...props}
     >
-      <h2 className="font-heading text-xl md:text-3xl">Sign Up</h2>
+      <h2 className="font-heading text-xl md:text-3xl">Sign In</h2>
 
       <form
         className="flex w-full flex-col gap-2 [&>label>p]:opacity-50"
         action={action}
       >
-        <label className="box-border w-full" htmlFor="signupEmail">
+        <label className="box-border w-full" htmlFor="signinEmail">
           <p>Email</p>
           <input
             className={cn(
@@ -68,16 +68,22 @@ function SignUp({
               },
             )}
             placeholder="example@gmail.com"
-            name="signupEmail"
-            id="signupEmail"
+            name="signinEmail"
+            id="signinEmail"
             type="email"
             required
           />
         </label>
 
-        <label className="box-border w-full" htmlFor="signupPassword">
+        <label className="box-border w-full" htmlFor="signinPassword">
           <div className="flex justify-between">
             <p className="opacity-50">Password</p>
+            <Link
+              to="/forgot"
+              className="opacity-50 transition hover:opacity-100"
+            >
+              Forgot?
+            </Link>
           </div>
           <div className="flex gap-2">
             <input
@@ -88,32 +94,29 @@ function SignUp({
                     error !== "",
                 },
               )}
-              name="signupPassword"
+              name="signinPassword"
               autoComplete="off"
-              id="signupPassword"
+              id="signinPassword"
+              type={type}
               required
             />
-          </div>
-        </label>
-
-        <label className="box-border w-full" htmlFor="password-confirm">
-          <div className="flex justify-between">
-            <p className="opacity-50">Confirm Password</p>
-          </div>
-          <div className="flex gap-2">
-            <input
-              className={cn(
-                "border-secondary bg-bg-primary focus:border-primary focus:bg-bg-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
-                {
-                  "border-red-900 bg-red-950 focus:border-red-300 focus:bg-red-900":
-                    error !== "",
-                },
+            <Button
+              variant="basic"
+              type="button"
+              onClick={() => {
+                if (type === "password") {
+                  setType("text");
+                } else {
+                  setType("password");
+                }
+              }}
+            >
+              {type === "password" ? (
+                <Eye className="h-4" />
+              ) : (
+                <EyeOff className="h-4" />
               )}
-              name="password-confirm"
-              autoComplete="off"
-              id="password-confirm"
-              required
-            />
+            </Button>
           </div>
         </label>
 
@@ -121,7 +124,7 @@ function SignUp({
 
         <div className="flex w-full justify-center">
           <Button variant="special" type="submit" className="w-full">
-            Sign Up
+            Login
           </Button>
         </div>
       </form>
@@ -142,7 +145,7 @@ function SignUp({
         }}
         variant="basic"
       >
-        <Image
+        <img
           src="/assets/google icon.png"
           alt="google icon"
           width={20}
@@ -153,16 +156,16 @@ function SignUp({
       </Button>
 
       <div className="flex gap-2">
-        Back to
+        Don{"'"}t have and account?{" "}
         <Button
           className="text-primary p-0 underline"
-          onClick={() => setWindow("signin")}
+          onClick={() => setWindow("signup")}
         >
-          Sign In
+          Sign Up
         </Button>
       </div>
     </motion.div>
   );
 }
 
-export default SignUp;
+export default SignIn;
