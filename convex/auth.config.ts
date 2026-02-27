@@ -2,6 +2,10 @@ import { AuthConfig } from "convex/server";
 
 const projectId = process.env.FIREBASE_PROJECT_ID;
 
+if (!projectId) {
+  throw new Error("firebase project id unset");
+}
+
 const config = {
   providers: [
     {
