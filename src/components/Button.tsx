@@ -1,14 +1,12 @@
-"use client";
-
 import {
   AnimatePresence,
   type HTMLMotionProps,
   motion,
   useAnimate,
 } from "framer-motion";
+import { LoaderCircle } from "lucide-react";
 import { type ButtonHTMLAttributes, useRef, useState } from "react";
 import cn from "@/lib/cn";
-import { LoaderCircle } from "lucide-react";
 
 type Props = {
   variant?: "basic" | "special";
