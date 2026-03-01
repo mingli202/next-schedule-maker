@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { View } from "src/components";
-import { EditorInViewParams } from "@/types/schedule";
 import { Sidebar } from "src/components/root/editor";
+import { EditorInViewParams } from "@/types/schedule";
 
 export const Route = createFileRoute("/editor")({
   head: () => ({
