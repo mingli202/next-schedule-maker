@@ -2,6 +2,8 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { useState } from "react";
 import { Button } from "src/components";
+import { Field, FieldLabel } from "src/components/ui/field";
+import { Input } from "src/components/ui/input";
 import { getAuth } from "src/integrations/firebase";
 import { cn } from "src/lib";
 
@@ -32,28 +34,24 @@ function RouteComponent() {
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-4">
-      <form className="flex w-[min(25rem,80%)] flex-col gap-4" action={action}>
-        <label htmlFor="email">Send password reset email to:</label>
-        <input
-          id="email"
-          name="email"
-          className={cn(
-            "border-secondary bg-background focus:border-primary focus:bg-bg-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
-            {
-              "border-red-900 bg-red-950 focus:border-red-300 focus:bg-red-900":
-                error !== "",
-            },
-          )}
-          type="email"
-          required
-          placeholder="example@gmail.com"
-        />
+      <form className="flex w-[min(25rem,80%)]" action={action}>
+        <Field className="gap-4">
+          <FieldLabel htmlFor="email">Send password reset email to:</FieldLabel>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            required
+            placeholder="example@gmail.com"
+            aria-invalid={!!error}
+          />
 
-        {error !== "" && <p className="text-red-400">{error}</p>}
+          {!!error && <p className="text-red-400">{error}</p>}
 
-        <Button variant="special" type="submit">
-          Send
-        </Button>
+          <Button variant="special" type="submit">
+            Send
+          </Button>
+        </Field>
       </form>
 
       <Link to="/login" className="hover:underline">
