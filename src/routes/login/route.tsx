@@ -1,5 +1,5 @@
 import { useConvexAuth } from "@convex-dev/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, Navigate } from "@tanstack/react-router";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -17,8 +17,9 @@ export const Route = createFileRoute("/login")({
   component: RouteComponent,
 });
 
+const auth = getAuth();
+
 function RouteComponent() {
-  const navigate = useNavigate();
   const { isAuthenticated, isLoading } = useConvexAuth();
 
   const [isSignup, setIsSignup] = useState(false);
@@ -46,8 +47,6 @@ function RouteComponent() {
       }
     }
 
-    const auth = getAuth();
-
     const user = isSignup
       ? await createUserWithEmailAndPassword(auth, email, password).catch(
           () => null,
@@ -61,16 +60,18 @@ function RouteComponent() {
     }
   });
 
-  if (isLoading) {
-    return null;
-  }
-
-  if (isAuthenticated) {
-    navigate({ to: "/editor", search: { sections: [] } });
-  }
-
-  return (
-    <div className="flex h-full w-full items-center justify-center">
+  return isLoading ? null : isAuthenticated ? (
+    <Navigate to="/editor" search={{ sections: [] }} />
+  ) : (
+    <motion.div
+      className="flex h-full w-full items-center justify-center"
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+    >
       <div
         className={cn(
           "flex w-[min(20rem,80%)] flex-col items-center gap-2 rounded-md p-2 shadow-lg max-md:text-sm md:w-[min(25rem,80%)] md:gap-4 md:p-4",
@@ -204,7 +205,7 @@ function RouteComponent() {
         <Button
           className="flex items-center gap-2 rounded-full bg-white p-2 text-black opacity-100"
           onClick={async () => {
-            await signInWithPopup(getAuth(), provider);
+            await signInWithPopup(auth, provider);
           }}
           variant="basic"
         >
@@ -264,6 +265,6 @@ function RouteComponent() {
           </motion.div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

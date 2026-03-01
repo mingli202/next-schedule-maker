@@ -9,8 +9,9 @@ type Props = {
   client: ConvexReactClient;
 };
 
+const auth = getAuth(app);
+
 function useAuthFromFirebase() {
-  const auth = getAuth(app);
   const [user, loading] = useAuthState(auth);
 
   const fetchAccessToken = useCallback(
