@@ -7,7 +7,7 @@ export function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
     <div
       className={cn(
         className,
-        "bg-bg-primary bg-opacity-50 z-50 box-border flex flex-col gap-4 p-4 backdrop-blur-lg backdrop-filter",
+        "bg-background bg-opacity-50 z-50 box-border flex flex-col gap-4 p-4 backdrop-blur-lg backdrop-filter",
       )}
     >
       <div className="flex items-center">
