@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { View } from "src/components";
 import { EditorInViewParams } from "@/types/schedule";
+import { Sidebar } from "src/components/root/editor";
 
 export const Route = createFileRoute("/editor")({
   head: () => ({
@@ -19,7 +21,13 @@ export const Route = createFileRoute("/editor")({
 function RouteComponent() {
   return (
     <div className="text-text box-border flex w-screen gap-2 overflow-x-hidden overflow-y-auto p-2 text-sm max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
-      Hello "/editor"!
+      <Sidebar className="basis-1/3" />
+      <ViewWrapper />
     </div>
   );
+}
+
+function ViewWrapper() {
+  const { sections } = Route.useSearch();
+  return <View savedSections={sections} className="basis-2/3" />;
 }

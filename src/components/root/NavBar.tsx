@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { Image } from "@unpic/react";
 import { cn } from "@/lib";
 
 export function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
@@ -11,7 +12,7 @@ export function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
     >
       <div className="flex items-center">
         <Link to="/" className="flex h-10 items-center gap-4">
-          <img src="/assets/logo.png" alt="Logo" width={36} height={36} />
+          <Image src="/assets/logo.png" alt="Logo" width={36} height={36} />
           <span className="font-heading text-lg md:text-3xl">
             Dream Builder
           </span>
