@@ -14,6 +14,18 @@ import { getAuth, provider } from "src/integrations/firebase";
 import { cn } from "src/lib";
 
 export const Route = createFileRoute("/login")({
+  head: () => ({
+    meta: [
+      {
+        title: "Login",
+      },
+      {
+        name: "desciption",
+        content:
+          "John Abbott College (JAC) Dream Schedule Builder Login Page. Login into your account to access your schedules anywhere anytime.",
+      },
+    ],
+  }),
   component: RouteComponent,
 });
 
