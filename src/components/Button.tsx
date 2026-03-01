@@ -124,7 +124,7 @@ function Button({
         disabled && "cursor-not-allowed",
         className,
       )}
-      disabled={isPending && disabled}
+      disabled={isPending || disabled}
       style={
         {
           "--mouse-x": `${mousePosition.x}px`,
