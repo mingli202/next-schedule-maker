@@ -1,7 +1,6 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import TanstackQueryClientProvider from "@/integrations/TanstackQueryClientProvider";
 import appCss from "./globals.css?url";
 
 export const Route = createRootRoute({
