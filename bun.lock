@@ -6,6 +6,8 @@
       "name": "next-schedule-maker",
       "dependencies": {
         "@convex-dev/react-query": "^0.1.0",
+        "@fontsource-variable/fraunces": "^5.2.9",
+        "@fontsource/poppins": "^5.2.7",
         "@tailwindcss/vite": "^4.1.18",
         "@tanstack/react-devtools": "^0.9.4",
         "@tanstack/react-query": "^5.90.20",
@@ -293,6 +295,10 @@
     "@firebase/util": ["@firebase/util@1.13.0", "", { "dependencies": { "tslib": "^2.1.0" } }, "sha512-0AZUyYUfpMNcztR5l09izHwXkZpghLgCUaAGjtMwXnCg3bj4ml5VgiwqOMOxJ+Nw4qN/zJAaOQBcJ7KGkWStqQ=="],
 
     "@firebase/webchannel-wrapper": ["@firebase/webchannel-wrapper@1.0.5", "", {}, "sha512-+uGNN7rkfn41HLO0vekTFhTxk61eKa8mTpRGLO0QSqlQdKvIoGAvLp3ppdVIWbTGYJWM6Kp0iN+PjMIOcnVqTw=="],
+
+    "@fontsource-variable/fraunces": ["@fontsource-variable/fraunces@5.2.9", "", {}, "sha512-Y6IjunlN9Ni723np+GIgAaKzCDBrPRrqNi01TZxHs5wtHYROWFM9W6yiT+/gGwSjWIRD18oX17kD/BRWekc/Lw=="],
+
+    "@fontsource/poppins": ["@fontsource/poppins@5.2.7", "", {}, "sha512-6uQyPmseo4FgI97WIhA4yWRlNaoLk4vSDK/PyRwdqqZb5zAEuc+Kunt8JTMcsHYUEGYBtN15SNkMajMdqUSUmg=="],
 
     "@grpc/grpc-js": ["@grpc/grpc-js@1.9.15", "", { "dependencies": { "@grpc/proto-loader": "^0.7.8", "@types/node": ">=12.12.47" } }, "sha512-nqE7Hc0AzI+euzUwDAy0aY5hCp10r734gMGRdU+qOPX0XSceI2ULrcXB5U2xSc5VkWwalCj4M7GzCAygZl2KoQ=="],
 

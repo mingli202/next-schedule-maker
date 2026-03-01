@@ -3,6 +3,10 @@ import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import appCss from "./globals.css?url";
 
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/700.css";
+import "@fontsource-variable/fraunces";
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
