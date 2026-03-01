@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { View } from "src/components";
-import { Sidebar } from "src/components/root/editor";
+import { SidePane } from "src/components/root/editor";
 import { EditorInViewParams } from "@/types/schedule";
 
 export const Route = createFileRoute("/editor")({
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/editor")({
 function RouteComponent() {
   return (
     <div className="text-text box-border flex w-screen gap-2 overflow-x-hidden overflow-y-auto p-2 text-sm max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
-      <Sidebar className="basis-1/3" />
+      <SidePane className="basis-1/3" />
       <ViewWrapper />
     </div>
   );

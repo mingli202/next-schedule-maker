@@ -3,7 +3,7 @@ import { cn } from "src/lib";
 
 type Props = HTMLProps<HTMLDivElement>;
 
-export function Sidebar({ className, ...props }: Props) {
+export function SidePane({ className, ...props }: Props) {
   return (
     <div
       className={cn(
