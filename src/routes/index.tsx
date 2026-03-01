@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
   return (
-    <main className="font-body text-text flex w-screen flex-col overflow-x-hidden">
+    <main className="font-body flex w-screen flex-col overflow-x-hidden">
       <Navbar className="fixed w-full" />
       <Welcome id="welcome" className="h-screen" />
     </main>
