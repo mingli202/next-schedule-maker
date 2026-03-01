@@ -1,4 +1,4 @@
-import { type SubmitEvent, useState } from "react";
+import { type SubmitEvent, useRef, useState } from "react";
 
 /**
  * Custom hook that mimics the behavior of the built-in `useActionState` hook.
@@ -13,14 +13,17 @@ export default function useFormState(
 ) {
   const [message, setMessage] = useState<string | undefined | null>();
   const [isPending, setIsPending] = useState(false);
+  const _isPending = useRef(false);
 
   async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (isPending) {
+    if (_isPending.current) {
       return;
     }
+    _isPending.current = true;
     setIsPending(true);
     setMessage(await submitHandler(e));
+    _isPending.current = false;
     setIsPending(false);
   }
 
