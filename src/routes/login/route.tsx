@@ -83,18 +83,16 @@ function RouteComponent() {
   return isLoading ? null : isAuthenticated ? (
     <Navigate to="/editor" search={{ sections: [] }} />
   ) : (
-    <motion.div
-      className="flex h-full w-full items-center justify-center"
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-      }}
-    >
+    <div className="flex h-full w-full items-center justify-center">
       <motion.div
         layout
         transition={{ duration: 0.25, ease: "easeOut" }}
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+        }}
         className={cn(
           "flex w-[min(20rem,80%)] flex-col items-center gap-2 rounded-md p-2 shadow-lg max-md:text-sm md:w-[min(25rem,80%)] md:gap-6 md:p-4",
         )}
@@ -161,26 +159,23 @@ function RouteComponent() {
               )}
             </Field>
 
-            <AnimatePresence initial={false}>
+            <AnimatePresence>
               {isSignup ? (
                 <motion.div
                   key="confirm-password"
                   initial={{
                     opacity: 0,
-                    y: -12,
                     height: 0,
                   }}
                   animate={{
                     opacity: 1,
-                    y: 0,
                     height: "auto",
                   }}
                   exit={{
                     opacity: 0,
-                    y: -12,
                     height: 0,
                   }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  transition={{ duration: 0.1, ease: "easeOut" }}
                   className="overflow-hidden"
                 >
                   <Field>
@@ -277,6 +272,6 @@ function RouteComponent() {
           </motion.div>
         )}
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
