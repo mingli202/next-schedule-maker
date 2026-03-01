@@ -10,6 +10,14 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Button } from "src/components";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldSet,
+} from "src/components/ui/field";
+import { Input } from "src/components/ui/input";
 import useFormState from "src/hooks/useFormState";
 import { getAuth, provider } from "src/integrations/firebase";
 import { cn } from "src/lib";
@@ -87,132 +95,110 @@ function RouteComponent() {
     >
       <div
         className={cn(
-          "flex w-[min(20rem,80%)] flex-col items-center gap-2 rounded-md p-2 shadow-lg max-md:text-sm md:w-[min(25rem,80%)] md:gap-4 md:p-4",
+          "flex w-[min(20rem,80%)] flex-col items-center gap-2 rounded-md p-2 shadow-lg max-md:text-sm md:w-[min(25rem,80%)] md:gap-6 md:p-4",
         )}
       >
         <h2 className="font-heading text-xl md:text-3xl">
           {isSignup ? "Sign up" : "Sign in"}
         </h2>
 
-        <form
-          className="flex w-full flex-col gap-2 [&>label>p]:opacity-50"
-          onSubmit={handleSubmit}
-        >
-          <label className="box-border w-full" htmlFor="email">
-            <p>Email</p>
-            <input
-              className={cn(
-                "border-secondary bg-background focus:border-primary focus:bg-bg-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
-                {
-                  "border-red-900 bg-red-950 focus:border-red-300 focus:bg-red-900":
-                    !!error,
-                },
-              )}
-              placeholder="example@gmail.com"
-              name="email"
-              id="email"
-              type="email"
-              required
-            />
-          </label>
-
-          <label className="box-border w-full" htmlFor="password">
-            <div className="flex justify-between">
-              <p className="opacity-50">Password</p>
-              {isSignup ? null : (
-                <Link
-                  to="/forgot"
-                  className="opacity-50 transition hover:opacity-100"
-                >
-                  Forgot?
-                </Link>
-              )}
-            </div>
-            <div className="flex gap-2">
-              <input
-                className={cn(
-                  "focus:border-primary focus:bg-bg-secondary bg-background border-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
-                  {
-                    "border-red-900 bg-red-950 focus:border-red-300 focus:bg-red-900":
-                      !!error,
-                  },
-                )}
-                name="password"
-                autoComplete="off"
-                id="password"
-                type={type}
+        <form className="w-full" onSubmit={handleSubmit}>
+          <FieldGroup>
+            <Field>
+              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <Input
+                placeholder="example@gmail.com"
+                name="email"
+                id="email"
+                type="email"
                 required
+                className="bg-card"
+                aria-invalid={!!error}
               />
-              {isSignup ? null : (
-                <Button
-                  variant="basic"
-                  type="button"
-                  onClick={() => {
-                    if (type === "password") {
-                      setType("text");
-                    } else {
-                      setType("password");
-                    }
-                  }}
-                >
-                  {type === "password" ? (
-                    <Eye className="h-4" />
-                  ) : (
-                    <EyeOff className="h-4" />
-                  )}
-                </Button>
-              )}
-            </div>
-          </label>
+            </Field>
 
-          {isSignup ? (
-            <motion.label
-              className="box-border w-full"
-              htmlFor="confirm-password"
-              initial={{
-                opacity: 0,
-                y: "-50%",
-              }}
-              animate={{
-                opacity: 1,
-                y: "0%",
-              }}
-            >
-              <div className="flex justify-between">
-                <p className="opacity-50">Confirm Password</p>
-              </div>
+            <Field>
+              <FieldLabel htmlFor="password">Password</FieldLabel>
               <div className="flex gap-2">
-                <input
-                  className={cn(
-                    "border-secondary bg-background focus:border-primary focus:bg-bg-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
-                    {
-                      "border-red-900 bg-red-950 focus:border-red-300 focus:bg-red-900":
-                        !!error,
-                    },
-                  )}
-                  name="confirm-password"
+                <Input
+                  name="password"
                   autoComplete="off"
-                  id="confirm-password"
+                  id="password"
                   type={type}
                   required
+                  aria-invalid={!!error}
                 />
+                {isSignup ? null : (
+                  <Button
+                    variant="basic"
+                    type="button"
+                    onClick={() => {
+                      if (type === "password") {
+                        setType("text");
+                      } else {
+                        setType("password");
+                      }
+                    }}
+                  >
+                    {type === "password" ? (
+                      <Eye className="h-4" />
+                    ) : (
+                      <EyeOff className="h-4" />
+                    )}
+                  </Button>
+                )}
               </div>
-            </motion.label>
-          ) : null}
+              {isSignup ? null : (
+                <FieldDescription>
+                  <Link
+                    to="/forgot"
+                    className="opacity-50 transition hover:opacity-100"
+                  >
+                    Reset your password
+                  </Link>
+                </FieldDescription>
+              )}
+            </Field>
 
-          {error !== "" && <p className="text-red-400">{error}</p>}
+            {isSignup ? (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: "-50%",
+                }}
+                animate={{
+                  opacity: 1,
+                  y: "0%",
+                }}
+              >
+                <Field>
+                  <FieldLabel htmlFor="confirm-password">
+                    Confirm Password
+                  </FieldLabel>
+                  <Input
+                    name="confirm-password"
+                    autoComplete="off"
+                    id="confirm-password"
+                    type={type}
+                    required
+                    aria-invalid={!!error}
+                  />
+                </Field>
+              </motion.div>
+            ) : null}
 
-          <div className="flex w-full justify-center">
+            {!!error && <p className="text-red-400">{error}</p>}
+
             <Button variant="special" type="submit" className="w-full">
               {isSignup ? "Sign up" : "Sign in"}
             </Button>
-          </div>
+          </FieldGroup>
         </form>
 
         <div className="flex w-full items-center gap-2">
-          <div className="bg-bg-secondary h-1 basis-full rounded-full" />
-          <p className="text-third">or</p>
-          <div className="bg-bg-secondary h-1 basis-full rounded-full" />
+          <div className="bg-secondary h-1 basis-full rounded-full" />
+          <p className="text-third shrink-0">or</p>
+          <div className="bg-secondary h-1 basis-full rounded-full" />
         </div>
 
         <Button
