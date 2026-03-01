@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider } from "firebase/auth";
+import { GoogleAuthProvider, getAuth as getAuthFirebase } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 const isProd = import.meta.env.PROD;
@@ -29,4 +29,6 @@ const app = initializeApp(config);
 const db = getDatabase(app);
 const provider = new GoogleAuthProvider();
 
-export { app, db, provider };
+const getAuth = () => getAuthFirebase(app);
+
+export { app, db, provider, getAuth };
