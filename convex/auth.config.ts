@@ -1,6 +1,9 @@
 import { AuthConfig } from "convex/server";
 
-const projectId = process.env.FIREBASE_PROJECT_ID;
+const projectId =
+  process.env.ENV === "DEV"
+    ? process.env.DEV_FIREBASE_PROJECT_ID
+    : process.env.FIREBASE_PROJECT_ID;
 
 if (!projectId) {
   throw new Error("firebase project id unset");
