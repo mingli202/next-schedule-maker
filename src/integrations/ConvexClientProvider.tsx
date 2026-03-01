@@ -1,6 +1,9 @@
+import { useConvexMutation } from "@convex-dev/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { api } from "convex/_generated/api";
 import { ConvexProviderWithAuth, type ConvexReactClient } from "convex/react";
-import { getAuth } from "firebase/auth";
-import { type ReactNode, useCallback } from "react";
+import { getAuth, User } from "firebase/auth";
+import { type ReactNode, useCallback, useEffect, useMemo } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { app } from "src/integrations/firebase";
 
@@ -9,8 +12,9 @@ type Props = {
   client: ConvexReactClient;
 };
 
+const auth = getAuth(app);
+
 function useAuthFromFirebase() {
-  const auth = getAuth(app);
   const [user, loading] = useAuthState(auth);
 
   const fetchAccessToken = useCallback(
@@ -21,17 +25,36 @@ function useAuthFromFirebase() {
     [user],
   );
 
-  return {
-    isLoading: loading,
-    isAuthenticated: !!user,
-    fetchAccessToken,
-  };
+  return useMemo(
+    () => ({
+      isLoading: loading,
+      isAuthenticated: !!user,
+      fetchAccessToken,
+    }),
+    [loading, user, fetchAccessToken],
+  );
 }
 
 export function ConvexClientProvider({ children, client }: Props) {
   return (
     <ConvexProviderWithAuth client={client} useAuth={useAuthFromFirebase}>
-      {children}
+      <CreateUserOnLoad>{children}</CreateUserOnLoad>
     </ConvexProviderWithAuth>
   );
+}
+
+function CreateUserOnLoad({ children }: { children: ReactNode }) {
+  const [user] = useAuthState(auth);
+
+  const { mutateAsync: createUser } = useMutation({
+    mutationFn: useConvexMutation(api.user.mutations.createUser),
+  });
+
+  useEffect(() => {
+    if (user) {
+      createUser({});
+    }
+  }, [user, createUser]);
+
+  return children;
 }

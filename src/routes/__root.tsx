@@ -82,7 +82,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="bg-bg-primary font-body text-text overflow-x-hidden text-sm antialiased md:text-base">
+      <body className="bg-bg-primary font-body text-text h-screen w-screen overflow-x-hidden text-sm antialiased md:text-base">
         {children}
         <TanStackDevtools
           config={{

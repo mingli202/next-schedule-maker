@@ -1,11 +1,10 @@
-"use client";
-
 import {
   AnimatePresence,
   type HTMLMotionProps,
   motion,
   useAnimate,
 } from "framer-motion";
+import { LoaderCircle } from "lucide-react";
 import { type ButtonHTMLAttributes, useRef, useState } from "react";
 import cn from "@/lib/cn";
 
@@ -14,6 +13,8 @@ type Props = {
 } & {
   disableBgEffect?: boolean;
   disableScaleEffect?: boolean;
+  isPending?: boolean;
+  pendingElement?: React.ReactNode;
 } & HTMLMotionProps<"button"> &
   ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -23,6 +24,9 @@ function Button({
   variant,
   disableBgEffect,
   disableScaleEffect,
+  isPending,
+  pendingElement,
+  disabled,
   ...props
 }: Props) {
   const yellow = "#facc15";
@@ -112,11 +116,15 @@ function Button({
     <motion.button
       {...props}
       className={cn(
-        "relative overflow-hidden rounded-lg p-2",
+        "relative overflow-hidden rounded-lg p-2 hover:cursor-pointer",
         variant === "basic" && "bg-transparent opacity-50",
         variant === "special" && "text-bg-primary z-10 bg-yellow-400",
+        isPending &&
+          "flex cursor-wait items-center justify-center hover:cursor-wait",
+        disabled && "cursor-not-allowed",
         className,
       )}
+      disabled={isPending || disabled}
       style={
         {
           "--mouse-x": `${mousePosition.x}px`,
@@ -143,7 +151,9 @@ function Button({
         setCircleSize(undefined);
       }}
     >
-      {children}
+      {isPending
+        ? (pendingElement ?? <LoaderCircle className="h-6 w-6 animate-spin" />)
+        : children}
 
       {variant === "basic" && (
         <motion.div
