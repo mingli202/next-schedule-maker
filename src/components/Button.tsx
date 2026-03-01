@@ -29,7 +29,6 @@ function Button({
   disabled,
   ...props
 }: Props) {
-  const yellow = "#facc15";
   const hoverVariants = {
     // basic animation for non important text
 
@@ -40,8 +39,8 @@ function Button({
     // for important buttons
     special: {
       scale: disableScaleEffect ? 1 : 1.01,
-      outlineColor: yellow,
-      boxShadow: `0 0 1rem ${yellow}`,
+      outlineColor: "var(--accent)",
+      boxShadow: `0 0 1rem var(--accent)`,
     },
   };
 
@@ -174,7 +173,7 @@ function Button({
                 className,
               )}
               style={{
-                color: yellow,
+                color: "var(--accent)",
               }}
               initial={{
                 clipPath: "circle(0px at var(--mouse-x) var(--mouse-y))",
