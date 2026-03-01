@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Button } from "src/components";
@@ -117,7 +117,18 @@ function RouteComponent() {
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
+              <div className="flex w-full justify-between">
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+
+                {isSignup ? null : (
+                  <Link
+                    to="/forgot"
+                    className="text-sm opacity-50 transition hover:opacity-100"
+                  >
+                    Forgot?
+                  </Link>
+                )}
+              </div>
               <div className="flex gap-2">
                 <Input
                   name="password"
@@ -147,53 +158,35 @@ function RouteComponent() {
                   </Button>
                 )}
               </div>
-              {isSignup ? null : (
-                <FieldDescription>
-                  <Link
-                    to="/forgot"
-                    className="opacity-50 transition hover:opacity-100"
-                  >
-                    Reset your password
-                  </Link>
-                </FieldDescription>
-              )}
             </Field>
 
-            <AnimatePresence>
-              {isSignup ? (
-                <motion.div
-                  key="confirm-password"
-                  initial={{
-                    opacity: 0,
-                    height: 0,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    height: "auto",
-                  }}
-                  exit={{
-                    opacity: 0,
-                    height: 0,
-                  }}
-                  transition={{ duration: 0.1, ease: "easeOut" }}
-                  className="overflow-hidden"
-                >
-                  <Field>
-                    <FieldLabel htmlFor="confirm-password">
-                      Confirm Password
-                    </FieldLabel>
-                    <Input
-                      name="confirm-password"
-                      autoComplete="off"
-                      id="confirm-password"
-                      type={type}
-                      required
-                      aria-invalid={!!error}
-                    />
-                  </Field>
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
+            <motion.div
+              initial={false}
+              animate={{
+                opacity: isSignup ? 1 : 0,
+                height: isSignup ? "auto" : 0,
+                y: isSignup ? "0%" : "-50%",
+              }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="overflow-hidden"
+              aria-hidden={!isSignup}
+            >
+              <Field>
+                <FieldLabel htmlFor="confirm-password">
+                  Confirm Password
+                </FieldLabel>
+                <Input
+                  name="confirm-password"
+                  autoComplete="off"
+                  id="confirm-password"
+                  type={type}
+                  required={isSignup}
+                  disabled={!isSignup}
+                  aria-invalid={!!error}
+                  tabIndex={isSignup ? 0 : -1}
+                />
+              </Field>
+            </motion.div>
 
             {!!error && <p className="text-red-400">{error}</p>}
 
