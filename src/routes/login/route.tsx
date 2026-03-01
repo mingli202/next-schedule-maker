@@ -1,5 +1,6 @@
 import { useConvexAuth } from "@convex-dev/react-query";
 import { createFileRoute, Link, Navigate } from "@tanstack/react-router";
+import { Image } from "@unpic/react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -221,7 +222,7 @@ function RouteComponent() {
           }}
           variant="basic"
         >
-          <img
+          <Image
             src="/assets/google icon.png"
             alt="google icon"
             width={20}

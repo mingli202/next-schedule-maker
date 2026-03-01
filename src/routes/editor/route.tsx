@@ -17,5 +17,9 @@ export const Route = createFileRoute("/editor")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/editor"!</div>;
+  return (
+    <div className="text-text box-border flex w-screen gap-2 overflow-x-hidden overflow-y-auto p-2 text-sm max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
+      Hello "/editor"!
+    </div>
+  );
 }
