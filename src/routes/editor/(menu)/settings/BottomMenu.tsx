@@ -46,7 +46,7 @@ function BottomMenu() {
   };
 
   return (
-    <div className="bg-bg-primary flex w-full shrink-0 items-center justify-between gap-2 p-2">
+    <div className="bg-background flex w-full shrink-0 items-center justify-between gap-2 p-2">
       <Link href="/editor/settings" title="reset everything">
         <Button variant="basic">Reset URL</Button>
       </Link>

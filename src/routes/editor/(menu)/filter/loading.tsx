@@ -16,29 +16,29 @@ function Loading() {
           className="bg-bg-secondary flex flex-col gap-2 rounded-md p-2"
         >
           <div className="bg-text h-4 w-1/5 rounded-full" />
-          <div className="bg-bg-primary h-10 rounded-md" />
+          <div className="bg-background h-10 rounded-md" />
         </div>
       ))}
 
       <div className="flex gap-2">
         <div className="bg-bg-secondary flex basis-1/2 flex-col gap-2 rounded-md p-2">
           <div className="bg-text h-4 w-1/3 rounded-full" />
-          <div className="bg-bg-primary h-10 rounded-md" />
+          <div className="bg-background h-10 rounded-md" />
         </div>
         <div className="bg-bg-secondary flex basis-1/2 flex-col gap-2 rounded-md p-2">
           <div className="bg-text h-4 w-1/3 rounded-full" />
-          <div className="bg-bg-primary h-10 rounded-md" />
+          <div className="bg-background h-10 rounded-md" />
         </div>
       </div>
 
       <div className="bg-bg-secondary flex flex-col gap-2 rounded-md p-2">
         <div className="bg-text h-4 w-1/5 rounded-full" />
-        <div className="bg-bg-primary h-10 rounded-md" />
+        <div className="bg-background h-10 rounded-md" />
       </div>
 
       <div className="bg-bg-secondary flex flex-col gap-2 rounded-md p-2">
         <div className="bg-text h-4 w-1/5 rounded-full" />
-        <div className="bg-bg-primary h-10 rounded-md" />
+        <div className="bg-background h-10 rounded-md" />
       </div>
     </motion.div>
   );

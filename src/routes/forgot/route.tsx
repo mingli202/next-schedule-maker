@@ -38,7 +38,7 @@ function RouteComponent() {
           id="email"
           name="email"
           className={cn(
-            "border-secondary bg-bg-primary focus:border-primary focus:bg-bg-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
+            "border-secondary bg-background focus:border-primary focus:bg-bg-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
             {
               "border-red-900 bg-red-950 focus:border-red-300 focus:bg-red-900":
                 error !== "",

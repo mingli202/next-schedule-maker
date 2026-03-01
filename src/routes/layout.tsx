@@ -53,7 +53,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
-        className={`${fraunces.variable} ${poppins.variable} bg-bg-primary font-body text-text overflow-x-hidden text-sm antialiased md:text-base`}
+        className={`${fraunces.variable} ${poppins.variable} bg-background font-body text-text overflow-x-hidden text-sm antialiased md:text-base`}
       >
         <ConvexClientProvider>{children}</ConvexClientProvider>
         <SpeedInsights />

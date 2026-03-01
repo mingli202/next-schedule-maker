@@ -62,7 +62,7 @@ export default function ReleaseNotes() {
     <AnimatePresence>
       {seenReleaseNotes === currentVersion ? null : (
         <motion.div
-          className="bot-0 bg-bg-primary/50 absolute top-0 z-[9999] flex h-[100vh] w-[100vw] items-center justify-center backdrop-blur-md backdrop-filter"
+          className="bot-0 bg-background/50 absolute top-0 z-[9999] flex h-[100vh] w-[100vw] items-center justify-center backdrop-blur-md backdrop-filter"
           initial={{
             opacity: 0,
           }}
@@ -75,7 +75,7 @@ export default function ReleaseNotes() {
           onClick={handleClick}
         >
           <div
-            className="border-primary bg-bg-primary flex w-[min(35rem,80%)] flex-col gap-2 rounded-md border-[4px] border-solid p-2 md:gap-4 md:p-4"
+            className="border-primary bg-background flex w-[min(35rem,80%)] flex-col gap-2 rounded-md border-[4px] border-solid p-2 md:gap-4 md:p-4"
             onClick={(e) => e.stopPropagation()}
           >
             <div>

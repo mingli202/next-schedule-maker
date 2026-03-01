@@ -146,7 +146,7 @@
 //       <div className="flex h-full items-center justify-between gap-2">
 //         {editName ? (
 //           <form
-//             className="bg-bg-primary box-border flex basis-full items-center overflow-hidden rounded-md"
+//             className="bg-background box-border flex basis-full items-center overflow-hidden rounded-md"
 //             action={async (f) => {
 //               if (disableEdit) return;
 //               await nameChange(f);
@@ -155,7 +155,7 @@
 //             <input
 //               name="name"
 //               id="name"
-//               className="bg-bg-primary w-full outline-none"
+//               className="bg-background w-full outline-none"
 //               defaultValue={schedule.name}
 //               autoFocus
 //             />
