@@ -61,6 +61,10 @@ function RouteComponent() {
     }
   });
 
+  if (isLoading) {
+    return null;
+  }
+
   if (isAuthenticated) {
     navigate({ to: "/editor", search: { sections: [] } });
   }
