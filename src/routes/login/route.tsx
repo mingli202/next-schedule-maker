@@ -1,9 +1,16 @@
 import { useConvexAuth } from "@convex-dev/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Button } from "src/components";
+import useFormState from "src/hooks/useFormState";
+import { getAuth, provider } from "src/integrations/firebase";
 import { cn } from "src/lib";
 
 export const Route = createFileRoute("/login")({
@@ -15,8 +22,44 @@ function RouteComponent() {
   const { isAuthenticated, isLoading } = useConvexAuth();
 
   const [isSignup, setIsSignup] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [type, setType] = useState<"password" | "text">("text");
+
+  const [error, handleSubmit, isPending] = useFormState(async (e) => {
+    const formData = new FormData(e.target);
+
+    const email = formData.get("email")?.toString();
+    const password = formData.get("password")?.toString();
+
+    if (!email || !password) {
+      return "Fields must not be empty";
+    }
+
+    if (isSignup) {
+      const confirmPassword = formData.get("confirm-password")?.toString();
+
+      if (!confirmPassword) {
+        return "Fields must not be empty";
+      }
+
+      if (confirmPassword !== password) {
+        return "Passwords must match";
+      }
+    }
+
+    const auth = getAuth();
+
+    const user = isSignup
+      ? await createUserWithEmailAndPassword(auth, email, password).catch(
+          () => null,
+        )
+      : await signInWithEmailAndPassword(auth, email, password).catch(
+          () => null,
+        );
+
+    if (!user) {
+      return "Looks like something went wrong";
+    }
+  });
 
   if (isAuthenticated) {
     navigate({ to: "/editor", search: { sections: [] } });
@@ -29,9 +72,14 @@ function RouteComponent() {
           "flex w-[min(20rem,80%)] flex-col items-center gap-2 rounded-md p-2 shadow-lg max-md:text-sm md:w-[min(25rem,80%)] md:gap-4 md:p-4",
         )}
       >
-        <h2 className="font-heading text-xl md:text-3xl">Sign In</h2>
+        <h2 className="font-heading text-xl md:text-3xl">
+          {isSignup ? "Sign up" : "Sign in"}
+        </h2>
 
-        <form className="flex w-full flex-col gap-2 [&>label>p]:opacity-50">
+        <form
+          className="flex w-full flex-col gap-2 [&>label>p]:opacity-50"
+          onSubmit={handleSubmit}
+        >
           <label className="box-border w-full" htmlFor="email">
             <p>Email</p>
             <input
@@ -65,7 +113,7 @@ function RouteComponent() {
             <div className="flex gap-2">
               <input
                 className={cn(
-                  "border-secondary bg-bg-primary focus:border-primary focus:bg-bg-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
+                  "focus:border-primary focus:bg-bg-secondary bg-bg-primary border-secondary box-border w-full rounded-md border-4 border-solid p-2 transition outline-none placeholder:italic",
                   {
                     "border-red-900 bg-red-950 focus:border-red-300 focus:bg-red-900":
                       !!error,
@@ -138,7 +186,7 @@ function RouteComponent() {
 
           <div className="flex w-full justify-center">
             <Button variant="special" type="submit" className="w-full">
-              Login
+              {isSignup ? "Sign up" : "Sign in"}
             </Button>
           </div>
         </form>
@@ -151,7 +199,9 @@ function RouteComponent() {
 
         <Button
           className="flex items-center gap-2 rounded-full bg-white p-2 text-black opacity-100"
-          onClick={async () => {}}
+          onClick={async () => {
+            await signInWithPopup(getAuth(), provider);
+          }}
           variant="basic"
         >
           <img
@@ -181,6 +231,7 @@ function RouteComponent() {
             <Button
               className="text-primary p-0 hover:underline"
               onClick={() => setIsSignup(false)}
+              isPending={isPending}
             >
               Sign In
             </Button>
@@ -202,6 +253,7 @@ function RouteComponent() {
             <Button
               className="text-primary p-0 hover:underline"
               onClick={() => setIsSignup(true)}
+              isPending={isPending}
             >
               Sign Up
             </Button>
