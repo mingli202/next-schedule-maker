@@ -21,8 +21,6 @@ function useAuthFromFirebase() {
     [user],
   );
 
-  console.log({ user, isAuthenticated: !!user });
-
   return useMemo(
     () => ({
       isLoading: loading,
