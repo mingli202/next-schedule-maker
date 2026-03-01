@@ -266,7 +266,7 @@ function RouteComponent() {
             }}
             key="signup-text"
           >
-            Don{"'"}t have and account?{" "}
+            Don{"'"}t have an account?{" "}
             <Button
               className="text-primary p-0 hover:underline"
               onClick={() => setIsSignup(true)}
