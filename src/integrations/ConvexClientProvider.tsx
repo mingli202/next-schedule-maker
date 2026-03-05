@@ -2,7 +2,7 @@ import { useConvexMutation } from "@convex-dev/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { api } from "convex/_generated/api";
 import { ConvexProviderWithAuth, type ConvexReactClient } from "convex/react";
-import { getAuth, User } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { type ReactNode, useCallback, useEffect, useMemo } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { app } from "src/integrations/firebase";
