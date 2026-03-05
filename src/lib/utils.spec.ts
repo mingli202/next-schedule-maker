@@ -1,7 +1,7 @@
 import { expect } from "bun:test";
 import { getAllSectionsAllGet, type SectionResponse } from "src/client";
 import { given, then, when } from "./test-util";
-import { getSectionFromSortedListWithId } from "./util";
+import { getSectionFromSortedListWithId } from "./utils";
 
 let allSections: SectionResponse[] = [];
 

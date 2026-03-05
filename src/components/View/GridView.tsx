@@ -1,5 +1,3 @@
-"use client";
-
 import { AnimatePresence } from "framer-motion";
 import type { SavedSection } from "@/types/schedule";
 import SectionBlock from "./SectionBlock";

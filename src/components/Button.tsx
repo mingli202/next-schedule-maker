@@ -6,7 +6,7 @@ import {
 } from "framer-motion";
 import { LoaderCircle } from "lucide-react";
 import { type ButtonHTMLAttributes, useRef, useState } from "react";
-import cn from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 type Props = {
   variant?: "basic" | "special";

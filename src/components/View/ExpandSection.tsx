@@ -1,9 +1,7 @@
-"use client";
-
 import { motion, type Variants } from "framer-motion";
 import { Minimize } from "lucide-react";
 import type { SectionResponse } from "@/client";
-import cn from "@/lib/cn";
+import { cn } from "@/lib";
 import Button from "../Button";
 import SectionCard from "../SectionCard";
 
