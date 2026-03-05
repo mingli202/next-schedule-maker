@@ -125,7 +125,7 @@ function Autobuild({ allClasses, colors }: Props) {
               />
             </div>
           </div>
-          <div className="bg-bg-primary relative bottom-0 z-[5] flex items-center justify-center">
+          <div className="bg-background relative bottom-0 z-[5] flex items-center justify-center">
             <Button
               variant="special"
               className="w-fit"
@@ -155,7 +155,7 @@ function Autobuild({ allClasses, colors }: Props) {
             allClasses={allClasses}
           />
 
-          <div className="bg-bg-primary z-10 flex w-full items-center justify-center max-md:order-first">
+          <div className="bg-background z-10 flex w-full items-center justify-center max-md:order-first">
             <Button
               variant="special"
               className="w-fit"

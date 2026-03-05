@@ -1,6 +1,4 @@
-"use client";
-
-import cn from "@/lib/cn";
+import { cn } from "src/lib/utils";
 import type { SavedSection } from "@/types/schedule";
 import GridView from "./GridView";
 import PreviewHover from "./PreviewHover";
@@ -28,7 +26,7 @@ function View({
     <div
       className={cn(
         "relative box-border grid w-full",
-        "bg-primary text-bg-primary rounded-md p-2 md:p-4",
+        "bg-primary text-primary-foreground rounded-md p-2 md:p-4",
 
         disableControls
           ? "h-full grid-cols-5 grid-rows-[repeat(20,1fr)] md:h-full md:w-full md:p-2"
@@ -61,7 +59,7 @@ function View({
       <div
         className={cn(
           "relative grid grid-cols-5 grid-rows-[repeat(20,1fr)]",
-          "bg-slate shadow-bg-primary/30 h-full rounded-md shadow-lg",
+          "shadow-background/30 h-full rounded-md bg-slate-300 shadow-lg",
           "text-[8px] leading-2.5 md:text-[14px] md:leading-3.5",
 
           disableControls

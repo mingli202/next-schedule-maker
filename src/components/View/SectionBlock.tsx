@@ -2,8 +2,8 @@ import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Maximize, Minus } from "lucide-react";
 import { Fragment, useState } from "react";
 import { useSection } from "@/hooks";
-import { cn } from "@/lib";
 import { getColorFromIndex } from "@/lib/colors";
+import { cn } from "@/lib/utils";
 import Button from "../Button";
 import ExpandSection from "./ExpandSection";
 

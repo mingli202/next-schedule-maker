@@ -151,9 +151,7 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
               <p className="cursor-pointer hover:underline">
                 rating range:{" "}
                 {code.ratingRange
-                  ? `${code.ratingRange.from ?? 0} - ${
-                      code.ratingRange.to ?? 5
-                    }`
+                  ? `${code.ratingRange.from ?? 0} - ${code.ratingRange.to ?? 5}`
                   : "any (click to edit)"}
               </p>
 
@@ -232,9 +230,7 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
               <p className="cursor-pointer hover:underline">
                 score range:{" "}
                 {code.scoreRange
-                  ? `${code.scoreRange.from ?? 0} - ${
-                      code.scoreRange.to ?? 100
-                    }`
+                  ? `${code.scoreRange.from ?? 0} - ${code.scoreRange.to ?? 100}`
                   : "any (click to edit)"}
               </p>
 
@@ -316,7 +312,7 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
           <input
             id="extraCode"
             name="extraCode"
-            className="bg-bg-primary group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
+            className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
             placeholder="Add code..."
             list="codes"
           />

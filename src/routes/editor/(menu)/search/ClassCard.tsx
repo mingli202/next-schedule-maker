@@ -83,7 +83,7 @@ function ClassCard({ id, section, allClasses, colors, currentClasses }: Props) {
     >
       {reportedCoordinates ? (
         <div
-          className="bg-bg-primary absolute z-10 -translate-x-[1rem] -translate-y-3/4 rounded-[0.375rem] p-1 text-sm"
+          className="bg-background absolute z-10 -translate-x-[1rem] -translate-y-3/4 rounded-[0.375rem] p-1 text-sm"
           style={{ top: reportedCoordinates.y, left: reportedCoordinates.x }}
           ref={reportedRef}
           onClick={(e) => e.stopPropagation()}

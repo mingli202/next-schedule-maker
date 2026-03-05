@@ -110,7 +110,7 @@ function Form({ allClasses }: Props) {
         <input
           name="course"
           id="course"
-          className="bg-bg-primary group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
+          className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
           placeholder="e.g. English"
           onChange={(e) => setCourseName(e.target.value)}
           list="a"
@@ -140,7 +140,7 @@ function Form({ allClasses }: Props) {
         <input
           name="code"
           id="code"
-          className="bg-bg-primary group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
+          className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
           placeholder="e.g. 603-103-MQ"
           autoComplete="off"
           onChange={(e) => setCode(e.target.value)}
@@ -163,7 +163,7 @@ function Form({ allClasses }: Props) {
         <input
           name="title"
           id="title"
-          className="bg-bg-primary group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
+          className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
           placeholder="e.g. Hockey is everything"
           autoComplete="off"
           list="c"
@@ -193,7 +193,7 @@ function Form({ allClasses }: Props) {
         <input
           name="prof"
           id="prof"
-          className="bg-bg-primary group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
+          className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
           placeholder="e.g. Patrick Burger"
           list="d"
           autoComplete="off"
@@ -222,7 +222,7 @@ function Form({ allClasses }: Props) {
               <input
                 name="ratingMin"
                 id="ratingMin"
-                className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
                 type="number"
                 min={0}
                 max={5}
@@ -242,7 +242,7 @@ function Form({ allClasses }: Props) {
               <input
                 name="ratingMax"
                 id="ratingMax"
-                className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
                 type="number"
                 min={0}
                 max={5}
@@ -267,7 +267,7 @@ function Form({ allClasses }: Props) {
               <input
                 name="scoreMin"
                 id="scoreMin"
-                className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
                 type="number"
                 min={0}
                 max={100}
@@ -287,7 +287,7 @@ function Form({ allClasses }: Props) {
               <input
                 name="scoreMax"
                 id="scoreMax"
-                className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
                 type="number"
                 min={0}
                 max={100}
@@ -311,7 +311,7 @@ function Form({ allClasses }: Props) {
         <div className="flex gap-2">
           <label
             htmlFor="M"
-            className="bg-bg-primary group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
+            className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
           >
             <input
               name="day"
@@ -325,7 +325,7 @@ function Form({ allClasses }: Props) {
           </label>
           <label
             htmlFor="T"
-            className="bg-bg-primary group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
+            className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
           >
             <input
               name="day"
@@ -339,7 +339,7 @@ function Form({ allClasses }: Props) {
           </label>
           <label
             htmlFor="W"
-            className="bg-bg-primary group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
+            className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
           >
             <input
               name="day"
@@ -353,7 +353,7 @@ function Form({ allClasses }: Props) {
           </label>
           <label
             htmlFor="R"
-            className="bg-bg-primary group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
+            className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
           >
             <input
               name="day"
@@ -367,7 +367,7 @@ function Form({ allClasses }: Props) {
           </label>
           <label
             htmlFor="F"
-            className="bg-bg-primary group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
+            className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
           >
             <input
               name="day"
@@ -389,7 +389,7 @@ function Form({ allClasses }: Props) {
             <input
               name="time"
               id="timeMin"
-              className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+              className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
               type="time"
               min="08:00"
               max="18:00"
@@ -404,7 +404,7 @@ function Form({ allClasses }: Props) {
             <input
               name="time"
               id="timeMax"
-              className="bg-bg-primary group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+              className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
               type="time"
               min="08:00"
               max="18:00"

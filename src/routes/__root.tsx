@@ -1,8 +1,11 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import TanstackQueryClientProvider from "@/integrations/TanstackQueryClientProvider";
 import appCss from "./globals.css?url";
+
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/700.css";
+import "@fontsource-variable/fraunces";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -82,7 +85,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="bg-bg-primary font-body text-text h-screen w-screen overflow-x-hidden text-sm antialiased md:text-base">
+      <body className="dark font-body h-screen w-screen overflow-x-hidden text-sm antialiased md:text-base">
         {children}
         <TanStackDevtools
           config={{

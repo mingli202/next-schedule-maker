@@ -1,5 +1,3 @@
-"use client";
-
 import { useSearch } from "@tanstack/react-router";
 import { useSection } from "@/hooks";
 

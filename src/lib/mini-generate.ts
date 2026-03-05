@@ -2,7 +2,7 @@ import type { SectionResponse } from "@/client";
 import type { SavedSection } from "@/types/schedule";
 import { getNextAvailableColorIndex } from "./colors";
 import isValidAdditionToSchedule from "./schedule/isValidAdditionToSchedule";
-import { getSectionFromSortedListWithId } from "./util";
+import { getSectionFromSortedListWithId } from "./utils";
 
 const prefix = {
   french: "602",

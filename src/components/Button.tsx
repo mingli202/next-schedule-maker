@@ -6,7 +6,7 @@ import {
 } from "framer-motion";
 import { LoaderCircle } from "lucide-react";
 import { type ButtonHTMLAttributes, useRef, useState } from "react";
-import cn from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 type Props = {
   variant?: "basic" | "special";
@@ -29,7 +29,6 @@ function Button({
   disabled,
   ...props
 }: Props) {
-  const yellow = "#facc15";
   const hoverVariants = {
     // basic animation for non important text
 
@@ -40,8 +39,8 @@ function Button({
     // for important buttons
     special: {
       scale: disableScaleEffect ? 1 : 1.01,
-      outlineColor: yellow,
-      boxShadow: `0 0 1rem ${yellow}`,
+      outlineColor: "var(--accent)",
+      boxShadow: `0 0 1rem var(--accent)`,
     },
   };
 
@@ -118,7 +117,7 @@ function Button({
       className={cn(
         "relative overflow-hidden rounded-lg p-2 hover:cursor-pointer",
         variant === "basic" && "bg-transparent opacity-50",
-        variant === "special" && "text-bg-primary z-10 bg-yellow-400",
+        variant === "special" && "text-accent-foreground bg-accent z-10",
         isPending &&
           "flex cursor-wait items-center justify-center hover:cursor-wait",
         disabled && "cursor-not-allowed",
@@ -169,12 +168,12 @@ function Button({
             <motion.div
               ref={scope}
               className={cn(
-                "bg-bg-primary absolute top-0 left-0 z-1 h-full w-full",
+                "bg-background absolute top-0 left-0 z-1 h-full w-full",
                 "overflow-hidden p-2",
                 className,
               )}
               style={{
-                color: yellow,
+                color: "var(--accent)",
               }}
               initial={{
                 clipPath: "circle(0px at var(--mouse-x) var(--mouse-y))",
