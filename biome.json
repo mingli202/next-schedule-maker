@@ -31,7 +31,11 @@
     "enabled": true,
     "rules": {
       "recommended": true
-    }
+    },
+    "includes": [
+      "**",
+      "!src/client/**"
+    ]
   },
   "javascript": {
     "formatter": {
