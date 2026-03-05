@@ -68,7 +68,7 @@
   --shadow-2xl: 0 1px 3px 0px oklch(0 0 0 / 0.25);
 }
 
-* .dark {
+*.dark {
   --background: oklch(0.18 0.01 223.99);
   --foreground: oklch(0.91 0.01 232.29);
   --card: oklch(0.22 0.02 237.82);
