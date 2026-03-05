@@ -1,6 +1,6 @@
 import type { HTMLProps } from "react";
 import type { SectionResponse } from "@/client";
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 import LecLab from "./LecLab";
 
 type SectionCardProps = {

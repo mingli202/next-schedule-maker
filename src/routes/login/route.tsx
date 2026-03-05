@@ -10,16 +10,11 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Button } from "src/components";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "src/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
 import useFormState from "src/hooks/useFormState";
 import { getAuth, provider } from "src/integrations/firebase";
-import { cn } from "src/lib";
+import { cn } from "src/lib/utils";
 
 export const Route = createFileRoute("/login")({
   head: () => ({

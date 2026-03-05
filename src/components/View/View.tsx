@@ -1,4 +1,4 @@
-import { cn } from "src/lib";
+import { cn } from "src/lib/utils";
 import type { SavedSection } from "@/types/schedule";
 import GridView from "./GridView";
 import PreviewHover from "./PreviewHover";

@@ -1,8 +1,7 @@
 import { Clock, User } from "lucide-react";
 import type { HTMLProps } from "react";
 import type { LecLabResponse } from "@/client";
-import { cn } from "@/lib";
-import { capitalize } from "@/lib/utils";
+import { capitalize, cn } from "@/lib/utils";
 import TeacherStats from "./TeacherStats";
 
 type Props = {

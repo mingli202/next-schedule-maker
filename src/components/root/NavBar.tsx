@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 
 export function Navbar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   return (

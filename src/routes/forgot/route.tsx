@@ -5,7 +5,6 @@ import { Button } from "src/components";
 import { Field, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
 import { getAuth } from "src/integrations/firebase";
-import { cn } from "src/lib";
 
 export const Route = createFileRoute("/forgot")({
   component: RouteComponent,

@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import type { HTMLAttributes } from "react";
-import { cn } from "src/lib";
+import { cn } from "src/lib/utils";
 import Button from "@/components/Button";
 import { BgAnimation } from "./BgAnimation";
 

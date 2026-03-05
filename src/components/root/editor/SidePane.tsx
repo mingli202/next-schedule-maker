@@ -2,7 +2,7 @@ import { signOut } from "firebase/auth";
 import type { HTMLProps } from "react";
 import { Button } from "src/components";
 import { getAuth } from "src/integrations/firebase";
-import { cn } from "src/lib";
+import { cn } from "src/lib/utils";
 
 type Props = HTMLProps<HTMLDivElement>;
 

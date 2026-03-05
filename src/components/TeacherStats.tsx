@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { HTMLProps } from "react";
-import { cn } from "src/lib";
+import { cn } from "src/lib/utils";
 import { getRatingsRatingsProfGet, type LecLabResponse } from "@/client";
 
 type Props = {
