@@ -1,17 +1,6 @@
-"use client";
-
-import cn from "@/lib/cn";
 import Button from "@/components/Button";
-import {
-  faFilter,
-  faFolder,
-  faGear,
-  faSearch,
-  faStar,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { Link } from "@tanstack/react-router";
+import { cn } from "src/lib/utils";
 
 function MenuNavBar({ className }: React.HTMLAttributes<HTMLDivElement>) {
   const searchParams = useSearchParams();

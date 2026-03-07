@@ -13,6 +13,11 @@ import { Route as LoginRouteRouteImport } from './routes/login/route'
 import { Route as ForgotRouteRouteImport } from './routes/forgot/route'
 import { Route as EditorRouteRouteImport } from './routes/editor/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EditorSettingsRouteImport } from './routes/editor/settings'
+import { Route as EditorSearchRouteImport } from './routes/editor/search'
+import { Route as EditorSavedRouteImport } from './routes/editor/saved'
+import { Route as EditorFilterRouteImport } from './routes/editor/filter'
+import { Route as EditorAutobuildRouteImport } from './routes/editor/autobuild'
 
 const LoginRouteRoute = LoginRouteRouteImport.update({
   id: '/login',
@@ -34,37 +39,105 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EditorSettingsRoute = EditorSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => EditorRouteRoute,
+} as any)
+const EditorSearchRoute = EditorSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => EditorRouteRoute,
+} as any)
+const EditorSavedRoute = EditorSavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => EditorRouteRoute,
+} as any)
+const EditorFilterRoute = EditorFilterRouteImport.update({
+  id: '/filter',
+  path: '/filter',
+  getParentRoute: () => EditorRouteRoute,
+} as any)
+const EditorAutobuildRoute = EditorAutobuildRouteImport.update({
+  id: '/autobuild',
+  path: '/autobuild',
+  getParentRoute: () => EditorRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/editor': typeof EditorRouteRoute
+  '/editor': typeof EditorRouteRouteWithChildren
   '/forgot': typeof ForgotRouteRoute
   '/login': typeof LoginRouteRoute
+  '/editor/autobuild': typeof EditorAutobuildRoute
+  '/editor/filter': typeof EditorFilterRoute
+  '/editor/saved': typeof EditorSavedRoute
+  '/editor/search': typeof EditorSearchRoute
+  '/editor/settings': typeof EditorSettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/editor': typeof EditorRouteRoute
+  '/editor': typeof EditorRouteRouteWithChildren
   '/forgot': typeof ForgotRouteRoute
   '/login': typeof LoginRouteRoute
+  '/editor/autobuild': typeof EditorAutobuildRoute
+  '/editor/filter': typeof EditorFilterRoute
+  '/editor/saved': typeof EditorSavedRoute
+  '/editor/search': typeof EditorSearchRoute
+  '/editor/settings': typeof EditorSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/editor': typeof EditorRouteRoute
+  '/editor': typeof EditorRouteRouteWithChildren
   '/forgot': typeof ForgotRouteRoute
   '/login': typeof LoginRouteRoute
+  '/editor/autobuild': typeof EditorAutobuildRoute
+  '/editor/filter': typeof EditorFilterRoute
+  '/editor/saved': typeof EditorSavedRoute
+  '/editor/search': typeof EditorSearchRoute
+  '/editor/settings': typeof EditorSettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/editor' | '/forgot' | '/login'
+  fullPaths:
+    | '/'
+    | '/editor'
+    | '/forgot'
+    | '/login'
+    | '/editor/autobuild'
+    | '/editor/filter'
+    | '/editor/saved'
+    | '/editor/search'
+    | '/editor/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/editor' | '/forgot' | '/login'
-  id: '__root__' | '/' | '/editor' | '/forgot' | '/login'
+  to:
+    | '/'
+    | '/editor'
+    | '/forgot'
+    | '/login'
+    | '/editor/autobuild'
+    | '/editor/filter'
+    | '/editor/saved'
+    | '/editor/search'
+    | '/editor/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/editor'
+    | '/forgot'
+    | '/login'
+    | '/editor/autobuild'
+    | '/editor/filter'
+    | '/editor/saved'
+    | '/editor/search'
+    | '/editor/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  EditorRouteRoute: typeof EditorRouteRoute
+  EditorRouteRoute: typeof EditorRouteRouteWithChildren
   ForgotRouteRoute: typeof ForgotRouteRoute
   LoginRouteRoute: typeof LoginRouteRoute
 }
@@ -99,12 +172,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/editor/settings': {
+      id: '/editor/settings'
+      path: '/settings'
+      fullPath: '/editor/settings'
+      preLoaderRoute: typeof EditorSettingsRouteImport
+      parentRoute: typeof EditorRouteRoute
+    }
+    '/editor/search': {
+      id: '/editor/search'
+      path: '/search'
+      fullPath: '/editor/search'
+      preLoaderRoute: typeof EditorSearchRouteImport
+      parentRoute: typeof EditorRouteRoute
+    }
+    '/editor/saved': {
+      id: '/editor/saved'
+      path: '/saved'
+      fullPath: '/editor/saved'
+      preLoaderRoute: typeof EditorSavedRouteImport
+      parentRoute: typeof EditorRouteRoute
+    }
+    '/editor/filter': {
+      id: '/editor/filter'
+      path: '/filter'
+      fullPath: '/editor/filter'
+      preLoaderRoute: typeof EditorFilterRouteImport
+      parentRoute: typeof EditorRouteRoute
+    }
+    '/editor/autobuild': {
+      id: '/editor/autobuild'
+      path: '/autobuild'
+      fullPath: '/editor/autobuild'
+      preLoaderRoute: typeof EditorAutobuildRouteImport
+      parentRoute: typeof EditorRouteRoute
+    }
   }
 }
 
+interface EditorRouteRouteChildren {
+  EditorAutobuildRoute: typeof EditorAutobuildRoute
+  EditorFilterRoute: typeof EditorFilterRoute
+  EditorSavedRoute: typeof EditorSavedRoute
+  EditorSearchRoute: typeof EditorSearchRoute
+  EditorSettingsRoute: typeof EditorSettingsRoute
+}
+
+const EditorRouteRouteChildren: EditorRouteRouteChildren = {
+  EditorAutobuildRoute: EditorAutobuildRoute,
+  EditorFilterRoute: EditorFilterRoute,
+  EditorSavedRoute: EditorSavedRoute,
+  EditorSearchRoute: EditorSearchRoute,
+  EditorSettingsRoute: EditorSettingsRoute,
+}
+
+const EditorRouteRouteWithChildren = EditorRouteRoute._addFileChildren(
+  EditorRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  EditorRouteRoute: EditorRouteRoute,
+  EditorRouteRoute: EditorRouteRouteWithChildren,
   ForgotRouteRoute: ForgotRouteRoute,
   LoginRouteRoute: LoginRouteRoute,
 }
