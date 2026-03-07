@@ -1,36 +1,61 @@
-"use client";
+import { useCallback, useEffect, useRef } from "react";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+type DragIndicatorProps = {
+  onNewXPos: (xPos: number) => void;
+};
+export function DragIndicator({ onNewXPos }: DragIndicatorProps) {
+  const isMouseDown = useRef<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-function DragIndicator() {
-  const [vw, setVW] = useState(0);
-  const [menu, setMenu] = useState<HTMLElement | null>(null);
-  const [view, setView] = useState<HTMLElement | null>(null);
+  const onMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isMouseDown.current || !containerRef.current) {
+        return;
+      }
 
-  useEffect(() => {
-    setVW(window.innerWidth);
-    setMenu(document.getElementById("menu"));
-    setView(document.getElementById("view"));
+      const x = e.clientX;
+
+      const percent = (100 * x) / window.innerWidth;
+      onNewXPos(percent);
+    },
+    [onNewXPos],
+  );
+
+  const onMouseUp = useCallback(() => {
+    if (!isMouseDown.current) {
+      return;
+    }
+    isMouseDown.current = false;
+    document.body.style.userSelect = "";
+    document.body.style.cursor = "";
   }, []);
 
+  const onMouseDown = useCallback(() => {
+    isMouseDown.current = true;
+    document.body.style.userSelect = "none";
+    document.body.style.cursor = "col-resize";
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+
+    return () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+  }, [onMouseMove, onMouseUp]);
+
   return (
-    <motion.div
-      className="z-30 hidden h-[calc(100%-1rem)] w-2 cursor-ew-resize items-center justify-center md:flex"
-      onPan={(_, info) => {
-        const x = info.point.x;
-        const menuWidth = `${x}px`;
-        const viewWidth = `${vw - x}px`;
-
-        if (!menu || !view) return;
-
-        menu.style.flexBasis = menuWidth;
-        view.style.flexBasis = viewWidth;
-      }}
+    <div
+      className="z-30 hidden h-full w-3 items-center justify-center md:flex"
+      ref={containerRef}
     >
-      <div className="h-10 w-1/2 rounded-full bg-slate" />
-    </motion.div>
+      <button
+        className="h-10 w-1/2 cursor-ew-resize rounded-full bg-slate-400"
+        onMouseDown={onMouseDown}
+        type="button"
+      />
+    </div>
   );
 }
-
-export default DragIndicator;
