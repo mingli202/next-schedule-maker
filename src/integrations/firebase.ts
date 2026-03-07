@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth as getAuthFirebase } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
-const isProd = import.meta.env.PROD;
+const isProd = import.meta.env.VITE_ENV === "prod";
 
 const config = isProd
   ? {
