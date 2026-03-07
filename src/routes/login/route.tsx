@@ -1,5 +1,10 @@
 import { useConvexAuth } from "@convex-dev/react-query";
-import { createFileRoute, Link, Navigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  Navigate,
+  useNavigate,
+} from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import {
   createUserWithEmailAndPassword,
@@ -7,7 +12,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { motion } from "framer-motion";
-import { Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Button } from "src/components";
 import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
@@ -36,6 +41,8 @@ const auth = getAuth();
 
 function RouteComponent() {
   const { isAuthenticated, isLoading } = useConvexAuth();
+
+  const navigate = useNavigate();
 
   const [isSignup, setIsSignup] = useState(false);
   const [type, setType] = useState<"password" | "text">("text");
@@ -92,6 +99,17 @@ function RouteComponent() {
           "flex w-[min(20rem,80%)] flex-col items-center gap-2 rounded-md p-2 shadow-lg max-md:text-sm md:w-[min(25rem,80%)] md:gap-6 md:p-4",
         )}
       >
+        <div className="w-full">
+          <Button
+            className="flex items-center gap-2 p-0 text-sm"
+            variant="basic"
+            onClick={() => window.history.back()}
+          >
+            <ArrowLeft className="aspect-square w-4" />
+            back
+          </Button>
+        </div>
+
         <h2 className="font-heading text-xl md:text-3xl">
           {isSignup ? "Sign up" : "Sign in"}
         </h2>
