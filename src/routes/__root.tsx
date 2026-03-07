@@ -3,10 +3,6 @@ import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import appCss from "./globals.css?url";
 
-import "@fontsource/poppins/400.css";
-import "@fontsource/poppins/700.css";
-import "@fontsource-variable/fraunces";
-
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -84,6 +80,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body className="dark font-body h-screen w-screen overflow-x-hidden text-sm antialiased md:text-base">
         {children}
