@@ -1,3 +1,4 @@
+import { Outlet } from "@tanstack/react-router";
 import { signOut } from "firebase/auth";
 import type { ComponentProps } from "react";
 import { Button } from "src/components";
@@ -17,13 +18,13 @@ export function SidePane({ className, ...props }: Props) {
       )}
       {...props}
     >
-      <Button
-        onClick={async () => {
-          await signOut(auth);
-        }}
-      >
-        Log out
-      </Button>
+      <Outlet />
+      {/* <Button */}
+      {/*   onClick={async () => { */}
+      {/*     await signOut(auth); */}
+      {/*   }} */}
+      {/* > */}
+      {/* </Button> */}
     </div>
   );
 }
