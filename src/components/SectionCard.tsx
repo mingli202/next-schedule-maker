@@ -38,7 +38,7 @@ export default function SectionCard({
         <LecLab
           key={leclab.id}
           leclab={leclab}
-          className={cn("rounded-md p-2", leclabClassName)}
+          className={cn("p-2", leclabClassName)}
         />
       ))}
 

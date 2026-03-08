@@ -50,7 +50,7 @@ export default function ExpandSection({
       }}
     >
       <motion.div
-        className="flex w-4/5 flex-col rounded-md p-1 shadow-xl"
+        className="flex w-4/5 flex-col rounded-2xl p-1 shadow-xl"
         style={{
           backgroundColor: bgColor,
           color: textColor,
@@ -83,7 +83,7 @@ export default function ExpandSection({
 
         <SectionCard
           section={section}
-          className={cn("bg-transparent")}
+          className={cn("bg-transparent p-1")}
           leclabClassName={cn({
             "bg-black/10": textColor === "#000",
             "bg-white/10": textColor === "#FFF",
