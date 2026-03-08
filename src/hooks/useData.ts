@@ -1,4 +1,4 @@
-import { RecordValues } from "@/types";
+import type { RecordValues } from "@/types";
 
 export const DataFileVersion = {
   winter2026: {
