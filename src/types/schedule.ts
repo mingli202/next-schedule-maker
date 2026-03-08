@@ -9,5 +9,6 @@ export type SavedSection = z.infer<typeof SavedSection>;
 export const EditorInViewParams = z.object({
   sections: z.array(SavedSection).catch([]),
   previewSectionId: z.number().optional(),
+  activeSearch: z.boolean().optional(),
 });
 export type EditorInViewParams = z.infer<typeof EditorInViewParams>;
