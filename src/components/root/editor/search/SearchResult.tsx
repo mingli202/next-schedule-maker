@@ -1,11 +1,12 @@
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { Eye } from "lucide-react";
+import { Eye, Minus, Plus } from "lucide-react";
 import type { MouseEvent } from "react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
 import SectionCard from "src/components/SectionCard";
 import { useSectionQuery } from "src/hooks/useSection";
+import { useSectionInSearchHelper } from "src/hooks/useSectionInSearchHelper";
 import { cn } from "src/lib/utils";
 
 export function SearchResult() {
@@ -69,20 +70,34 @@ function Result({ sections }: ResultProps) {
 }
 
 function SectionCardFooter(props: { sectionId: number }) {
+  const { sectionId } = props;
+
+  const { addSection, canAddSection, isSectionIncluded, removeSection } =
+    useSectionInSearchHelper(sectionId);
+
   return (
-    <div className="flex w-full justify-end gap-2">
+    <div className="flex w-full justify-end">
       <Link
         to="."
         search={(prev) => ({
           ...prev,
           previewSectionId:
-            prev.previewSectionId === undefined ? props.sectionId : undefined,
+            prev.previewSectionId === undefined ? sectionId : undefined,
         })}
       >
         <Button variant="basic">
           <Eye className="h-5" />
         </Button>
       </Link>
+      {canAddSection() ? (
+        <Button variant="basic" onClick={addSection}>
+          <Plus className="h-5" />
+        </Button>
+      ) : isSectionIncluded() ? (
+        <Button variant="basic" onClick={removeSection}>
+          <Minus className="h-5" />
+        </Button>
+      ) : null}
     </div>
   );
 }

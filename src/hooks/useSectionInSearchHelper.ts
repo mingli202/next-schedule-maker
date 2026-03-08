@@ -52,5 +52,21 @@ export function useSectionInSearchHelper(sectionId: number) {
     }
   }, [section, navigate, canAddSection, isPending]);
 
-  return { addSection, isSectionIncluded, canAddSection } as const;
+  const removeSection = useCallback(() => {
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        sections: prev.sections.filter(
+          (section) => section.sectionId !== sectionId,
+        ),
+      }),
+    });
+  }, [sectionId, navigate]);
+
+  return {
+    addSection,
+    isSectionIncluded,
+    canAddSection,
+    removeSection,
+  } as const;
 }
