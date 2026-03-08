@@ -1,7 +1,11 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { client } from "@/client/client.gen";
 import appCss from "./globals.css?url";
+
+const baseUrl = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8000";
+client.setConfig({ baseUrl });
 
 export const Route = createRootRoute({
   head: () => ({
