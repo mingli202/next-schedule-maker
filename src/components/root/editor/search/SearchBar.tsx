@@ -2,14 +2,25 @@ import { useNavigate, useSearch } from "@tanstack/react-router";
 import { type SubmitEvent, useCallback, useRef } from "react";
 import { Field, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
+import { useDebounce } from "src/hooks";
+
+const activeSearchDelayMili = 200;
 
 export function SearchBar() {
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate({ from: "/editor/search" });
 
-  const q = useSearch({
+  const handleChange = useDebounce(() => {
+    if (!formRef || !activeSearch) {
+      return;
+    }
+
+    formRef.current?.requestSubmit();
+  }, activeSearchDelayMili);
+
+  const { q, activeSearch } = useSearch({
     from: "/editor/search",
-    select: (params) => params.q,
+    select: (params) => ({ q: params.q, activeSearch: params.activeSearch }),
   });
 
   const handleSubmit = useCallback(
@@ -40,13 +51,7 @@ export function SearchBar() {
           name="search"
           id="search"
           autoComplete="off"
-          onChange={() => {
-            if (!formRef) {
-              return;
-            }
-
-            formRef.current?.requestSubmit();
-          }}
+          onChange={handleChange}
           defaultValue={q}
         />
       </Field>
