@@ -6,12 +6,14 @@ import LecLab from "./LecLab";
 type SectionCardProps = {
   section: SectionResponse;
   footer?: ReactNode;
+  leclabClassName?: string;
 } & HTMLProps<HTMLDivElement>;
 
 export default function SectionCard({
   section,
   footer,
   className,
+  leclabClassName,
   ...props
 }: SectionCardProps) {
   return (
@@ -36,7 +38,7 @@ export default function SectionCard({
         <LecLab
           key={leclab.id}
           leclab={leclab}
-          className={cn("rounded-md p-2")}
+          className={cn("rounded-md p-2", leclabClassName)}
         />
       ))}
 

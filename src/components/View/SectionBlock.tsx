@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Maximize, Minus } from "lucide-react";
 import { Fragment, useState } from "react";
+import { useSectionInSearchHelper } from "src/hooks/useSectionInSearchHelper";
 import { useSection } from "@/hooks";
 import { getColorFromIndex } from "@/lib/colors";
 import { cn } from "@/lib/utils";
@@ -16,7 +17,6 @@ type SectionBlockProps = {
   disableRemove?: boolean;
   // mini view like in auto generate
   disableControls?: boolean;
-  onRemoveSectionClicked: () => void;
 };
 
 export default function SectionBlock({
@@ -24,11 +24,11 @@ export default function SectionBlock({
   colorIndex,
   disableRemove,
   disableControls,
-  onRemoveSectionClicked,
 }: SectionBlockProps) {
   const [expand, setExpand] = useState(false);
 
   const { data: section } = useSection(sectionId);
+  const { removeSection } = useSectionInSearchHelper(sectionId);
 
   if (!section) return null;
 
@@ -82,11 +82,11 @@ export default function SectionBlock({
                     className="rounded-none p-0"
                     onClick={() => {
                       if (disableRemove || disableControls) return;
-                      onRemoveSectionClicked();
+                      removeSection();
                     }}
                     title="remove"
                   >
-                    <Minus />
+                    <Minus className="h-4" />
                   </Button>
                 ) : (
                   <div className="basis-full" />
@@ -100,7 +100,7 @@ export default function SectionBlock({
                   }}
                   title="expand"
                 >
-                  <Maximize />
+                  <Maximize className="h-4" />
                 </Button>
               </motion.div>
             )}
@@ -115,7 +115,7 @@ export default function SectionBlock({
               bgColor={bgColor}
               textColor={textColor}
               onMinimizeClicked={() => setExpand(false)}
-              onRemoveSectionClicked={onRemoveSectionClicked}
+              onRemoveSectionClicked={removeSection}
             />
           )}
         </AnimatePresence>

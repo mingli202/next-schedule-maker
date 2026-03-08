@@ -77,13 +77,14 @@ export default function ExpandSection({
             className="p-1"
             title="minimize"
           >
-            <Minimize />
+            <Minimize className="h-5" />
           </Button>
         </div>
 
         <SectionCard
           section={section}
-          className={cn({
+          className={cn("bg-transparent")}
+          leclabClassName={cn({
             "bg-black/10": textColor === "#000",
             "bg-white/10": textColor === "#FFF",
           })}

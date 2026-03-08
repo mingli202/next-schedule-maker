@@ -11,23 +11,13 @@ type Props = {
 export default function GridView({ savedSections, ...props }: Props) {
   return props.disableControls ? (
     savedSections.map((param) => (
-      <SectionBlock
-        key={param.sectionId}
-        {...param}
-        {...props}
-        onRemoveSectionClicked={() => {}}
-      />
+      <SectionBlock key={param.sectionId} {...param} {...props} />
     ))
   ) : (
     // TODO: onRemoveSectionClicked
     <AnimatePresence>
       {savedSections.map((param) => (
-        <SectionBlock
-          key={param.sectionId}
-          {...param}
-          {...props}
-          onRemoveSectionClicked={() => {}}
-        />
+        <SectionBlock key={param.sectionId} {...param} {...props} />
       ))}
     </AnimatePresence>
   );
