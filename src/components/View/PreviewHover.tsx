@@ -6,7 +6,7 @@ export default function PreviewHover() {
 
   const previewSectionId = search.previewSectionId;
 
-  if (!previewSectionId) return null;
+  if (previewSectionId === undefined) return null;
 
   return <PreviewHoverInner previewSectionId={previewSectionId} />;
 }
