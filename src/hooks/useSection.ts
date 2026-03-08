@@ -1,4 +1,9 @@
-import { queryOptions, useQueries, useQuery } from "@tanstack/react-query";
+import {
+  queryOptions,
+  useQueries,
+  useQuery,
+  UseQueryResult,
+} from "@tanstack/react-query";
 import {
   type GetSectionsSectionsGetData,
   getSectionSectionsSectionIdGet,
@@ -33,9 +38,17 @@ export function useSection(sectionId: number) {
   return res;
 }
 
+function combineFn(results: UseQueryResult[]) {
+  return {
+    data: results.map((res) => res.data),
+    isPending: results.some((res) => res.isPending),
+  };
+}
+
 export function useSections(sectionIds: number[]) {
   const res = useQueries({
     queries: sectionIds.map((sectionId) => sectionOptions(sectionId)),
+    combine: combineFn,
   });
 
   return res;
