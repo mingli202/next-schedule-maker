@@ -1,7 +1,6 @@
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Maximize, Minus } from "lucide-react";
 import { Fragment, useState } from "react";
-import { useSectionInSearchHelper } from "src/hooks/useSectionInSearchHelper";
 import { useSection } from "@/hooks";
 import { getColorFromIndex } from "@/lib/colors";
 import { cn } from "@/lib/utils";
@@ -17,6 +16,9 @@ type SectionBlockProps = {
   disableRemove?: boolean;
   // mini view like in auto generate
   disableControls?: boolean;
+
+  // handler for removing the section
+  onRemoveSectionClicked?: (sectionId: number) => void;
 };
 
 export default function SectionBlock({
@@ -24,11 +26,11 @@ export default function SectionBlock({
   colorIndex,
   disableRemove,
   disableControls,
+  onRemoveSectionClicked,
 }: SectionBlockProps) {
   const [expand, setExpand] = useState(false);
 
   const { data: section } = useSection(sectionId);
-  const { removeSection } = useSectionInSearchHelper(sectionId);
 
   if (!section) return null;
 
@@ -81,8 +83,13 @@ export default function SectionBlock({
                     variant="basic"
                     className="rounded-none p-0"
                     onClick={() => {
-                      if (disableRemove || disableControls) return;
-                      removeSection();
+                      if (
+                        disableRemove ||
+                        disableControls ||
+                        !onRemoveSectionClicked
+                      )
+                        return;
+                      onRemoveSectionClicked(sectionId);
                     }}
                     title="remove"
                   >
@@ -115,7 +122,7 @@ export default function SectionBlock({
               bgColor={bgColor}
               textColor={textColor}
               onMinimizeClicked={() => setExpand(false)}
-              onRemoveSectionClicked={removeSection}
+              onRemoveSectionClicked={onRemoveSectionClicked ?? ((_s) => {})}
             />
           )}
         </AnimatePresence>

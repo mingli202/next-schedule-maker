@@ -9,7 +9,7 @@ type ExpandSectionProps = {
   section: SectionResponse;
   bgColor: string;
   textColor: string;
-  onRemoveSectionClicked: () => void;
+  onRemoveSectionClicked: (sectionId: number) => void;
   onMinimizeClicked: () => void;
 };
 
@@ -65,7 +65,7 @@ export default function ExpandSection({
             variant="basic"
             className="p-1 italic"
             onClick={() => {
-              onRemoveSectionClicked();
+              onRemoveSectionClicked(section.id);
               onMinimizeClicked();
             }}
           >
