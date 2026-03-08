@@ -1,14 +1,14 @@
 import {
   queryOptions,
+  type UseQueryResult,
   useQueries,
   useQuery,
-  UseQueryResult,
 } from "@tanstack/react-query";
 import {
   type GetSectionsSectionsGetData,
-  SectionResponse,
   getSectionSectionsSectionIdGet,
   getSectionsSectionsGet,
+  type SectionResponse,
 } from "@/client";
 
 export function sectionOptions(sectionId: number) {
