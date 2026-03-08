@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { type SubmitEvent, useCallback, useRef } from "react";
 import { Field, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
@@ -6,6 +6,11 @@ import { Input } from "src/components/ui/input";
 export function SearchBar() {
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate({ from: "/editor/search" });
+
+  const q = useSearch({
+    from: "/editor/search",
+    select: (params) => params.q,
+  });
 
   const handleSubmit = useCallback(
     (e: SubmitEvent<HTMLFormElement>) => {
@@ -42,6 +47,7 @@ export function SearchBar() {
 
             formRef.current?.requestSubmit();
           }}
+          defaultValue={q}
         />
       </Field>
     </form>
