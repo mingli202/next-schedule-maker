@@ -9,7 +9,7 @@ export function SidePane({ className, ...props }: Props) {
   return (
     <div
       className={cn(
-        "overflow-x-hidden overflow-y-hidden max-md:order-2 md:h-full md:overflow-x-auto",
+        "flex flex-col gap-2 overflow-hidden max-md:order-2 md:h-full",
         className,
       )}
       {...props}
