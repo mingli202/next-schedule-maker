@@ -17,7 +17,7 @@ export default function SectionCard({
       className={cn("bg-secondary/60 flex flex-col rounded-xl p-2", className)}
       {...props}
     >
-      <h2>
+      <h2 className="font-light">
         {section.course}: {section.domain} {section.code}
       </h2>
 
