@@ -24,7 +24,7 @@ export function Welcome({
         <p className="text-center drop-shadow-[#000_0_0_20px]">
           The schedule builder you deserve
         </p>
-        <Link to="/editor" search={{ sections: [] }} className="w-fit">
+        <Link to="/editor/search" search={{ sections: [] }} className="w-fit">
           <Button
             variant="special"
             className="drop-shadow-[rgba(0,0,0,0.5)_0_0_20px] max-md:p-1"

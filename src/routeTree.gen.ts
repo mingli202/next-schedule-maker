@@ -13,6 +13,7 @@ import { Route as LoginRouteRouteImport } from './routes/login/route'
 import { Route as ForgotRouteRouteImport } from './routes/forgot/route'
 import { Route as EditorRouteRouteImport } from './routes/editor/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EditorIndexRouteImport } from './routes/editor/index'
 import { Route as EditorSettingsRouteImport } from './routes/editor/settings'
 import { Route as EditorSearchRouteImport } from './routes/editor/search'
 import { Route as EditorSavedRouteImport } from './routes/editor/saved'
@@ -38,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const EditorIndexRoute = EditorIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EditorRouteRoute,
 } as any)
 const EditorSettingsRoute = EditorSettingsRouteImport.update({
   id: '/settings',
@@ -75,10 +81,10 @@ export interface FileRoutesByFullPath {
   '/editor/saved': typeof EditorSavedRoute
   '/editor/search': typeof EditorSearchRoute
   '/editor/settings': typeof EditorSettingsRoute
+  '/editor/': typeof EditorIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/editor': typeof EditorRouteRouteWithChildren
   '/forgot': typeof ForgotRouteRoute
   '/login': typeof LoginRouteRoute
   '/editor/autobuild': typeof EditorAutobuildRoute
@@ -86,6 +92,7 @@ export interface FileRoutesByTo {
   '/editor/saved': typeof EditorSavedRoute
   '/editor/search': typeof EditorSearchRoute
   '/editor/settings': typeof EditorSettingsRoute
+  '/editor': typeof EditorIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +105,7 @@ export interface FileRoutesById {
   '/editor/saved': typeof EditorSavedRoute
   '/editor/search': typeof EditorSearchRoute
   '/editor/settings': typeof EditorSettingsRoute
+  '/editor/': typeof EditorIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,10 +119,10 @@ export interface FileRouteTypes {
     | '/editor/saved'
     | '/editor/search'
     | '/editor/settings'
+    | '/editor/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/editor'
     | '/forgot'
     | '/login'
     | '/editor/autobuild'
@@ -122,6 +130,7 @@ export interface FileRouteTypes {
     | '/editor/saved'
     | '/editor/search'
     | '/editor/settings'
+    | '/editor'
   id:
     | '__root__'
     | '/'
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/editor/saved'
     | '/editor/search'
     | '/editor/settings'
+    | '/editor/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,6 +181,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/editor/': {
+      id: '/editor/'
+      path: '/'
+      fullPath: '/editor/'
+      preLoaderRoute: typeof EditorIndexRouteImport
+      parentRoute: typeof EditorRouteRoute
     }
     '/editor/settings': {
       id: '/editor/settings'
@@ -216,6 +233,7 @@ interface EditorRouteRouteChildren {
   EditorSavedRoute: typeof EditorSavedRoute
   EditorSearchRoute: typeof EditorSearchRoute
   EditorSettingsRoute: typeof EditorSettingsRoute
+  EditorIndexRoute: typeof EditorIndexRoute
 }
 
 const EditorRouteRouteChildren: EditorRouteRouteChildren = {
@@ -224,6 +242,7 @@ const EditorRouteRouteChildren: EditorRouteRouteChildren = {
   EditorSavedRoute: EditorSavedRoute,
   EditorSearchRoute: EditorSearchRoute,
   EditorSettingsRoute: EditorSettingsRoute,
+  EditorIndexRoute: EditorIndexRoute,
 }
 
 const EditorRouteRouteWithChildren = EditorRouteRoute._addFileChildren(
