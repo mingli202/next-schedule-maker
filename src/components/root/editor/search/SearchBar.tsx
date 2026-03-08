@@ -16,7 +16,7 @@ export function SearchBar() {
       navigate({
         search: (prev) => ({
           ...prev,
-          q: inputValue ?? prev.q,
+          q: inputValue,
         }),
       });
     },
