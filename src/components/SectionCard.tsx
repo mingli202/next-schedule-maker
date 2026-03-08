@@ -13,12 +13,15 @@ export default function SectionCard({
   ...props
 }: SectionCardProps) {
   return (
-    <div className={cn("flex flex-col p-1", className)} {...props}>
+    <div
+      className={cn("bg-secondary/60 flex flex-col rounded-xl p-2", className)}
+      {...props}
+    >
       <h2>
         {section.course}: {section.domain} {section.code}
       </h2>
 
-      <h1 className="font-heading text-base font-bold md:text-2xl">
+      <h1 className="font-heading text-base font-bold md:text-xl">
         {section.section} {section.title}
       </h1>
 
