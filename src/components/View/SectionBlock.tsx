@@ -68,7 +68,7 @@ export default function SectionBlock({
           >
             <p className="line-clamp-2 font-bold">{section.title}</p>
             <p className="mt-1 line-clamp-1">{section.code}</p>
-            <p className="font">{section.section}</p>
+            <p>{section.section}</p>
             <p className="mt-1 line-clamp-2">{section.leclabs[0]?.prof}</p>
             {disableControls ? null : (
               <motion.div
