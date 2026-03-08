@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dream-builder-hazel.vercel.app/sitemap.xml

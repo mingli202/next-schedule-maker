@@ -1,12 +1,9 @@
-import { signOut } from "firebase/auth";
-import type { HTMLProps } from "react";
-import { Button } from "src/components";
-import { getAuth } from "src/integrations/firebase";
+import { Outlet } from "@tanstack/react-router";
+import type { ComponentProps } from "react";
 import { cn } from "src/lib/utils";
+import { MenuNavBar } from "./MenuNavBar";
 
-type Props = HTMLProps<HTMLDivElement>;
-
-const auth = getAuth();
+type Props = ComponentProps<"div">;
 
 export function SidePane({ className, ...props }: Props) {
   return (
@@ -17,13 +14,8 @@ export function SidePane({ className, ...props }: Props) {
       )}
       {...props}
     >
-      <Button
-        onClick={async () => {
-          await signOut(auth);
-        }}
-      >
-        Log out
-      </Button>
+      <MenuNavBar />
+      <Outlet />
     </div>
   );
 }

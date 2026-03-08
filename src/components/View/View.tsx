@@ -1,9 +1,10 @@
+import type { ComponentProps } from "react";
 import { cn } from "src/lib/utils";
 import type { SavedSection } from "@/types/schedule";
 import GridView from "./GridView";
 import PreviewHover from "./PreviewHover";
 
-type Props = React.HTMLAttributes<HTMLDivElement> & {
+type Props = ComponentProps<"div"> & {
   // disable the remove button
   disableRemove?: boolean;
 
@@ -21,6 +22,7 @@ function View({
   disableRemove,
   disableControls,
   savedSections,
+  ...props
 }: Props) {
   return (
     <div
@@ -34,6 +36,7 @@ function View({
 
         className,
       )}
+      {...props}
     >
       {!disableControls && (
         <>

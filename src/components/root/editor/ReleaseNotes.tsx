@@ -1,10 +1,7 @@
-"use client";
-
-import { Button } from "@/components";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
 import { useLayoutEffect, useState } from "react";
+import { Button } from "@/components";
 
 const versionHistory = [
   [
@@ -48,7 +45,7 @@ export default function ReleaseNotes() {
     setSeenReleaseNotes(localStorage.getItem(key));
 
     const s = new Set(versionHistory.map((v) => v[0]));
-    if (s.size != versionHistory.length) {
+    if (s.size !== versionHistory.length) {
       throw new Error("Has duplicate version name");
     }
   }, []);
@@ -62,7 +59,7 @@ export default function ReleaseNotes() {
     <AnimatePresence>
       {seenReleaseNotes === currentVersion ? null : (
         <motion.div
-          className="bot-0 bg-background/50 absolute top-0 z-[9999] flex h-[100vh] w-[100vw] items-center justify-center backdrop-blur-md backdrop-filter"
+          className="bot-0 bg-background/50 absolute top-0 z-9999 flex h-screen w-screen items-center justify-center backdrop-blur-md backdrop-filter"
           initial={{
             opacity: 0,
           }}
@@ -74,18 +71,16 @@ export default function ReleaseNotes() {
           }}
           onClick={handleClick}
         >
-          <div
-            className="border-primary bg-background flex w-[min(35rem,80%)] flex-col gap-2 rounded-md border-[4px] border-solid p-2 md:gap-4 md:p-4"
+          <button
+            className="border-primary bg-background flex w-[min(35rem,80%)] flex-col gap-2 rounded-md border-4 border-solid p-2 md:gap-4 md:p-4"
             onClick={(e) => e.stopPropagation()}
+            type="button"
           >
             <div>
               <div className="flex items-center justify-between gap-2 text-xl md:text-2xl">
                 <h1>What{"'"}s new in Winter 2026</h1>
                 <Button variant="basic" className="p-0" onClick={handleClick}>
-                  <FontAwesomeIcon
-                    icon={faClose}
-                    className="h-[1.25rem] w-[1.25rem] md:h-[1.5rem] md:w-[1.5rem]"
-                  />
+                  <X className="h-5 w-5 md:h-6 md:w-6" />
                 </Button>
               </div>
             </div>
@@ -103,7 +98,7 @@ export default function ReleaseNotes() {
                 ))}
               </ul>
             ))}
-          </div>
+          </button>
         </motion.div>
       )}
     </AnimatePresence>
