@@ -1,6 +1,7 @@
 import { Outlet } from "@tanstack/react-router";
 import type { ComponentProps } from "react";
 import { cn } from "src/lib/utils";
+import { MenuNavBar } from "./MenuNavBar";
 
 type Props = ComponentProps<"div">;
 
@@ -13,6 +14,7 @@ export function SidePane({ className, ...props }: Props) {
       )}
       {...props}
     >
+      <MenuNavBar />
       <Outlet />
     </div>
   );
