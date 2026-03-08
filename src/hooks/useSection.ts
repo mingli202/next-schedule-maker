@@ -43,7 +43,7 @@ export function useSections(sectionIds: number[]) {
 
 export function useSectionQuery(query: GetSectionsSectionsGetData["query"]) {
   const res = useQuery({
-    queryKey: ["section_query"],
+    queryKey: ["section_query", query],
     queryFn: async () => {
       const res = await getSectionsSectionsGet({ query });
 
@@ -53,7 +53,6 @@ export function useSectionQuery(query: GetSectionsSectionsGetData["query"]) {
 
       return res.data;
     },
-    staleTime: 60 * 1000,
   });
 
   if (res.error) {
