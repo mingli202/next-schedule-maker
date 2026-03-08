@@ -15,6 +15,9 @@ export const Route = createFileRoute("/editor")({
       },
     ],
   }),
+  beforeLoad: () => {
+    Route.redirect({ to: "./search", search: { sections: [] } });
+  },
   validateSearch: EditorInViewParams,
   component: RouteComponent,
 });
