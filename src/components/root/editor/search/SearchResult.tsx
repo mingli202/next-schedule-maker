@@ -1,6 +1,6 @@
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { MouseEvent } from "@types/react";
 import { Eye } from "lucide-react";
+import type { MouseEvent } from "react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
