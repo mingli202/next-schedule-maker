@@ -1,5 +1,9 @@
 import { queryOptions, useQueries, useQuery } from "@tanstack/react-query";
-import { getSectionSectionsSectionIdGet } from "@/client";
+import {
+  type GetSectionsSectionsGetData,
+  getSectionSectionsSectionIdGet,
+  getSectionsSectionsGet,
+} from "@/client";
 
 export function sectionOptions(sectionId: number) {
   return queryOptions({
@@ -33,6 +37,28 @@ export function useSections(sectionIds: number[]) {
   const res = useQueries({
     queries: sectionIds.map((sectionId) => sectionOptions(sectionId)),
   });
+
+  return res;
+}
+
+export function useSectionQuery(query: GetSectionsSectionsGetData["query"]) {
+  const res = useQuery({
+    queryKey: ["section_query"],
+    queryFn: async () => {
+      const res = await getSectionsSectionsGet({ query });
+
+      if (res.error) {
+        throw new Error(JSON.stringify(res.error.detail));
+      }
+
+      return res.data;
+    },
+    staleTime: 60 * 1000,
+  });
+
+  if (res.error) {
+    console.trace(`query ${query} threw an error`);
+  }
 
   return res;
 }
