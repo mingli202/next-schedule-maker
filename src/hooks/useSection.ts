@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-query";
 import {
   type GetSectionsSectionsGetData,
+  SectionResponse,
   getSectionSectionsSectionIdGet,
   getSectionsSectionsGet,
 } from "@/client";
@@ -38,9 +39,9 @@ export function useSection(sectionId: number) {
   return res;
 }
 
-function combineFn(results: UseQueryResult[]) {
+function combineFn(results: UseQueryResult<SectionResponse, Error>[]) {
   return {
-    data: results.map((res) => res.data),
+    data: results.map((res) => res.data).filter((section) => !!section),
     isPending: results.some((res) => res.isPending),
   };
 }
