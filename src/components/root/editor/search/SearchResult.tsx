@@ -1,6 +1,9 @@
-import { useSearch } from "@tanstack/react-router";
+import { Link, useNavigate, useSearch } from "@tanstack/react-router";
+import { MouseEvent } from "@types/react";
+import { Eye } from "lucide-react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
+import Button from "src/components/Button";
 import SectionCard from "src/components/SectionCard";
 import { useSectionQuery } from "src/hooks/useSection";
 import { cn } from "src/lib/utils";
@@ -34,13 +37,52 @@ type ResultProps = {
   sections: SectionResponse[];
 };
 function Result({ sections }: ResultProps) {
+  const navigate = useNavigate({ from: "/editor/search" });
+
+  const onHover = (sectionId: number) => {
+    return (_e: MouseEvent<HTMLDivElement>) => {
+      navigate({
+        search: (prev) => ({
+          ...prev,
+          previewSectionId:
+            prev.previewSectionId === undefined ? undefined : sectionId,
+        }),
+      });
+    };
+  };
+
   return (
     <Virtuoso
       style={{ height: "100%" }}
       data={sections}
       itemContent={(index, section) => (
-        <SectionCard section={section} className={cn(index !== 0 && "mt-2")} />
+        <SectionCard
+          section={section}
+          className={cn(index !== 0 && "mt-2")}
+          footer={<SectionCardFooter sectionId={section.id} />}
+          onMouseEnter={onHover(section.id)}
+          onMouseLeave={onHover(-1)}
+        />
       )}
     />
+  );
+}
+
+function SectionCardFooter(props: { sectionId: number }) {
+  return (
+    <div className="flex w-full justify-end gap-2">
+      <Link
+        to="."
+        search={(prev) => ({
+          ...prev,
+          previewSectionId:
+            prev.previewSectionId === undefined ? props.sectionId : undefined,
+        })}
+      >
+        <Button variant="basic">
+          <Eye className="h-5" />
+        </Button>
+      </Link>
+    </div>
   );
 }
