@@ -1,26 +1,39 @@
-import { ScheduleOfClasses, ScheduleOfClassesData } from "@/types/schedule";
-import { createStore } from "zustand/vanilla";
+import type { SectionResponse } from "src/client";
+import { create } from "zustand";
+import isValidAdditionToSchedule from "./schedule/isValidAdditionToSchedule";
 
-export type StoreState = {
-  scheduleOfClassesCache: Record<string, ScheduleOfClasses>;
+type ScheduleState = {
+  sections: SectionResponse[];
 };
 
-export type StoreActions = {
-  addScheduleOfClassesCache: (data: ScheduleOfClassesData) => void;
+type ScheduleAction = {
+  set: (sections: SectionResponse[]) => boolean;
+  add: (section: SectionResponse) => boolean;
+  remove: (sectionId: number) => boolean;
 };
 
-export type Store = StoreState & StoreActions;
+const useScheduleStore = create<ScheduleState & ScheduleAction>((set, get) => ({
+  sections: [],
+  set: (sections) => {
+    set({ sections });
+    return true;
+  },
+  add: (section) => {
+    if (!isValidAdditionToSchedule(section, get().sections)) {
+      return false;
+    }
 
-export function createAppStore() {
-  return createStore<StoreState>()((set) => ({
-    scheduleOfClassesCache: {},
+    set((state) => ({ sections: [...state.sections, section] }));
+    return true;
+  },
+  remove: (sectionId: number) => {
+    if (!get().sections.some((section) => section.id === sectionId)) {
+      return false;
+    }
 
-    addScheduleOfClassesCache: (data: ScheduleOfClassesData) =>
-      set((state) => ({
-        scheduleOfClassesCache: {
-          ...state.scheduleOfClassesCache,
-          [data.commitId]: data.scheduleOfClasses,
-        },
-      })),
-  }));
-}
+    set((state) => ({
+      sections: state.sections.filter((section) => section.id !== sectionId),
+    }));
+    return true;
+  },
+}));
