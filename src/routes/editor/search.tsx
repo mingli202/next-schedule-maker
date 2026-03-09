@@ -5,7 +5,7 @@ import { z } from "zod";
 
 export const Route = createFileRoute("/editor/search")({
   component: RouteComponent,
-  validateSearch: z.object({ q: z.optional(z.string().catch("")) }),
+  validateSearch: z.object({ q: z.optional(z.string()) }),
 });
 
 function RouteComponent() {
