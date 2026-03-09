@@ -1,5 +1,5 @@
-import { client } from "src/client/client.gen";
 import { getAllSectionsAllGet, type SectionResponse } from "@/client";
+import { client } from "@/client/client.gen";
 import miniGenerate from "@/lib/mini-generate";
 import type { SavedSection } from "@/types/schedule";
 
