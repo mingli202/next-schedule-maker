@@ -1,5 +1,5 @@
-import type { SectionResponse } from "@/client";
-import { getAllSectionsAllGet } from "@/client";
+import { client } from "src/client/client.gen";
+import { getAllSectionsAllGet, type SectionResponse } from "@/client";
 import miniGenerate from "@/lib/mini-generate";
 import type { SavedSection } from "@/types/schedule";
 
@@ -14,6 +14,9 @@ export type WorkerResponse = {
 };
 
 let allSections: SectionResponse[] | null = null;
+
+const baseUrl = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8000";
+client.setConfig({ baseUrl });
 
 self.onmessage = async (e: MessageEvent<WorkerRequest>) => {
   if (!allSections) {
