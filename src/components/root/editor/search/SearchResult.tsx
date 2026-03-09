@@ -1,6 +1,6 @@
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { Eye, Minus, Plus } from "lucide-react";
-import type { MouseEvent } from "react";
+import { useCallback, type MouseEvent } from "react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
@@ -40,8 +40,8 @@ type ResultProps = {
 function Result({ sections }: ResultProps) {
   const navigate = useNavigate({ from: "/editor/search" });
 
-  const onHover = (sectionId: number) => {
-    return (_e: MouseEvent<HTMLDivElement>) => {
+  const onHover = useCallback(
+    (sectionId: number) => {
       navigate({
         search: (prev) => ({
           ...prev,
@@ -49,8 +49,9 @@ function Result({ sections }: ResultProps) {
             prev.previewSectionId === undefined ? undefined : sectionId,
         }),
       });
-    };
-  };
+    },
+    [navigate],
+  );
 
   return (
     <Virtuoso
@@ -61,8 +62,8 @@ function Result({ sections }: ResultProps) {
           section={section}
           className={cn(index !== 0 && "mt-2")}
           footer={<SectionCardFooter sectionId={section.id} />}
-          onMouseEnter={onHover(section.id)}
-          onMouseLeave={onHover(-1)}
+          onMouseEnter={() => onHover(section.id)}
+          onMouseLeave={() => onHover(-1)}
         />
       )}
     />
