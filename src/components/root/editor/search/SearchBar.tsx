@@ -11,11 +11,11 @@ export function SearchBar() {
   const navigate = useNavigate({ from: "/editor/search" });
 
   const handleChange = useDebounce(() => {
-    if (!formRef || !activeSearch) {
+    if (!formRef.current || !activeSearch) {
       return;
     }
 
-    formRef.current?.requestSubmit();
+    formRef.current.requestSubmit();
   }, activeSearchDelayMili);
 
   const { q, activeSearch } = useSearch({
