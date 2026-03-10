@@ -1,4 +1,8 @@
-import type { WorkerMessage, WorkerResponse } from "src/types/worker";
+import type {
+  WorkerMessage,
+  WorkerMessageType,
+  WorkerResponseMap,
+} from "src/types/worker";
 
 let worker: Worker | null = null;
 
@@ -23,7 +27,7 @@ export function getWorker() {
 /**
  * Send a message to the worker
  * */
-export function postMessage(message: WorkerMessage) {
+export function postWorkerMessage(message: WorkerMessage) {
   getWorker()?.postMessage(message);
 }
 
@@ -31,13 +35,13 @@ export function postMessage(message: WorkerMessage) {
  * Listens to incoming worker message
  * @returns callback to detach message handler
  * */
-export function onWorkerMessage(
-  handler: (event: MessageEvent<WorkerResponse>) => void,
+export function onWorkerMessage<T extends WorkerMessageType>(
+  handler: (event: MessageEvent<WorkerResponseMap[T]>) => void,
 ) {
   const w = getWorker();
 
   if (!w) {
-    return;
+    return () => {};
   }
 
   w.addEventListener("message", handler);

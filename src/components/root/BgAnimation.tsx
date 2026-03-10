@@ -9,21 +9,9 @@ export function BgAnimation() {
   const pause = useRef(false);
 
   const [vw, setVw] = useState(Infinity);
-  const [worker, setWorker] = useState<Worker>();
 
   useEffect(() => {
-    const worker = new Worker(
-      new URL("../../workers/myWorker.ts", import.meta.url),
-      {
-        type: "module",
-      },
-    );
-    setWorker(worker);
     setVw(window.innerWidth);
-
-    return () => {
-      worker.terminate();
-    };
   }, []);
 
   return (
@@ -38,7 +26,6 @@ export function BgAnimation() {
               index={i}
               lastRef={last}
               pauseRef={pause}
-              worker={worker}
             />
           ))}
       </div>

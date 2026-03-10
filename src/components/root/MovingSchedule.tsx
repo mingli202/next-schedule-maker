@@ -1,6 +1,7 @@
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { WorkerMessage, WorkerResponse } from "src/types/worker";
+import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
+import type { WorkerMessage } from "src/types/worker";
 import View from "@/components/View";
 import type { SavedSection } from "@/types/schedule";
 
@@ -8,10 +9,9 @@ type Props = {
   index: number;
   lastRef: RefObject<number>;
   pauseRef: RefObject<boolean>;
-  worker: Worker | undefined;
 };
 
-export function MovingSchedule({ index, lastRef, pauseRef, worker }: Props) {
+export function MovingSchedule({ index, lastRef, pauseRef }: Props) {
   const [schedule, setSchedule] = useState<Array<SavedSection>>([]);
   const isGenerating = useRef(false);
   const isStopped = useRef(false);
@@ -25,11 +25,11 @@ export function MovingSchedule({ index, lastRef, pauseRef, worker }: Props) {
   const deltaT = 1 / 120;
 
   const requestNewSchedule = useCallback(() => {
-    worker?.postMessage({
+    postWorkerMessage({
       type: "mini-generate",
       index,
-    } satisfies WorkerMessage);
-  }, [worker, index]);
+    });
+  }, [index]);
 
   const nextFrame = useCallback(
     (t: DOMHighResTimeStamp) => {
@@ -88,7 +88,7 @@ export function MovingSchedule({ index, lastRef, pauseRef, worker }: Props) {
   useEffect(() => {
     isStopped.current = false;
 
-    const onMessage = (e: MessageEvent<WorkerResponse>) => {
+    const unSub = onWorkerMessage<"mini-generate">((e) => {
       if (e.data.index !== index) {
         return;
       }
@@ -98,23 +98,22 @@ export function MovingSchedule({ index, lastRef, pauseRef, worker }: Props) {
       }
       setSchedule(e.data.schedule);
       isGenerating.current = false;
-    };
+    });
+
     let id: number;
     let animationId: number;
-    if (worker) {
-      worker.addEventListener("message", onMessage);
-      id = window.setTimeout(() => {
-        animationId = requestAnimationFrame(nextFrame);
-      }, 1000 * index);
-    }
+
+    id = window.setTimeout(() => {
+      animationId = requestAnimationFrame(nextFrame);
+    }, 1000 * index);
 
     return () => {
-      worker?.removeEventListener("message", onMessage);
+      unSub();
       isStopped.current = true;
       clearTimeout(id);
       cancelAnimationFrame(animationId);
     };
-  }, [worker, index, requestNewSchedule, nextFrame]);
+  }, [index, requestNewSchedule, nextFrame]);
 
   return (
     <div
