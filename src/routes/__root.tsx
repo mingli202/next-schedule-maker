@@ -6,11 +6,12 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { useEffect } from "react";
 import { getAllSectionsAllGet } from "src/client";
+import { postWorkerMessage, terminateWorker } from "src/lib/store/worker";
 import type { RouterContext, SectionStore } from "src/types";
 import { client } from "@/client/client.gen";
 import appCss from "./globals.css?url";
-import { postWorkerMessage } from "src/lib/store/worker";
 
 const baseUrl = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8000";
 client.setConfig({ baseUrl });
@@ -141,6 +142,12 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootDocument({ children }: { children: React.ReactNode }) {
   const { data } = useSuspenseQuery(allSectionsQueryOptions);
   postWorkerMessage({ type: "init", sectionStore: data });
+
+  useEffect(() => {
+    return () => {
+      terminateWorker();
+    };
+  }, []);
 
   return (
     <html lang="en">
