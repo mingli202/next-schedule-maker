@@ -7,16 +7,17 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { getAllSectionsAllGet } from "src/client";
-import type { RouterContext } from "src/types";
+import type { RouterContext, SectionStore } from "src/types";
 import { client } from "@/client/client.gen";
 import appCss from "./globals.css?url";
+import { postWorkerMessage } from "src/lib/store/worker";
 
 const baseUrl = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8000";
 client.setConfig({ baseUrl });
 
 const allSectionsQueryOptions = queryOptions({
-  queryKey: ["all-sections"],
-  queryFn: async () => {
+  queryKey: ["section-store"],
+  queryFn: async (): Promise<SectionStore> => {
     const res = await getAllSectionsAllGet();
     const sections = res.data ?? [];
 
@@ -139,6 +140,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const { data } = useSuspenseQuery(allSectionsQueryOptions);
+  postWorkerMessage({ type: "init", sectionStore: data });
 
   return (
     <html lang="en">

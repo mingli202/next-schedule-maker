@@ -1,5 +1,4 @@
-import type { SectionResponse } from "src/client";
-import type { RecordValues } from ".";
+import type { RecordValues, SectionStore } from ".";
 import type { SavedSection } from "./schedule";
 
 export const WorkerMessageType = {
@@ -12,7 +11,7 @@ export type WorkerMessageType = RecordValues<typeof WorkerMessageType>;
 export type WorkerMessage =
   | {
       type: "init";
-      allSections: SectionResponse[];
+      sectionStore: SectionStore;
     }
   | {
       type: "mini-generate";
