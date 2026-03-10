@@ -1,29 +1,6 @@
 import type { WorkerMessage, WorkerResponse } from "src/types/worker";
 
-class MyWorker {
-  constructor(private _worker: Worker) {}
-
-  public postMessage(message: WorkerMessage) {
-    this._worker.postMessage(message);
-  }
-
-  public onWorkerMessage(
-    handler: (event: MessageEvent<WorkerResponse>) => void,
-  ) {
-    this._worker.addEventListener("message", handler);
-
-    return () => {
-      this._worker.removeEventListener("message", handler);
-    };
-  }
-
-  public terminateWorker() {
-    this._worker?.terminate();
-    this._worker;
-  }
-}
-
-let worker: MyWorker | null = null;
+let worker: Worker | null = null;
 
 /**
  * Get instance of the web worker
@@ -35,16 +12,19 @@ export function getWorker() {
   }
 
   if (!worker) {
-    const aWorker = new Worker(
-      new URL("../../workers/myWorker.ts", import.meta.url),
-      {
-        type: "module",
-      },
-    );
-    worker = new MyWorker(aWorker);
+    worker = new Worker(new URL("../../workers/myWorker.ts", import.meta.url), {
+      type: "module",
+    });
   }
 
   return worker;
+}
+
+/**
+ * Send a message to the worker
+ * */
+export function postMessage(message: WorkerMessage) {
+  getWorker()?.postMessage(message);
 }
 
 /**
@@ -70,3 +50,7 @@ export function onWorkerMessage(
 /**
  * Terminate current instance of worker
  * */
+export function terminateWorker() {
+  worker?.terminate();
+  worker = null;
+}
