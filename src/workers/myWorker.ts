@@ -38,8 +38,6 @@ function messageHandler(
 }
 
 self.onmessage = (e: MessageEvent<WorkerMessage>) => {
-  console.log("message received");
-
   const res = messageHandler(e);
 
   if (res !== undefined) {
