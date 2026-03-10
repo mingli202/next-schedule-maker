@@ -1,5 +1,9 @@
-import type { WorkerMessage, WorkerResponse } from "src/types/worker";
-import { getAllSectionsAllGet, type SectionResponse } from "@/client";
+import type {
+  WorkerMessage,
+  WorkerResponse,
+  WorkerResponseMap,
+} from "src/types/worker";
+import type { SectionResponse } from "@/client";
 import { client } from "@/client/client.gen";
 import miniGenerate from "@/lib/mini-generate";
 
@@ -8,25 +12,35 @@ let allSections: SectionResponse[] | null = null;
 const baseUrl = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8000";
 client.setConfig({ baseUrl });
 
-self.onmessage = async (e: MessageEvent<WorkerMessage>) => {
-  if (!allSections) {
-    const res = await getAllSectionsAllGet();
+function messageHandler(
+  e: MessageEvent<WorkerMessage>,
+): WorkerResponse | undefined {
+  const data = e.data;
 
-    if (!res.data) return;
-
-    allSections = res.data;
-  }
-
-  const { type } = e.data;
-
-  switch (type) {
+  switch (data.type) {
+    case "init": {
+      allSections = data.allSections;
+      break;
+    }
     case "mini-generate": {
+      if (!allSections) {
+        return;
+      }
+
       const sch = miniGenerate(allSections);
 
-      self.postMessage({
+      return {
         schedule: sch,
-        index: e.data.index,
-      } satisfies WorkerResponse);
+        index: data.index,
+      } satisfies WorkerResponseMap[typeof data.type];
     }
+  }
+}
+
+self.onmessage = (e: MessageEvent<WorkerMessage>) => {
+  const res = messageHandler(e);
+
+  if (res !== undefined) {
+    self.postMessage(res);
   }
 };
