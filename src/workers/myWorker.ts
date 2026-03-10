@@ -1,26 +1,15 @@
+import type { WorkerMessage, WorkerResponse } from "src/types/worker";
 import { getAllSectionsAllGet, type SectionResponse } from "@/client";
 import { client } from "@/client/client.gen";
 import miniGenerate from "@/lib/mini-generate";
-import type { SavedSection } from "@/types/schedule";
-
-export type WorkerRequest = {
-  type: "mini-generate";
-  index: number;
-};
-
-export type WorkerResponse = {
-  schedule: SavedSection[];
-  index: number;
-};
 
 let allSections: SectionResponse[] | null = null;
 
 const baseUrl = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8000";
 client.setConfig({ baseUrl });
 
-self.onmessage = async (e: MessageEvent<WorkerRequest>) => {
+self.onmessage = async (e: MessageEvent<WorkerMessage>) => {
   if (!allSections) {
-    console.log("fetching sections");
     const res = await getAllSectionsAllGet();
 
     if (!res.data) return;

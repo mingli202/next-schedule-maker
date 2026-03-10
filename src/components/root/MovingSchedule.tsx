@@ -1,10 +1,8 @@
-"use client";
-
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { WorkerMessage, WorkerResponse } from "src/types/worker";
 import View from "@/components/View";
 import type { SavedSection } from "@/types/schedule";
-import type { WorkerRequest, WorkerResponse } from "@/workers/myWorker";
 
 type Props = {
   index: number;
@@ -30,7 +28,7 @@ export function MovingSchedule({ index, lastRef, pauseRef, worker }: Props) {
     worker?.postMessage({
       type: "mini-generate",
       index,
-    } satisfies WorkerRequest);
+    } satisfies WorkerMessage);
   }, [worker, index]);
 
   const nextFrame = useCallback(
