@@ -1,7 +1,6 @@
 import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
-import type { WorkerMessage } from "src/types/worker";
 import View from "@/components/View";
 import type { SavedSection } from "@/types/schedule";
 
