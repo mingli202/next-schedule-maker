@@ -242,11 +242,12 @@ export class Iter<T> implements Iterable<T> {
       }
       let index = 0;
       for (const val of source) {
+        yield val;
+        index += 1;
+
         if (index >= limit) {
           break;
         }
-        yield val;
-        index += 1;
       }
     });
   }
