@@ -1,4 +1,4 @@
-import { type IOption, None, Some } from "./option";
+import { type IOption, none, some } from "./option";
 
 /**
  * Custom implementation of a lazy iterator
@@ -139,12 +139,12 @@ export class Iter<T> implements Iterable<T> {
     let index = 0;
     for (const val of this) {
       if (predicate(val, index)) {
-        return new Some(val);
+        return some(val);
       }
       index++;
     }
 
-    return new None<T>();
+    return none<T>();
   }
 
   /**
@@ -162,7 +162,7 @@ export class Iter<T> implements Iterable<T> {
       index++;
     }
 
-    return new None<U>();
+    return none<U>();
   }
 
   /**
