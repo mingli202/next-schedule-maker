@@ -1,4 +1,4 @@
-import type { IOption } from "./option";
+import { None, Some, type IOption } from "./option";
 
 /**
  * Custom implementation of a lazy iterator
@@ -120,6 +120,23 @@ export class Iter<T> implements Iterable<T> {
   }
 
   /**
+   * Searches for an element of an iterator that satisfies a predicate.
+   *
+   * find() takes a closure that returns true or false. It applies this closure to each element of the iterator, and if any of them return true, then find() returns Some(element). If they all return false, it returns None.
+   * */
+  public find(predicate: (val: T, index: number) => boolean): IOption<T> {
+    let index = 0;
+    for (const val of this) {
+      if (predicate(val, index)) {
+        return new Some(val);
+      }
+      index++;
+    }
+
+    return new None();
+  }
+
+  /**
    * Folds every element into an accumulator by applying an operation, returning the final result.
    * */
   public fold<U>(initialValue: U, f: (acc: U, val: T, index: number) => U): U {
@@ -131,6 +148,18 @@ export class Iter<T> implements Iterable<T> {
     }
 
     return acc;
+  }
+
+  /**
+   * Calls a closure on each element of an iterator.
+   * This is equivalent to using a for loop on the iterator, although break and continue are not possible from a closure.
+   * */
+  public forEach(f: (val: T, index: number) => void): void {
+    let index = 0;
+    for (const val of this) {
+      f(val, index);
+      index++;
+    }
   }
 
   /**
