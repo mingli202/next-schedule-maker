@@ -2,7 +2,7 @@ import { type IOption, None, Some } from "./option";
 
 /**
  * Custom implementation of a lazy iterator
- * Every oporator will be executed once per elements,
+ * Every operator will be executed once per elements,
  * and there will only be a single pass through when consuming the iterator,
  * making it more efficient than working with arrays
  * */
@@ -144,7 +144,7 @@ export class Iter<T> implements Iterable<T> {
       index++;
     }
 
-    return new None();
+    return new None<T>();
   }
 
   /**
@@ -162,7 +162,7 @@ export class Iter<T> implements Iterable<T> {
       index++;
     }
 
-    return new None();
+    return new None<U>();
   }
 
   /**
