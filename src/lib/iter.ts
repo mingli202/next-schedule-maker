@@ -10,7 +10,7 @@ type IterOp<T, U> = (val: IOption<T>, index: number) => IOption<U>;
  * */
 export class Iter<TInitial, TCurrent> {
   private constructor(
-    private arr: TInitial[],
+    public readonly _arr: TInitial[],
     private op: IterOp<TInitial, TCurrent>,
   ) {}
 
@@ -33,8 +33,8 @@ export class Iter<TInitial, TCurrent> {
   public all(predicate: (val: TCurrent, index: number) => boolean): boolean {
     let acc = true;
 
-    for (let i = 0; i < this.arr.length; i++) {
-      const res = this.op(new Some(this.arr[i]), i);
+    for (let i = 0; i < this._arr.length; i++) {
+      const res = this.op(new Some(this._arr[i]), i);
       if (res.isSome()) {
         acc &&= predicate(res.unwrap(), i);
       }
@@ -59,8 +59,8 @@ export class Iter<TInitial, TCurrent> {
   public any(predicate: (val: TCurrent, index: number) => boolean): boolean {
     let acc = false;
 
-    for (let i = 0; i < this.arr.length; i++) {
-      const res = this.op(new Some(this.arr[i]), i);
+    for (let i = 0; i < this._arr.length; i++) {
+      const res = this.op(new Some(this._arr[i]), i);
       if (res.isSome()) {
         acc ||= predicate(res.unwrap(), i);
       }
@@ -74,29 +74,42 @@ export class Iter<TInitial, TCurrent> {
   }
 
   /**
-   * Collects
+   * Counts the number of iterations
+   * */
+  public count(): number {
+    return this._arr.length;
+  }
+
+  /**
+   * Collects the itererator by applying all the operations and returning the resulting array
    * */
   public collect(): TCurrent[] {
     const initialValue: TCurrent[] = [];
     return this.fold(initialValue, (acc, val) => [...acc, val]);
   }
 
+  /**
+   * Keep values matching the given predicate
+   * */
   public filter(
-    fn: (val: TCurrent, index: number) => boolean,
+    predicate: (val: TCurrent, index: number) => boolean,
   ): Iter<TInitial, TCurrent> {
     const op = (val: IOption<TInitial>, index: number) =>
-      this.op(val, index).filter((val) => fn(val, index));
+      this.op(val, index).filter((val) => predicate(val, index));
 
-    return new Iter(this.arr, op);
+    return new Iter(this._arr, op);
   }
 
+  /**
+   * Folds every element into an accumulator by applying an operation, returning the final result.
+   * */
   public fold<U>(
     initialValue: U,
     f: (acc: U, val: TCurrent, index: number) => U,
   ) {
     let acc = initialValue;
 
-    this.arr.forEach((val, i) => {
+    this._arr.forEach((val, i) => {
       const res = this.op(new Some(val), i);
 
       if (res.isSome()) {
@@ -107,17 +120,26 @@ export class Iter<TInitial, TCurrent> {
     return acc;
   }
 
+  /**
+   * Map every element of this iterator to another
+   * */
   public map<U>(fn: (val: TCurrent, index: number) => U): Iter<TInitial, U> {
     const op = (val: IOption<TInitial>, index: number) =>
       this.op(val, index).map((v) => fn(v, index));
 
-    return new Iter(this.arr, op);
+    return new Iter(this._arr, op);
   }
 
+  /**
+   * Take the first n elements
+   * */
   public take(n: number): Iter<TInitial, TCurrent> {
     return this.filter((_, i) => i < n);
   }
 
+  /**
+   * Skip the first n elements
+   * */
   public skip(n: number): Iter<TInitial, TCurrent> {
     return this.filter((_, i) => i >= n);
   }
