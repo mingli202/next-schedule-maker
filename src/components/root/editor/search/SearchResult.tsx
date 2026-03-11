@@ -1,6 +1,17 @@
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { Eye, Minus, Plus } from "lucide-react";
-import { useCallback, type MouseEvent } from "react";
+import {
+  Eye,
+  Filter,
+  Folder,
+  Github,
+  Info,
+  Minus,
+  Plus,
+  Search,
+  Settings,
+  Star,
+} from "lucide-react";
+import { useCallback } from "react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
@@ -19,19 +30,85 @@ export function SearchResult() {
     return null;
   }
 
-  return (
-    <div className="flex-1">
-      {!sections || sections.length === 0 ? (
-        <NoResult />
-      ) : (
-        <Result sections={sections} />
-      )}
-    </div>
+  return !sections || sections.length === 0 ? (
+    <NoResult />
+  ) : (
+    <Result sections={sections} />
   );
 }
 
 function NoResult() {
-  return null;
+  return (
+    <div className="flex-1 overflow-x-hidden overflow-y-auto">
+      <div className="flex flex-col gap-4 p-4">
+        <h3 className="font-heading text-center text-xl">Guidelines</h3>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <Search className="h-4 w-4 shrink-0" /> General search
+          </div>
+          <div className="flex items-center gap-2">
+            <Filter className="h-4 w-4 shrink-0" /> Advanced filtering
+          </div>
+          <div className="flex items-center gap-2">
+            <Star className="h-4 w-4 shrink-0" /> Generate schedules
+          </div>
+          <div className="flex items-center gap-2">
+            <Folder className="h-4 w-4 shrink-0" /> Your saved schedules
+          </div>
+          <div className="flex items-center gap-2">
+            <Settings className="h-4 w-4 shrink-0" /> Some options
+          </div>
+        </div>
+        <div className="bg-secondary h-0.5 w-full rounded-full" />
+        <div className="">
+          Search by keywords and separate them by a comma. It will attempt to
+          search by matching various patterns. Click on the{" "}
+          <Info className="inline h-4" /> icon right to the search bar for more
+          detail. Examples:
+        </div>
+        <ul className="list-inside list-disc">
+          <li>ENGLISH, 603-200, r{">"}4.5, 10:00-16:00</li>
+          <li>HUMA, blended, steven</li>
+          <li>bio ii, s{">"}80, WF</li>
+        </ul>
+        <div className="bg-secondary h-0.5 w-full rounded-full" />
+        <p>
+          DISCLAIMER: This website is a tool meant to help students plan their
+          schedule. It is NOT an official website and you still need to make
+          your schedule via OMNIVOX. Moreover, although I try my best to make
+          the website as reliable as possible, it is still your responsibility
+          to make sure that the info is correct.
+        </p>
+        <div className="bg-secondary h-0.5 w-full rounded-full" />
+        <div className="flex flex-col gap-2">
+          <a
+            href="https://github.com/mingli202/next-schedule-maker"
+            className="group flex items-center gap-2"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Github className="h-4 w-4 shrink-0" />
+            <span className="group-hover:underline">Contribute</span>
+          </a>
+          <a
+            href="https://mingliliu.com"
+            className="group flex items-center gap-2"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/126989125?v=4"
+              alt="portfolio icon"
+              className="h-4 w-4 shrink-0 rounded-full"
+            />
+            <span className="group-hover:underline">
+              Ming Li Liu, 2022-2024 Honours Science
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 type ResultProps = {
@@ -41,7 +118,7 @@ function Result({ sections }: ResultProps) {
   const navigate = useNavigate({ from: "/editor/search" });
 
   const onHover = useCallback(
-    (sectionId: number) => {
+    (sectionId: number) => () => {
       navigate({
         search: (prev) => ({
           ...prev,
@@ -55,15 +132,15 @@ function Result({ sections }: ResultProps) {
 
   return (
     <Virtuoso
-      style={{ height: "100%" }}
+      style={{ overflowX: "hidden", width: "100%", flexGrow: 1 }}
       data={sections}
       itemContent={(index, section) => (
         <SectionCard
           section={section}
           className={cn(index !== 0 && "mt-2")}
           footer={<SectionCardFooter sectionId={section.id} />}
-          onMouseEnter={() => onHover(section.id)}
-          onMouseLeave={() => onHover(-1)}
+          onMouseEnter={onHover(section.id)}
+          onMouseLeave={onHover(-1)}
         />
       )}
     />

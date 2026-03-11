@@ -2,7 +2,7 @@ import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useCallback } from "react";
 import { getNextAvailableColorIndex } from "src/lib/colors";
 import isValidAdditionToSchedule from "src/lib/schedule/isValidAdditionToSchedule";
-import { useSection, useSections } from "./useSection";
+import { useSectionStore } from "src/lib/store/section";
 
 export function useSectionInSearchHelper(sectionId: number) {
   const navigate = useNavigate({ from: "/editor" });
@@ -12,11 +12,10 @@ export function useSectionInSearchHelper(sectionId: number) {
     select: (p) => p.sections,
   });
 
-  const { data: section } = useSection(sectionId);
+  const { sectionsById } = useSectionStore();
 
-  const { data: sections, isPending } = useSections(
-    savedSections.map((section) => section.sectionId),
-  );
+  const section = sectionsById[`${sectionId}`];
+  const sections = savedSections.map((s) => sectionsById[`${s.sectionId}`]);
 
   const isSectionIncluded = useCallback(
     () => savedSections.some((s) => s.sectionId === section?.id),
@@ -24,15 +23,15 @@ export function useSectionInSearchHelper(sectionId: number) {
   );
 
   const canAddSection = useCallback(() => {
-    if (!section || isPending) {
+    if (!section) {
       return false;
     }
 
     return isValidAdditionToSchedule(section, sections);
-  }, [section, sections, isPending]);
+  }, [section, sections]);
 
   const addSection = useCallback(() => {
-    if (!section || isPending) {
+    if (!section) {
       return;
     }
 
@@ -50,7 +49,7 @@ export function useSectionInSearchHelper(sectionId: number) {
         }),
       });
     }
-  }, [section, navigate, canAddSection, isPending]);
+  }, [section, navigate, canAddSection]);
 
   const removeSection = useCallback(() => {
     navigate({
