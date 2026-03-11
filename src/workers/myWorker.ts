@@ -4,13 +4,9 @@ import type {
   WorkerResponse,
   WorkerResponseMap,
 } from "src/types/worker";
-import { client } from "@/client/client.gen";
 import miniGenerate from "@/lib/mini-generate";
 
 let sectionStore: SectionStore | null = null;
-
-const baseUrl = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8000";
-client.setConfig({ baseUrl });
 
 function messageHandler(
   e: MessageEvent<WorkerMessage>,
