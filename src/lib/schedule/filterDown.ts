@@ -114,7 +114,7 @@ const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
  * dayTime.startTimeHhmm is less than the given timeStart
  * */
 const filterByTimeStart = (iter: Iter<SectionResponse>, timeStart: string) =>
-  !timeStart.match(/\d{4}/)
+  !timeStart.match(/\d{3,4}/)
     ? iter
     : iter.filter(
         (section) =>
@@ -126,14 +126,14 @@ const filterByTimeStart = (iter: Iter<SectionResponse>, timeStart: string) =>
       );
 
 /**
- * Section where every dayTime of every leclab starts before timeEnd
+ * Section where every dayTime of every leclab starts after timeEnd
  *
  * Section where there does not exist a leclab such that
  * there exist a dayTime such that
  * dayTime.startEndHhmm is more than the given timeEnd
  * */
 const filterByTimeEnd = (iter: Iter<SectionResponse>, timeEnd: string) =>
-  !timeEnd.match(/\d{4}/)
+  !timeEnd.match(/\d{3,4}/)
     ? iter
     : iter.filter(
         (section) =>
@@ -201,7 +201,7 @@ const domainReg = /^[A-Z]{2,} *[A-Z ]*$/g;
 const dayReg = /^[MTWRF]+ *[MTWRF ]*$/g;
 
 /**
- * Attempt to filter from a general query q by matching various patterns.
+ * Filter from a general query q by matching various patterns.
  * */
 const filterByQuery = (
   iter: Iter<SectionResponse>,
@@ -215,8 +215,8 @@ const filterByQuery = (
     const timeMatch = keyword.match(timeReg);
     // check if time
     if (timeMatch) {
-      tmp = filterByTimeStart(tmp, timeMatch[0]);
-      tmp = filterByTimeEnd(tmp, timeMatch[2]);
+      tmp = filterByTimeStart(tmp, timeMatch[1].replace(/[:h]/, ""));
+      tmp = filterByTimeEnd(tmp, timeMatch[3].replace(/[:h]/, ""));
     }
 
     // check if daysOff
@@ -259,7 +259,7 @@ const filterByQuery = (
     // check if domain name
     else if (keyword.match(domainReg)) {
       for (const k of keyword.split(" ")) {
-        tmp = filterByCourse(tmp, k);
+        tmp = filterByDomain(tmp, k);
       }
     }
     // check if honours or blended
