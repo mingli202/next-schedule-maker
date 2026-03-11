@@ -1,5 +1,5 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
   HeadContent,
@@ -7,45 +7,17 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { useEffect } from "react";
-import { getAllSectionsAllGet } from "src/client";
+import {
+  allSectionsQueryOptions,
+  useSectionStore,
+} from "src/lib/store/section";
 import { postWorkerMessage, terminateWorker } from "src/lib/store/worker";
-import type { RouterContext, SectionStore } from "src/types";
+import type { RouterContext } from "src/types";
 import { client } from "@/client/client.gen";
 import appCss from "./globals.css?url";
 
 const baseUrl = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8000";
 client.setConfig({ baseUrl });
-
-const allSectionsQueryOptions = queryOptions({
-  queryKey: ["section-store"],
-  queryFn: async (): Promise<SectionStore> => {
-    const res = await getAllSectionsAllGet();
-    const sections = res.data ?? [];
-
-    const sectionsById = Object.fromEntries(
-      sections.map((section) => [section.id, section] as const),
-    );
-
-    const professors = new Set(
-      sections
-        .flatMap((section) => section.leclabs.map((leclab) => leclab.prof))
-        .filter((prof) => prof.trim() !== ""),
-    );
-
-    const codes = new Set(
-      sections
-        .map((section) => section.code)
-        .filter((code) => code.trim() !== ""),
-    );
-
-    return {
-      sectionsById,
-      professors,
-      codes,
-    } as const;
-  },
-  staleTime: Infinity,
-});
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
@@ -140,7 +112,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { data } = useSuspenseQuery(allSectionsQueryOptions);
+  const data = useSectionStore();
   postWorkerMessage({ type: "init", sectionStore: data });
 
   useEffect(() => {
