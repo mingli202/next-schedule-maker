@@ -241,6 +241,27 @@ export class Iter<T> implements Iterable<T> {
   }
 
   /**
+   * Creates an iterator that yields elements based on a predicate.
+   *
+   * takeWhile() takes a closure as an argument. It will call this closure on each element of the iterator, and yield elements while it returns true.
+   *
+   * After false is returned, take_while()’s job is over, and the rest of the elements are ignored.
+   * */
+  public takeWhile(predicate: (val: T, index: number) => boolean): Iter<T> {
+    const source = this;
+    return new Iter(function* () {
+      let index = 0;
+      for (const val of source) {
+        if (!predicate(val, index)) {
+          break;
+        }
+        yield val;
+        index += 1;
+      }
+    });
+  }
+
+  /**
    * Skip the first n elements
    * */
   public skip(n: number): Iter<T> {
