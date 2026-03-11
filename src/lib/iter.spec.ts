@@ -1,6 +1,7 @@
 import { expect } from "bun:test";
 import { Iter } from "./iter";
 import { given, then, when } from "./test-util";
+import { None, Some } from "./option";
 
 given("an iter", () => {
   when("from() is called", () => {
@@ -219,6 +220,15 @@ given("an iter", () => {
     then("should return empty when n exceeds length", () => {
       const iter = Iter.from([1, 2]).skip(10);
       expect(iter.collect()).toStrictEqual([]);
+    });
+  });
+
+  when("filterMap() is called", () => {
+    then("should map and filter", () => {
+      const iter = Iter.from([1, 2, 3, 4, 5, 6]).filterMap((val) =>
+        val % 2 === 0 ? new Some(`${val}`) : new None(),
+      );
+      expect(iter.collect()).toStrictEqual(["2", "4", "6"]);
     });
   });
 });
