@@ -102,7 +102,7 @@ export class Iter<T> implements Iterable<T> {
    * Creates an iterator that both filters and maps.
    * The returned iterator yields only the values for which the supplied closure returns Some(value).
    * */
-  public filerMap<U>(fn: (val: T, index: number) => IOption<U>): Iter<U> {
+  public filterMap<U>(fn: (val: T, index: number) => IOption<U>): Iter<U> {
     const source = this;
 
     return new Iter(function* () {
