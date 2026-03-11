@@ -39,7 +39,7 @@ export class Iter<TInitial, TCurrent> {
         acc &&= predicate(res.unwrap(), i);
       }
 
-      if (!res) {
+      if (!acc) {
         return false;
       }
     }
@@ -65,7 +65,7 @@ export class Iter<TInitial, TCurrent> {
         acc ||= predicate(res.unwrap(), i);
       }
 
-      if (res) {
+      if (acc) {
         return true;
       }
     }
