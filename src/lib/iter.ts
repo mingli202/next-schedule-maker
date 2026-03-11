@@ -26,9 +26,19 @@ export class Iter<TInitial, TCurrent> {
     return arr;
   }
 
+  public fitler(
+    fn: (val: TCurrent, index: number) => boolean,
+  ): Iter<TInitial, TCurrent> {
+    const op = (val: IOption<TInitial>, index: number) =>
+      this.op(val, index).filter((val) => fn(val, index));
+
+    return new Iter(this.arr, op);
+  }
+
   public map<U>(fn: (val: TCurrent, index: number) => U): Iter<TInitial, U> {
     const op = (val: IOption<TInitial>, index: number) =>
       this.op(val, index).map((v) => fn(v, index));
+
     return new Iter(this.arr, op);
   }
 }
