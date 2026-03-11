@@ -308,7 +308,7 @@ export class Iter<T> implements Iterable<T> {
       let index = 0;
 
       for (const val of source) {
-        if (!predicate(val, index)) {
+        if (!stopSkipping && !predicate(val, index)) {
           stopSkipping = true;
         }
         if (stopSkipping) {
