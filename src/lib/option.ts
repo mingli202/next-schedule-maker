@@ -68,11 +68,6 @@ export interface IOption<T> {
   orElse(f: () => IOption<T>): IOption<T>;
 
   /**
-   * Replaces the actual value in the option by the value given in parameter, returning the old value if present, leaving a Some in its place without deinitializing either one.
-   * */
-  replace(value: T): IOption<T>;
-
-  /**
    * Returns the contained Some value, consuming the self value.
    * */
   unwrap(): T;
@@ -99,7 +94,7 @@ export class Some<T> implements IOption<T> {
     return f(this.value);
   }
 
-  expect(_msg: string) {
+  expect(_msg: string): T {
     return this.value;
   }
 
@@ -143,12 +138,6 @@ export class Some<T> implements IOption<T> {
     return this;
   }
 
-  replace(value: T): IOption<T> {
-    const oldSome = new Some(this.value);
-    this.value = value;
-    return oldSome;
-  }
-
   unwrap(): T {
     return this.value;
   }
@@ -162,8 +151,68 @@ export class Some<T> implements IOption<T> {
   }
 }
 
-export class None implements IOption<void> {
-  expect(msg: string) {
+export class None<T> implements IOption<T> {
+  and<U>(_optb: IOption<U>): IOption<U> {
+    return new None<U>();
+  }
+
+  andThen<U>(_f: (val: T) => IOption<U>): IOption<U> {
+    return new None<U>();
+  }
+
+  expect(msg: string): T {
     throw new Error(msg);
+  }
+
+  filter(_predicate: (val: T) => boolean): IOption<T> {
+    return this;
+  }
+
+  isNone(): boolean {
+    return true;
+  }
+
+  isNoneOr(_predicate: (val: T) => boolean): boolean {
+    return true;
+  }
+
+  isSome(): boolean {
+    return false;
+  }
+
+  isSomeAnd(_predicate: (val: T) => boolean): boolean {
+    return false;
+  }
+
+  map<U>(_f: (val: T) => U): IOption<U> {
+    return new None<U>();
+  }
+
+  mapOr<U>(defaultValue: U, _f: (val: T) => U): IOption<U> {
+    return new Some(defaultValue);
+  }
+
+  mapOrElse<U>(defaultFunc: () => U, _f: (val: T) => U): IOption<U> {
+    return new Some(defaultFunc());
+  }
+
+  or(optb: IOption<T>): IOption<T> {
+    return optb;
+  }
+
+  orElse(f: () => IOption<T>): IOption<T> {
+    return f();
+  }
+
+  unwrap(): T {
+    throw new Error("Unwrapped a None value");
+  }
+
+  unwrapOr(defaultValue: T): T {
+    return defaultValue;
+  }
+
+  unwrapOrElse(f: () => T): T {
+    return f();
   }
 }
