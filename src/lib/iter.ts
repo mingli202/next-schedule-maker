@@ -139,7 +139,7 @@ export class Iter<T> implements Iterable<T> {
   /**
    * Applies function to the elements of iterator and returns the first non-none result.
    * */
-  public findMap<B>(f: (val: T, index: number) => IOption<B>): IOption<B> {
+  public findMap<U>(f: (val: T, index: number) => IOption<U>): IOption<U> {
     let index = 0;
     for (const val of this) {
       const res = f(val, index);
@@ -183,13 +183,38 @@ export class Iter<T> implements Iterable<T> {
   /**
    * Map every element of this iterator to another
    * */
-  public map<U>(fn: (val: T, index: number) => U): Iter<U> {
+  public map<U>(f: (val: T, index: number) => U): Iter<U> {
     const source = this;
     return new Iter(function* () {
       let index = 0;
       for (const val of source) {
-        yield fn(val, index);
+        yield f(val, index);
         index += 1;
+      }
+    });
+  }
+
+  /**
+   * Creates an iterator that both yields elements based on a predicate and maps.
+   *
+   * mapWhile() takes a closure as an argument. It will call this closure on each element of the iterator, and yield elements while it returns Some(_).
+   * */
+  public mapWhile<U>(f: (val: T, index: number) => IOption<U>): Iter<U> {
+    const source = this;
+
+    return new Iter(function* () {
+      let index = 0;
+
+      for (const val of source) {
+        const res = f(val, index);
+
+        if (res.isSome()) {
+          yield res.unwrap();
+        } else {
+          break;
+        }
+
+        index++;
       }
     });
   }
