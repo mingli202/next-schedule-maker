@@ -1,146 +1,169 @@
-import { type IOption, Some } from "./option";
-
-type IterOp<T, U> = (val: IOption<T>, index: number) => IOption<U>;
-
 /**
  * Custom implementation of a lazy iterator
  * Every oporator will be executed once per elements,
  * and there will only be a single pass through when consuming the iterator,
  * making it more efficient than working with arrays
  * */
-export class Iter<TInitial, TCurrent> {
-  private constructor(
-    public readonly _arr: TInitial[],
-    private op: IterOp<TInitial, TCurrent>,
-  ) {}
+export class Iter<T> implements Iterable<T> {
+	private constructor(
+		private readonly iteratorFactory: () => IterableIterator<T>,
+	) {}
 
-  /**
-   * Creates a new Iter from a given list of array
-   * */
-  public static from<T>(arr: T[]): Iter<T, T> {
-    return new Iter(arr, (val) => val);
-  }
+	public static from<T>(arr: readonly T[]): Iter<T> {
+		return new Iter(function* () {
+			yield* arr;
+		});
+	}
 
-  /**
-   * Tests if every element of the iterator matches a predicate.
-   *
-   * all() takes a closure that returns true or false. It applies this closure to each element of the iterator, and if they all return true, then so does all(). If any of them return false, it returns false.
-   *
-   * all() is short-circuiting; in other words, it will stop processing as soon as it finds a false, given that no matter what else happens, the result will also be false.
-   *
-   * an empty iterator returns true
-   * */
-  public all(predicate: (val: TCurrent, index: number) => boolean): boolean {
-    let acc = true;
+	public [Symbol.iterator](): IterableIterator<T> {
+		return this.iteratorFactory();
+	}
 
-    for (let i = 0; i < this._arr.length; i++) {
-      const res = this.op(new Some(this._arr[i]), i);
-      if (res.isSome()) {
-        acc &&= predicate(res.unwrap(), i);
-      }
+	/**
+	 * Tests if every element of the iterator matches a predicate.
+	 *
+	 * all() takes a closure that returns true or false. It applies this closure to each element of the iterator, and if they all return true, then so does all(). If any of them return false, it returns false.
+	 *
+	 * all() is short-circuiting; in other words, it will stop processing as soon as it finds a false, given that no matter what else happens, the result will also be false.
+	 *
+	 * an empty iterator returns true
+	 * */
+	public all(predicate: (val: T, index: number) => boolean): boolean {
+		let index = 0;
+		for (const val of this) {
+			if (!predicate(val, index)) {
+				return false;
+			}
+			index += 1;
+		}
 
-      if (acc === false) {
-        return false;
-      }
-    }
+		return true;
+	}
 
-    return acc;
-  }
+	/**
+	 * Tests if any element of the iterator matches a predicate.
+	 *
+	 * any() takes a closure that returns true or false. It applies this closure to each element of the iterator, and if any of them return true, then so does any(). If they all return false, it returns false.
+	 *
+	 * any() is short-circuiting; in other words, it will stop processing as soon as it finds a true, given that no matter what else happens, the result will also be true.
+	 *
+	 * An empty iterator returns false.
+	 * */
+	public any(predicate: (val: T, index: number) => boolean): boolean {
+		let index = 0;
+		for (const val of this) {
+			if (predicate(val, index)) {
+				return true;
+			}
+			index += 1;
+		}
 
-  /**
-   * Tests if any element of the iterator matches a predicate.
-   *
-   * any() takes a closure that returns true or false. It applies this closure to each element of the iterator, and if any of them return true, then so does any(). If they all return false, it returns false.
-   *
-   * any() is short-circuiting; in other words, it will stop processing as soon as it finds a true, given that no matter what else happens, the result will also be true.
-   *
-   * An empty iterator returns false.
-   * */
-  public any(predicate: (val: TCurrent, index: number) => boolean): boolean {
-    let acc = false;
+		return false;
+	}
 
-    for (let i = 0; i < this._arr.length; i++) {
-      const res = this.op(new Some(this._arr[i]), i);
-      if (res.isSome()) {
-        acc ||= predicate(res.unwrap(), i);
-      }
+	/**
+	 * Counts the number of iterations
+	 * */
+	public count(): number {
+		return this.fold(0, (acc) => acc + 1);
+	}
 
-      if (acc === true) {
-        return true;
-      }
-    }
+	/**
+	 * Collects the itererator by applying all the operations and returning the resulting array
+	 * */
+	public collect(): T[] {
+		const results: T[] = [];
+		for (const val of this) {
+			results.push(val);
+		}
 
-    return acc;
-  }
+		return results;
+	}
 
-  /**
-   * Counts the number of iterations
-   * */
-  public count(): number {
-    return this._arr.length;
-  }
+	/**
+	 * Keep values matching the given predicate
+	 * */
+	public filter(predicate: (val: T, index: number) => boolean): Iter<T> {
+		const source = this;
+		return new Iter(function* () {
+			let index = 0;
+			for (const val of source) {
+				if (predicate(val, index)) {
+					yield val;
+				}
+				index += 1;
+			}
+		});
+	}
 
-  /**
-   * Collects the itererator by applying all the operations and returning the resulting array
-   * */
-  public collect(): TCurrent[] {
-    const initialValue: TCurrent[] = [];
-    return this.fold(initialValue, (acc, val) => [...acc, val]);
-  }
+	/**
+	 * Folds every element into an accumulator by applying an operation, returning the final result.
+	 * */
+	public fold<U>(initialValue: U, f: (acc: U, val: T, index: number) => U): U {
+		let acc = initialValue;
+		let index = 0;
+		for (const val of this) {
+			acc = f(acc, val, index);
+			index += 1;
+		}
 
-  /**
-   * Keep values matching the given predicate
-   * */
-  public filter(
-    predicate: (val: TCurrent, index: number) => boolean,
-  ): Iter<TInitial, TCurrent> {
-    const op = (val: IOption<TInitial>, index: number) =>
-      this.op(val, index).filter((val) => predicate(val, index));
+		return acc;
+	}
 
-    return new Iter(this._arr, op);
-  }
+	/**
+	 * Map every element of this iterator to another
+	 * */
+	public map<U>(fn: (val: T, index: number) => U): Iter<U> {
+		const source = this;
+		return new Iter(function* () {
+			let index = 0;
+			for (const val of source) {
+				yield fn(val, index);
+				index += 1;
+			}
+		});
+	}
 
-  /**
-   * Folds every element into an accumulator by applying an operation, returning the final result.
-   * */
-  public fold<U>(
-    initialValue: U,
-    f: (acc: U, val: TCurrent, index: number) => U,
-  ) {
-    let acc = initialValue;
+	/**
+	 * Take the first n elements
+	 * */
+	public take(n: number): Iter<T> {
+		const source = this;
+		const limit = Math.max(0, Math.floor(n));
+		return new Iter(function* () {
+			if (limit === 0) {
+				return;
+			}
+			let index = 0;
+			for (const val of source) {
+				if (index >= limit) {
+					break;
+				}
+				yield val;
+				index += 1;
+			}
+		});
+	}
 
-    this._arr.forEach((val, i) => {
-      const res = this.op(new Some(val), i);
-
-      if (res.isSome()) {
-        acc = f(acc, res.unwrap(), i);
-      }
-    });
-
-    return acc;
-  }
-
-  /**
-   * Map every element of this iterator to another
-   * */
-  public map<U>(fn: (val: TCurrent, index: number) => U): Iter<TInitial, U> {
-    const op = (val: IOption<TInitial>, index: number) =>
-      this.op(val, index).map((v) => fn(v, index));
-
-    return new Iter(this._arr, op);
-  }
-
-  /**
-   * Take the first n elements
-   * */
-  public take(n: number): Iter<TInitial, TCurrent> {
-    return this.filter((_, i) => i < n);
-  }
-
-  /**
-   * Skip the first n elements
-   * */
-  public skip(n: number): Iter<TInitial, TCurrent> {
-    return this.filter((_, i) => i >= n);
-  }
+	/**
+	 * Skip the first n elements
+	 * */
+	public skip(n: number): Iter<T> {
+		const source = this;
+		const toSkip = Math.max(0, Math.floor(n));
+		return new Iter(function* () {
+			if (toSkip === 0) {
+				yield* source;
+				return;
+			}
+			let skipped = 0;
+			for (const val of source) {
+				if (skipped < toSkip) {
+					skipped += 1;
+					continue;
+				}
+				yield val;
+			}
+		});
+	}
 }
