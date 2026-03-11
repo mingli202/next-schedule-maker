@@ -1,4 +1,4 @@
-import { None, Some, type IOption } from "./option";
+import { type IOption, None, Some } from "./option";
 
 /**
  * Custom implementation of a lazy iterator
@@ -61,6 +61,17 @@ export class Iter<T> implements Iterable<T> {
     }
 
     return false;
+  }
+
+  /**
+   * Takes two iterators and creates a new iterator over both in sequence.
+   * */
+  public chain(other: Iter<T>): Iter<T> {
+    const source = this;
+    return new Iter(function* () {
+      yield* source;
+      yield* other;
+    });
   }
 
   /**
