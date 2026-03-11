@@ -159,6 +159,33 @@ given("an iter", () => {
       const sum = iter.fold(0, (acc, val) => acc + val);
       expect(sum).toBe(6);
     });
+
+    then("should work with any type", () => {
+      const initialValue: number[][] = [[]];
+      const powerset = Iter.from([1, 2, 3, 4]).fold(
+        initialValue,
+        (acc, val) => [...acc, ...acc.map((s) => [...s, val])],
+      );
+      const expected = [
+        [],
+        [1],
+        [2],
+        [1, 2],
+        [3],
+        [1, 3],
+        [2, 3],
+        [1, 2, 3],
+        [4],
+        [1, 4],
+        [2, 4],
+        [1, 2, 4],
+        [3, 4],
+        [1, 3, 4],
+        [2, 3, 4],
+        [1, 2, 3, 4],
+      ];
+      expect(powerset.sort()).toStrictEqual(expected.sort());
+    });
   });
 
   when("take() is called", () => {
