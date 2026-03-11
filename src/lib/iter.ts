@@ -137,6 +137,24 @@ export class Iter<T> implements Iterable<T> {
   }
 
   /**
+   * Applies function to the elements of iterator and returns the first non-none result.
+   * */
+  public findMap<B>(f: (val: T, index: number) => IOption<B>): IOption<B> {
+    let index = 0;
+    for (const val of this) {
+      const res = f(val, index);
+
+      if (res.isSome()) {
+        return res;
+      }
+
+      index++;
+    }
+
+    return new None();
+  }
+
+  /**
    * Folds every element into an accumulator by applying an operation, returning the final result.
    * */
   public fold<U>(initialValue: U, f: (acc: U, val: T, index: number) => U): U {
