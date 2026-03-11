@@ -11,7 +11,7 @@ import {
   Settings,
   Star,
 } from "lucide-react";
-import { useCallback } from "react";
+import { MouseEvent, useCallback } from "react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
@@ -102,7 +102,7 @@ function Result({ sections }: ResultProps) {
   const navigate = useNavigate({ from: "/editor/search" });
 
   const onHover = useCallback(
-    (sectionId: number) => {
+    (sectionId: number) => () => {
       navigate({
         search: (prev) => ({
           ...prev,
@@ -123,8 +123,8 @@ function Result({ sections }: ResultProps) {
           section={section}
           className={cn(index !== 0 && "mt-2")}
           footer={<SectionCardFooter sectionId={section.id} />}
-          onMouseEnter={() => onHover(section.id)}
-          onMouseLeave={() => onHover(-1)}
+          onMouseEnter={onHover(section.id)}
+          onMouseLeave={onHover(-1)}
         />
       )}
     />
