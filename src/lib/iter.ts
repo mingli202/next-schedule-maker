@@ -13,20 +13,11 @@ export class Iter<TInitial, TCurrent> {
   }
 
   public collect(): TCurrent[] {
-    const arr: TCurrent[] = [];
-
-    this.arr.forEach((el, i) => {
-      const res = this.op(new Some(el), i);
-
-      if (res.isSome()) {
-        arr.push(res.unwrap());
-      }
-    });
-
-    return arr;
+    const initialValue: TCurrent[] = [];
+    return this.fold(initialValue, (acc, val) => [...acc, val]);
   }
 
-  public fitler(
+  public filter(
     fn: (val: TCurrent, index: number) => boolean,
   ): Iter<TInitial, TCurrent> {
     const op = (val: IOption<TInitial>, index: number) =>
@@ -35,10 +26,35 @@ export class Iter<TInitial, TCurrent> {
     return new Iter(this.arr, op);
   }
 
+  public fold<U>(
+    initialValue: U,
+    f: (acc: U, val: TCurrent, index: number) => U,
+  ) {
+    let acc = initialValue;
+
+    this.arr.forEach((val, i) => {
+      const res = this.op(new Some(val), i);
+
+      if (res.isSome()) {
+        acc = f(acc, res.unwrap(), i);
+      }
+    });
+
+    return acc;
+  }
+
   public map<U>(fn: (val: TCurrent, index: number) => U): Iter<TInitial, U> {
     const op = (val: IOption<TInitial>, index: number) =>
       this.op(val, index).map((v) => fn(v, index));
 
     return new Iter(this.arr, op);
+  }
+
+  public take(n: number): Iter<TInitial, TCurrent> {
+    return this.filter((_, i) => i < n);
+  }
+
+  public skip(n: number): Iter<TInitial, TCurrent> {
+    return this.filter((_, i) => i >= n);
   }
 }
