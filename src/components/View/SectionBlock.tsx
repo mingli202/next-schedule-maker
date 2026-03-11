@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Maximize, Minus } from "lucide-react";
 import { Fragment, useState } from "react";
-import { useSection } from "@/hooks";
+import { useSectionStore } from "src/lib/store/section";
 import { getColorFromIndex } from "@/lib/colors";
 import { cn } from "@/lib/utils";
 import Button from "../Button";
@@ -30,9 +30,9 @@ export default function SectionBlock({
 }: SectionBlockProps) {
   const [expand, setExpand] = useState(false);
 
-  const { data: section } = useSection(sectionId);
+  const { sectionsById } = useSectionStore();
 
-  if (!section) return null;
+  const section = sectionsById[sectionId];
 
   const card: Variants = {
     hover: {
