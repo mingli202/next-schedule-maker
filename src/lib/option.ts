@@ -216,3 +216,10 @@ export class None<T> implements IOption<T> {
     return f();
   }
 }
+
+export function some<T>(val: T): IOption<T> {
+  return new Some<T>(val);
+}
+export function none<T>(): IOption<T> {
+  return new None<T>();
+}
