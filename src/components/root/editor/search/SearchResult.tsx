@@ -11,7 +11,7 @@ import {
   Settings,
   Star,
 } from "lucide-react";
-import { MouseEvent, useCallback } from "react";
+import { useCallback } from "react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
@@ -44,20 +44,19 @@ function NoResult() {
         <h3 className="font-heading text-center text-xl">Guidelines</h3>
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
-            <Search className="h-4 shrink-0" /> General search
+            <Search className="h-4 w-4 shrink-0" /> General search
           </div>
           <div className="flex items-center gap-2">
-            <Filter className="h-4 shrink-0" /> Advanced filtering
+            <Filter className="h-4 w-4 shrink-0" /> Advanced filtering
           </div>
           <div className="flex items-center gap-2">
-            <Star className="h-4 shrink-0" /> Generate an exhaustive list of
-            candidate schedule
+            <Star className="h-4 w-4 shrink-0" /> Generate schedules
           </div>
           <div className="flex items-center gap-2">
-            <Folder className="h-4 shrink-0" /> Your saved schedules
+            <Folder className="h-4 w-4 shrink-0" /> Your saved schedules
           </div>
           <div className="flex items-center gap-2">
-            <Settings className="h-4 shrink-0" /> Some options
+            <Settings className="h-4 w-4 shrink-0" /> Some options
           </div>
         </div>
         <div className="bg-secondary h-0.5 w-full rounded-full" />
@@ -81,13 +80,32 @@ function NoResult() {
           to make sure that the info is correct.
         </p>
         <div className="bg-secondary h-0.5 w-full rounded-full" />
-        <a
-          href="https://github.com/mingli202/next-schedule-maker"
-          className="flex items-center gap-2"
-        >
-          <Github className="h-4 shrink-0" />
-          Contribute
-        </a>
+        <div className="flex flex-col gap-2">
+          <a
+            href="https://github.com/mingli202/next-schedule-maker"
+            className="group flex items-center gap-2"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Github className="h-4 w-4 shrink-0" />
+            <span className="group-hover:underline">Contribute</span>
+          </a>
+          <a
+            href="https://mingliliu.com"
+            className="group flex items-center gap-2"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/126989125?v=4"
+              alt="portfolio icon"
+              className="h-4 w-4 shrink-0 rounded-full"
+            />
+            <span className="group-hover:underline">
+              Ming Li Liu, 2022-2024 Honours Science
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   );
