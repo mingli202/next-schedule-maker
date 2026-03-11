@@ -261,4 +261,29 @@ export class Iter<T> implements Iterable<T> {
       }
     });
   }
+
+  /**
+   * Creates an iterator that skips elements based on a predicate.
+   *
+   * skipWhile() takes a closure as an argument. It will call this closure on each element of the iterator, and ignore elements until it returns false.
+   *
+   * After false is returned, skipWhile()’s job is over, and the rest of the elements are yielded.
+   * */
+  public skipWhile(predicate: (val: T, index: number) => boolean): Iter<T> {
+    const source = this;
+    return new Iter(function* () {
+      let stopSkipping = false;
+      let index = 0;
+
+      for (const val of source) {
+        if (!predicate(val, index)) {
+          stopSkipping = true;
+        }
+        if (stopSkipping) {
+          yield val;
+        }
+        index++;
+      }
+    });
+  }
 }
