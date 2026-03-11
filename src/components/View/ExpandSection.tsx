@@ -9,7 +9,7 @@ type ExpandSectionProps = {
   section: SectionResponse;
   bgColor: string;
   textColor: string;
-  onRemoveSectionClicked: () => void;
+  onRemoveSectionClicked: (sectionId: number) => void;
   onMinimizeClicked: () => void;
 };
 
@@ -50,7 +50,7 @@ export default function ExpandSection({
       }}
     >
       <motion.div
-        className="flex w-4/5 flex-col rounded-md p-1 shadow-xl"
+        className="flex w-4/5 flex-col rounded-2xl p-1 shadow-xl"
         style={{
           backgroundColor: bgColor,
           color: textColor,
@@ -65,7 +65,7 @@ export default function ExpandSection({
             variant="basic"
             className="p-1 italic"
             onClick={() => {
-              onRemoveSectionClicked();
+              onRemoveSectionClicked(section.id);
               onMinimizeClicked();
             }}
           >
@@ -77,13 +77,14 @@ export default function ExpandSection({
             className="p-1"
             title="minimize"
           >
-            <Minimize />
+            <Minimize className="h-5" />
           </Button>
         </div>
 
         <SectionCard
           section={section}
-          className={cn({
+          className={cn("bg-transparent p-1")}
+          leclabClassName={cn({
             "bg-black/10": textColor === "#000",
             "bg-white/10": textColor === "#FFF",
           })}

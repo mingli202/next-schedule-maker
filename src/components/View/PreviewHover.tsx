@@ -1,12 +1,12 @@
 import { useSearch } from "@tanstack/react-router";
-import { useSection } from "@/hooks";
+import { useSectionStore } from "src/lib/store/section";
 
 export default function PreviewHover() {
   const search = useSearch({ strict: false });
 
   const previewSectionId = search.previewSectionId;
 
-  if (!previewSectionId) return null;
+  if (previewSectionId === undefined || previewSectionId < 0) return null;
 
   return <PreviewHoverInner previewSectionId={previewSectionId} />;
 }
@@ -15,7 +15,8 @@ type PreviewHoverInnerProps = {
   previewSectionId: number;
 };
 function PreviewHoverInner({ previewSectionId }: PreviewHoverInnerProps) {
-  const { data: section } = useSection(previewSectionId);
+  const { sectionsById } = useSectionStore();
+  const section = sectionsById[previewSectionId];
 
   if (!section) return null;
 
@@ -26,7 +27,7 @@ function PreviewHoverInner({ previewSectionId }: PreviewHoverInnerProps) {
         return (
           <div
             key={`${section.code}-${d}-${section.section}-hover`}
-            className="z-10 overflow-hidden rounded-md bg-white p-2 text-[8px] leading-2.5 text-black opacity-50 md:text-[14px] md:leading-3.5"
+            className="z-10 overflow-hidden rounded-md border-[3px] bg-white p-1 text-[8px] leading-2.5 text-black opacity-50 md:text-[14px] md:leading-3.5"
             style={{
               gridColumn: d,
               gridRowStart: start,
@@ -35,7 +36,7 @@ function PreviewHoverInner({ previewSectionId }: PreviewHoverInnerProps) {
           >
             <p className="line-clamp-2 font-bold">{section.title}</p>
             <p className="mt-1 line-clamp-1">{section.code}</p>
-            <p className="font">{section.section}</p>
+            <p>{section.section}</p>
             <p className="mt-1 line-clamp-2">{section.leclabs[0]?.prof}</p>
           </div>
         );

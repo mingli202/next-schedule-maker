@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Maximize, Minus } from "lucide-react";
 import { Fragment, useState } from "react";
-import { useSection } from "@/hooks";
+import { useSectionStore } from "src/lib/store/section";
 import { getColorFromIndex } from "@/lib/colors";
 import { cn } from "@/lib/utils";
 import Button from "../Button";
@@ -16,7 +16,9 @@ type SectionBlockProps = {
   disableRemove?: boolean;
   // mini view like in auto generate
   disableControls?: boolean;
-  onRemoveSectionClicked: () => void;
+
+  // handler for removing the section
+  onRemoveSectionClicked?: (sectionId: number) => void;
 };
 
 export default function SectionBlock({
@@ -28,9 +30,9 @@ export default function SectionBlock({
 }: SectionBlockProps) {
   const [expand, setExpand] = useState(false);
 
-  const { data: section } = useSection(sectionId);
+  const { sectionsById } = useSectionStore();
 
-  if (!section) return null;
+  const section = sectionsById[sectionId];
 
   const card: Variants = {
     hover: {
@@ -68,7 +70,7 @@ export default function SectionBlock({
           >
             <p className="line-clamp-2 font-bold">{section.title}</p>
             <p className="mt-1 line-clamp-1">{section.code}</p>
-            <p className="font">{section.section}</p>
+            <p>{section.section}</p>
             <p className="mt-1 line-clamp-2">{section.leclabs[0]?.prof}</p>
             {disableControls ? null : (
               <motion.div
@@ -81,12 +83,17 @@ export default function SectionBlock({
                     variant="basic"
                     className="rounded-none p-0"
                     onClick={() => {
-                      if (disableRemove || disableControls) return;
-                      onRemoveSectionClicked();
+                      if (
+                        disableRemove ||
+                        disableControls ||
+                        !onRemoveSectionClicked
+                      )
+                        return;
+                      onRemoveSectionClicked(sectionId);
                     }}
                     title="remove"
                   >
-                    <Minus />
+                    <Minus className="h-4" />
                   </Button>
                 ) : (
                   <div className="basis-full" />
@@ -100,7 +107,7 @@ export default function SectionBlock({
                   }}
                   title="expand"
                 >
-                  <Maximize />
+                  <Maximize className="h-4" />
                 </Button>
               </motion.div>
             )}
@@ -115,7 +122,7 @@ export default function SectionBlock({
               bgColor={bgColor}
               textColor={textColor}
               onMinimizeClicked={() => setExpand(false)}
-              onRemoveSectionClicked={onRemoveSectionClicked}
+              onRemoveSectionClicked={onRemoveSectionClicked ?? ((_s) => {})}
             />
           )}
         </AnimatePresence>

@@ -15,6 +15,8 @@ type Props = ComponentProps<"div"> & {
 
   // the sections to view
   savedSections: SavedSection[];
+
+  onRemoveSectionClicked?: (sectionId: number) => void;
 };
 
 function View({
@@ -22,6 +24,7 @@ function View({
   disableRemove,
   disableControls,
   savedSections,
+  onRemoveSectionClicked,
   ...props
 }: Props) {
   return (
@@ -102,6 +105,7 @@ function View({
           disableRemove={disableRemove}
           savedSections={savedSections}
           disableControls={disableControls}
+          onRemoveSectionClicked={onRemoveSectionClicked}
         />
         {!disableControls && <PreviewHover />}
       </div>

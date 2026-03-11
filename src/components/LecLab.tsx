@@ -9,7 +9,7 @@ type Props = {
 } & HTMLProps<HTMLDivElement>;
 export default function LecLab({ leclab, className }: Props) {
   return (
-    <div className={cn("bg-secondary mt-2 rounded-md p-2", className)}>
+    <div className={cn("bg-secondary rounded-md p-2", className)}>
       <h4 className="italic">{capitalize(leclab.type ?? "lecture")}</h4>
 
       <div className="relative flex items-center gap-2">

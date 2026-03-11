@@ -43,5 +43,25 @@ function RouteComponent() {
 
 function ViewWrapper(props: ComponentProps<"div">) {
   const { sections } = Route.useSearch();
-  return <View savedSections={sections} {...props} />;
+  const navigate = Route.useNavigate();
+
+  const onRemoveSectionClicked = useCallback(
+    (sectionId: number) => {
+      navigate({
+        search: (prev) => ({
+          ...prev,
+          sections: prev.sections.filter((s) => s.sectionId !== sectionId),
+        }),
+      });
+    },
+    [navigate],
+  );
+
+  return (
+    <View
+      savedSections={sections}
+      onRemoveSectionClicked={onRemoveSectionClicked}
+      {...props}
+    />
+  );
 }

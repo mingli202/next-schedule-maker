@@ -1,7 +1,5 @@
-"use client";
-
-import { SharedCurrentClasses, ActionType } from "@/types";
-import React, { createContext, useLayoutEffect, useReducer } from "react";
+import type React from "react";
+import { createContext, useLayoutEffect, useReducer } from "react";
 
 export const ScheduleClassesContext = createContext<SharedCurrentClasses[]>([]);
 export const ScheduleDispatchContext = createContext<

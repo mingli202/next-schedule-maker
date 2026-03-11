@@ -1,9 +1,25 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+  createRootRouteWithContext,
+  HeadContent,
+  Scripts,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { useEffect } from "react";
+import {
+  allSectionsQueryOptions,
+  useSectionStore,
+} from "src/lib/store/section";
+import { postWorkerMessage, terminateWorker } from "src/lib/store/worker";
+import type { RouterContext } from "src/types";
+import { client } from "@/client/client.gen";
 import appCss from "./globals.css?url";
 
-export const Route = createRootRoute({
+const baseUrl = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8000";
+client.setConfig({ baseUrl });
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
     meta: [
       {
@@ -89,11 +105,22 @@ export const Route = createRootRoute({
       },
     ],
   }),
-
+  loader: ({ context }) => {
+    context.queryClient.ensureQueryData(allSectionsQueryOptions);
+  },
   shellComponent: RootDocument,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const data = useSectionStore();
+  postWorkerMessage({ type: "init", sectionStore: data });
+
+  useEffect(() => {
+    return () => {
+      terminateWorker();
+    };
+  }, []);
+
   return (
     <html lang="en">
       <head>

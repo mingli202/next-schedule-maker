@@ -1,40 +1,42 @@
-import type { SectionResponse } from "@/client";
-import { getAllSectionsAllGet } from "@/client";
+import type { SectionStore } from "src/types";
+import type {
+  WorkerMessage,
+  WorkerResponse,
+  WorkerResponseMap,
+} from "src/types/worker";
 import miniGenerate from "@/lib/mini-generate";
-import type { SavedSection } from "@/types/schedule";
 
-export type WorkerRequest = {
-  type: "mini-generate";
-  index: number;
-};
+let sectionStore: SectionStore | null = null;
 
-export type WorkerResponse = {
-  schedule: SavedSection[];
-  index: number;
-};
+function messageHandler(
+  e: MessageEvent<WorkerMessage>,
+): WorkerResponse | undefined {
+  const data = e.data;
 
-let allSections: SectionResponse[] | null = null;
-
-self.onmessage = async (e: MessageEvent<WorkerRequest>) => {
-  if (!allSections) {
-    console.log("fetching sections");
-    const res = await getAllSectionsAllGet();
-
-    if (!res.data) return;
-
-    allSections = res.data;
-  }
-
-  const { type } = e.data;
-
-  switch (type) {
-    case "mini-generate": {
-      const sch = miniGenerate(allSections);
-
-      self.postMessage({
-        schedule: sch,
-        index: e.data.index,
-      } satisfies WorkerResponse);
+  switch (data.type) {
+    case "init": {
+      sectionStore = data.sectionStore;
+      break;
     }
+    case "mini-generate": {
+      if (!sectionStore) {
+        return;
+      }
+
+      const sch = miniGenerate(Object.values(sectionStore.sectionsById));
+
+      return {
+        schedule: sch,
+        index: data.index,
+      } satisfies WorkerResponseMap[typeof data.type];
+    }
+  }
+}
+
+self.onmessage = (e: MessageEvent<WorkerMessage>) => {
+  const res = messageHandler(e);
+
+  if (res !== undefined) {
+    self.postMessage(res);
   }
 };

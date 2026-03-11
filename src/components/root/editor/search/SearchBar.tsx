@@ -1,46 +1,60 @@
-"use client";
+import { useNavigate, useSearch } from "@tanstack/react-router";
+import { type SubmitEvent, useCallback, useRef } from "react";
+import { Field, FieldLabel } from "src/components/ui/field";
+import { Input } from "src/components/ui/input";
+import { useDebounce } from "src/hooks";
 
-import { useRouter, useSearchParams } from "next/navigation";
+const activeSearchDelayMili = 200;
 
-function SearchBar() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+export function SearchBar() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const navigate = useNavigate({ from: "/editor/search" });
 
-  const initialValue = searchParams.get("q") ?? "";
+  const handleChange = useDebounce(() => {
+    if (!formRef.current || !activeSearch) {
+      return;
+    }
 
-  const isLiveSearch = searchParams.get("liveSearch");
+    formRef.current.requestSubmit();
+  }, activeSearchDelayMili);
 
-  function search(formData: FormData) {
-    const searchInput = formData.get("search")!.toString();
+  const { q, activeSearch } = useSearch({
+    from: "/editor/search",
+    select: (params) => ({ q: params.q, activeSearch: params.activeSearch }),
+  });
 
-    const url = new URL(window.location.href);
-    url.searchParams.set("q", searchInput);
-    router.push(`/editor/search?${url.searchParams}`);
-  }
+  const handleSubmit = useCallback(
+    (e: SubmitEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const inputValue = formData.get("search")?.toString();
+
+      navigate({
+        search: (prev) => ({
+          ...prev,
+          q: inputValue,
+        }),
+      });
+    },
+    [navigate],
+  );
 
   return (
-    <form action={search} autoComplete="off">
-      <label htmlFor="search" className="hidden">
-        search
-      </label>
-      <input
-        className="w-full shrink-0 rounded-md bg-secondary p-1 outline-none placeholder:italic"
-        placeholder="Search..."
-        type="text"
-        name="search"
-        id="search"
-        autoComplete="off"
-        defaultValue={initialValue}
-        onChange={(e) => {
-          if (isLiveSearch !== "true") return;
-
-          const urlParams = new URL(window.location.href);
-          urlParams.searchParams.set("q", e.target.value);
-          router.push(`/editor/search?${urlParams.searchParams}`);
-        }}
-      />
+    <form onSubmit={handleSubmit} autoComplete="off" ref={formRef}>
+      <Field>
+        <FieldLabel htmlFor="search" className="hidden">
+          search
+        </FieldLabel>
+        <Input
+          placeholder="Search..."
+          type="text"
+          name="search"
+          id="search"
+          autoComplete="off"
+          onChange={handleChange}
+          defaultValue={q}
+        />
+      </Field>
     </form>
   );
 }
-
-export default SearchBar;
