@@ -12,6 +12,9 @@ const includes = (str: string, substring: string) =>
 const startsWith = (str: string, substring: string) =>
   str.toLowerCase().startsWith(substring.toLowerCase());
 
+/**
+ * Section where there exsist one leclab.prof that includes the given prof
+ * */
 const filterByProfessor = (iter: Iter<SectionResponse>, prof: string) =>
   prof.trim() === ""
     ? iter
@@ -19,6 +22,14 @@ const filterByProfessor = (iter: Iter<SectionResponse>, prof: string) =>
         section.leclabs.some((leclab) => includes(leclab.prof, prof)),
       );
 
+/**
+ * Section where every prof of every leclab has a higher avg than minRating
+ *
+ * Section where there does not exist a leclab such that
+ * leclab.rating is undefined or
+ * leclab.rating.status is not found or
+ * leclab.avg is less than the minRating allowed
+ * */
 const filterByMinRating = (iter: Iter<SectionResponse>, minRating: number) =>
   iter.filter(
     (section) =>
@@ -29,6 +40,15 @@ const filterByMinRating = (iter: Iter<SectionResponse>, minRating: number) =>
           leclab.rating.avg < minRating,
       ),
   );
+
+/**
+ * Section where every prof of every leclab has a lower avg than maxRating
+ *
+ * Section where there does not exist a leclab such that
+ * leclab.rating is undefined or
+ * leclab.rating.status is not found or
+ * leclab.avg is more than the maxRating allowed
+ * */
 const filterByMaxRating = (iter: Iter<SectionResponse>, maxRating: number) =>
   iter.filter(
     (section) =>
@@ -40,6 +60,14 @@ const filterByMaxRating = (iter: Iter<SectionResponse>, maxRating: number) =>
       ),
   );
 
+/**
+ * Section whery every prof of every leclab has a higher score than minScore
+ *
+ * Section where there does not exist a leclab such that
+ * leclab.rating is undefined or
+ * leclab.rating.status is not found or
+ * leclab.score is less than the minScore allowed
+ * */
 const filterByMinScore = (iter: Iter<SectionResponse>, minScore: number) =>
   iter.filter(
     (section) =>
@@ -50,6 +78,15 @@ const filterByMinScore = (iter: Iter<SectionResponse>, minScore: number) =>
           leclab.rating.score < minScore,
       ),
   );
+
+/**
+ * Section whery every prof of every leclab has a lower score than maxScore
+ *
+ * Section where there does not exist a leclab such that
+ * leclab.rating is undefined or
+ * leclab.rating.status is not found or
+ * leclab.score is more than the maxScore allowed
+ * */
 const filterByMaxScore = (iter: Iter<SectionResponse>, maxScore: number) =>
   iter.filter(
     (section) =>
@@ -61,11 +98,21 @@ const filterByMaxScore = (iter: Iter<SectionResponse>, maxScore: number) =>
       ),
   );
 
+/**
+ * Section where Section.code includes the given code
+ * */
 const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
   code.trim() === ""
     ? iter
     : iter.filter((section) => includes(section.code, code));
 
+/**
+ * Section where every dayTime of every leclab starts after timeStart
+ *
+ * Section where there does not exist a leclab such that
+ * there exist a dayTime such that
+ * dayTime.startTimeHhmm is less than the given timeStart
+ * */
 const filterByTimeStart = (iter: Iter<SectionResponse>, timeStart: string) =>
   !timeStart.match(/\d{4}/)
     ? iter
@@ -78,6 +125,13 @@ const filterByTimeStart = (iter: Iter<SectionResponse>, timeStart: string) =>
           ),
       );
 
+/**
+ * Section where every dayTime of every leclab starts before timeEnd
+ *
+ * Section where there does not exist a leclab such that
+ * there exist a dayTime such that
+ * dayTime.startEndHhmm is more than the given timeEnd
+ * */
 const filterByTimeEnd = (iter: Iter<SectionResponse>, timeEnd: string) =>
   !timeEnd.match(/\d{4}/)
     ? iter
@@ -88,27 +142,49 @@ const filterByTimeEnd = (iter: Iter<SectionResponse>, timeEnd: string) =>
           ),
       );
 
+/**
+ * Blended sections
+ * */
 const filterByBlended = (iter: Iter<SectionResponse>) =>
   iter.filter((section) => section.more.startsWith("BLENDED"));
 
+/**
+ * Honours sections
+ * */
 const filterByHonours = (iter: Iter<SectionResponse>) =>
   iter.filter((section) => section.more.startsWith("For Honours"));
 
+/**
+ * Section with titles that starts with
+ * */
 const filterByTitle = (iter: Iter<SectionResponse>, title: string) =>
   title.trim() === ""
     ? iter
     : iter.filter((section) => startsWith(section.title, title));
 
+/**
+ * Sections with course that starts with
+ * */
 const filterByCourse = (iter: Iter<SectionResponse>, course: string) =>
   course.trim() === ""
     ? iter
     : iter.filter((section) => startsWith(section.course, course));
 
+/**
+ * Sections with domain that starts with
+ * */
 const filterByDomain = (iter: Iter<SectionResponse>, domain: string) =>
   domain.trim() === ""
     ? iter
     : iter.filter((section) => startsWith(section.domain, domain));
 
+/**
+ * Section where there are no leclab that has a day listed in daysOff
+ *
+ * Section where there does not exist a leclab such that
+ * there exist a dayTime such that
+ * any day dayTime.day is in daysOff
+ * */
 const filterByDaysOff = (iter: Iter<SectionResponse>, daysOff: string) =>
   iter.filter(
     (section) =>
@@ -124,6 +200,9 @@ const codeReg = /^\d{3}(-| )?[0-9A-Z]{0,3}(-| )?\w{0,2}$/g;
 const domainReg = /^[A-Z]{2,} *[A-Z ]*$/g;
 const dayReg = /^[MTWRF]+ *[MTWRF ]*$/g;
 
+/**
+ * Attempt to filter from a general query q by matching various patterns.
+ * */
 const filterByQuery = (
   iter: Iter<SectionResponse>,
   q: string,
@@ -191,15 +270,21 @@ const filterByQuery = (
     }
 
     // check if user meant to search a professors
+    // Will match if at least one professor is 66% matched
     else if (
-      keyword.split(" ").some((keyword) => {
-        return professors.some((prof) => {
-          return prof.split(",").some((p) => {
-            const re = new RegExp(keyword, "ig");
-            return p.match(re) && keyword.length > p.length * (2 / 3);
-          });
-        });
-      })
+      keyword
+        .split(" ")
+        .some((keyword) =>
+          professors.some((prof) =>
+            prof
+              .split(",")
+              .some(
+                (p) =>
+                  p.toLowerCase().includes(keyword.toLowerCase()) &&
+                  keyword.length > p.length * (2 / 3),
+              ),
+          ),
+        )
     ) {
       for (const k of keyword.split(" ")) {
         tmp = filterByProfessor(tmp, k);
