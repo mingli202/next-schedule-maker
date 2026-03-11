@@ -1,13 +1,13 @@
 import { expect } from "bun:test";
-import { None, Some } from "./option";
+import { None, none, Some, some } from "./option";
 import { given, then, when } from "./test-util";
 
 when("option is a Some", () => {
-  const someValue = new Some(123);
+  const someValue = some(123);
 
   given("and() is called", () => {
     then("optb should be returned", () => {
-      const optb = new Some(456);
+      const optb = some(456);
       const actual = someValue.and(optb);
 
       expect(actual).toBe(optb);
@@ -16,8 +16,8 @@ when("option is a Some", () => {
 
   given("andThen() is called", () => {
     then("the function result option should be returned", () => {
-      const actual = someValue.andThen((val) => new Some(val * 2));
-      expect(actual).toStrictEqual(new Some(246));
+      const actual = someValue.andThen((val) => some(val * 2));
+      expect(actual).toStrictEqual(some(246));
     });
   });
 
@@ -71,52 +71,58 @@ when("option is a Some", () => {
   given("map() is called", () => {
     then("the mapped Some should be returned", () => {
       const actual = someValue.map((val) => val.toString());
-      expect(actual).toStrictEqual(new Some("123"));
+      expect(actual).toStrictEqual(some("123"));
     });
   });
 
   given("mapOr() is called", () => {
     then("the mapped Some should be returned and the default ignored", () => {
       const actual = someValue.mapOr(999, (val) => val * 2);
-      expect(actual).toStrictEqual(new Some(246));
+      expect(actual).toStrictEqual(some(246));
     });
   });
 
   given("mapOrElse() is called", () => {
-    then("the mapped Some should be returned and the default function ignored", () => {
-      let defaultCalled = false;
-      const actual = someValue.mapOrElse(
-        () => {
-          defaultCalled = true;
-          return 0;
-        },
-        (val) => val * 2,
-      );
+    then(
+      "the mapped Some should be returned and the default function ignored",
+      () => {
+        let defaultCalled = false;
+        const actual = someValue.mapOrElse(
+          () => {
+            defaultCalled = true;
+            return 0;
+          },
+          (val) => val * 2,
+        );
 
-      expect(defaultCalled).toBe(false);
-      expect(actual).toStrictEqual(new Some(246));
-    });
+        expect(defaultCalled).toBe(false);
+        expect(actual).toStrictEqual(some(246));
+      },
+    );
   });
 
   given("or() is called", () => {
     then("the original Some should be returned", () => {
-      const optb = new Some(456);
+      const optb = some(456);
       const actual = someValue.or(optb);
       expect(actual).toBe(someValue);
     });
   });
 
   given("orElse() is called", () => {
-    then("the original Some should be returned and the function ignored", () => {
-      let called = false;
-      const actual = someValue.orElse(() => {
-        called = true;
-        return new Some(456);
-      });
+    then(
+      "the original Some should be returned and the function ignored",
+      () => {
+        let called = false;
+        const actual = someValue.orElse(() => {
+          called = true;
+          return some(456);
+        });
 
-      expect(called).toBe(false);
-      expect(actual).toBe(someValue);
-    });
+        expect(called).toBe(false);
+        expect(actual).toBe(someValue);
+      },
+    );
   });
 
   given("unwrap() is called", () => {
@@ -132,25 +138,28 @@ when("option is a Some", () => {
   });
 
   given("unwrapOrElse() is called", () => {
-    then("the wrapped value should be returned and the function ignored", () => {
-      let called = false;
-      const actual = someValue.unwrapOrElse(() => {
-        called = true;
-        return 999;
-      });
+    then(
+      "the wrapped value should be returned and the function ignored",
+      () => {
+        let called = false;
+        const actual = someValue.unwrapOrElse(() => {
+          called = true;
+          return 999;
+        });
 
-      expect(called).toBe(false);
-      expect(actual).toBe(123);
-    });
+        expect(called).toBe(false);
+        expect(actual).toBe(123);
+      },
+    );
   });
 });
 
 when("option is a None", () => {
-  const noneValue = new None<number>();
+  const noneValue = none<number>();
 
   given("and() is called", () => {
     then("a None should be returned", () => {
-      const optb = new Some(456);
+      const optb = some(456);
       const actual = noneValue.and(optb);
       expect(actual).toBeInstanceOf(None);
     });
@@ -161,7 +170,7 @@ when("option is a None", () => {
       let called = false;
       const actual = noneValue.andThen((val) => {
         called = true;
-        return new Some(val * 2);
+        return some(val * 2);
       });
 
       expect(called).toBe(false);
@@ -238,10 +247,13 @@ when("option is a None", () => {
   given("mapOrElse() is called", () => {
     then("the default function value should be wrapped in Some", () => {
       let called = false;
-      const actual = noneValue.mapOrElse(() => {
-        called = true;
-        return 555;
-      }, (val) => val * 2);
+      const actual = noneValue.mapOrElse(
+        () => {
+          called = true;
+          return 555;
+        },
+        (val) => val * 2,
+      );
 
       expect(called).toBe(true);
       expect(actual).toBeInstanceOf(Some);
@@ -251,7 +263,7 @@ when("option is a None", () => {
 
   given("or() is called", () => {
     then("optb should be returned", () => {
-      const optb = new Some(456);
+      const optb = some(456);
       const actual = noneValue.or(optb);
       expect(actual).toBe(optb);
     });
@@ -259,7 +271,7 @@ when("option is a None", () => {
 
   given("orElse() is called", () => {
     then("the function result should be returned", () => {
-      const optb = new Some(456);
+      const optb = some(456);
       const actual = noneValue.orElse(() => optb);
       expect(actual).toBe(optb);
     });

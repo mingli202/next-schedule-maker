@@ -99,7 +99,7 @@ export class Some<T> implements IOption<T> {
   }
 
   filter(predicate: (val: T) => boolean): IOption<T> {
-    return predicate(this.value) ? this : new None();
+    return predicate(this.value) ? this : none<T>();
   }
 
   isNone(): boolean {
@@ -119,15 +119,15 @@ export class Some<T> implements IOption<T> {
   }
 
   map<U>(f: (val: T) => U): IOption<U> {
-    return new Some(f(this.value));
+    return some(f(this.value));
   }
 
   mapOr<U>(_defaultValue: U, f: (val: T) => U): IOption<U> {
-    return new Some(f(this.value));
+    return some(f(this.value));
   }
 
   mapOrElse<U>(_defaultFunc: () => U, f: (val: T) => U): IOption<U> {
-    return new Some(f(this.value));
+    return some(f(this.value));
   }
 
   or(_optb: IOption<T>): IOption<T> {
@@ -153,11 +153,11 @@ export class Some<T> implements IOption<T> {
 
 export class None<T> implements IOption<T> {
   and<U>(_optb: IOption<U>): IOption<U> {
-    return new None<U>();
+    return none<U>();
   }
 
   andThen<U>(_f: (val: T) => IOption<U>): IOption<U> {
-    return new None<U>();
+    return none<U>();
   }
 
   expect(msg: string): T {
@@ -185,15 +185,15 @@ export class None<T> implements IOption<T> {
   }
 
   map<U>(_f: (val: T) => U): IOption<U> {
-    return new None<U>();
+    return none<U>();
   }
 
   mapOr<U>(defaultValue: U, _f: (val: T) => U): IOption<U> {
-    return new Some(defaultValue);
+    return some(defaultValue);
   }
 
   mapOrElse<U>(defaultFunc: () => U, _f: (val: T) => U): IOption<U> {
-    return new Some(defaultFunc());
+    return some(defaultFunc());
   }
 
   or(optb: IOption<T>): IOption<T> {
