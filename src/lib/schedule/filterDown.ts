@@ -12,6 +12,12 @@ const includes = (str: string, substring: string) =>
 const startsWith = (str: string, substring: string) =>
   str.toLowerCase().startsWith(substring.toLowerCase());
 
+const normalizeTime = (value: string) => {
+  const digits = value.replace(/[:h]/g, "");
+  if (!digits.match(/^\d{3,4}$/)) return undefined;
+  return digits.length === 3 ? `0${digits}` : digits;
+};
+
 /**
  * Section where there exsist one leclab.prof that includes the given prof
  * */
@@ -113,34 +119,36 @@ const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
  * there exist a dayTime such that
  * dayTime.startTimeHhmm is less than the given timeStart
  * */
-const filterByTimeStart = (iter: Iter<SectionResponse>, timeStart: string) =>
-  !timeStart.match(/\d{3,4}/)
-    ? iter
-    : iter.filter(
-        (section) =>
-          !section.leclabs.some((leclab) =>
-            leclab.dayTimes.some(
-              (dayTime) => dayTime.startTimeHhmm < timeStart,
-            ),
-          ),
-      );
+const filterByTimeStart = (iter: Iter<SectionResponse>, timeStart: string) => {
+  const normalized = normalizeTime(timeStart);
+  if (!normalized) return iter;
+
+  return iter.filter(
+    (section) =>
+      !section.leclabs.some((leclab) =>
+        leclab.dayTimes.some((dayTime) => dayTime.startTimeHhmm < normalized),
+      ),
+  );
+};
 
 /**
- * Section where every dayTime of every leclab starts after timeEnd
+ * Section where every dayTime of every leclab ends before timeEnd
  *
  * Section where there does not exist a leclab such that
  * there exist a dayTime such that
- * dayTime.startEndHhmm is more than the given timeEnd
+ * dayTime.endTimeHhmm is more than the given timeEnd
  * */
-const filterByTimeEnd = (iter: Iter<SectionResponse>, timeEnd: string) =>
-  !timeEnd.match(/\d{3,4}/)
-    ? iter
-    : iter.filter(
-        (section) =>
-          !section.leclabs.some((leclab) =>
-            leclab.dayTimes.some((dayTime) => dayTime.endTimeHhmm > timeEnd),
-          ),
-      );
+const filterByTimeEnd = (iter: Iter<SectionResponse>, timeEnd: string) => {
+  const normalized = normalizeTime(timeEnd);
+  if (!normalized) return iter;
+
+  return iter.filter(
+    (section) =>
+      !section.leclabs.some((leclab) =>
+        leclab.dayTimes.some((dayTime) => dayTime.endTimeHhmm > normalized),
+      ),
+  );
+};
 
 /**
  * Blended sections
@@ -195,7 +203,7 @@ const filterByDaysOff = (iter: Iter<SectionResponse>, daysOff: string) =>
       ),
   );
 
-const timeReg = /^(\d{1,2}[:h]?\d{2})(-| ?to ?)(\d{2}[:h]?\d{2})$/g;
+const timeReg = /^(\d{1,2}[:h]?\d{2})(-| ?to ?)(\d{2}[:h]?\d{2})$/;
 const codeReg = /^\d{3}(-| )?[0-9A-Z]{0,3}(-| )?\w{0,2}$/g;
 const domainReg = /^[A-Z]{2,} *[A-Z ]*$/g;
 const dayReg = /^[MTWRF]+ *[MTWRF ]*$/g;
@@ -215,8 +223,8 @@ const filterByQuery = (
     const timeMatch = keyword.match(timeReg);
     // check if time
     if (timeMatch) {
-      tmp = filterByTimeStart(tmp, timeMatch[1].replace(/[:h]/, ""));
-      tmp = filterByTimeEnd(tmp, timeMatch[3].replace(/[:h]/, ""));
+      tmp = filterByTimeStart(tmp, timeMatch[1]);
+      tmp = filterByTimeEnd(tmp, timeMatch[3]);
     }
 
     // check if daysOff
@@ -298,7 +306,7 @@ const filterByQuery = (
     }
   }
 
-  return iter;
+  return tmp;
 };
 
 export function filterDown(
