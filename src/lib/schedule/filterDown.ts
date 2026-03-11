@@ -1,234 +1,193 @@
-import type { Class, SharedCurrentClasses } from "@/types";
-import isValid from "./checkValid";
-import { getSectionTimes } from "@/lib/util";
+import type { SectionResponse } from "src/client";
+import type { SectionStore } from "src/types";
+import { SearchSectionParams } from "src/types/schedule";
+import { Iter } from "../iter";
 
-type ReturnType = [string, Class][];
+const isBlank = (str: string | undefined) =>
+  str === undefined || str.trim().length === 0;
 
-function filterDown(
-  allClasses: Record<string, Class>,
-  search: Map<string, string>,
-  professors: string[],
-  currentClasses: SharedCurrentClasses[],
-) {
-  if (
-    !["prof", "rating", "score", "code", "time", "title", "course", "day"].some(
-      (k) => search.has(k),
-    )
-  ) {
-    if (!search.has("q")) return [];
-    if (search.get("q") === "") return [];
-  }
+const includes = (str: string, substring: string) =>
+  str.toLowerCase().includes(substring.toLowerCase());
 
-  let toReturn = Object.entries(allClasses);
+const startsWith = (str: string, substring: string) =>
+  str.toLowerCase().startsWith(substring.toLowerCase());
 
-  for (const [key, val] of search) {
-    if (key === "q" && val === "") continue;
-    const allVal = val.split(",").map((v) => v.trim());
+const filterByProfessor = (iter: Iter<SectionResponse>, prof: string) =>
+  prof.trim() === ""
+    ? iter
+    : iter.filter((section) =>
+        section.leclabs.some((leclab) => includes(leclab.prof, prof)),
+      );
 
-    for (let v of allVal) {
-      v = v.replaceAll(/[/()\\]|\[|\]/gi, "\\$&");
+const filterByMinRating = (iter: Iter<SectionResponse>, minRating: number) =>
+  iter.filter(
+    (section) =>
+      !section.leclabs.some(
+        (leclab) =>
+          !leclab.rating ||
+          leclab.rating.status !== "found" ||
+          leclab.rating.avg < minRating,
+      ),
+  );
+const filterByMaxRating = (iter: Iter<SectionResponse>, maxRating: number) =>
+  iter.filter(
+    (section) =>
+      !section.leclabs.some(
+        (leclab) =>
+          !leclab.rating ||
+          leclab.rating.status !== "found" ||
+          leclab.rating.avg > maxRating,
+      ),
+  );
 
-      switch (key) {
-        case "prof":
-          toReturn = filterByProfessor(toReturn, v);
-          break;
+const filterByMinScore = (iter: Iter<SectionResponse>, minScore: number) =>
+  iter.filter(
+    (section) =>
+      !section.leclabs.some(
+        (leclab) =>
+          !leclab.rating ||
+          leclab.rating.status !== "found" ||
+          leclab.rating.score < minScore,
+      ),
+  );
+const filterByMaxScore = (iter: Iter<SectionResponse>, maxScore: number) =>
+  iter.filter(
+    (section) =>
+      !section.leclabs.some(
+        (leclab) =>
+          !leclab.rating ||
+          leclab.rating.status !== "found" ||
+          leclab.rating.score > maxScore,
+      ),
+  );
 
-        case "rating":
-          toReturn = filterByRating(toReturn, v, "r");
-          break;
+const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
+  code.trim() === ""
+    ? iter
+    : iter.filter((section) => includes(section.code, code));
 
-        case "score":
-          toReturn = filterByRating(toReturn, v, "s");
-          break;
+const filterByTimeStart = (iter: Iter<SectionResponse>, timeStart: string) =>
+  !timeStart.match(/\d{4}/)
+    ? iter
+    : iter.filter(
+        (section) =>
+          !section.leclabs.some((leclab) =>
+            leclab.dayTimes.some(
+              (dayTime) => dayTime.startTimeHhmm < timeStart,
+            ),
+          ),
+      );
 
-        case "code":
-          toReturn = filterByCode(toReturn, v);
-          break;
+const filterByTimeEnd = (iter: Iter<SectionResponse>, timeEnd: string) =>
+  !timeEnd.match(/\d{4}/)
+    ? iter
+    : iter.filter(
+        (section) =>
+          !section.leclabs.some((leclab) =>
+            leclab.dayTimes.some((dayTime) => dayTime.endTimeHhmm > timeEnd),
+          ),
+      );
 
-        case "time":
-          toReturn = filterByTime(toReturn, v);
-          break;
+const filterByBlended = (iter: Iter<SectionResponse>) =>
+  iter.filter((section) => section.more.startsWith("BLENDED"));
 
-        case "title":
-          toReturn = filterByTitle(toReturn, v);
-          break;
+const filterByHonours = (iter: Iter<SectionResponse>) =>
+  iter.filter((section) => section.more.startsWith("For Honours"));
 
-        case "course":
-          toReturn = filterByCourse(toReturn, v);
-          break;
+const filterByTitle = (iter: Iter<SectionResponse>, title: string) =>
+  title.trim() === ""
+    ? iter
+    : iter.filter((section) => startsWith(section.title, title));
 
-        case "day":
-          toReturn = filterByDay(toReturn, v);
-          break;
+const filterByCourse = (iter: Iter<SectionResponse>, course: string) =>
+  course.trim() === ""
+    ? iter
+    : iter.filter((section) => startsWith(section.course, course));
 
-        case "q":
-          toReturn = filterByQuery(toReturn, v, professors);
-          break;
-      }
-    }
-  }
+const filterByDomain = (iter: Iter<SectionResponse>, domain: string) =>
+  domain.trim() === ""
+    ? iter
+    : iter.filter((section) => startsWith(section.domain, domain));
 
-  if (search.get("checkValid") === "true") {
-    toReturn = toReturn.filter(([, cl]) =>
-      isValid(cl, currentClasses, allClasses),
-    );
-  }
+const filterByDaysOff = (iter: Iter<SectionResponse>, daysOff: string) =>
+  iter.filter(
+    (section) =>
+      !section.leclabs.some((leclab) =>
+        leclab.dayTimes.some((dayTime) =>
+          daysOff.split("").some((day) => dayTime.day.includes(day)),
+        ),
+      ),
+  );
 
-  return toReturn;
-}
-
-function filterByProfessor(arr: ReturnType, prof: string) {
-  if (prof === "") return [];
-
-  const re = new RegExp(prof, "ig");
-  return arr.filter(([, cl]) => cl.lecture?.prof.match(re));
-}
-
-function filterByRating(arr: ReturnType, rating: string, type: "r" | "s") {
-  if (rating === "") return [];
-  const sign = rating[0];
-  const num = Number(rating.slice(1));
-
-  if (!num) return [];
-
-  switch (sign) {
-    case "<":
-      return arr.filter(([, cl]) => {
-        if (!cl.lecture || !cl.lecture.rating) {
-          return false;
-        }
-        if (type === "r") return cl.lecture.rating.avg < num;
-        if (type === "s") return cl.lecture.rating.score < num;
-      });
-    case ">":
-      return arr.filter(([, cl]) => {
-        if (!cl.lecture || !cl.lecture.rating) {
-          return false;
-        }
-        if (type === "r") return cl.lecture.rating.avg > num;
-        if (type === "s") return cl.lecture.rating.score > num;
-      });
-    case "=":
-      return arr.filter(([, cl]) => {
-        if (!cl.lecture || !cl.lecture.rating) {
-          return false;
-        }
-        if (type === "r") return cl.lecture.rating.avg === num;
-        if (type === "s") return cl.lecture.rating.score === num;
-      });
-  }
-
-  return [];
-}
-
-function filterByCode(arr: ReturnType, code: string) {
-  if (code === "") return [];
-
-  const re = new RegExp(code, "ig");
-  return arr.filter(([, cl]) => cl.code.match(re));
-}
-
-function filterByTime(arr: ReturnType, time: string) {
-  if (time === "") return [];
-
-  const [start, end] = time.split("-").map((t) => {
-    return Number(t.replaceAll(":", ""));
-  });
-
-  const toReturn = arr.filter(([, cl]) => {
-    const tArr = getSectionTimes(cl);
-
-    return tArr.every(([, t]) => {
-      const [tStart, tEnd] = t
-        .toString()
-        .split("-")
-        .map((t) => Number(t));
-
-      return tStart >= start && tEnd <= end;
-    });
-  });
-
-  return toReturn;
-}
-
-function filterByTitle(arr: ReturnType, title: string) {
-  if (title === "") return [];
-
-  const re = new RegExp(title, "ig");
-  return arr.filter(([, cl]) => cl.lecture?.title.match(re));
-}
-
-function filterByCourse(arr: ReturnType, courseName: string) {
-  if (courseName === "") return [];
-
-  const re = new RegExp(courseName, "ig");
-  return arr.filter(([, cl]) => cl.course.match(re));
-}
-
-function filterByDay(arr: ReturnType, day: string) {
-  if (day === "") return [];
-
-  return arr.filter(([, cl]) => {
-    const tArr = getSectionTimes(cl).join("");
-
-    return !day.split("").some((d) => tArr.includes(d));
-  });
-}
-
-function filterBySpecialKeywords(arr: ReturnType, special: string) {
-  if (special.match(/^blended$/gi)) {
-    return arr.filter(([, cl]) => cl.more.startsWith("BLENDED"));
-  } else {
-    return arr.filter(([, cl]) => cl.more.startsWith("For Honours"));
-  }
-}
-
-const timeReg = /^\d{1,2}[:h]?\d{2}(-| ?to ?)\d{2}[:h]?\d{2}$/g;
+const timeReg = /^(\d{1,2}[:h]?\d{2})(-| ?to ?)(\d{2}[:h]?\d{2})$/g;
 const codeReg = /^\d{3}(-| )?[0-9A-Z]{0,3}(-| )?\w{0,2}$/g;
-const ratingReg = /^r[<>=]\d+$/g;
-const scoreReg = /^s[<>=]\d+$/g;
-const courseReg = /^[A-Z]{2,} *[A-Z ]*$/g;
+const domainReg = /^[A-Z]{2,} *[A-Z ]*$/g;
 const dayReg = /^[MTWRF]+ *[MTWRF ]*$/g;
 
-function filterByQuery(arr: ReturnType, query: string, professors: string[]) {
-  let tmp = structuredClone(arr);
-  const keywords = query.split(",");
+const filterByQuery = (
+  iter: Iter<SectionResponse>,
+  q: string,
+  professors: string[],
+) => {
+  const keywords = q.split(",");
+  let tmp = iter;
 
   for (const keyword of keywords) {
+    const timeMatch = keyword.match(timeReg);
+    // check if time
+    if (timeMatch) {
+      tmp = filterByTimeStart(tmp, timeMatch[0]);
+      tmp = filterByTimeEnd(tmp, timeMatch[2]);
+    }
+
+    // check if daysOff
+    else if (keyword.match(dayReg)) {
+      for (const k of keyword.split(" ")) {
+        tmp = filterByDaysOff(tmp, k);
+      }
+    }
     // check if code
-    if (keyword.match(codeReg)) {
+    else if (keyword.match(codeReg)) {
       for (const k of keyword.split(" ")) {
         tmp = filterByCode(tmp, k);
       }
     }
-
-    // check if day
-    else if (keyword.match(dayReg)) {
-      for (const k of keyword.split(" ")) {
-        tmp = filterByDay(tmp, k);
+    // check if rating
+    else if (keyword.startsWith("r>")) {
+      const minRating = parseInt(keyword.replace("r>", ""), 10);
+      if (!Number.isNaN(minRating)) {
+        tmp = filterByMinRating(tmp, minRating);
+      }
+    } else if (keyword.startsWith("r<")) {
+      const maxRating = parseInt(keyword.replace("r<", ""), 10);
+      if (!Number.isNaN(maxRating)) {
+        tmp = filterByMaxRating(tmp, maxRating);
       }
     }
-    // check if time
-    else if (keyword.match(timeReg)) {
-      tmp = filterByTime(tmp, keyword);
-    }
-    // check if rating
-    else if (keyword.match(ratingReg)) {
-      tmp = filterByRating(tmp, keyword.slice(1), "r");
-    }
     // check if score
-    else if (keyword.match(scoreReg)) {
-      tmp = filterByRating(tmp, keyword.slice(1), "s");
+    else if (keyword.startsWith("s>")) {
+      const minScore = parseInt(keyword.replace("s>", ""), 10);
+      if (!Number.isNaN(minScore)) {
+        tmp = filterByMinScore(tmp, minScore);
+      }
+    } else if (keyword.startsWith("s<")) {
+      const maxScore = parseInt(keyword.replace("s<", ""), 10);
+      if (!Number.isNaN(maxScore)) {
+        tmp = filterByMaxScore(tmp, maxScore);
+      }
     }
-    // check if course name
-    else if (keyword.match(courseReg)) {
+
+    // check if domain name
+    else if (keyword.match(domainReg)) {
       for (const k of keyword.split(" ")) {
         tmp = filterByCourse(tmp, k);
       }
     }
     // check if honours or blended
-    else if (keyword.match(/^honours$|^blended$/gi)) {
-      tmp = filterBySpecialKeywords(tmp, keyword);
+    else if (keyword.toLowerCase() === "blended") {
+      tmp = filterByBlended(tmp);
+    } else if (keyword.toLowerCase() === "honours") {
+      tmp = filterByHonours(tmp);
     }
 
     // check if user meant to search a professors
@@ -254,7 +213,60 @@ function filterByQuery(arr: ReturnType, query: string, professors: string[]) {
     }
   }
 
-  return tmp;
-}
+  return iter;
+};
 
-export default filterDown;
+export function filterDown(
+  sectionStore: SectionStore,
+  search: SearchSectionParams,
+): SectionResponse[] {
+  const {
+    q,
+    course,
+    domain,
+    code,
+    title,
+    prof,
+    ratingMin,
+    ratingMax,
+    scoreMin,
+    scoreMax,
+    daysOff,
+    timeStart,
+    timeEnd,
+    blended,
+    honours,
+  } = search;
+
+  if (
+    isBlank(q) ||
+    isBlank(course) ||
+    isBlank(domain) ||
+    isBlank(code) ||
+    isBlank(title) ||
+    isBlank(prof) ||
+    ratingMin === undefined ||
+    ratingMax === undefined ||
+    scoreMin === undefined ||
+    scoreMax === undefined ||
+    isBlank(daysOff) ||
+    isBlank(timeStart) ||
+    isBlank(timeEnd) ||
+    blended === undefined ||
+    honours === undefined
+  ) {
+    return [];
+  }
+
+  let iter = Iter.from(Object.values(sectionStore.sectionsById));
+
+  if (q !== undefined) {
+    iter = filterByQuery(iter, q, Array.from(sectionStore.professors));
+  }
+
+  if (course !== undefined) {
+    iter = iter.filter((section) => startsWith(section.course, course));
+  }
+
+  return iter.collect();
+}
