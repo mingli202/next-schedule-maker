@@ -1,6 +1,6 @@
 import type { SectionResponse } from "src/client";
 import type { SectionStore } from "src/types";
-import { SearchSectionParams } from "src/types/schedule";
+import type { SearchSectionParams } from "src/types/schedule";
 import { Iter } from "../iter";
 
 const isBlank = (str: string | undefined) =>
@@ -239,20 +239,20 @@ export function filterDown(
   } = search;
 
   if (
-    isBlank(q) ||
-    isBlank(course) ||
-    isBlank(domain) ||
-    isBlank(code) ||
-    isBlank(title) ||
-    isBlank(prof) ||
-    ratingMin === undefined ||
-    ratingMax === undefined ||
-    scoreMin === undefined ||
-    scoreMax === undefined ||
-    isBlank(daysOff) ||
-    isBlank(timeStart) ||
-    isBlank(timeEnd) ||
-    blended === undefined ||
+    isBlank(q) &&
+    isBlank(course) &&
+    isBlank(domain) &&
+    isBlank(code) &&
+    isBlank(title) &&
+    isBlank(prof) &&
+    ratingMin === undefined &&
+    ratingMax === undefined &&
+    scoreMin === undefined &&
+    scoreMax === undefined &&
+    isBlank(daysOff) &&
+    isBlank(timeStart) &&
+    isBlank(timeEnd) &&
+    blended === undefined &&
     honours === undefined
   ) {
     return [];
@@ -260,12 +260,64 @@ export function filterDown(
 
   let iter = Iter.from(Object.values(sectionStore.sectionsById));
 
-  if (q !== undefined) {
+  if (q) {
     iter = filterByQuery(iter, q, Array.from(sectionStore.professors));
   }
 
-  if (course !== undefined) {
-    iter = iter.filter((section) => startsWith(section.course, course));
+  if (course) {
+    iter = filterByCourse(iter, course);
+  }
+
+  if (domain) {
+    iter = filterByDomain(iter, domain);
+  }
+
+  if (code) {
+    iter = filterByCode(iter, code);
+  }
+
+  if (title) {
+    iter = filterByTitle(iter, title);
+  }
+
+  if (prof) {
+    iter = filterByProfessor(iter, prof);
+  }
+
+  if (ratingMin !== undefined) {
+    iter = filterByMinRating(iter, ratingMin);
+  }
+
+  if (ratingMax !== undefined) {
+    iter = filterByMaxRating(iter, ratingMax);
+  }
+
+  if (scoreMin !== undefined) {
+    iter = filterByMinScore(iter, scoreMin);
+  }
+
+  if (scoreMax !== undefined) {
+    iter = filterByMaxScore(iter, scoreMax);
+  }
+
+  if (daysOff) {
+    iter = filterByDaysOff(iter, daysOff);
+  }
+
+  if (timeStart !== undefined) {
+    iter = filterByTimeStart(iter, timeStart);
+  }
+
+  if (timeEnd !== undefined) {
+    iter = filterByTimeEnd(iter, timeEnd);
+  }
+
+  if (blended) {
+    iter = filterByBlended(iter);
+  }
+
+  if (honours) {
+    iter = filterByHonours(iter);
   }
 
   return iter.collect();
