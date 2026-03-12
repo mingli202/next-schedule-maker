@@ -11,30 +11,35 @@ import {
   Settings,
   Star,
 } from "lucide-react";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
 import SectionCard from "src/components/SectionCard";
-import { useSectionQuery } from "src/hooks/useSection";
 import { useSectionInSearchHelper } from "src/hooks/useSectionInSearchHelper";
+import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
 import { cn } from "src/lib/utils";
 
 export function SearchResult() {
   const search = useSearch({ from: "/editor/search" });
-  const q = search.q;
 
-  const { data: sections, isPending } = useSectionQuery({ q });
+  const [sections, setSections] = useState<SectionResponse[]>([]);
 
-  if (isPending) {
-    return null;
-  }
+  useEffect(() => {
+    const unsub = onWorkerMessage<"search">((e) => {
+      setSections(e.data.sections);
+    });
 
-  return !sections || sections.length === 0 ? (
-    <NoResult />
-  ) : (
-    <Result sections={sections} />
-  );
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  useEffect(() => {
+    postWorkerMessage({ type: "search", search });
+  }, [search]);
+
+  return sections.length === 0 ? <NoResult /> : <Result sections={sections} />;
 }
 
 function NoResult() {
