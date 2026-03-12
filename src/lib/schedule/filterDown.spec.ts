@@ -469,7 +469,17 @@ given("search params with query title fallback", () => {
 given("search params with combined query tokens", () => {
   when("filterDown is called", () => {
     then("it should apply each query token", () => {
-      const search: SearchSectionParams = { q: "CS,r>4,9:00-11:00" };
+      const search: SearchSectionParams = { q: "CS,    r>4, 9:00-11:00" };
+      const res = filterDown(store, search);
+      expectIds(res, [1]);
+    });
+  });
+});
+
+given("search params with many keyword query", () => {
+  when("filterDown is called", () => {
+    then("filter for every keyword", () => {
+      const search: SearchSectionParams = { q: "nt prog" };
       const res = filterDown(store, search);
       expectIds(res, [1]);
     });
