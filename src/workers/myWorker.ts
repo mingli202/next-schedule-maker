@@ -1,3 +1,4 @@
+import { filterDown } from "src/lib/schedule/filterDown";
 import type { SectionStore } from "src/types";
 import type {
   WorkerMessage,
@@ -29,6 +30,15 @@ function messageHandler(
         schedule: sch,
         index: data.index,
       } satisfies WorkerResponseMap[typeof data.type];
+    }
+    case "search": {
+      if (!sectionStore) {
+        return { sections: [] };
+      }
+
+      const sections = filterDown(sectionStore, data.search);
+
+      return { sections } satisfies WorkerResponseMap[typeof data.type];
     }
   }
 }
