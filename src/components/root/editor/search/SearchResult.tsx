@@ -136,19 +136,22 @@ function Result({ sections }: ResultProps) {
   );
 
   return (
-    <Virtuoso
-      style={{ overflowX: "hidden", width: "100%", flexGrow: 1 }}
-      data={sections}
-      itemContent={(index, section) => (
-        <SectionCard
-          section={section}
-          className={cn(index !== 0 && "mt-2")}
-          footer={<SectionCardFooter sectionId={section.id} />}
-          onMouseEnter={onHover(section.id)}
-          onMouseLeave={onHover(-1)}
-        />
-      )}
-    />
+    <div className="flex-1 overflow-hidden">
+      <Virtuoso
+        style={{ overflowX: "hidden", width: "100%" }}
+        data={sections}
+        itemContent={(index, section) => (
+          <div className={cn(index !== 0 && "pt-2")}>
+            <SectionCard
+              section={section}
+              footer={<SectionCardFooter sectionId={section.id} />}
+              onMouseEnter={onHover(section.id)}
+              onMouseLeave={onHover(-1)}
+            />
+          </div>
+        )}
+      />
+    </div>
   );
 }
 
