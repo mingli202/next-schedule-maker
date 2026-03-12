@@ -140,6 +140,7 @@ function Result({ sections }: ResultProps) {
       <Virtuoso
         style={{ overflowX: "hidden", width: "100%" }}
         data={sections}
+        computeItemKey={(_, section) => section.id}
         itemContent={(index, section) => (
           <div className={cn(index !== 0 && "pt-2")}>
             <SectionCard
