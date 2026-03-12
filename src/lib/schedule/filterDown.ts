@@ -3,9 +3,6 @@ import type { SectionStore } from "src/types";
 import type { SearchSectionParams } from "src/types/schedule";
 import { Iter } from "../iter";
 
-const isBlank = (str: string | undefined) =>
-  str === undefined || str.trim().length === 0;
-
 const includes = (str: string, substring: string) =>
   str.toLowerCase().includes(substring.toLowerCase());
 
@@ -300,9 +297,12 @@ const filterByQuery = (
     }
     // if nothing then search title
     else {
-      for (const k of keyword.split(" ")) {
-        tmp = filterByTitle(tmp, k);
-      }
+      tmp = tmp.filter((section) =>
+        keyword
+          .split(" ")
+          .filter((s) => s.trim() !== "")
+          .every((k) => includes(section.title, k.trim().toLowerCase())),
+      );
     }
   }
 
@@ -332,19 +332,19 @@ export function filterDown(
   } = search;
 
   if (
-    isBlank(q) &&
-    isBlank(course) &&
-    isBlank(domain) &&
-    isBlank(code) &&
-    isBlank(title) &&
-    isBlank(prof) &&
+    !q &&
+    !course &&
+    !domain &&
+    !code &&
+    !title &&
+    !prof &&
     ratingMin === undefined &&
     ratingMax === undefined &&
     scoreMin === undefined &&
     scoreMax === undefined &&
-    isBlank(daysOff) &&
-    isBlank(timeStart) &&
-    isBlank(timeEnd) &&
+    !daysOff &&
+    !timeStart &&
+    !timeEnd &&
     blended === undefined &&
     honours === undefined
   ) {
