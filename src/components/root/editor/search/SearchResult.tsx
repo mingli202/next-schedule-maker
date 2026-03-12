@@ -142,13 +142,14 @@ function Result({ sections }: ResultProps) {
         data={sections}
         computeItemKey={(_, section) => section.id}
         itemContent={(index, section) => (
-          <SectionCard
-            section={section}
-            className={cn(index !== 0 && "pt-2")}
-            footer={<SectionCardFooter sectionId={section.id} />}
-            onMouseEnter={onHover(section.id)}
-            onMouseLeave={onHover(-1)}
-          />
+          <div className={cn(index !== 0 && "pt-2")}>
+            <SectionCard
+              section={section}
+              footer={<SectionCardFooter sectionId={section.id} />}
+              onMouseEnter={onHover(section.id)}
+              onMouseLeave={onHover(-1)}
+            />
+          </div>
         )}
       />
     </div>
