@@ -213,7 +213,7 @@ const filterByQuery = (
   q: string,
   professors: string[],
 ) => {
-  const keywords = q.split(",");
+  const keywords = q.split(/, */);
   let tmp = iter;
 
   for (const keyword of keywords) {
