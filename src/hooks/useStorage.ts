@@ -1,39 +1,34 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-export function useSessionStorage<T>(defaultValue: T, key: string) {
+function useStorage<T>(
+  defaultValue: T,
+  key: string,
+  storage: Storage | undefined,
+) {
+  const keyRef = useRef(`${key}winter2026`);
+  const storageRef = useRef(storage);
   const [state, setState] = useState<T>(defaultValue);
 
   useEffect(() => {
-    const data = sessionStorage.getItem(`${key}winter2026`);
+    const data = storageRef.current?.getItem(keyRef.current);
 
     if (data) {
-      setState(JSON.parse(data));
+      try {
+        setState(JSON.parse(data));
+      } catch {}
     }
-  }, [key]);
+  }, []);
 
-  function update(newValue: T) {
-    sessionStorage.setItem(`${key}winter2026`, JSON.stringify(newValue));
+  const update = useCallback((newValue: T) => {
+    storageRef.current?.setItem(keyRef.current, JSON.stringify(newValue));
     setState(newValue);
-  }
+  }, []);
 
   return [state, update] as const;
 }
 
-export function useLocalStorage<T>(defaultValue: T, key: string) {
-  const [state, setState] = useState<T>(defaultValue);
+export const useSessionStorage = <T>(defaultValue: T, key: string) =>
+  useStorage(defaultValue, key, sessionStorage);
 
-  useEffect(() => {
-    const data = localStorage.getItem(`${key}winter2026`);
-
-    if (data) {
-      setState(JSON.parse(data));
-    }
-  }, [key]);
-
-  function update(newValue: T) {
-    sessionStorage.setItem(`${key}winter2026`, JSON.stringify(newValue));
-    setState(newValue);
-  }
-
-  return [state, update] as const;
-}
+export const useLocalStorage = <T>(defaultValue: T, key: string) =>
+  useStorage(defaultValue, key, localStorage);
