@@ -6,6 +6,7 @@ import { NotFound } from "./components/root";
 import { ConvexClientProvider } from "./integrations/ConvexClientProvider";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
+import { TooltipProvider } from "./components/ui/tooltip";
 
 // Create a new router instance
 export const getRouter = () => {
@@ -41,7 +42,7 @@ export const getRouter = () => {
 
     Wrap: ({ children }) => (
       <ConvexClientProvider client={convexQueryClient.convexClient}>
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
       </ConvexClientProvider>
     ),
   });
