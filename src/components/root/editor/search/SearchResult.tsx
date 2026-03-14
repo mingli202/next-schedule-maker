@@ -11,30 +11,35 @@ import {
   Settings,
   Star,
 } from "lucide-react";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
 import SectionCard from "src/components/SectionCard";
-import { useSectionQuery } from "src/hooks/useSection";
 import { useSectionInSearchHelper } from "src/hooks/useSectionInSearchHelper";
+import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
 import { cn } from "src/lib/utils";
 
 export function SearchResult() {
   const search = useSearch({ from: "/editor/search" });
-  const q = search.q;
 
-  const { data: sections, isPending } = useSectionQuery({ q });
+  const [sections, setSections] = useState<SectionResponse[]>([]);
 
-  if (isPending) {
-    return null;
-  }
+  useEffect(() => {
+    const unsub = onWorkerMessage<"search">((e) => {
+      setSections(e.data.sections);
+    });
 
-  return !sections || sections.length === 0 ? (
-    <NoResult />
-  ) : (
-    <Result sections={sections} />
-  );
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  useEffect(() => {
+    postWorkerMessage({ type: "search", search });
+  }, [search]);
+
+  return sections.length === 0 ? <NoResult /> : <Result sections={sections} />;
 }
 
 function NoResult() {
@@ -131,19 +136,23 @@ function Result({ sections }: ResultProps) {
   );
 
   return (
-    <Virtuoso
-      style={{ overflowX: "hidden", width: "100%", flexGrow: 1 }}
-      data={sections}
-      itemContent={(index, section) => (
-        <SectionCard
-          section={section}
-          className={cn(index !== 0 && "mt-2")}
-          footer={<SectionCardFooter sectionId={section.id} />}
-          onMouseEnter={onHover(section.id)}
-          onMouseLeave={onHover(-1)}
-        />
-      )}
-    />
+    <div className="flex-1 overflow-hidden">
+      <Virtuoso
+        style={{ overflowX: "hidden", width: "100%" }}
+        data={sections}
+        computeItemKey={(_, section) => section.id}
+        itemContent={(index, section) => (
+          <div className={cn(index !== 0 && "pt-2")}>
+            <SectionCard
+              section={section}
+              footer={<SectionCardFooter sectionId={section.id} />}
+              onMouseEnter={onHover(section.id)}
+              onMouseLeave={onHover(-1)}
+            />
+          </div>
+        )}
+      />
+    </div>
   );
 }
 

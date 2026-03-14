@@ -12,3 +12,23 @@ export const EditorInViewParams = z.object({
   activeSearch: z.boolean().optional(),
 });
 export type EditorInViewParams = z.infer<typeof EditorInViewParams>;
+
+export const SearchSectionParams = z.object({
+  q: z.string().optional(),
+  course: z.string().optional(),
+  domain: z.string().optional(),
+  code: z.string().optional(),
+  title: z.string().optional(),
+  prof: z.string().optional(),
+  ratingMin: z.number().optional(),
+  ratingMax: z.number().optional(),
+  scoreMin: z.number().optional(),
+  scoreMax: z.number().optional(),
+  daysOff: z.string().optional(),
+  timeStart: z.string().optional(),
+  timeEnd: z.string().optional(),
+  blended: z.boolean().optional(),
+  honours: z.boolean().optional(),
+});
+
+export type SearchSectionParams = z.infer<typeof SearchSectionParams>;
