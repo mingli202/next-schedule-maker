@@ -172,16 +172,16 @@ function SectionCardFooter(props: { sectionId: number }) {
             prev.previewSectionId === undefined ? sectionId : undefined,
         })}
       >
-        <Button variant="basic">
+        <Button variant="basic" title="toggle preview">
           <Eye className="h-5" />
         </Button>
       </Link>
       {canAddSection() ? (
-        <Button variant="basic" onClick={addSection}>
+        <Button variant="basic" onClick={addSection} title="add">
           <Plus className="h-5" />
         </Button>
       ) : isSectionIncluded() ? (
-        <Button variant="basic" onClick={removeSection}>
+        <Button variant="basic" onClick={removeSection} title="remove">
           <Minus className="h-5" />
         </Button>
       ) : null}
