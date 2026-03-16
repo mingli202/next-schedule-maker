@@ -17,7 +17,7 @@ type PreviewHoverInnerProps = {
 };
 function PreviewHoverInner({ previewSectionId }: PreviewHoverInnerProps) {
   const { sectionsById } = useSectionStore();
-  const section = sectionsById[previewSectionId];
+  const section = sectionsById.get(previewSectionId);
 
   if (!section) return null;
 

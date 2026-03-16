@@ -17,7 +17,7 @@ export async function fetchStore(): Promise<SectionStore> {
   const res = await getAllSectionsAllGet();
   const sections = res.data ?? [];
 
-  const sectionsById = Object.fromEntries(
+  const sectionsById = new Map(
     sections.map((section) => [section.id, section] as const),
   );
 
