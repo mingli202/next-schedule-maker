@@ -1,34 +1,59 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
+
+// biome-ignore lint/suspicious/noExplicitAny: idk man
+const isFunction = (val: any): val is (...args: any) => any =>
+  typeof val === "function";
 
 function useStorage<T>(
   defaultValue: T,
   key: string,
-  storage: Storage | undefined,
+  getStorage: () => Storage | undefined,
 ) {
-  const keyRef = useRef(`${key}winter2026`);
-  const storageRef = useRef(storage);
-  const [state, setState] = useState<T>(defaultValue);
+  const keyRef = useRef(key);
+  const storageRef = useRef(getStorage());
+  const defaultValueRef = useRef(defaultValue);
 
-  useEffect(() => {
+  const [state, setState] = useState<T>(() => {
+    const storage = storageRef.current;
+    if (typeof window === "undefined" || !storage) {
+      return defaultValue;
+    }
+
     const data = storageRef.current?.getItem(keyRef.current);
 
     if (data) {
       try {
-        setState(JSON.parse(data));
+        return JSON.parse(data);
       } catch {}
     }
+
+    return defaultValue;
+  });
+
+  const update = useCallback((newValue: T | ((prev: T) => T)) => {
+    setState((prev) => {
+      const nextValue = isFunction(newValue) ? newValue(prev) : newValue;
+      storageRef.current?.setItem(keyRef.current, JSON.stringify(nextValue));
+      return nextValue;
+    });
   }, []);
 
-  const update = useCallback((newValue: T) => {
-    storageRef.current?.setItem(keyRef.current, JSON.stringify(newValue));
-    setState(newValue);
+  const remove = useCallback(() => {
+    storageRef.current?.removeItem(keyRef.current);
+    setState(defaultValueRef.current);
   }, []);
 
-  return [state, update] as const;
+  return [state, update, remove] as const;
 }
 
+const getSessionStorage = () =>
+  typeof sessionStorage === "undefined" ? undefined : sessionStorage;
+
+const getLocalStorage = () =>
+  typeof localStorage === "undefined" ? undefined : localStorage;
+
 export const useSessionStorage = <T>(defaultValue: T, key: string) =>
-  useStorage(defaultValue, key, sessionStorage);
+  useStorage(defaultValue, key, getSessionStorage);
 
 export const useLocalStorage = <T>(defaultValue: T, key: string) =>
-  useStorage(defaultValue, key, localStorage);
+  useStorage(defaultValue, key, getLocalStorage);
