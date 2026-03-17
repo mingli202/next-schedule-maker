@@ -1,38 +1,18 @@
-"use client";
+import { AnimatePresence, type Variants, motion } from "framer-motion";
+import { useState } from "react";
+import { Button } from "src/components";
+import { Link, useSearch } from "@tanstack/react-router";
+import download from "src/lib/download";
+import { useSectionStore } from "src/lib/store/section";
 
-import Button from "@/components/Button";
-import {
-  faFileDownload,
-  faHome,
-  faList,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AnimatePresence, Variants, motion } from "framer-motion";
-import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
-import { ScheduleClassesContext } from "../../ScheduleContext";
-import download from "./download";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { app } from "@/backend";
-
-function BottomMenu() {
-  const currentClasses = useContext(ScheduleClassesContext);
-
-  const [path, setPath] = useState("/");
+export function BottomMenu() {
   const [expand, setExpand] = useState(false);
 
-  useEffect(() => {
-    const auth = getAuth(app);
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setPath("/user");
-      } else {
-        setPath("/");
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
+  const { sectionsById } = useSectionStore();
+  const sections = useSearch({
+    from: "/editor/settings",
+    select: (s) => s.sections,
+  });
 
   const buttonVariants: Variants = {
     initial: {
@@ -47,7 +27,11 @@ function BottomMenu() {
 
   return (
     <div className="bg-background flex w-full shrink-0 items-center justify-between gap-2 p-2">
-      <Link href="/editor/settings" title="reset everything">
+      <Link
+        to="/editor/settings"
+        title="reset everything"
+        search={{ sections: [] }}
+      >
         <Button variant="basic">Reset URL</Button>
       </Link>
 
@@ -61,7 +45,7 @@ function BottomMenu() {
               exit="initial"
               title="download current schedule as Excel"
               onClick={() => {
-                download(currentClasses);
+                download(sections, sectionsById);
               }}
               key="download"
             >
@@ -109,5 +93,3 @@ function BottomMenu() {
     </div>
   );
 }
-
-export default BottomMenu;

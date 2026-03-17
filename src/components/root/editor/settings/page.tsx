@@ -4,7 +4,7 @@ import Card from "./Card";
 function Settings() {
   return (
     <div className="relative flex h-full w-full flex-col gap-2 rounded-md">
-      <h1 className="shrink-0 font-heading text-xl md:text-2xl">Options</h1>
+      <h1 className="font-heading shrink-0 text-xl md:text-2xl">Options</h1>
       <Card
         title="Live Search"
         desc="Results are displayed while you type. May reduce performance."
