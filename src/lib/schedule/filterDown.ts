@@ -351,7 +351,7 @@ export function filterDown(
     return [];
   }
 
-  let iter = Iter.from(Object.values(sectionStore.sectionsById));
+  let iter = Iter.from(sectionStore.sectionsById.values());
 
   if (q) {
     iter = filterByQuery(iter, q, Array.from(sectionStore.professors));

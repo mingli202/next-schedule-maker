@@ -11,7 +11,7 @@ export class Iter<T> implements Iterable<T> {
     private readonly iteratorFactory: () => IterableIterator<T>,
   ) {}
 
-  public static from<T>(arr: readonly T[]): Iter<T> {
+  public static from<T>(arr: Iterable<T>): Iter<T> {
     return new Iter(function* () {
       yield* arr;
     });
