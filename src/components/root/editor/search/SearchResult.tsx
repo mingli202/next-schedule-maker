@@ -11,7 +11,7 @@ import {
   Settings,
   Star,
 } from "lucide-react";
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
@@ -217,7 +217,7 @@ const Result = memo(
     ),
 );
 
-function SectionCardFooter(props: { sectionId: number }) {
+const SectionCardFooter = memo((props: { sectionId: number }) => {
   const { sectionId } = props;
 
   const { addSection, canAddSection, isSectionIncluded, removeSection } =
@@ -248,4 +248,4 @@ function SectionCardFooter(props: { sectionId: number }) {
       ) : null}
     </div>
   );
-}
+});
