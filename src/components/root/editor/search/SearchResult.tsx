@@ -11,7 +11,7 @@ import {
   Settings,
   Star,
 } from "lucide-react";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
@@ -19,36 +19,36 @@ import SectionCard from "src/components/SectionCard";
 import { useSectionInSearchHelper } from "src/hooks/useSectionInSearchHelper";
 import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
 import { cn } from "src/lib/utils";
-import type { SearchSectionParams } from "src/types/schedule";
 
 export function SearchResult() {
   const search = useSearch({
     from: "/editor/search",
-    select: (search) =>
-      ({
-        q: search.q,
-        course: search.course,
-        domain: search.domain,
-        code: search.code,
-        title: search.title,
-        prof: search.prof,
-        ratingMin: search.ratingMin,
-        ratingMax: search.ratingMax,
-        scoreMin: search.scoreMin,
-        scoreMax: search.scoreMax,
-        daysOff: search.daysOff,
-        timeStart: search.timeStart,
-        timeEnd: search.timeEnd,
-        blended: search.blended,
-        honours: search.blended,
-      }) satisfies SearchSectionParams,
+    select: (search) => ({
+      q: search.q,
+      course: search.course,
+      domain: search.domain,
+      code: search.code,
+      title: search.title,
+      prof: search.prof,
+      ratingMin: search.ratingMin,
+      ratingMax: search.ratingMax,
+      scoreMin: search.scoreMin,
+      scoreMax: search.scoreMax,
+      daysOff: search.daysOff,
+      timeStart: search.timeStart,
+      timeEnd: search.timeEnd,
+      blended: search.blended,
+      honours: search.blended,
+      sections: search.sections,
+      excludeInvalid: search.excludeInvalid,
+    }),
   });
 
-  const [sections, setSections] = useState<SectionResponse[]>([]);
+  const [results, setResults] = useState<SectionResponse[]>([]);
 
   useEffect(() => {
     const unsub = onWorkerMessage<"search">((e) => {
-      setSections(e.data.sections);
+      setResults(e.data.sections);
     });
 
     return () => {
@@ -57,10 +57,16 @@ export function SearchResult() {
   }, []);
 
   useEffect(() => {
-    postWorkerMessage({ type: "search", search });
+    postWorkerMessage({
+      type: "search",
+      search: {
+        ...search,
+        sections: search.excludeInvalid ? search.sections : undefined,
+      },
+    });
   }, [search]);
 
-  return <Result sections={sections} />;
+  return <Result sections={results} />;
 }
 
 function NoResult() {
@@ -144,63 +150,72 @@ const MemoizedSectionCard = memo(
     onHover: (sectionId: number) => void;
     index: number;
     section: SectionResponse;
-  }) => (
-    <div className={cn(index !== 0 && "pt-2")}>
-      <SectionCard
-        section={section}
-        footer={<SectionCardFooter sectionId={section.id} />}
-        onMouseEnter={() => onHover(section.id)}
-        onMouseLeave={() => onHover(-1)}
-      />
-    </div>
-  ),
+  }) => {
+    return (
+      <div className={cn(index !== 0 && "pt-2")}>
+        <SectionCard
+          section={section}
+          footer={<SectionCardFooter sectionId={section.id} />}
+          onMouseEnter={() => onHover(section.id)}
+          onMouseLeave={() => onHover(-1)}
+        />
+      </div>
+    );
+  },
 );
 
 type ResultProps = {
   sections: SectionResponse[];
 };
-function Result({ sections }: ResultProps) {
-  const navigate = useNavigate({ from: "/editor/search" });
+const Result = memo(
+  ({ sections }: ResultProps) => {
+    const navigate = useNavigate({ from: "/editor/search" });
 
-  const onHover = useCallback(
-    (sectionId: number) => {
-      navigate({
-        search: (prev) => ({
-          ...prev,
-          previewSectionId:
-            prev.previewSectionId === undefined ? undefined : sectionId,
-        }),
-      });
-    },
-    [navigate],
-  );
+    const onHover = useCallback(
+      (sectionId: number) => {
+        navigate({
+          search: (prev) => ({
+            ...prev,
+            previewSectionId:
+              prev.previewSectionId === undefined ? undefined : sectionId,
+          }),
+        });
+      },
+      [navigate],
+    );
 
-  const components = useMemo(
-    () => ({
-      EmptyPlaceholder: () => <NoResult />,
-    }),
-    [],
-  );
+    const components = useMemo(
+      () => ({
+        EmptyPlaceholder: () => <NoResult />,
+      }),
+      [],
+    );
 
-  return (
-    <div className="flex-1 overflow-hidden">
-      <Virtuoso
-        components={components}
-        style={{ overflowX: "hidden", width: "100%" }}
-        data={sections}
-        computeItemKey={(_, section) => section.id}
-        overscan={200}
-        itemContent={(index, section) => (
-          <MemoizedSectionCard
-            section={section}
-            index={index}
-            onHover={onHover}
-          />
-        )}
-      />
-    </div>
-  );
-}
+    return (
+      <div className="flex-1 overflow-hidden">
+        <Virtuoso
+          components={components}
+          style={{ overflowX: "hidden", width: "100%" }}
+          data={sections}
+          computeItemKey={(_, section) => section.id}
+          overscan={200}
+          itemContent={(index, section) => (
+            <MemoizedSectionCard
+              section={section}
+              index={index}
+              onHover={onHover}
+            />
+          )}
+        />
+      </div>
+    );
+  },
+  (prevProps, newProps) =>
+    prevProps.sections.length === newProps.sections.length &&
+    newProps.sections.every(
+      (section, index) => prevProps.sections[index].id === section.id,
+    ),
+);
 
 function SectionCardFooter(props: { sectionId: number }) {
   const { sectionId } = props;
