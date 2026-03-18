@@ -1,5 +1,4 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
   HeadContent,
@@ -102,6 +101,12 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         rel: "icon",
         type: "image/png",
         href: "/assets/logo.png",
+      },
+    ],
+    scripts: [
+      {
+        crossOrigin: "anonymous",
+        src: "//unpkg.com/react-scan/dist/auto.global.js",
       },
     ],
   }),
