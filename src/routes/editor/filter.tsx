@@ -1,474 +1,529 @@
-import { createFileRoute } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useNavigate,
+  useSearch,
+} from "@tanstack/react-router";
+import { type SubmitEvent, useCallback, useMemo, useState } from "react";
+import { Button } from "src/components";
+import { Field, FieldLabel } from "src/components/ui/field";
+import { Input } from "src/components/ui/input";
+import { Iter } from "src/lib/iter";
+import { useSectionStore } from "src/lib/store/section";
+import { SearchSectionParams } from "src/types/schedule";
 
 export const Route = createFileRoute("/editor/filter")({
   component: RouteComponent,
+  validateSearch: SearchSectionParams,
 });
 
 function RouteComponent() {
-  const [courseName, setCourseName] = useState(
-    searchParams.get("course") ?? "",
-  );
-  const [code, setCode] = useState(searchParams.get("code") ?? "");
-  const [title, setTitle] = useState(searchParams.get("title") ?? "");
+  const { sectionsById } = useSectionStore();
+
+  const search = useSearch({ from: "/editor/filter" });
+  const navigate = useNavigate({ from: "/editor/filter" });
+
+  const [course, setCourse] = useState(search.course ?? "");
+  const [domain, setDomain] = useState(search.domain ?? "");
+  const [code, setCode] = useState(search.code ?? "");
+  const [title, setTitle] = useState(search.title ?? "");
 
   const courseNameDatalist = useMemo(
-    () => Object.values(allClasses),
-    [allClasses],
+    () => Iter.from(sectionsById.values()),
+    [sectionsById],
+  );
+
+  const domainNameDatalist = useMemo(
+    () =>
+      courseNameDatalist.filter(
+        (section) =>
+          course === "" ||
+          section.course.toLowerCase().includes(course.toLowerCase()),
+      ),
+    [courseNameDatalist, course],
   );
 
   const codeDataList = useMemo(
     () =>
-      courseNameDatalist.filter((cl) => {
-        const courseRe = new RegExp(courseName, "gi");
-        return cl.course.match(courseRe);
-      }),
-    [courseNameDatalist, courseName],
+      domainNameDatalist.filter(
+        (section) =>
+          domain === "" ||
+          section.domain.toLowerCase().includes(domain.toLowerCase()),
+      ),
+    [domainNameDatalist, domain],
   );
 
   const titleDatalist = useMemo(
     () =>
-      codeDataList.filter((cl) => {
-        const codeRe = new RegExp(code, "gi");
-        return cl.code.match(codeRe);
-      }),
+      codeDataList.filter(
+        (section) =>
+          code === "" ||
+          section.code.toLowerCase().includes(code.toLowerCase()),
+      ),
     [codeDataList, code],
   );
 
   const profDatalist = useMemo(
     () =>
-      titleDatalist.filter((cl) => {
-        const titleRe = new RegExp(title, "gi");
-        return cl.lecture?.title.match(titleRe);
-      }),
+      titleDatalist.filter(
+        (section) =>
+          title === "" ||
+          section.title.toLowerCase().includes(title.toLowerCase()),
+      ),
     [title, titleDatalist],
   );
 
-  function action(formData: FormData) {
-    const url = new URL(window.location.href);
+  const handleSubmit = useCallback(
+    (e: SubmitEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-    const days = formData.getAll("day");
-    if (days.length === 0) {
-      url.searchParams.delete("day");
-    } else {
-      url.searchParams.set("day", days.join(""));
-    }
+      const formData = new FormData(e.target);
 
-    const time = formData.getAll("time");
-    if (time.length === 0 || time.some((t) => t === "")) {
-      url.searchParams.delete("time");
-    } else {
-      url.searchParams.set("time", time.map((t) => t.slice(0, 5)).join("-"));
-    }
+      const course = formData.get("course")?.toString();
+      const domain = formData.get("domain")?.toString();
+      const code = formData.get("code")?.toString();
+      const title = formData.get("title")?.toString();
 
-    formData.delete("day");
-    formData.delete("time");
-
-    for (const [key, val] of formData.entries()) {
-      if (val === "") url.searchParams.delete(key);
-      else {
-        switch (key) {
-          case "ratingMin":
-            url.searchParams.set("rating", `>${val.toString()}`);
-            break;
-          case "ratingMax":
-            url.searchParams.set("rating", `<${val.toString()}`);
-            break;
-          case "scoreMin":
-            url.searchParams.set("score", `>${val.toString()}`);
-            break;
-          case "scoreMax":
-            url.searchParams.set("score", `>${val.toString()}`);
-            break;
-          default:
-            url.searchParams.set(key, val.toString());
-            break;
-        }
-      }
-    }
-
-    router.push(`/editor/search?${url.searchParams}`);
-  }
+      navigate({
+        to: "/editor/search",
+        search: (prev) => ({
+          ...prev,
+          course,
+          domain,
+          code,
+          title,
+        }),
+      });
+    },
+    [navigate],
+  );
 
   return (
-    <form
-      className="relative flex h-full w-full flex-col gap-2 overflow-x-hidden overflow-y-auto"
-      action={action}
-    >
-      <label
-        className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
-        htmlFor="course"
+    <div className="flex-1 overflow-x-hidden overflow-y-auto">
+      <form
+        className="relative flex w-full flex-col gap-4"
+        onSubmit={handleSubmit}
       >
-        <h2 className="font-bold">Course Name</h2>
-        <input
-          name="course"
-          id="course"
-          className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
-          placeholder="e.g. English"
-          onChange={(e) => setCourseName(e.target.value)}
-          list="a"
-          autoComplete="off"
-          type="text"
-          value={courseName}
-        />
-        <datalist id="a">
-          {[
-            ...new Set(
-              courseNameDatalist
-                .map((cl) => cl.course)
-                .filter((c) => c !== "")
-                .sort(),
-            ),
-          ].map((val) => (
-            <option value={val} key={val} />
-          ))}
-        </datalist>
-      </label>
+        <Field className="gap-2">
+          <FieldLabel htmlFor="course">Course</FieldLabel>
+          <Input
+            id="course"
+            name="course"
+            placeholder="e.g. Complementary"
+            onChange={(e) => setCourse(e.target.value)}
+            list="course-list"
+            autoComplete="off"
+            type="text"
+            value={course}
+          />
 
-      <label
-        className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
-        htmlFor="code"
-      >
-        <h2 className="font-bold">Code</h2>
-        <input
-          name="code"
-          id="code"
-          className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
-          placeholder="e.g. 603-103-MQ"
-          autoComplete="off"
-          onChange={(e) => setCode(e.target.value)}
-          list="b"
-          type="text"
-          value={code}
-        />
-        <datalist id="b">
-          {[...new Set(codeDataList.map((cl) => cl.code).sort())].map((val) => (
-            <option value={val} key={val} />
-          ))}
-        </datalist>
-      </label>
+          <datalist id="course-list">
+            {[
+              ...new Set(
+                courseNameDatalist
+                  .map((cl) => cl.course)
+                  .filter((c) => c.trim() !== "")
+                  .collect()
+                  .sort(),
+              ),
+            ].map((val) => (
+              <option value={val} key={val} />
+            ))}
+          </datalist>
+        </Field>
 
-      <label
-        className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
-        htmlFor="title"
-      >
-        <h2 className="font-bold">Title</h2>
-        <input
-          name="title"
-          id="title"
-          className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
-          placeholder="e.g. Hockey is everything"
-          autoComplete="off"
-          list="c"
-          onChange={(e) => setTitle(e.target.value)}
-          type="text"
-          value={title}
-        />
-        <datalist id="c">
-          {[
-            ...new Set(
-              titleDatalist
-                .map((cl) => cl.lecture?.title)
-                .filter((p) => p)
-                .sort(),
-            ),
-          ].map((val) => (
-            <option key={val} value={val} />
-          ))}
-        </datalist>
-      </label>
+        <Field className="gap-2">
+          <FieldLabel htmlFor="domain">Domain</FieldLabel>
+          <Input
+            id="domain"
+            name="domain"
+            placeholder="e.g. BIOLOGY"
+            onChange={(e) => setDomain(e.target.value)}
+            list="domain-list"
+            autoComplete="off"
+            type="text"
+            value={domain}
+          />
 
-      <label
-        className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
-        htmlFor="prof"
-      >
-        <h2 className="font-bold">Teacher</h2>
-        <input
-          name="prof"
-          id="prof"
-          className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
-          placeholder="e.g. Patrick Burger"
-          list="d"
-          autoComplete="off"
-          defaultValue={searchParams.get("prof") ?? ""}
-          type="text"
-        />
-        <datalist id="d">
-          {[
-            ...new Set(
-              profDatalist
-                .map((cl) => cl.lecture?.prof)
-                .filter((p) => p)
-                .sort(),
-            ),
-          ].map((val) => (
-            <option value={val} key={val} />
-          ))}
-        </datalist>
-      </label>
+          <datalist id="domain-list">
+            {[
+              ...new Set(
+                domainNameDatalist
+                  .map((cl) => cl.domain)
+                  .filter((c) => c.trim() !== "")
+                  .collect()
+                  .sort(),
+              ),
+            ].map((val) => (
+              <option value={val} key={val} />
+            ))}
+          </datalist>
+        </Field>
 
-      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2">
-        <div className="group bg-bg-secondary hover:bg-secondary basis-1/2 rounded-md p-2 transition">
-          <h2 className="font-bold">Rating /5</h2>
-          <div className="flex items-center gap-4">
-            <label htmlFor="ratingMin">
-              <input
-                name="ratingMin"
-                id="ratingMin"
-                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
-                type="number"
-                min={0}
-                max={5}
-                step={0.1}
-                placeholder="0"
-                defaultValue={
-                  searchParams
-                    .get("rating")
-                    ?.match(/>\d+/)?.[0]
-                    .replace(">", "") ?? ""
-                }
-                autoComplete="off"
-              />
-            </label>
-            to
-            <label htmlFor="ratingMax">
-              <input
-                name="ratingMax"
-                id="ratingMax"
-                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
-                type="number"
-                min={0}
-                max={5}
-                step={0.1}
-                placeholder="5"
-                autoComplete="off"
-                defaultValue={
-                  searchParams
-                    .get("rating")
-                    ?.match(/<\d+/)?.[0]
-                    .replace("<", "") ?? ""
-                }
-              />
-            </label>
-          </div>
-        </div>
-
-        <div className="group bg-bg-secondary hover:bg-secondary basis-1/2 rounded-md p-2 transition">
-          <h2 className="font-bold">Score /100</h2>
-          <div className="flex items-center gap-4">
-            <label htmlFor="scoreMin">
-              <input
-                name="scoreMin"
-                id="scoreMin"
-                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
-                type="number"
-                min={0}
-                max={100}
-                step={1}
-                placeholder="0"
-                autoComplete="off"
-                defaultValue={
-                  searchParams
-                    .get("score")
-                    ?.match(/>\d+/)?.[0]
-                    .replace(">", "") ?? ""
-                }
-              />
-            </label>
-            to
-            <label htmlFor="scoreMax">
-              <input
-                name="scoreMax"
-                id="scoreMax"
-                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
-                type="number"
-                min={0}
-                max={100}
-                step={1}
-                placeholder="100"
-                autoComplete="off"
-                defaultValue={
-                  searchParams
-                    .get("score")
-                    ?.match(/<\d+/)?.[0]
-                    .replace("<", "") ?? ""
-                }
-              />
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition">
-        <p className="font-bold">Days Off</p>
-        <div className="flex gap-2">
-          <label
-            htmlFor="M"
-            className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
-          >
-            <input
-              name="day"
-              value="M"
-              type="checkbox"
-              id="M"
-              className="outline-none"
-              defaultChecked={searchParams.get("day")?.includes("M")}
-            />
-            M
-          </label>
-          <label
-            htmlFor="T"
-            className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
-          >
-            <input
-              name="day"
-              value="T"
-              type="checkbox"
-              id="T"
-              className="outline-none"
-              defaultChecked={searchParams.get("day")?.includes("T")}
-            />
-            T
-          </label>
-          <label
-            htmlFor="W"
-            className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
-          >
-            <input
-              name="day"
-              value="W"
-              type="checkbox"
-              id="W"
-              className="outline-none"
-              defaultChecked={searchParams.get("day")?.includes("W")}
-            />
-            W
-          </label>
-          <label
-            htmlFor="R"
-            className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
-          >
-            <input
-              name="day"
-              value="R"
-              type="checkbox"
-              id="R"
-              className="outline-none"
-              defaultChecked={searchParams.get("day")?.includes("R")}
-            />
-            R
-          </label>
-          <label
-            htmlFor="F"
-            className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
-          >
-            <input
-              name="day"
-              value="F"
-              type="checkbox"
-              id="F"
-              className="outline-none"
-              defaultChecked={searchParams.get("day")?.includes("F")}
-            />
-            F
-          </label>
-        </div>
-      </div>
-
-      <div className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition">
-        <h2 className="font-bold">Time Range</h2>
-        <div className="flex items-center gap-4">
-          <label htmlFor="timeMin">
-            <input
-              name="time"
-              id="timeMin"
-              className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
-              type="time"
-              min="08:00"
-              max="18:00"
-              step={`${60 * 30}`}
-              placeholder="08:00"
-              autoComplete="off"
-              defaultValue={searchParams.get("time")?.split("-")[0]}
-            />
-          </label>
-          to
-          <label htmlFor="timeMax">
-            <input
-              name="time"
-              id="timeMax"
-              className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
-              type="time"
-              min="08:00"
-              max="18:00"
-              step={`${60 * 30}`}
-              placeholder="18:00"
-              autoComplete="off"
-              defaultValue={searchParams.get("time")?.split("-")[1]}
-            />
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <p className="text-center">
-          Narrow search results by specifying what you want. Leaving an entry
-          blank will not filter for that entry.
-        </p>
-      </div>
-
-      <div className="flex justify-end gap-2 p-2">
-        <Button
-          variant="basic"
-          type="reset"
-          onClick={() => {
-            const url = new URL(window.location.href);
-
-            [
-              "prof",
-              "rating",
-              "score",
-              "code",
-              "time",
-              "title",
-              "course",
-              "day",
-            ].forEach((query) => {
-              url.searchParams.delete(query);
-            });
-
-            router.push(`/editor/filter?${url.searchParams}`);
-
-            [
-              "M",
-              "T",
-              "W",
-              "R",
-              "F",
-              "prof",
-              "timeMin",
-              "timeMax",
-              "scoreMin",
-              "scoreMax",
-              "ratingMin",
-              "ratingMax",
-            ].forEach((id) => {
-              const el = document.getElementById(id) as HTMLInputElement;
-              el.defaultChecked = false;
-              el.defaultValue = "";
-            });
-
-            setCourseName("");
-            setCode("");
-            setTitle("");
-          }}
+        <label
+          className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
+          htmlFor="code"
         >
-          Clear
-        </Button>
+          <h2 className="font-bold">Code</h2>
+          <input
+            name="code"
+            id="code"
+            className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
+            placeholder="e.g. 603-103-MQ"
+            autoComplete="off"
+            onChange={(e) => setCode(e.target.value)}
+            list="code-list"
+            type="text"
+            value={code}
+          />
+          <datalist id="code-list">
+            {[
+              ...new Set(
+                codeDataList
+                  .map((cl) => cl.code)
+                  .collect()
+                  .sort(),
+              ),
+            ].map((val) => (
+              <option value={val} key={val} />
+            ))}
+          </datalist>
+        </label>
 
-        <Button variant="special" type="submit">
-          Apply
-        </Button>
-      </div>
-    </form>
+        <label
+          className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
+          htmlFor="code"
+        >
+          <h2 className="font-bold">Code</h2>
+          <input
+            name="code"
+            id="code"
+            className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
+            placeholder="e.g. 603-103-MQ"
+            autoComplete="off"
+            onChange={(e) => setCode(e.target.value)}
+            list="code-list"
+            type="text"
+            value={code}
+          />
+          <datalist id="code-list">
+            {[
+              ...new Set(
+                codeDataList
+                  .map((cl) => cl.code)
+                  .collect()
+                  .sort(),
+              ),
+            ].map((val) => (
+              <option value={val} key={val} />
+            ))}
+          </datalist>
+        </label>
+
+        <label
+          className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
+          htmlFor="title"
+        >
+          <h2 className="font-bold">Title</h2>
+          <input
+            name="title"
+            id="title"
+            className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
+            placeholder="e.g. Hockey is everything"
+            autoComplete="off"
+            list="c"
+            onChange={(e) => setTitle(e.target.value)}
+            type="text"
+            value={title}
+          />
+          <datalist id="c">
+            {[
+              ...new Set(
+                titleDatalist
+                  .map((cl) => cl.title)
+                  .filter((p) => p.trim() !== "")
+                  .collect()
+                  .sort(),
+              ),
+            ].map((val) => (
+              <option key={val} value={val} />
+            ))}
+          </datalist>
+        </label>
+
+        <label
+          className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
+          htmlFor="prof"
+        >
+          <h2 className="font-bold">Teacher</h2>
+          <input
+            name="prof"
+            id="prof"
+            className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
+            placeholder="e.g. Patrick Burger"
+            list="d"
+            autoComplete="off"
+            defaultValue={search.prof ?? ""}
+            type="text"
+          />
+          <datalist id="d">
+            {[
+              ...new Set(
+                profDatalist
+                  .flatMap((section) =>
+                    section.leclabs.map((leclab) => leclab.prof),
+                  )
+                  .filter((p) => p.trim() !== "")
+                  .collect()
+                  .sort(),
+              ),
+            ].map((val) => (
+              <option value={val} key={val} />
+            ))}
+          </datalist>
+        </label>
+
+        <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2">
+          <div className="group bg-bg-secondary hover:bg-secondary basis-1/2 rounded-md p-2 transition">
+            <h2 className="font-bold">Rating /5</h2>
+            <div className="flex items-center gap-4">
+              <label htmlFor="ratingMin">
+                <input
+                  name="ratingMin"
+                  id="ratingMin"
+                  className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+                  type="number"
+                  min={0}
+                  max={5}
+                  step={0.1}
+                  placeholder="0"
+                  defaultValue={search.ratingMin}
+                  autoComplete="off"
+                />
+              </label>
+              to
+              <label htmlFor="ratingMax">
+                <input
+                  name="ratingMax"
+                  id="ratingMax"
+                  className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+                  type="number"
+                  min={0}
+                  max={5}
+                  step={0.1}
+                  placeholder="5"
+                  autoComplete="off"
+                  defaultValue={search.ratingMax}
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="group bg-bg-secondary hover:bg-secondary basis-1/2 rounded-md p-2 transition">
+            <h2 className="font-bold">Score /100</h2>
+            <div className="flex items-center gap-4">
+              <label htmlFor="scoreMin">
+                <input
+                  name="scoreMin"
+                  id="scoreMin"
+                  className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+                  type="number"
+                  min={0}
+                  max={100}
+                  step={1}
+                  placeholder="0"
+                  autoComplete="off"
+                  defaultValue={search.scoreMin}
+                />
+              </label>
+              to
+              <label htmlFor="scoreMax">
+                <input
+                  name="scoreMax"
+                  id="scoreMax"
+                  className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+                  type="number"
+                  min={0}
+                  max={100}
+                  step={1}
+                  placeholder="100"
+                  autoComplete="off"
+                  defaultValue={search.scoreMax}
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition">
+          <p className="font-bold">Days Off</p>
+          <div className="flex gap-2">
+            <label
+              htmlFor="M"
+              className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
+            >
+              <input
+                name="day"
+                value="M"
+                type="checkbox"
+                id="M"
+                className="outline-none"
+                defaultChecked={search.daysOff?.includes("M")}
+              />
+              M
+            </label>
+            <label
+              htmlFor="T"
+              className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
+            >
+              <input
+                name="day"
+                value="T"
+                type="checkbox"
+                id="T"
+                className="outline-none"
+                defaultChecked={search.daysOff?.includes("T")}
+              />
+              T
+            </label>
+            <label
+              htmlFor="W"
+              className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
+            >
+              <input
+                name="day"
+                value="W"
+                type="checkbox"
+                id="W"
+                className="outline-none"
+                defaultChecked={search.daysOff?.includes("W")}
+              />
+              W
+            </label>
+            <label
+              htmlFor="R"
+              className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
+            >
+              <input
+                name="day"
+                value="R"
+                type="checkbox"
+                id="R"
+                className="outline-none"
+                defaultChecked={search.daysOff?.includes("R")}
+              />
+              R
+            </label>
+            <label
+              htmlFor="F"
+              className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
+            >
+              <input
+                name="day"
+                value="F"
+                type="checkbox"
+                id="F"
+                className="outline-none"
+                defaultChecked={search.daysOff?.includes("F")}
+              />
+              F
+            </label>
+          </div>
+        </div>
+
+        <div className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition">
+          <h2 className="font-bold">Time Range</h2>
+          <div className="flex items-center gap-4">
+            <label htmlFor="timeMin">
+              <input
+                name="time"
+                id="timeMin"
+                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+                type="time"
+                min="08:00"
+                max="18:00"
+                step={`${60 * 30}`}
+                placeholder="08:00"
+                autoComplete="off"
+                defaultValue={search.timeStart}
+              />
+            </label>
+            to
+            <label htmlFor="timeMax">
+              <input
+                name="time"
+                id="timeMax"
+                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
+                type="time"
+                min="08:00"
+                max="18:00"
+                step={`${60 * 30}`}
+                placeholder="18:00"
+                autoComplete="off"
+                defaultValue={search.timeEnd}
+              />
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <p className="text-center">
+            Narrow search results by specifying what you want. Leaving an entry
+            blank will not filter for that entry.
+          </p>
+        </div>
+
+        <div className="flex justify-end gap-2 p-2">
+          <Button
+            variant="basic"
+            type="reset"
+            onClick={() => {
+              const url = new URL(window.location.href);
+
+              [
+                "prof",
+                "rating",
+                "score",
+                "code",
+                "time",
+                "title",
+                "course",
+                "day",
+              ].forEach((query) => {
+                url.searchParams.delete(query);
+              });
+
+              [
+                "M",
+                "T",
+                "W",
+                "R",
+                "F",
+                "prof",
+                "timeMin",
+                "timeMax",
+                "scoreMin",
+                "scoreMax",
+                "ratingMin",
+                "ratingMax",
+              ].forEach((id) => {
+                const el = document.getElementById(id) as HTMLInputElement;
+                el.defaultChecked = false;
+                el.defaultValue = "";
+              });
+
+              setCourse("");
+              setCode("");
+              setTitle("");
+            }}
+          >
+            Clear
+          </Button>
+
+          <Button variant="special" type="submit">
+            Apply
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 }
