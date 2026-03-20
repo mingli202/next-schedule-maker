@@ -28,7 +28,7 @@ function RouteComponent() {
   const [title, setTitle] = useState(search.title ?? "");
 
   const courseNameDatalist = useMemo(
-    () => Iter.from(sectionsById.values()),
+    () => Iter.from(Array.from(sectionsById.values())),
     [sectionsById],
   );
 
