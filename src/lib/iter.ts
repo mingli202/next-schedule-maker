@@ -206,6 +206,18 @@ export class Iter<T> implements Iterable<T> {
   }
 
   /**
+   * Flattens one level of nested iterables.
+   * */
+  public flatten<U>(this: Iter<Iterable<U>>): Iter<U> {
+    const source = this;
+    return new Iter(function* () {
+      for (const val of source) {
+        yield* val;
+      }
+    });
+  }
+
+  /**
    * Creates an iterator that both yields elements based on a predicate and maps.
    *
    * mapWhile() takes a closure as an argument. It will call this closure on each element of the iterator, and yield elements while it returns Some(_).

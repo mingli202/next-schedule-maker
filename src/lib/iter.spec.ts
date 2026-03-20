@@ -398,4 +398,26 @@ given("an iter", () => {
       expect(iter.collect()).toStrictEqual([]);
     });
   });
+
+  when("flatten() is called", () => {
+    then("should flatten by one level nested structures", () => {
+      const iter = Iter.from([
+        [1, 2, 3],
+        [4, 5, 6],
+        [1, 2, 3],
+      ]).flatten();
+
+      expect(iter.collect()).toStrictEqual([1, 2, 3, 4, 5, 6, 1, 2, 3]);
+    });
+
+    then("should flatten by one level nested structures", () => {
+      const iter = Iter.from([[[1, 2, 3]], [[4, 5, 6]], [[1, 2, 3]]]).flatten();
+
+      expect(iter.collect()).toStrictEqual([
+        [1, 2, 3],
+        [4, 5, 6],
+        [1, 2, 3],
+      ]);
+    });
+  });
 });
