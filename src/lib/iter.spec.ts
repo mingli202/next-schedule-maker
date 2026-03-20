@@ -420,4 +420,12 @@ given("an iter", () => {
       ]);
     });
   });
+
+  when("flatMap() is called", () => {
+    then("should map and flatten by one level", () => {
+      const iter = Iter.from([1, 2, 3, 4, 5]).flatMap((val) => [val, val * 2]);
+
+      expect(iter.collect()).toStrictEqual([1, 2, 2, 4, 3, 6, 4, 8, 5, 10]);
+    });
+  });
 });
