@@ -7,6 +7,7 @@ import {
 import { LoaderCircle } from "lucide-react";
 import { type ButtonHTMLAttributes, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 type Props = {
   variant?: "basic" | "special";
@@ -27,6 +28,7 @@ function Button({
   isPending,
   pendingElement,
   disabled,
+  title,
   ...props
 }: Props) {
   const hoverVariants = {
@@ -112,85 +114,92 @@ function Button({
   };
 
   return (
-    <motion.button
-      {...props}
-      className={cn(
-        "relative overflow-hidden rounded-lg p-2 hover:cursor-pointer",
-        variant === "basic" && "bg-transparent opacity-50",
-        variant === "special" && "text-accent-foreground bg-accent z-10",
-        isPending &&
-          "flex cursor-wait items-center justify-center hover:cursor-wait",
-        disabled && "cursor-not-allowed",
-        className,
-      )}
-      disabled={isPending || disabled}
-      style={
-        {
-          "--mouse-x": `${mousePosition.x}px`,
-          "--mouse-y": `${mousePosition.y}px`,
-        } as React.CSSProperties
-      }
-      whileHover={variant}
-      whileTap={{
-        scale: 1,
-      }}
-      variants={hoverVariants}
-      ref={ref}
-      onPointerUp={async (e) => {
-        if (disableBgEffect) return;
-        handleBasicHover(e);
-      }}
-      onPointerEnter={async (e) => {
-        if (disableBgEffect) return;
-        handleSpecialHover(e);
-      }}
-      onPointerLeave={async (e) => {
-        if (disableBgEffect) return;
-        updateMousePosition(e);
-        setCircleSize(undefined);
-      }}
-    >
-      {isPending
-        ? (pendingElement ?? <LoaderCircle className="h-6 w-6 animate-spin" />)
-        : children}
-
-      {variant === "basic" && (
-        <motion.div
-          ref={scope}
+    <Tooltip delayDuration={700}>
+      <TooltipTrigger asChild>
+        <motion.button
+          {...props}
           className={cn(
-            "absolute top-0 left-0 z-1 aspect-square w-full rounded-full bg-white opacity-1",
+            "relative overflow-hidden rounded-lg p-2 hover:cursor-pointer",
+            variant === "basic" && "bg-transparent opacity-50",
+            variant === "special" && "text-accent-foreground bg-accent z-10",
+            isPending &&
+              "flex cursor-wait items-center justify-center hover:cursor-wait",
+            disabled && "cursor-not-allowed",
+            className,
           )}
-        />
-      )}
-      {variant === "special" && (
-        <AnimatePresence>
-          {circleSize !== undefined && (
+          disabled={isPending || disabled}
+          style={
+            {
+              "--mouse-x": `${mousePosition.x}px`,
+              "--mouse-y": `${mousePosition.y}px`,
+            } as React.CSSProperties
+          }
+          whileHover={variant}
+          whileTap={{
+            scale: 1,
+          }}
+          variants={hoverVariants}
+          ref={ref}
+          onPointerUp={async (e) => {
+            if (disableBgEffect) return;
+            handleBasicHover(e);
+          }}
+          onPointerEnter={async (e) => {
+            if (disableBgEffect) return;
+            handleSpecialHover(e);
+          }}
+          onPointerLeave={async (e) => {
+            if (disableBgEffect) return;
+            updateMousePosition(e);
+            setCircleSize(undefined);
+          }}
+        >
+          {isPending
+            ? (pendingElement ?? (
+                <LoaderCircle className="h-6 w-6 animate-spin" />
+              ))
+            : children}
+
+          {variant === "basic" && (
             <motion.div
               ref={scope}
               className={cn(
-                "bg-background absolute top-0 left-0 z-1 h-full w-full",
-                "overflow-hidden p-2",
-                className,
+                "absolute top-0 left-0 z-1 aspect-square w-full rounded-full bg-white opacity-1",
               )}
-              style={{
-                color: "var(--accent)",
-              }}
-              initial={{
-                clipPath: "circle(0px at var(--mouse-x) var(--mouse-y))",
-              }}
-              animate={{
-                clipPath: `circle(${circleSize}px at var(--mouse-x) var(--mouse-y))`,
-              }}
-              exit={{
-                clipPath: "circle(0px at var(--mouse-x) var(--mouse-y))",
-              }}
-            >
-              {children}
-            </motion.div>
+            />
           )}
-        </AnimatePresence>
-      )}
-    </motion.button>
+          {variant === "special" && (
+            <AnimatePresence>
+              {circleSize !== undefined && (
+                <motion.div
+                  ref={scope}
+                  className={cn(
+                    "bg-background absolute top-0 left-0 z-1 h-full w-full",
+                    "overflow-hidden p-2",
+                    className,
+                  )}
+                  style={{
+                    color: "var(--accent)",
+                  }}
+                  initial={{
+                    clipPath: "circle(0px at var(--mouse-x) var(--mouse-y))",
+                  }}
+                  animate={{
+                    clipPath: `circle(${circleSize}px at var(--mouse-x) var(--mouse-y))`,
+                  }}
+                  exit={{
+                    clipPath: "circle(0px at var(--mouse-x) var(--mouse-y))",
+                  }}
+                >
+                  {children}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          )}
+        </motion.button>
+      </TooltipTrigger>
+      {title && <TooltipContent>{title}</TooltipContent>}
+    </Tooltip>
   );
 }
 

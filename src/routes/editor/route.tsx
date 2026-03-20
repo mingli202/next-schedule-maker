@@ -42,7 +42,7 @@ function RouteComponent() {
 }
 
 function ViewWrapper(props: ComponentProps<"div">) {
-  const { sections } = Route.useSearch();
+  const sections = Route.useSearch({ select: (s) => s.sections });
   const navigate = Route.useNavigate();
 
   const onRemoveSectionClicked = useCallback(

@@ -157,9 +157,7 @@ const sections: SectionResponse[] = [
 ];
 
 const store: SectionStore = {
-  sectionsById: Object.fromEntries(
-    sections.map((section) => [section.id, section]),
-  ),
+  sectionsById: new Map(sections.map((section) => [section.id, section])),
   professors: new Set(
     sections
       .flatMap((section) => section.leclabs.map((leclab) => leclab.prof))

@@ -1,7 +1,8 @@
 import type { SectionResponse } from "src/client";
 import type { SectionStore } from "src/types";
-import type { SearchSectionParams } from "src/types/schedule";
+import type { SavedSection, SearchSectionParams } from "src/types/schedule";
 import { Iter } from "../iter";
+import isValidAdditionToSchedule from "./isValidAdditionToSchedule";
 
 const includes = (str: string, substring: string) =>
   str.toLowerCase().includes(substring.toLowerCase());
@@ -311,7 +312,7 @@ const filterByQuery = (
 
 export function filterDown(
   sectionStore: SectionStore,
-  search: SearchSectionParams,
+  search: SearchSectionParams & { sections: SavedSection[] | undefined },
 ): SectionResponse[] {
   const {
     q,
@@ -329,6 +330,7 @@ export function filterDown(
     timeEnd,
     blended,
     honours,
+    sections,
   } = search;
 
   if (
@@ -351,7 +353,7 @@ export function filterDown(
     return [];
   }
 
-  let iter = Iter.from(Object.values(sectionStore.sectionsById));
+  let iter = Iter.from(sectionStore.sectionsById.values());
 
   if (q) {
     iter = filterByQuery(iter, q, Array.from(sectionStore.professors));
@@ -411,6 +413,14 @@ export function filterDown(
 
   if (honours) {
     iter = filterByHonours(iter);
+  }
+
+  if (sections) {
+    const fullSections = sections
+      .map((s) => sectionStore.sectionsById.get(s.sectionId))
+      .filter((s) => !!s);
+
+    iter = iter.filter((s) => isValidAdditionToSchedule(s, fullSections));
   }
 
   return iter.collect();

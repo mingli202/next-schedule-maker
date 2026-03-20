@@ -1,113 +1,39 @@
-"use client";
+import { Link, useSearch } from "@tanstack/react-router";
+import { Download } from "lucide-react";
+import { Button } from "src/components";
+import download from "src/lib/download";
+import { useSectionStore } from "src/lib/store/section";
 
-import Button from "@/components/Button";
-import {
-  faFileDownload,
-  faHome,
-  faList,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AnimatePresence, Variants, motion } from "framer-motion";
-import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
-import { ScheduleClassesContext } from "../../ScheduleContext";
-import download from "./download";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { app } from "@/backend";
-
-function BottomMenu() {
-  const currentClasses = useContext(ScheduleClassesContext);
-
-  const [path, setPath] = useState("/");
-  const [expand, setExpand] = useState(false);
-
-  useEffect(() => {
-    const auth = getAuth(app);
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setPath("/user");
-      } else {
-        setPath("/");
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const buttonVariants: Variants = {
-    initial: {
-      x: "100%",
-      opacity: 0,
-    },
-    animate: {
-      x: "0%",
-      opacity: 1,
-    },
-  };
+export function BottomMenu() {
+  const { sectionsById } = useSectionStore();
+  const sections = useSearch({
+    from: "/editor/settings",
+    select: (s) => s.sections,
+  });
 
   return (
-    <div className="bg-background flex w-full shrink-0 items-center justify-between gap-2 p-2">
-      <Link href="/editor/settings" title="reset everything">
-        <Button variant="basic">Reset URL</Button>
+    <div className="bg-background flex w-full shrink-0 items-center justify-between gap-2">
+      <Link
+        to="/editor/settings"
+        title="reset everything"
+        search={{ sections: [] }}
+      >
+        <Button variant="basic" title="Clear everything on the screen">
+          Reset URL
+        </Button>
       </Link>
 
-      <div className="flex shrink-0 items-center gap-4">
-        <AnimatePresence>
-          {expand === true && (
-            <motion.div
-              variants={buttonVariants}
-              initial="initial"
-              animate="animate"
-              exit="initial"
-              title="download current schedule as Excel"
-              onClick={() => {
-                download(currentClasses);
-              }}
-              key="download"
-            >
-              <Button
-                variant="basic"
-                className="rounded-none p-0"
-                disableBgEffect
-              >
-                <FontAwesomeIcon icon={faFileDownload} className="h-4" />
-              </Button>
-            </motion.div>
-          )}
-
-          {expand === true && (
-            <motion.div
-              initial="initial"
-              animate="animate"
-              exit="initial"
-              variants={buttonVariants}
-              title="home"
-              key="home"
-            >
-              <Link href={path}>
-                <Button
-                  variant="basic"
-                  className="rounded-none p-0"
-                  disableBgEffect
-                >
-                  <FontAwesomeIcon icon={faHome} className="h-4" />
-                </Button>
-              </Link>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <Button
-          variant="basic"
-          className="rounded-none p-0"
-          onClick={() => setExpand(!expand)}
-          disableBgEffect
-        >
-          <FontAwesomeIcon icon={faList} className="h-4" />
-        </Button>
-      </div>
+      <Button
+        onClick={() => {
+          download(sections, sectionsById);
+        }}
+        variant="basic"
+        className="rounded-none p-0"
+        disableBgEffect
+        title="Download as excel"
+      >
+        <Download className="h-4 w-4" />
+      </Button>
     </div>
   );
 }
-
-export default BottomMenu;

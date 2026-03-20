@@ -2,9 +2,10 @@ import { useSearch } from "@tanstack/react-router";
 import { useSectionStore } from "src/lib/store/section";
 
 export default function PreviewHover() {
-  const search = useSearch({ strict: false });
-
-  const previewSectionId = search.previewSectionId;
+  const previewSectionId = useSearch({
+    strict: false,
+    select: (s) => s.previewSectionId,
+  });
 
   if (previewSectionId === undefined || previewSectionId < 0) return null;
 
@@ -16,7 +17,7 @@ type PreviewHoverInnerProps = {
 };
 function PreviewHoverInner({ previewSectionId }: PreviewHoverInnerProps) {
   const { sectionsById } = useSectionStore();
-  const section = sectionsById[previewSectionId];
+  const section = sectionsById.get(previewSectionId);
 
   if (!section) return null;
 

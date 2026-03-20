@@ -32,7 +32,9 @@ export default function SectionBlock({
 
   const { sectionsById } = useSectionStore();
 
-  const section = sectionsById[sectionId];
+  const section = sectionsById.get(sectionId);
+
+  if (!section) return null;
 
   const card: Variants = {
     hover: {

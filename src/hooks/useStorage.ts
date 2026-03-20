@@ -1,39 +1,57 @@
-import { useEffect, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
-export function useSessionStorage<T>(defaultValue: T, key: string) {
-  const [state, setState] = useState<T>(defaultValue);
+// biome-ignore lint/suspicious/noExplicitAny: idk man
+const isFunction = (val: any): val is (...args: any) => any =>
+  typeof val === "function";
 
-  useEffect(() => {
-    const data = sessionStorage.getItem(`${key}winter2026`);
+function useStorage<T>(
+  defaultValue: T,
+  key: string,
+  getStorage: () => Storage | undefined,
+) {
+  const keyRef = useRef(key);
+  const storageRef = useRef(getStorage());
+  const defaultValueRef = useRef(defaultValue);
+
+  const [state, setState] = useState<T>(() => {
+    const storage = storageRef.current;
+    if (typeof window === "undefined" || !storage) {
+      return defaultValue;
+    }
+
+    const data = storageRef.current?.getItem(keyRef.current);
 
     if (data) {
-      setState(JSON.parse(data));
+      return JSON.parse(data);
     }
-  }, [key]);
 
-  function update(newValue: T) {
-    sessionStorage.setItem(`${key}winter2026`, JSON.stringify(newValue));
-    setState(newValue);
-  }
+    return defaultValue;
+  });
 
-  return [state, update] as const;
+  const update = useCallback((newValue: T | ((prev: T) => T)) => {
+    setState((prev) => {
+      const nextValue = isFunction(newValue) ? newValue(prev) : newValue;
+      storageRef.current?.setItem(keyRef.current, JSON.stringify(nextValue));
+      return nextValue;
+    });
+  }, []);
+
+  const remove = useCallback(() => {
+    storageRef.current?.removeItem(keyRef.current);
+    setState(defaultValueRef.current);
+  }, []);
+
+  return [state, update, remove] as const;
 }
 
-export function useLocalStorage<T>(defaultValue: T, key: string) {
-  const [state, setState] = useState<T>(defaultValue);
+const getSessionStorage = () =>
+  typeof sessionStorage === "undefined" ? undefined : sessionStorage;
 
-  useEffect(() => {
-    const data = localStorage.getItem(`${key}winter2026`);
+const getLocalStorage = () =>
+  typeof localStorage === "undefined" ? undefined : localStorage;
 
-    if (data) {
-      setState(JSON.parse(data));
-    }
-  }, [key]);
+export const useSessionStorage = <T>(defaultValue: T, key: string) =>
+  useStorage(defaultValue, key, getSessionStorage);
 
-  function update(newValue: T) {
-    sessionStorage.setItem(`${key}winter2026`, JSON.stringify(newValue));
-    setState(newValue);
-  }
-
-  return [state, update] as const;
-}
+export const useLocalStorage = <T>(defaultValue: T, key: string) =>
+  useStorage(defaultValue, key, getLocalStorage);

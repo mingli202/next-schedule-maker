@@ -21,7 +21,7 @@ export type WorkerMessage =
     }
   | {
       type: "search";
-      search: SearchSectionParams;
+      search: SearchSectionParams & { sections: SavedSection[] | undefined };
     };
 
 export type WorkerResponseMap = {

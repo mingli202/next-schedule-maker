@@ -19,7 +19,7 @@ export default function SectionCard({
   return (
     <div
       className={cn(
-        "bg-secondary/60 flex flex-col gap-2 rounded-xl p-2",
+        "bg-secondary/50 flex flex-col gap-2 rounded-xl p-2",
         className,
       )}
       {...props}

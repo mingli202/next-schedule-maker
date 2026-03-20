@@ -9,7 +9,7 @@ export type RouterContext = {
 };
 
 export type SectionStore = {
-  readonly sectionsById: { [k: string]: SectionResponse };
+  readonly sectionsById: Map<number, SectionResponse>;
   readonly professors: Set<string>;
   readonly codes: Set<string>;
 };

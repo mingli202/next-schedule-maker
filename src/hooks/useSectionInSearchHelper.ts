@@ -1,5 +1,5 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { getNextAvailableColorIndex } from "src/lib/colors";
 import isValidAdditionToSchedule from "src/lib/schedule/isValidAdditionToSchedule";
 import { useSectionStore } from "src/lib/store/section";
@@ -14,8 +14,14 @@ export function useSectionInSearchHelper(sectionId: number) {
 
   const { sectionsById } = useSectionStore();
 
-  const section = sectionsById[`${sectionId}`];
-  const sections = savedSections.map((s) => sectionsById[`${s.sectionId}`]);
+  const section = sectionsById.get(sectionId);
+  const sections = useMemo(
+    () =>
+      savedSections
+        .map((s) => sectionsById.get(s.sectionId))
+        .filter((s) => !!s),
+    [savedSections, sectionsById],
+  );
 
   const isSectionIncluded = useCallback(
     () => savedSections.some((s) => s.sectionId === section?.id),

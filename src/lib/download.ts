@@ -1,11 +1,13 @@
-import { getLocalJsonData } from "@/lib";
-import { Class, SharedCurrentClasses } from "@/types";
 import ExcelJS from "exceljs";
 import FileSaver from "file-saver";
+import type { SectionResponse } from "src/client";
+import type { SavedSection } from "src/types/schedule";
+import { getColorFromIndex } from "./colors";
 
-async function download(currentSchedule: SharedCurrentClasses[]) {
-  const allClasses: Record<string, Class> =
-    await getLocalJsonData("allClasses");
+export default async function download(
+  sections: SavedSection[],
+  sectionById: Map<number, SectionResponse>,
+) {
   const workbook = new ExcelJS.Workbook();
 
   workbook.creator = "Unknown";
@@ -66,16 +68,18 @@ async function download(currentSchedule: SharedCurrentClasses[]) {
   const cols = ["A", "B", "C", "D", "E", "F"];
 
   // add all classes
-  for (const schedule of currentSchedule) {
-    const { id, textColor, bgColor } = schedule;
+  for (const section of sections) {
+    const { sectionId, colorIndex } = section;
 
-    if (!Object.hasOwn(allClasses, id)) {
+    const fullSection = sectionById.get(sectionId);
+
+    if (!fullSection) {
       continue;
     }
 
-    const cl = allClasses[id];
+    const { textColor, bgColor } = getColorFromIndex(colorIndex);
 
-    for (const time of cl.viewData) {
+    for (const time of fullSection.viewData) {
       const [d, [start, end]] = Object.entries(time)[0];
       const day = cols[Number(d)];
 
@@ -84,12 +88,11 @@ async function download(currentSchedule: SharedCurrentClasses[]) {
         cell.style = {
           font: {
             color: {
-              argb:
-                "FF" + textColor?.replace("#", "").replace(/[0F]{3}/g, "$&$&"),
+              argb: `FF${textColor?.replace("#", "").replace(/[0F]{3}/g, "$&$&")}`,
             },
           },
           fill: {
-            fgColor: { argb: "FF" + bgColor?.replace("#", "") },
+            fgColor: { argb: `FF${bgColor?.replace("#", "")}` },
             type: "pattern",
             pattern: "solid",
           },
@@ -97,13 +100,13 @@ async function download(currentSchedule: SharedCurrentClasses[]) {
 
         switch (k) {
           case 0:
-            cell.value = `${cl.section} ${cl.code}`;
+            cell.value = `${fullSection.section} ${fullSection.code}`;
             break;
           case 1:
-            cell.value = cl.lecture?.title ?? "";
+            cell.value = fullSection.title ?? "";
             break;
           case 2:
-            cell.value = cl.lecture?.prof ?? "";
+            cell.value = fullSection.leclabs[0]?.prof ?? "";
             break;
         }
       }
@@ -136,5 +139,3 @@ async function download(currentSchedule: SharedCurrentClasses[]) {
     alert("Failed to download. Try again.");
   }
 }
-
-export default download;
