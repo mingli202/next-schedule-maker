@@ -72,11 +72,12 @@ export default async function download(
     const { sectionId, colorIndex } = section;
 
     const fullSection = sectionById.get(sectionId);
-    const { textColor, bgColor } = getColorFromIndex(colorIndex);
 
     if (!fullSection) {
       continue;
     }
+
+    const { textColor, bgColor } = getColorFromIndex(colorIndex);
 
     for (const time of fullSection.viewData) {
       const [d, [start, end]] = Object.entries(time)[0];
