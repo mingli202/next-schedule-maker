@@ -299,81 +299,66 @@ function RouteComponent() {
           </Field>
         </FieldGroup>
 
-        <div className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition">
-          <p className="font-bold">Days Off</p>
+        <FieldGroup className="gap-2">
+          <FieldLabel>Days off</FieldLabel>
           <div className="flex gap-2">
-            <label
-              htmlFor="M"
-              className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
-            >
-              <input
+            <Field orientation="horizontal" className="gap-1">
+              <FieldLabel htmlFor="M">M</FieldLabel>
+              <Input
                 name="day"
                 value="M"
                 type="checkbox"
                 id="M"
-                className="outline-none"
                 defaultChecked={search.daysOff?.includes("M")}
+                className="h-4 w-4"
               />
-              M
-            </label>
-            <label
-              htmlFor="T"
-              className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
-            >
-              <input
+            </Field>
+            <Field orientation="horizontal">
+              <FieldLabel htmlFor="T">T</FieldLabel>
+              <Input
                 name="day"
                 value="T"
                 type="checkbox"
                 id="T"
-                className="outline-none"
                 defaultChecked={search.daysOff?.includes("T")}
+                className="h-4 w-4"
               />
-              T
-            </label>
-            <label
-              htmlFor="W"
-              className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
-            >
-              <input
+            </Field>
+            <Field orientation="horizontal">
+              <FieldLabel htmlFor="W">W</FieldLabel>
+              <Input
                 name="day"
                 value="W"
                 type="checkbox"
                 id="W"
-                className="outline-none"
                 defaultChecked={search.daysOff?.includes("W")}
+                className="h-4 w-4"
               />
-              W
-            </label>
-            <label
-              htmlFor="R"
-              className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
-            >
-              <input
+            </Field>
+            <Field orientation="horizontal">
+              <FieldLabel htmlFor="R">R</FieldLabel>
+              <Input
                 name="day"
                 value="R"
                 type="checkbox"
                 id="R"
-                className="outline-none"
                 defaultChecked={search.daysOff?.includes("R")}
+                className="h-4 w-4"
               />
-              R
-            </label>
-            <label
-              htmlFor="F"
-              className="bg-background group-hover:bg-bg-secondary flex gap-2 rounded-md p-2"
-            >
-              <input
+            </Field>
+            <Field orientation="horizontal">
+              <FieldLabel htmlFor="F">F</FieldLabel>
+              <Input
                 name="day"
                 value="F"
                 type="checkbox"
                 id="F"
-                className="outline-none"
                 defaultChecked={search.daysOff?.includes("F")}
+                className="h-4 w-4"
               />
-              F
-            </label>
+            </Field>
           </div>
-        </div>
+        </FieldGroup>
 
         <div className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition">
           <h2 className="font-bold">Time Range</h2>
