@@ -22,9 +22,7 @@ function useStorage<T>(
     const data = storageRef.current?.getItem(keyRef.current);
 
     if (data) {
-      try {
-        return JSON.parse(data);
-      } catch {}
+      return JSON.parse(data);
     }
 
     return defaultValue;
