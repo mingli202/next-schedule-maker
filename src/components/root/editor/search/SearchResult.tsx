@@ -38,7 +38,7 @@ export function SearchResult() {
       timeStart: search.timeStart,
       timeEnd: search.timeEnd,
       blended: search.blended,
-      honours: search.blended,
+      honours: search.honours,
       sections: search.sections,
       excludeInvalid: search.excludeInvalid,
     }),
