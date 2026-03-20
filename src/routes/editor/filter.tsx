@@ -98,7 +98,7 @@ function RouteComponent() {
   );
 
   return (
-    <div className="flex-1 overflow-x-hidden overflow-y-auto">
+    <div className="flex-1 overflow-x-hidden overflow-y-auto p-4">
       <form
         className="relative flex w-full flex-col gap-4"
         onSubmit={handleSubmit}
@@ -159,15 +159,11 @@ function RouteComponent() {
           </datalist>
         </Field>
 
-        <label
-          className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
-          htmlFor="code"
-        >
-          <h2 className="font-bold">Code</h2>
-          <input
+        <Field>
+          <FieldLabel htmlFor="code">Code</FieldLabel>
+          <Input
             name="code"
             id="code"
-            className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
             placeholder="e.g. 603-103-MQ"
             autoComplete="off"
             onChange={(e) => setCode(e.target.value)}
@@ -187,47 +183,13 @@ function RouteComponent() {
               <option value={val} key={val} />
             ))}
           </datalist>
-        </label>
+        </Field>
 
-        <label
-          className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
-          htmlFor="code"
-        >
-          <h2 className="font-bold">Code</h2>
-          <input
-            name="code"
-            id="code"
-            className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
-            placeholder="e.g. 603-103-MQ"
-            autoComplete="off"
-            onChange={(e) => setCode(e.target.value)}
-            list="code-list"
-            type="text"
-            value={code}
-          />
-          <datalist id="code-list">
-            {[
-              ...new Set(
-                codeDataList
-                  .map((cl) => cl.code)
-                  .collect()
-                  .sort(),
-              ),
-            ].map((val) => (
-              <option value={val} key={val} />
-            ))}
-          </datalist>
-        </label>
-
-        <label
-          className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
-          htmlFor="title"
-        >
-          <h2 className="font-bold">Title</h2>
-          <input
+        <Field>
+          <FieldLabel htmlFor="title">Title</FieldLabel>
+          <Input
             name="title"
             id="title"
-            className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
             placeholder="e.g. Hockey is everything"
             autoComplete="off"
             list="c"
@@ -248,17 +210,13 @@ function RouteComponent() {
               <option key={val} value={val} />
             ))}
           </datalist>
-        </label>
+        </Field>
 
-        <label
-          className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition"
-          htmlFor="prof"
-        >
-          <h2 className="font-bold">Teacher</h2>
-          <input
+        <Field>
+          <FieldLabel htmlFor="prof">Teacher</FieldLabel>
+          <Input
             name="prof"
             id="prof"
-            className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
             placeholder="e.g. Patrick Burger"
             list="d"
             autoComplete="off"
@@ -280,7 +238,7 @@ function RouteComponent() {
               <option value={val} key={val} />
             ))}
           </datalist>
-        </label>
+        </Field>
 
         <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2">
           <div className="group bg-bg-secondary hover:bg-secondary basis-1/2 rounded-md p-2 transition">
@@ -290,7 +248,6 @@ function RouteComponent() {
                 <input
                   name="ratingMin"
                   id="ratingMin"
-                  className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
                   type="number"
                   min={0}
                   max={5}
