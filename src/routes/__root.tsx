@@ -104,10 +104,12 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       },
     ],
     scripts: [
-      {
-        crossOrigin: "anonymous",
-        src: "//unpkg.com/react-scan/dist/auto.global.js",
-      },
+      import.meta.env.DEV
+        ? {
+            crossOrigin: "anonymous",
+            src: "//unpkg.com/react-scan/dist/auto.global.js",
+          }
+        : undefined,
     ],
   }),
   loader: ({ context }) => {
