@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { type SubmitEvent, useCallback, useMemo, useState } from "react";
 import { Button } from "src/components";
-import { Field, FieldLabel } from "src/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
 import { Iter } from "src/lib/iter";
 import { useSectionStore } from "src/lib/store/section";
@@ -240,76 +240,64 @@ function RouteComponent() {
           </datalist>
         </Field>
 
-        <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-2">
-          <div className="group bg-bg-secondary hover:bg-secondary basis-1/2 rounded-md p-2 transition">
-            <h2 className="font-bold">Rating /5</h2>
-            <div className="flex items-center gap-4">
-              <label htmlFor="ratingMin">
-                <input
-                  name="ratingMin"
-                  id="ratingMin"
-                  type="number"
-                  min={0}
-                  max={5}
-                  step={0.1}
-                  placeholder="0"
-                  defaultValue={search.ratingMin}
-                  autoComplete="off"
-                />
-              </label>
-              to
-              <label htmlFor="ratingMax">
-                <input
-                  name="ratingMax"
-                  id="ratingMax"
-                  className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
-                  type="number"
-                  min={0}
-                  max={5}
-                  step={0.1}
-                  placeholder="5"
-                  autoComplete="off"
-                  defaultValue={search.ratingMax}
-                />
-              </label>
-            </div>
-          </div>
-
-          <div className="group bg-bg-secondary hover:bg-secondary basis-1/2 rounded-md p-2 transition">
-            <h2 className="font-bold">Score /100</h2>
-            <div className="flex items-center gap-4">
-              <label htmlFor="scoreMin">
-                <input
-                  name="scoreMin"
-                  id="scoreMin"
-                  className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
-                  type="number"
-                  min={0}
-                  max={100}
-                  step={1}
-                  placeholder="0"
-                  autoComplete="off"
-                  defaultValue={search.scoreMin}
-                />
-              </label>
-              to
-              <label htmlFor="scoreMax">
-                <input
-                  name="scoreMax"
-                  id="scoreMax"
-                  className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
-                  type="number"
-                  min={0}
-                  max={100}
-                  step={1}
-                  placeholder="100"
-                  autoComplete="off"
-                  defaultValue={search.scoreMax}
-                />
-              </label>
-            </div>
-          </div>
-        </div>
+        <FieldGroup className="grid max-w-sm grid-cols-2">
+          <Field>
+            <FieldLabel htmlFor="ratingMin">Min rating</FieldLabel>
+            <Input
+              name="ratingMin"
+              id="ratingMin"
+              type="number"
+              min={0}
+              max={5}
+              step={0.1}
+              placeholder="0"
+              defaultValue={search.ratingMin}
+              autoComplete="off"
+            />
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="ratingMax">Max rating</FieldLabel>
+            <Input
+              name="ratingMax"
+              id="ratingMax"
+              type="number"
+              min={0}
+              max={5}
+              step={0.1}
+              placeholder="5"
+              defaultValue={search.ratingMax}
+              autoComplete="off"
+            />
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="scoreMin">Min score</FieldLabel>
+            <Input
+              name="scoreMin"
+              id="scoreMin"
+              type="number"
+              min={0}
+              max={5}
+              step={0.1}
+              placeholder="0"
+              defaultValue={search.scoreMin}
+              autoComplete="off"
+            />
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="scoreMax">Max score</FieldLabel>
+            <Input
+              name="scoreMax"
+              id="scoreMax"
+              type="number"
+              min={0}
+              max={5}
+              step={0.1}
+              placeholder="5"
+              defaultValue={search.scoreMax}
+              autoComplete="off"
+            />
+          </Field>
+        </FieldGroup>
 
         <div className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition">
           <p className="font-bold">Days Off</p>
