@@ -7,6 +7,7 @@ import { type SubmitEvent, useCallback, useMemo, useState } from "react";
 import { Button } from "src/components";
 import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
+import { Label } from "src/components/ui/label";
 import { Iter } from "src/lib/iter";
 import { useSectionStore } from "src/lib/store/section";
 import { SearchSectionParams } from "src/types/schedule";
@@ -240,7 +241,7 @@ function RouteComponent() {
           </datalist>
         </Field>
 
-        <FieldGroup className="grid max-w-sm grid-cols-2">
+        <FieldGroup className="grid w-full grid-cols-2">
           <Field>
             <FieldLabel htmlFor="ratingMin">Min rating</FieldLabel>
             <Input
@@ -301,62 +302,20 @@ function RouteComponent() {
 
         <FieldGroup className="gap-2">
           <FieldLabel>Days off</FieldLabel>
-          <div className="flex gap-2">
-            <Field orientation="horizontal" className="gap-1">
-              <FieldLabel htmlFor="M">M</FieldLabel>
-              <Input
-                name="day"
-                value="M"
-                type="checkbox"
-                id="M"
-                defaultChecked={search.daysOff?.includes("M")}
-                className="h-4 w-4"
-              />
-            </Field>
-            <Field orientation="horizontal">
-              <FieldLabel htmlFor="T">T</FieldLabel>
-              <Input
-                name="day"
-                value="T"
-                type="checkbox"
-                id="T"
-                defaultChecked={search.daysOff?.includes("T")}
-                className="h-4 w-4"
-              />
-            </Field>
-            <Field orientation="horizontal">
-              <FieldLabel htmlFor="W">W</FieldLabel>
-              <Input
-                name="day"
-                value="W"
-                type="checkbox"
-                id="W"
-                defaultChecked={search.daysOff?.includes("W")}
-                className="h-4 w-4"
-              />
-            </Field>
-            <Field orientation="horizontal">
-              <FieldLabel htmlFor="R">R</FieldLabel>
-              <Input
-                name="day"
-                value="R"
-                type="checkbox"
-                id="R"
-                defaultChecked={search.daysOff?.includes("R")}
-                className="h-4 w-4"
-              />
-            </Field>
-            <Field orientation="horizontal">
-              <FieldLabel htmlFor="F">F</FieldLabel>
-              <Input
-                name="day"
-                value="F"
-                type="checkbox"
-                id="F"
-                defaultChecked={search.daysOff?.includes("F")}
-                className="h-4 w-4"
-              />
-            </Field>
+          <div className="flex flex-wrap items-center gap-3">
+            {["M", "T", "W", "R", "F"].map((day) => (
+              <Label key={day} htmlFor={day}>
+                <span>{day}</span>
+                <input
+                  name="day"
+                  value={day}
+                  type="checkbox"
+                  id={day}
+                  defaultChecked={search.daysOff?.includes(day)}
+                  className="accent-primary h-4 w-4"
+                />
+              </Label>
+            ))}
           </div>
         </FieldGroup>
 
