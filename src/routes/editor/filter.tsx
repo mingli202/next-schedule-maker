@@ -160,7 +160,7 @@ function RouteComponent() {
           </datalist>
         </Field>
 
-        <Field>
+        <Field className="gap-2">
           <FieldLabel htmlFor="code">Code</FieldLabel>
           <Input
             name="code"
@@ -186,7 +186,7 @@ function RouteComponent() {
           </datalist>
         </Field>
 
-        <Field>
+        <Field className="gap-2">
           <FieldLabel htmlFor="title">Title</FieldLabel>
           <Input
             name="title"
@@ -213,7 +213,7 @@ function RouteComponent() {
           </datalist>
         </Field>
 
-        <Field>
+        <Field className="gap-2">
           <FieldLabel htmlFor="prof">Teacher</FieldLabel>
           <Input
             name="prof"
@@ -241,8 +241,8 @@ function RouteComponent() {
           </datalist>
         </Field>
 
-        <FieldGroup className="grid w-full grid-cols-2">
-          <Field>
+        <FieldGroup className="grid w-full grid-cols-2 gap-4">
+          <Field className="gap-2">
             <FieldLabel htmlFor="ratingMin">Min rating</FieldLabel>
             <Input
               name="ratingMin"
@@ -256,7 +256,7 @@ function RouteComponent() {
               autoComplete="off"
             />
           </Field>
-          <Field>
+          <Field className="gap-2">
             <FieldLabel htmlFor="ratingMax">Max rating</FieldLabel>
             <Input
               name="ratingMax"
@@ -270,7 +270,7 @@ function RouteComponent() {
               autoComplete="off"
             />
           </Field>
-          <Field>
+          <Field className="gap-2">
             <FieldLabel htmlFor="scoreMin">Min score</FieldLabel>
             <Input
               name="scoreMin"
@@ -284,7 +284,7 @@ function RouteComponent() {
               autoComplete="off"
             />
           </Field>
-          <Field>
+          <Field className="gap-2">
             <FieldLabel htmlFor="scoreMax">Max score</FieldLabel>
             <Input
               name="scoreMax"
