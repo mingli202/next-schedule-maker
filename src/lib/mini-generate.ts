@@ -2,7 +2,6 @@ import type { SectionResponse } from "@/client";
 import type { SavedSection } from "@/types/schedule";
 import { getNextAvailableColorIndex } from "./colors";
 import isValidAdditionToSchedule from "./schedule/isValidAdditionToSchedule";
-import { getSectionFromSortedListWithId } from "./utils";
 
 const prefix = {
   french: "602",
@@ -22,9 +21,9 @@ const programs = [
   ...Array(2).fill("visual"),
 ];
 
-function miniGenerate(allSections: SectionResponse[]) {
+function miniGenerate(sectionsById: Map<number, SectionResponse>) {
   const allCodes = Object.fromEntries(
-    Object.entries(prefix).map(([n, p]) => [n, getCodes(allSections, p)]),
+    Object.entries(prefix).map(([n, p]) => [n, getCodes(sectionsById, p)]),
   );
 
   const program = programs[Math.floor(Math.random() * programs.length)];
@@ -52,13 +51,13 @@ function miniGenerate(allSections: SectionResponse[]) {
 
   const codes = [...coreCodes, ...g];
 
-  return generate(codes, allSections);
+  return generate(codes, sectionsById);
 }
 
-function getCodes(allSections: SectionResponse[], prefix = "") {
+function getCodes(sectionsById: Map<number, SectionResponse>, prefix = "") {
   return [
     ...new Set(
-      allSections
+      Array.from(sectionsById.values())
         .filter(
           (d) =>
             (d.code.startsWith(prefix) || d.course.startsWith(prefix)) &&
@@ -69,8 +68,8 @@ function getCodes(allSections: SectionResponse[], prefix = "") {
   ];
 }
 
-function generate(codes: string[], allSections: SectionResponse[]) {
-  const sections = allSections.filter((section) =>
+function generate(codes: string[], sectionsById: Map<number, SectionResponse>) {
+  const sections = Array.from(sectionsById.values()).filter((section) =>
     codes.includes(section.code),
   );
 
@@ -80,10 +79,10 @@ function generate(codes: string[], allSections: SectionResponse[]) {
     const sectionsForCode = sections.filter((section) => section.code === code);
 
     const schedule = toReturn.map((section) => {
-      const s = getSectionFromSortedListWithId(section.sectionId, allSections);
+      const s = sectionsById.get(section.sectionId);
 
       if (!s) {
-        console.log(allSections);
+        console.log(sectionsById);
         throw new Error(`Could not find section ${section.sectionId}`);
       }
 

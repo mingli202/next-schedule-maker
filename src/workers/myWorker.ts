@@ -24,7 +24,7 @@ function messageHandler(
         return;
       }
 
-      const sch = miniGenerate(Array.from(sectionStore.sectionsById.values()));
+      const sch = miniGenerate(sectionStore.sectionsById);
 
       return {
         schedule: sch,
