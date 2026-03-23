@@ -298,6 +298,34 @@ function RouteComponent() {
               autoComplete="off"
             />
           </Field>
+
+          <Field className="gap-2">
+            <FieldLabel htmlFor="timeStart">Start Time</FieldLabel>
+            <Input
+              type="time"
+              id="timeStart"
+              min="08:00"
+              max="18:00"
+              step={`${60 * 30}`}
+              placeholder="08:00"
+              autoComplete="off"
+              defaultValue={search.timeStart}
+            />
+          </Field>
+
+          <Field className="gap-2">
+            <FieldLabel htmlFor="timeEnd">End Time</FieldLabel>
+            <Input
+              type="time"
+              id="timeEnd"
+              min="08:00"
+              max="18:00"
+              step={`${60 * 30}`}
+              placeholder="18:00"
+              autoComplete="off"
+              defaultValue={search.timeEnd}
+            />
+          </Field>
         </FieldGroup>
 
         <FieldGroup className="gap-2">
@@ -318,41 +346,6 @@ function RouteComponent() {
             ))}
           </div>
         </FieldGroup>
-
-        <div className="group bg-bg-secondary hover:bg-secondary rounded-md p-2 transition">
-          <h2 className="font-bold">Time Range</h2>
-          <div className="flex items-center gap-4">
-            <label htmlFor="timeMin">
-              <input
-                name="time"
-                id="timeMin"
-                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
-                type="time"
-                min="08:00"
-                max="18:00"
-                step={`${60 * 30}`}
-                placeholder="08:00"
-                autoComplete="off"
-                defaultValue={search.timeStart}
-              />
-            </label>
-            to
-            <label htmlFor="timeMax">
-              <input
-                name="time"
-                id="timeMax"
-                className="bg-background group-hover:bg-bg-secondary rounded-md p-2 transition outline-none"
-                type="time"
-                min="08:00"
-                max="18:00"
-                step={`${60 * 30}`}
-                placeholder="18:00"
-                autoComplete="off"
-                defaultValue={search.timeEnd}
-              />
-            </label>
-          </div>
-        </div>
 
         <div>
           <p className="text-center">
