@@ -11,7 +11,7 @@ import {
   Settings,
   Star,
 } from "lucide-react";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
@@ -45,9 +45,11 @@ export function SearchResult() {
   });
 
   const [results, setResults] = useState<SectionResponse[]>([]);
+  const isFirstLoading = useRef(true);
 
   useEffect(() => {
     const unsub = onWorkerMessage<"search">((e) => {
+      isFirstLoading.current = false;
       setResults(e.data.sections);
     });
 
@@ -65,6 +67,10 @@ export function SearchResult() {
       },
     });
   }, [search]);
+
+  if (isFirstLoading.current) {
+    return null;
+  }
 
   return <Result sections={results} />;
 }
