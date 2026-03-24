@@ -210,7 +210,6 @@ export class Iter<T> implements Iterable<T> {
    * */
   public flatMap<U>(f: (val: T, index: number) => Iterable<U>): Iter<U> {
     const source = this;
-
     return new Iter(function* () {
       let index = 0;
       for (const val of source) {
