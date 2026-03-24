@@ -83,15 +83,44 @@ function RouteComponent() {
       const domain = formData.get("domain")?.toString();
       const code = formData.get("code")?.toString();
       const title = formData.get("title")?.toString();
+      const prof = formData.get("prof")?.toString();
+      const ratingMin = parseIntOrUndefined(
+        formData.get("ratingMin")?.toString() ?? "",
+      );
+      const ratingMax = parseIntOrUndefined(
+        formData.get("ratingMax")?.toString() ?? "",
+      );
+      const scoreMin = parseIntOrUndefined(
+        formData.get("scoreMin")?.toString() ?? "",
+      );
+      const scoreMax = parseIntOrUndefined(
+        formData.get("scoreMax")?.toString() ?? "",
+      );
+      const timeStart = formData.get("timeStart")?.toString();
+      const timeEnd = formData.get("timeEnd")?.toString();
+      const daysOff = formData.getAll("day").join("");
+      const honours = formData.get("honours")?.toString() === "on";
+      const blended = formData.get("blended")?.toString() === "on";
 
       navigate({
         to: "/editor/search",
         search: (prev) => ({
           ...prev,
-          course,
-          domain,
-          code,
-          title,
+          course: !course || course.trim() === "" ? undefined : course,
+          domain: !domain || domain.trim() === "" ? undefined : domain,
+          code: !code || code.trim() === "" ? undefined : code,
+          title: !title || title.trim() === "" ? undefined : title,
+          prof: !prof || prof.trim() === "" ? undefined : prof,
+          ratingMin,
+          ratingMax,
+          scoreMin,
+          scoreMax,
+          timeStart:
+            !timeStart || timeStart.trim() === "" ? undefined : timeStart,
+          timeEnd: !timeEnd || timeEnd.trim() === "" ? undefined : timeEnd,
+          daysOff: !daysOff || daysOff.trim() === "" ? undefined : daysOff,
+          honours: honours ? true : undefined,
+          blended: blended ? true : undefined,
         }),
       });
     },
@@ -99,7 +128,7 @@ function RouteComponent() {
   );
 
   return (
-    <div className="flex-1 overflow-x-hidden overflow-y-auto p-4">
+    <div className="flex-1 overflow-x-hidden overflow-y-auto p-4 pb-0">
       <form
         className="relative flex w-full flex-col gap-4"
         onSubmit={handleSubmit}
@@ -221,7 +250,7 @@ function RouteComponent() {
             placeholder="e.g. Patrick Burger"
             list="d"
             autoComplete="off"
-            defaultValue={search.prof ?? ""}
+            defaultValue={search.prof}
             type="text"
           />
           <datalist id="d">
@@ -347,55 +376,47 @@ function RouteComponent() {
           </div>
         </FieldGroup>
 
-        <div>
-          <p className="text-center">
-            Narrow search results by specifying what you want. Leaving an entry
-            blank will not filter for that entry.
-          </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <Label htmlFor="honours">
+            <span>Honours</span>
+            <input
+              name="honours"
+              type="checkbox"
+              id="honours"
+              defaultChecked={search.honours}
+              className="accent-primary h-4 w-4"
+            />
+          </Label>
+          <Label htmlFor="blended">
+            <span>Blended</span>
+            <input
+              name="blended"
+              type="checkbox"
+              id="blended"
+              defaultChecked={search.blended}
+              className="accent-primary h-4 w-4"
+            />
+          </Label>
         </div>
 
-        <div className="flex justify-end gap-2 p-2">
+        <div className="bg-background sticky bottom-0 flex justify-end gap-2 pb-4">
           <Button
             variant="basic"
             type="reset"
             onClick={() => {
-              const url = new URL(window.location.href);
-
-              [
-                "prof",
-                "rating",
-                "score",
-                "code",
-                "time",
-                "title",
-                "course",
-                "day",
-              ].forEach((query) => {
-                url.searchParams.delete(query);
-              });
-
-              [
-                "M",
-                "T",
-                "W",
-                "R",
-                "F",
-                "prof",
-                "timeMin",
-                "timeMax",
-                "scoreMin",
-                "scoreMax",
-                "ratingMin",
-                "ratingMax",
-              ].forEach((id) => {
-                const el = document.getElementById(id) as HTMLInputElement;
-                el.defaultChecked = false;
-                el.defaultValue = "";
+              navigate({
+                to: ".",
+                search: (prev) => ({
+                  sections: prev.sections,
+                  previewSectionId: prev.previewSectionId,
+                  activeSearch: prev.activeSearch,
+                  excludeInvalid: prev.excludeInvalid,
+                }),
               });
 
               setCourse("");
-              setCode("");
               setTitle("");
+              setCode("");
             }}
           >
             Clear
@@ -409,3 +430,8 @@ function RouteComponent() {
     </div>
   );
 }
+
+const parseIntOrUndefined = (n: string) => {
+  const num = parseInt(n, 10);
+  return Number.isNaN(num) ? undefined : num;
+};
