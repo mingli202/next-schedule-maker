@@ -417,6 +417,7 @@ function RouteComponent() {
               });
 
               setCourse("");
+              setDomain("");
               setTitle("");
               setCode("");
             }}
