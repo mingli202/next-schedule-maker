@@ -430,7 +430,7 @@ given("an iter", () => {
   });
 });
 
-test("test whether consume or not", () => {
+test("test whether iterator is consumed or not after collect", () => {
   const it1 = Iter.from([1, 2, 3, 4]);
   const arr1 = it1.collect();
   const it2 = it1.map((v) => v * 2);
