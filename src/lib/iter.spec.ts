@@ -1,4 +1,4 @@
-import { expect } from "bun:test";
+import { expect, test } from "bun:test";
 import { Iter } from "./iter";
 import { none, some } from "./option";
 import { given, then, when } from "./test-util";
@@ -398,4 +398,63 @@ given("an iter", () => {
       expect(iter.collect()).toStrictEqual([]);
     });
   });
+
+  when("flatten() is called", () => {
+    then("should flatten by one level nested structures", () => {
+      const iter = Iter.from([
+        [1, 2, 3],
+        [4, 5, 6],
+        [1, 2, 3],
+      ]).flatten();
+
+      expect(iter.collect()).toStrictEqual([1, 2, 3, 4, 5, 6, 1, 2, 3]);
+    });
+
+    then("should flatten by one level nested structures", () => {
+      const iter = Iter.from([[[1, 2, 3]], [[4, 5, 6]], [[1, 2, 3]]]).flatten();
+
+      expect(iter.collect()).toStrictEqual([
+        [1, 2, 3],
+        [4, 5, 6],
+        [1, 2, 3],
+      ]);
+    });
+  });
+
+  when("flatMap() is called", () => {
+    then("should map and flatten by one level", () => {
+      const iter = Iter.from([1, 2, 3, 4, 5]).flatMap((val) => [val, val * 2]);
+
+      expect(iter.collect()).toStrictEqual([1, 2, 2, 4, 3, 6, 4, 8, 5, 10]);
+    });
+  });
+});
+
+test("test whether iterator is consumed or not after collect", () => {
+  const it1 = Iter.from([1, 2, 3, 4]);
+  const arr1 = it1.collect();
+  const it2 = it1.map((v) => v * 2);
+  const arr2 = it2.collect();
+  const it3 = it1.filter((v) => v % 2 === 0);
+  const arr3 = it3.collect();
+
+  expect(arr1).toStrictEqual([1, 2, 3, 4]);
+  expect(arr2).toStrictEqual([2, 4, 6, 8]);
+  expect(arr3).toStrictEqual([2, 4]);
+});
+
+test("collect exhausts when source is a single-use iterator", () => {
+  const map = new Map([
+    ["a", 1],
+    ["b", 2],
+    ["c", 3],
+  ]);
+  const values = map.values(); // Map iterator is single-use
+  const iter = Iter.from(values);
+
+  const first = iter.collect();
+  const second = iter.collect();
+
+  expect(first).toStrictEqual([1, 2, 3]);
+  expect(second).toStrictEqual([]);
 });

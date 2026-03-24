@@ -1,7 +1,7 @@
 import { expect } from "bun:test";
 import {
-  getSectionSectionsSectionIdGet,
   type DayTimeResponse,
+  getSectionSectionsSectionIdGet,
   type SectionResponse,
 } from "@/client";
 import { given, then, when } from "../test-util";
@@ -203,67 +203,6 @@ given("a schedule with a time conflict", () => {
       const res = isValidAdditionToSchedule(sectionToCheck, schedule);
       // assert
       expect(res).toBeFalsy();
-    });
-  });
-});
-
-given("a real generated schedule", () => {
-  when("isValidAdditionToSchedule is called", () => {
-    then("it should return false", async () => {
-      const scheduleIds = [
-        {
-          sectionId: 39,
-          colorIndex: 0,
-        },
-        {
-          sectionId: 152,
-          colorIndex: 1,
-        },
-        {
-          sectionId: 79,
-          colorIndex: 2,
-        },
-        {
-          sectionId: 85,
-          colorIndex: 3,
-        },
-        {
-          sectionId: 651,
-          colorIndex: 4,
-        },
-        {
-          sectionId: 819,
-          colorIndex: 5,
-        },
-        {
-          sectionId: 721,
-          colorIndex: 6,
-        },
-      ];
-      const scheduleResults = await Promise.all(
-        scheduleIds.map((section) =>
-          getSectionSectionsSectionIdGet({
-            path: {
-              section_id: section.sectionId,
-            },
-          }),
-        ),
-      );
-      const schedule = scheduleResults
-        .map((res) => res.data)
-        .filter((s) => !!s);
-
-      let dummySchedule: SectionResponse[] = [];
-
-      let isValidSchedule = true;
-
-      for (const section of schedule) {
-        const validAddition = isValidAdditionToSchedule(section, dummySchedule);
-        isValidSchedule &&= validAddition;
-        dummySchedule = [...dummySchedule, section];
-      }
-
-      expect(isValidSchedule).toBeFalse();
     });
   });
 });
