@@ -84,16 +84,16 @@ function RouteComponent() {
       const code = formData.get("code")?.toString();
       const title = formData.get("title")?.toString();
       const prof = formData.get("prof")?.toString();
-      const ratingMin = parseIntOrUndefined(
+      const ratingMin = parseNumberOrUndefined(
         formData.get("ratingMin")?.toString() ?? "",
       );
-      const ratingMax = parseIntOrUndefined(
+      const ratingMax = parseNumberOrUndefined(
         formData.get("ratingMax")?.toString() ?? "",
       );
-      const scoreMin = parseIntOrUndefined(
+      const scoreMin = parseNumberOrUndefined(
         formData.get("scoreMin")?.toString() ?? "",
       );
-      const scoreMax = parseIntOrUndefined(
+      const scoreMax = parseNumberOrUndefined(
         formData.get("scoreMax")?.toString() ?? "",
       );
       const timeStart = formData.get("timeStart")?.toString();
@@ -306,8 +306,8 @@ function RouteComponent() {
               id="scoreMin"
               type="number"
               min={0}
-              max={5}
-              step={0.1}
+              max={100}
+              step={1}
               placeholder="0"
               defaultValue={search.scoreMin}
               autoComplete="off"
@@ -320,8 +320,8 @@ function RouteComponent() {
               id="scoreMax"
               type="number"
               min={0}
-              max={5}
-              step={0.1}
+              max={100}
+              step={1}
               placeholder="5"
               defaultValue={search.scoreMax}
               autoComplete="off"
@@ -433,7 +433,11 @@ function RouteComponent() {
   );
 }
 
-const parseIntOrUndefined = (n: string) => {
-  const num = parseInt(n, 10);
-  return Number.isNaN(num) ? undefined : num;
+const parseNumberOrUndefined = (n: string) => {
+  try {
+    const num = Number(n);
+    return Number.isNaN(num) ? undefined : num;
+  } catch {
+    return undefined;
+  }
 };
