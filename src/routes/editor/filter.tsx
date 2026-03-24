@@ -333,6 +333,7 @@ function RouteComponent() {
             <Input
               type="time"
               id="timeStart"
+              name="timeStart"
               min="08:00"
               max="18:00"
               step={`${60 * 30}`}
@@ -347,6 +348,7 @@ function RouteComponent() {
             <Input
               type="time"
               id="timeEnd"
+              name="timeEnd"
               min="08:00"
               max="18:00"
               step={`${60 * 30}`}
