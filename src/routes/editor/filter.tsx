@@ -322,7 +322,7 @@ function RouteComponent() {
               min={0}
               max={100}
               step={1}
-              placeholder="5"
+              placeholder="100"
               defaultValue={search.scoreMax}
               autoComplete="off"
             />
@@ -434,6 +434,10 @@ function RouteComponent() {
 }
 
 const parseNumberOrUndefined = (n: string) => {
+  if (n.trim() === "") {
+    return undefined;
+  }
+
   try {
     const num = Number(n);
     return Number.isNaN(num) ? undefined : num;
