@@ -1,18 +1,12 @@
-"use client";
-
-// import { motion } from "framer-motion";
-import generate from "./generate";
-import { Code, SharedCurrentClasses } from "@/types";
-import { useContext } from "react";
-import { ScheduleClassesContext } from "../../ScheduleContext";
+import { useSearch } from "@tanstack/react-router";
+import type { Code } from "src/types/autobuild";
+import type { SavedSection } from "src/types/schedule";
 import PageLoading from "@/components/PageLoading";
+import generate from "./generate";
 
 type Props = {
-  setGeneratedSchedules: React.Dispatch<
-    React.SetStateAction<SharedCurrentClasses[][]>
-  >;
+  setGeneratedSchedules: React.Dispatch<React.SetStateAction<SavedSection[][]>>;
   codes: Code[];
-  colors: string[];
   setIsBuilding: React.Dispatch<
     React.SetStateAction<"form" | "building" | "complete">
   >;
@@ -24,15 +18,17 @@ type Props = {
 function Loader({
   setGeneratedSchedules,
   codes,
-  colors,
   setIsBuilding,
   useCurrent,
   dayOff,
   time,
 }: Props) {
-  const currentClasses = useContext(ScheduleClassesContext);
+  const sections = useSearch({
+    from: "/editor/autobuild",
+    select: (s) => s.sections,
+  });
 
-  generate(codes, currentClasses, colors, useCurrent, dayOff, time)
+  generate(codes, sections, useCurrent, dayOff, time)
     .then((res) => {
       setGeneratedSchedules(res);
       setIsBuilding("complete");
