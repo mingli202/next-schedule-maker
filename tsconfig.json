@@ -7,11 +7,11 @@
     "vite.config.js"
   ],
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "es2023",
     "jsx": "react-jsx",
     "module": "ESNext",
     "lib": [
-      "ES2022",
+      "es2023",
       "DOM",
       "DOM.Iterable"
     ],
