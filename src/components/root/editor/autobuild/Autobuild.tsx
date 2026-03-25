@@ -1,19 +1,13 @@
-"use client";
-
-import { Class, Code, SharedCurrentClasses } from "@/types";
 import { useState } from "react";
-import Form from "./Form";
+import { useSessionStorage } from "src/hooks";
+import type { Code } from "src/types/autobuild";
+import type { SavedSection } from "src/types/schedule";
 import { Button } from "@/components";
+import Form from "./Form";
 import Loader from "./Loader";
 import Results from "./Results";
-import useSessionStorage from "./useSessionStorage";
 
-type Props = {
-  allClasses: Record<string, Class>;
-  colors: string[];
-};
-
-function Autobuild({ allClasses, colors }: Props) {
+function Autobuild() {
   const [isBuilding, setIsBuilding] = useState<
     "form" | "building" | "complete"
   >("form");
@@ -27,7 +21,7 @@ function Autobuild({ allClasses, colors }: Props) {
   );
 
   const [generatedSchedules, setGeneratedSchedules] = useState<
-    SharedCurrentClasses[][]
+    SavedSection[][]
   >([]);
 
   return (
@@ -75,7 +69,7 @@ function Autobuild({ allClasses, colors }: Props) {
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-1 [&_*]:outline-none">
+            <div className="flex flex-wrap gap-1 **:outline-none">
               <p>Time range: </p>
               <label className="flex gap-1" htmlFor="from">
                 <input
@@ -117,15 +111,10 @@ function Autobuild({ allClasses, colors }: Props) {
             </div>
 
             <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2">
-              <Form
-                allClasses={allClasses}
-                codes={codes}
-                setCodes={setCodes}
-                useCurrent={useCurrent}
-              />
+              <Form codes={codes} setCodes={setCodes} useCurrent={useCurrent} />
             </div>
           </div>
-          <div className="bg-background relative bottom-0 z-[5] flex items-center justify-center">
+          <div className="bg-background relative bottom-0 z-5 flex items-center justify-center">
             <Button
               variant="special"
               className="w-fit"
@@ -139,7 +128,6 @@ function Autobuild({ allClasses, colors }: Props) {
       {isBuilding === "building" && (
         <Loader
           setGeneratedSchedules={setGeneratedSchedules}
-          colors={colors}
           codes={codes}
           setIsBuilding={setIsBuilding}
           useCurrent={useCurrent}
@@ -152,7 +140,6 @@ function Autobuild({ allClasses, colors }: Props) {
           <Results
             setIsBuilding={setIsBuilding}
             generatedSchedules={generatedSchedules}
-            allClasses={allClasses}
           />
 
           <div className="bg-background z-10 flex w-full items-center justify-center max-md:order-first">
