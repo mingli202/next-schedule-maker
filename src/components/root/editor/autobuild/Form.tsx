@@ -1,28 +1,34 @@
-"use client";
-
-import { Class, Code } from "@/types";
+import { useSearch } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
+import { useMemo, useRef } from "react";
+import { useSectionStore } from "src/lib/store/section";
+import type { Code } from "src/types/autobuild";
 import Button from "@/components/Button";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useMemo, useRef } from "react";
-import { ScheduleClassesContext } from "../../ScheduleContext";
 
 type Props = {
-  allClasses: Record<string, Class>;
   codes: Code[];
   setCodes: (u: Code[]) => void;
   useCurrent: boolean;
 };
 
-function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
+function Form({ codes, setCodes, useCurrent }: Props) {
   const ref = useRef<HTMLFormElement>(null);
-  const currentClasses = useContext(ScheduleClassesContext);
-  const currentCodes = currentClasses.map((cl) => allClasses[cl.id].code);
+
+  const { sectionsById } = useSectionStore();
+
+  const currentSections = useSearch({
+    from: "/editor/autobuild",
+    select: (s) => s.sections,
+  });
+
+  const currentCodes = currentSections
+    .map((cl) => sectionsById.get(cl.sectionId)?.code)
+    .filter((s) => s !== undefined);
 
   const codesDatalist = useMemo(
     () => [
       ...new Set(
-        Object.values(allClasses)
+        Array.from(sectionsById.values())
           .map((cl) => cl.code)
           .filter(
             (code) =>
@@ -31,11 +37,14 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
           ),
       ),
     ],
-    [allClasses, codes, currentCodes, useCurrent],
+    [sectionsById, codes, currentCodes, useCurrent],
   );
 
   function action(formdata: FormData) {
-    ref.current!.reset();
+    if (!ref.current) {
+      return;
+    }
+    ref.current.reset();
 
     const newInput = formdata.get("extraCode");
     if (!newInput) return;
@@ -51,7 +60,7 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
 
   function openDialog(code: string, type: string) {
     const dialog = document.getElementById(
-      type + "dialog" + code,
+      `${type}dialog${code}`,
     )! as HTMLDivElement;
     dialog.style.display = "flex";
 
@@ -68,12 +77,16 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
   return (
     <>
       {codes.map((code) => {
-        const classes = Object.values(allClasses).filter(
+        const classes = Array.from(sectionsById.values()).filter(
           (cl) => cl.code === code.code,
         );
 
         const professors = [
-          ...new Set(classes.map((cl) => cl.lecture?.prof ?? "")),
+          ...new Set(
+            classes.flatMap((section) =>
+              section.leclabs.map((leclab) => leclab.prof),
+            ),
+          ),
         ]
           .toSorted()
           .filter((p) => p !== "");
@@ -81,7 +94,7 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
         return (
           <div
             key={code.code}
-            className="bg-bg-secondary hover:bg-secondary flex flex-col rounded-md p-2 transition [&_*]:outline-none"
+            className="bg-bg-secondary hover:bg-secondary flex flex-col rounded-md p-2 transition **:outline-none"
           >
             <div className="flex items-center justify-between">
               <p className="font-bold">{code.code}</p>
@@ -317,13 +330,13 @@ function Form({ allClasses, codes, setCodes, useCurrent }: Props) {
             list="codes"
           />
           <datalist id="codes">
-            {codesDatalist.map((code, i) => (
-              <option value={code} key={`${code}${i}`} />
+            {codesDatalist.map((code) => (
+              <option value={code} key={`${code}`} />
             ))}
           </datalist>
         </label>
         <Button className="w-4 shrink-0 p-0" variant="basic" type="submit">
-          <FontAwesomeIcon icon={faPlusCircle} className="w-4" />
+          <Plus className="w-4" />
         </Button>
       </form>
     </>
