@@ -34,7 +34,10 @@ const filterByProfessor = (iter: Iter<SectionResponse>, prof: string) =>
  * leclab.rating.status is not found or
  * leclab.avg is less than the minRating allowed
  * */
-const filterByMinRating = (iter: Iter<SectionResponse>, minRating: number) =>
+export const filterByMinRating = (
+  iter: Iter<SectionResponse>,
+  minRating: number,
+) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
@@ -53,7 +56,10 @@ const filterByMinRating = (iter: Iter<SectionResponse>, minRating: number) =>
  * leclab.rating.status is not found or
  * leclab.avg is more than the maxRating allowed
  * */
-const filterByMaxRating = (iter: Iter<SectionResponse>, maxRating: number) =>
+export const filterByMaxRating = (
+  iter: Iter<SectionResponse>,
+  maxRating: number,
+) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
@@ -117,7 +123,10 @@ const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
  * there exist a dayTime such that
  * dayTime.startTimeHhmm is less than the given timeStart
  * */
-const filterByTimeStart = (iter: Iter<SectionResponse>, timeStart: string) => {
+export const filterByTimeStart = (
+  iter: Iter<SectionResponse>,
+  timeStart: string,
+) => {
   const normalized = normalizeTime(timeStart);
   if (!normalized) return iter;
 
@@ -136,7 +145,10 @@ const filterByTimeStart = (iter: Iter<SectionResponse>, timeStart: string) => {
  * there exist a dayTime such that
  * dayTime.endTimeHhmm is more than the given timeEnd
  * */
-const filterByTimeEnd = (iter: Iter<SectionResponse>, timeEnd: string) => {
+export const filterByTimeEnd = (
+  iter: Iter<SectionResponse>,
+  timeEnd: string,
+) => {
   const normalized = normalizeTime(timeEnd);
   if (!normalized) return iter;
 
@@ -191,7 +203,7 @@ const filterByDomain = (iter: Iter<SectionResponse>, domain: string) =>
  * there exist a dayTime such that
  * any day dayTime.day is in daysOff
  * */
-const filterByDaysOff = (iter: Iter<SectionResponse>, daysOff: string) =>
+export const filterByDaysOff = (iter: Iter<SectionResponse>, daysOff: string) =>
   iter.filter(
     (section) =>
       !section.leclabs.some((leclab) =>
