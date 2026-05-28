@@ -27,6 +27,21 @@ const filterByProfessor = (iter: Iter<SectionResponse>, prof: string) =>
       );
 
 /**
+ * Section where there exsist one leclab.prof that includes the given prof
+ * */
+export const filterByProfessors = (
+  iter: Iter<SectionResponse>,
+  profs: string[],
+) =>
+  profs.length === 0
+    ? iter
+    : iter.filter((section) =>
+        section.leclabs.some((leclab) =>
+          profs.some((prof) => includes(leclab.prof, prof)),
+        ),
+      );
+
+/**
  * Section where every prof of every leclab has a higher avg than minRating
  *
  * Section where there does not exist a leclab such that
