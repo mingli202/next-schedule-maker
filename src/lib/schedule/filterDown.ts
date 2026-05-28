@@ -93,7 +93,10 @@ export const filterByMaxRating = (
  * leclab.rating.status is not found or
  * leclab.score is less than the minScore allowed
  * */
-const filterByMinScore = (iter: Iter<SectionResponse>, minScore: number) =>
+export const filterByMinScore = (
+  iter: Iter<SectionResponse>,
+  minScore: number,
+) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
@@ -112,7 +115,10 @@ const filterByMinScore = (iter: Iter<SectionResponse>, minScore: number) =>
  * leclab.rating.status is not found or
  * leclab.score is more than the maxScore allowed
  * */
-const filterByMaxScore = (iter: Iter<SectionResponse>, maxScore: number) =>
+export const filterByMaxScore = (
+  iter: Iter<SectionResponse>,
+  maxScore: number,
+) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
