@@ -15,7 +15,7 @@ import type { SectionStore } from "src/types";
 import type { Code } from "src/types/autobuild";
 import type { SavedSection } from "src/types/schedule";
 
-async function generate(
+export default async function generate(
   codes: Code[],
   currentSections: SavedSection[],
   useCurrent: boolean,
@@ -94,5 +94,3 @@ async function generate(
       s.length === codes.length + currentSections.length * (useCurrent ? 1 : 0),
   );
 }
-
-export default generate;
