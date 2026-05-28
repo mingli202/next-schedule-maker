@@ -1,42 +1,19 @@
-"use client";
-
-import { Class, Saved, SharedCurrentClasses } from "@/types";
+import { ChevronRight } from "lucide-react";
+import { Fragment, useRef } from "react";
+import { getColorFromIndex } from "src/lib/colors";
+import { useSectionStore } from "src/lib/store/section";
+import { cn } from "src/lib/utils";
+import type { SavedSection } from "src/types/schedule";
 import Button from "@/components/Button";
-import { faChevronRight, faDownload } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Dispatch,
-  Fragment,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
-import { ScheduleDispatchContext } from "../../ScheduleContext";
-import { app, db } from "@/backend";
-import { push, ref, set } from "firebase/database";
-import { getAuth } from "firebase/auth";
-import cn from "@/lib/cn";
 
 type Props = {
-  schedule: SharedCurrentClasses[];
-  allClasses: Record<string, Class>;
-  scroll: number;
-  setOver: Dispatch<SetStateAction<number>>;
+  schedule: SavedSection[];
   index: number;
 };
 
-function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
-  const dispatch = useContext(ScheduleDispatchContext);
+function Schedule({ schedule, index }: Props) {
   const divRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const bounds = divRef.current!.getBoundingClientRect();
-
-    if (bounds.bottom <= 0) {
-      setOver(index);
-    }
-  }, [index, setOver, scroll]);
+  const { sectionsById } = useSectionStore();
 
   return (
     <div
@@ -46,22 +23,26 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
       )}
       ref={divRef}
     >
-      <div className="bg-slate grid h-[10rem] w-full grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md">
-        {schedule.map(({ id, bgColor, textColor }, index) => {
-          if (!Object.hasOwn(allClasses, id)) {
+      <div className="bg-slate grid h-40 w-full grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md">
+        {schedule.map(({ sectionId, colorIndex }, index) => {
+          const section = sectionsById.get(sectionId);
+
+          if (!section) {
             return null;
           }
 
-          const cl = allClasses[id];
+          const { textColor, bgColor } = getColorFromIndex(colorIndex);
 
           return (
-            <Fragment key={id + `${index}` + cl.code + cl.section}>
-              {cl.viewData.map((c, i) => {
+            <Fragment
+              key={`${sectionId}${index}${section.code}${section.section}`}
+            >
+              {section.viewData.map((c, i) => {
                 const [day, [start, end]] = Object.entries(c)[0];
 
                 return (
                   <div
-                    key={day + cl.code + cl.section + `${i}`}
+                    key={`${day + section.code + section.section}${i}`}
                     style={{
                       backgroundColor: bgColor,
                       color: textColor,
@@ -81,16 +62,20 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
       </div>
 
       <div>
-        {schedule.map(({ bgColor, id, textColor }, i) => {
-          if (!Object.hasOwn(allClasses, id)) {
+        {schedule.map(({ sectionId, colorIndex }, i) => {
+          const section = sectionsById.get(sectionId);
+
+          if (!section) {
             return null;
           }
 
-          const { section, code, lecture } = allClasses[id];
+          const { textColor, bgColor } = getColorFromIndex(colorIndex);
+
+          const leclab = section.leclabs.find((leclab) => leclab.prof !== "");
 
           return (
             <div
-              key={bgColor + `${i}`}
+              key={`${bgColor}${i.toString()}`}
               className="flex items-center gap-2 text-sm"
             >
               <div
@@ -101,10 +86,10 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
               </div>
               <div>
                 <p className="font-bold">
-                  {code} {lecture?.title}
+                  {section.code} {section.title}
                 </p>
                 <p>
-                  {section} {lecture?.prof}
+                  {section.section} {leclab?.prof}
                 </p>
               </div>
             </div>
@@ -114,46 +99,10 @@ function Schedule({ schedule, allClasses, scroll, setOver, index }: Props) {
       <div className="col-span-full flex items-center justify-between">
         <span className="ml-1">{index + 1}</span>
         <div className="flex">
-          <Button
-            variant="basic"
-            className="w-fit"
-            onClick={async function () {
-              const user = getAuth(app).currentUser;
+          <Button variant="basic" className="w-fit"></Button>
 
-              const newSchedule: Saved = {
-                data: schedule,
-                name: `Generated ${index + 1}`,
-                semester: "winter2026",
-              } as const;
-
-              if (!user) {
-                const savedSchedules = JSON.parse(
-                  localStorage.getItem("savedScheduleswinter2026") ?? "{}",
-                );
-                savedSchedules[Math.random().toString()] = newSchedule;
-                localStorage.setItem(
-                  "savedScheduleswinter2026",
-                  JSON.stringify(savedSchedules),
-                );
-
-                return;
-              }
-
-              await set(
-                push(ref(db, `/users/${user.uid}/schedules`)),
-                newSchedule,
-              ).catch((err) => console.log(err));
-            }}
-          >
-            <FontAwesomeIcon icon={faDownload} className="h-4" />
-          </Button>
-
-          <Button
-            variant="basic"
-            className="w-fit"
-            onClick={() => dispatch({ type: "set", schedule })}
-          >
-            <FontAwesomeIcon icon={faChevronRight} className="h-4" />
+          <Button variant="basic" className="w-fit">
+            <ChevronRight />
           </Button>
         </div>
       </div>

@@ -1,48 +1,29 @@
-"use client";
-
-import { Class, SharedCurrentClasses } from "@/types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import type { SavedSection } from "src/types/schedule";
 import Schedule from "./Schedule";
 
 type Props = {
   setIsBuilding: React.Dispatch<
     React.SetStateAction<"form" | "building" | "complete">
   >;
-  allClasses: Record<string, Class>;
-  generatedSchedules: SharedCurrentClasses[][];
+  generatedSchedules: SavedSection[][];
 };
 
-function Results({ setIsBuilding, generatedSchedules, allClasses }: Props) {
-  const [over, setOver] = useState(0);
-  const [scroll, setScroll] = useState(0);
-
+function Results({ setIsBuilding, generatedSchedules }: Props) {
   useEffect(() => {
     setIsBuilding("complete");
   }, [setIsBuilding]);
 
   return (
-    <div
-      className="relative flex h-[80dvh] w-full flex-col gap-2 overflow-y-auto overflow-x-hidden rounded-md md:h-full"
-      onScroll={(e) => setScroll(e.currentTarget.scrollTop)}
-    >
+    <div className="relative flex h-[80dvh] w-full flex-col gap-2 overflow-x-hidden overflow-y-auto rounded-md md:h-full">
       {generatedSchedules.length === 0 ? (
         <p>No schedule can be made.</p>
       ) : (
         <>
           <p>Generated {generatedSchedules.length} schedules</p>
-          {generatedSchedules.map(
-            (schedule, i) =>
-              i <= over + 10 && (
-                <Schedule
-                  key={i}
-                  schedule={schedule}
-                  allClasses={allClasses}
-                  scroll={scroll}
-                  setOver={setOver}
-                  index={i}
-                />
-              ),
-          )}
+          {generatedSchedules.map((schedule, i) => (
+            <Schedule key={i.toString()} schedule={schedule} index={i} />
+          ))}
         </>
       )}
     </div>
