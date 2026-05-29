@@ -1,6 +1,6 @@
 import { useSearch } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
-import { useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { useSectionStore } from "src/lib/store/section";
 import type { Code } from "src/types/autobuild";
 import Button from "@/components/Button";
@@ -11,7 +11,7 @@ type Props = {
   useCurrent: boolean;
 };
 
-function Form({ codes, setCodes, useCurrent }: Props) {
+export default function CodesForm({ codes, setCodes, useCurrent }: Props) {
   const ref = useRef<HTMLFormElement>(null);
 
   const { sectionsById } = useSectionStore();
@@ -94,7 +94,7 @@ function Form({ codes, setCodes, useCurrent }: Props) {
         return (
           <div
             key={code.code}
-            className="bg-bg-secondary hover:bg-secondary flex flex-col rounded-md p-2 transition **:outline-none"
+            className="bg-secondary/50 hover:bg-secondary flex flex-col rounded-md p-2 transition **:outline-none"
           >
             <div className="flex items-center justify-between">
               <p className="font-bold">{code.code}</p>
@@ -343,4 +343,110 @@ function Form({ codes, setCodes, useCurrent }: Props) {
   );
 }
 
-export default Form;
+type ACodeFormProps = {
+  code: Code;
+  setCodes: (f: (codes: Code[]) => Code[]) => void;
+  onRemove: (code: Code) => void;
+};
+function ACodeForm(props: ACodeFormProps) {
+  const { code, onRemove, setCodes } = props;
+  const { sectionsById } = useSectionStore();
+
+  const classesForSection = useRef(
+    Array.from(sectionsById.values()).filter((cl) => cl.code === code.code),
+  );
+
+  const allProfessors = useRef(
+    [
+      ...new Set(
+        classesForSection.current.flatMap((section) =>
+          section.leclabs.map((leclab) => leclab.prof),
+        ),
+      ),
+    ]
+      .toSorted()
+      .filter((p) => p !== ""),
+  );
+
+  const onProfessorClicked = useCallback(
+    (prof: string) => {
+      setCodes((codes) =>
+        codes.map((c) => {
+          if (c.code !== code.code) {
+            return c;
+          }
+
+          let profs: string[];
+          if (c.professors?.includes(prof)) {
+            profs = c.professors.filter((p) => p !== prof);
+          } else {
+            profs = [...(c.professors ?? []), prof];
+          }
+
+          return {
+            ...c,
+            professors: profs,
+          };
+        }),
+      );
+    },
+    [setCodes, code.code],
+  );
+
+  return (
+    <div className="bg-secondary/50 hover:bg-secondary flex flex-col rounded-md p-2 transition **:outline-none">
+      <div className="flex items-center justify-between">
+        <p className="font-bold">{code.code}</p>
+        <Button
+          variant="basic"
+          onClick={() => onRemove(code)}
+          className="w-fit p-0"
+        >
+          Remove
+        </Button>
+      </div>
+      <ACodeTeacherSelection
+        allProfessors={allProfessors.current}
+        code={code}
+        onProfessorClicked={onProfessorClicked}
+      />
+    </div>
+  );
+}
+
+type ACodeTeacherSelectionProps = {
+  allProfessors: string[];
+  onProfessorClicked: (prof: string) => void;
+  code: Code;
+};
+function ACodeTeacherSelection(props: ACodeTeacherSelectionProps) {
+  const { allProfessors, onProfessorClicked, code } = props;
+
+  return (
+    <div>
+      <p className="cursor-pointer hover:underline">
+        teachers:{" "}
+        {code.professors && code.professors.length > 0
+          ? code.professors.join("; ")
+          : "any (click to edit)"}
+      </p>
+
+      <form
+        id={`teacherdialog${code.code}`}
+        className="bg-primary absolute z-10 hidden flex-col rounded-md p-2 text-black no-underline shadow shadow-black"
+      >
+        {allProfessors.map((p) => (
+          <label key={p} className="flex gap-1">
+            <input
+              type="checkbox"
+              id={p}
+              defaultChecked={code.professors?.includes(p)}
+              onClick={() => onProfessorClicked(p)}
+            />
+            {p}
+          </label>
+        ))}
+      </form>
+    </div>
+  );
+}
