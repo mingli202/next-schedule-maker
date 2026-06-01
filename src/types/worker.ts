@@ -1,11 +1,13 @@
 import type { SectionResponse } from "src/client";
 import type { RecordValues, SectionStore } from ".";
 import type { SavedSection, SearchSectionParams } from "./schedule";
+import { Code } from "./autobuild";
 
 export const WorkerMessageType = {
   init: "init",
   miniGenerate: "mini-generate",
   search: "search",
+  generate: "generate",
 } as const;
 
 export type WorkerMessageType = RecordValues<typeof WorkerMessageType>;
@@ -22,6 +24,14 @@ export type WorkerMessage =
   | {
       type: "search";
       search: SearchSectionParams & { sections: SavedSection[] | undefined };
+    }
+  | {
+      type: "generate";
+      codes: Code[];
+      currentSections: SavedSection[];
+      useCurrent: boolean;
+      dayOff: string[];
+      time: [string, string];
     };
 
 export type WorkerResponseMap = {
@@ -32,6 +42,9 @@ export type WorkerResponseMap = {
   };
   [WorkerMessageType.search]: {
     sections: SectionResponse[];
+  };
+  [WorkerMessageType.generate]: {
+    schedules: SavedSection[][];
   };
 };
 

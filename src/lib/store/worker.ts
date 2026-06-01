@@ -44,10 +44,14 @@ export function onWorkerMessage<T extends WorkerMessageType>(
     return () => {};
   }
 
-  w.addEventListener("message", handler);
+  const f = (e: MessageEvent<any>) => {
+    handler(e);
+  };
+
+  w.addEventListener("message", f);
 
   return () => {
-    w.removeEventListener("message", handler);
+    w.removeEventListener("message", f);
   };
 }
 

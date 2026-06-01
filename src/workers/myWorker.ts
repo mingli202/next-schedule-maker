@@ -1,3 +1,4 @@
+import generate from "src/components/root/editor/autobuild/generate";
 import { filterDown } from "src/lib/schedule/filterDown";
 import type { SectionStore } from "src/types";
 import type {
@@ -39,6 +40,22 @@ function messageHandler(
       const sections = filterDown(sectionStore, data.search);
 
       return { sections } satisfies WorkerResponseMap[typeof data.type];
+    }
+    case "generate": {
+      if (!sectionStore) {
+        return { schedules: [] };
+      }
+
+      const schedules = generate(
+        data.codes,
+        data.currentSections,
+        data.useCurrent,
+        data.dayOff,
+        data.time,
+        sectionStore.sectionsById,
+      );
+
+      return { schedules } satisfies WorkerResponseMap[typeof data.type];
     }
   }
 }
