@@ -33,7 +33,7 @@ function Loader({
 
   generate(codes, sections, useCurrent, dayOff, time, sectionsById)
     .then((res) => {
-      setGeneratedSchedules(res.collect());
+      setGeneratedSchedules(res);
       setIsBuilding("complete");
     })
     .catch((err) => console.log(err));

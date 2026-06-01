@@ -24,16 +24,16 @@ export default async function generate(
   time: [string, string],
   sectionsById: SectionStore["sectionsById"],
 ) {
-  const sections = Iter.from(sectionsById.values()).filter((section) =>
-    codes.some((c) => c.code === section.code),
-  );
+  const sections = Iter.from(sectionsById.values())
+    .filter((section) => codes.some((c) => c.code === section.code))
+    .collect();
 
   let toReturn: Iter<SavedSection[]> = useCurrent
     ? Iter.from([currentSections])
     : Iter.from([[]]);
 
   for (const code of codes) {
-    let sectionsForCode = filterByCode(sections, code.code);
+    let sectionsForCode = filterByCode(Iter.from(sections), code.code);
 
     sectionsForCode = filterByDaysOff(sectionsForCode, dayOff.join(""));
     sectionsForCode = filterByTimeStart(sectionsForCode, time[0]);
@@ -88,8 +88,11 @@ export default async function generate(
     });
   }
 
-  return toReturn.filter(
-    (s) =>
-      s.length === codes.length + currentSections.length * (useCurrent ? 1 : 0),
-  );
+  return toReturn
+    .filter(
+      (s) =>
+        s.length ===
+        codes.length + currentSections.length * (useCurrent ? 1 : 0),
+    )
+    .collect();
 }
