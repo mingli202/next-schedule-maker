@@ -49,28 +49,34 @@ const MemoizedSchedule = memo(
 type Props = {
   generatedSchedules: SavedSection[][];
   onReturn: () => void;
+  onScroll: (topScrollIndex: number) => void;
+  initialScroll: number;
 };
 
-export default memo(({ generatedSchedules, onReturn }: Props) => {
-  const components = useMemo(
-    () => ({
-      EmptyPlaceholder: () => <NoResult />,
-    }),
-    [],
-  );
+export default memo(
+  ({ generatedSchedules, onReturn, onScroll, initialScroll }: Props) => {
+    const components = useMemo(
+      () => ({
+        EmptyPlaceholder: () => <NoResult />,
+      }),
+      [],
+    );
 
-  return (
-    <>
-      <Virtuoso
-        components={components}
-        style={{ overflowX: "hidden", width: "100%" }}
-        data={generatedSchedules}
-        overscan={200}
-        itemContent={(index, schedule) => (
-          <MemoizedSchedule index={index} schedule={schedule} />
-        )}
-      />
-      <Footer returnFn={onReturn} />
-    </>
-  );
-});
+    return (
+      <>
+        <Virtuoso
+          components={components}
+          initialTopMostItemIndex={initialScroll}
+          style={{ overflowX: "hidden", width: "100%" }}
+          data={generatedSchedules}
+          rangeChanged={(range) => onScroll(range.startIndex)}
+          overscan={200}
+          itemContent={(index, schedule) => (
+            <MemoizedSchedule index={index} schedule={schedule} />
+          )}
+        />
+        <Footer returnFn={onReturn} />
+      </>
+    );
+  },
+);

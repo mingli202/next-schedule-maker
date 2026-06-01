@@ -18,7 +18,7 @@ import Button from "@/components/Button";
 
 type Props = {
   codes: Code[];
-  setCodes: (u: Code[] | ((codes: Code[]) => Code[])) => void;
+  setCodes: (u: (codes: Code[]) => Code[]) => void;
   useCurrent: boolean;
 };
 
