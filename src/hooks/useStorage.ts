@@ -11,28 +11,33 @@ function useStorage<T>(
   defaultValue: T,
   key: string,
   getStorage: () => Storage | undefined,
+  onLoad?: (v: T) => void,
 ) {
   const keyRef = useRef(key);
   const storageRef = useRef(getStorage());
   const defaultValueRef = useRef(defaultValue);
+  const onLoadRef = useRef(onLoad);
 
   const [state, setState] = useState<T>(defaultValue);
 
   useEffect(() => {
-    setState(() => {
-      const storage = storageRef.current;
-      if (typeof window === "undefined" || !storage) {
-        return defaultValueRef.current;
-      }
+    const storage = storageRef.current;
+    if (typeof window === "undefined" || !storage) {
+      return;
+    }
 
-      const data = storageRef.current?.getItem(keyRef.current);
+    const data = storageRef.current?.getItem(keyRef.current);
 
-      if (data) {
-        return JSON.parse(data);
-      }
+    if (!data) {
+      return;
+    }
 
-      return defaultValueRef.current;
-    });
+    const parsedData = JSON.parse(data);
+    if (onLoadRef.current) {
+      onLoadRef.current(parsedData);
+    }
+
+    setState(parsedData);
   }, []);
 
   const update = useCallback((newValue: T | ((prev: T) => T)) => {
@@ -60,11 +65,17 @@ const getLocalStorage = () =>
 /**
  * Gets the value stored at the given key in session storage
  * */
-export const useSessionStorage = <T>(defaultValue: T, key: string) =>
-  useStorage(defaultValue, key, getSessionStorage);
+export const useSessionStorage = <T>(
+  defaultValue: T,
+  key: string,
+  onLoad?: (v: T) => void,
+) => useStorage(defaultValue, key, getSessionStorage, onLoad);
 
 /**
  * Gets the value stored at the given key in local storage
  * */
-export const useLocalStorage = <T>(defaultValue: T, key: string) =>
-  useStorage(defaultValue, key, getLocalStorage);
+export const useLocalStorage = <T>(
+  defaultValue: T,
+  key: string,
+  onLoad?: (v: T) => void,
+) => useStorage(defaultValue, key, getLocalStorage, onLoad);
