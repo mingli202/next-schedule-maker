@@ -9,11 +9,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { FieldLabel } from "src/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
 import { useSectionStore } from "src/lib/store/section";
 import type { Code } from "src/types/autobuild";
 import Button from "@/components/Button";
+import { Checkbox } from "src/components/ui/checkbox";
 
 type Props = {
   codes: Code[];
@@ -90,7 +91,7 @@ export default function CodesForm({ codes, setCodes, useCurrent }: Props) {
       ))}
 
       <form
-        className="group bg-bg-secondary hover:bg-secondary flex items-center gap-2 rounded-md p-2 transition"
+        className="group bg-secondary/50 hover:bg-secondary flex items-center gap-2 rounded-md p-2 transition"
         ref={ref}
         onSubmit={submit}
       >
@@ -280,20 +281,19 @@ function ACodeTeacherSelection(props: ACodeTeacherSelectionProps) {
       </button>
 
       {open && (
-        <div className="bg-primary absolute z-10 flex-col rounded-md p-2 text-black no-underline shadow shadow-black">
+        <div className="bg-background ring-ring absolute z-10 flex flex-col gap-2 rounded-md p-2 no-underline shadow ring-1 shadow-black">
           {allProfessors.map((p) => (
-            <label key={p} className="flex gap-1">
-              <input
-                type="checkbox"
-                id={p}
+            <Field orientation="horizontal" key={`checkbox-${p}`}>
+              <Checkbox
                 defaultChecked={code.professors?.includes(p)}
-                onClick={(e) => {
-                  e.stopPropagation();
+                id={`checkbox-${p}`}
+                onCheckedChange={() => {
                   onProfessorClicked(p);
                 }}
+                className="dark:bg-secondary/40 dark:border-secondary"
               />
-              {p}
-            </label>
+              <FieldLabel htmlFor={`checkbox-${p}`}>{p}</FieldLabel>
+            </Field>
           ))}
         </div>
       )}
