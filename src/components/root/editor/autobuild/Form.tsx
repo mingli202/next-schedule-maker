@@ -1,19 +1,26 @@
 import { useSearch } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
-import { useCallback, useMemo, useRef } from "react";
+import {
+  type MouseEvent,
+  type SubmitEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useSectionStore } from "src/lib/store/section";
 import type { Code } from "src/types/autobuild";
 import Button from "@/components/Button";
 
 type Props = {
   codes: Code[];
-  setCodes: (u: Code[]) => void;
+  setCodes: (u: Code[] | ((codes: Code[]) => Code[])) => void;
   useCurrent: boolean;
 };
 
 export default function CodesForm({ codes, setCodes, useCurrent }: Props) {
   const ref = useRef<HTMLFormElement>(null);
-
   const { sectionsById } = useSectionStore();
 
   const currentSections = useSearch({
@@ -40,286 +47,50 @@ export default function CodesForm({ codes, setCodes, useCurrent }: Props) {
     [sectionsById, codes, currentCodes, useCurrent],
   );
 
-  function action(formdata: FormData) {
-    if (!ref.current) {
-      return;
-    }
-    ref.current.reset();
+  const submit = useCallback(
+    (e: SubmitEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formdata = new FormData(e.currentTarget);
 
-    const newInput = formdata.get("extraCode");
-    if (!newInput) return;
-    if (!codesDatalist.includes(newInput.toString())) {
-      alert("Invlid code");
-      return;
-    }
+      if (!ref.current) {
+        return;
+      }
+      ref.current.reset();
 
-    const updatedCodes = [...codes, { code: newInput.toString() }];
+      const newInput = formdata.get("extraCode");
+      if (!newInput) return;
+      if (!codesDatalist.includes(newInput.toString())) {
+        alert("Invlid code");
+        return;
+      }
 
-    setCodes(updatedCodes);
-  }
+      setCodes((codes) => [...codes, { code: newInput.toString() }]);
+    },
+    [codesDatalist, setCodes],
+  );
 
-  function openDialog(code: string, type: string) {
-    const dialog = document.getElementById(
-      `${type}dialog${code}`,
-    )! as HTMLDivElement;
-    dialog.style.display = "flex";
-
-    const body = document.querySelector("body")!;
-
-    const f = () => {
-      dialog.style.display = "none";
-      body.removeEventListener("click", f);
-    };
-
-    body.addEventListener("click", f);
-  }
+  const onRemove = useCallback(
+    (code: Code) => {
+      setCodes((c) => c.filter((_c) => _c.code !== code.code));
+    },
+    [setCodes],
+  );
 
   return (
     <>
-      {codes.map((code) => {
-        const classes = Array.from(sectionsById.values()).filter(
-          (cl) => cl.code === code.code,
-        );
-
-        const professors = [
-          ...new Set(
-            classes.flatMap((section) =>
-              section.leclabs.map((leclab) => leclab.prof),
-            ),
-          ),
-        ]
-          .toSorted()
-          .filter((p) => p !== "");
-
-        return (
-          <div
-            key={code.code}
-            className="bg-secondary/50 hover:bg-secondary flex flex-col rounded-md p-2 transition **:outline-none"
-          >
-            <div className="flex items-center justify-between">
-              <p className="font-bold">{code.code}</p>
-              <Button
-                variant="basic"
-                onClick={() => {
-                  const updatedCodes = codes.filter((c) => c !== code);
-                  setCodes(updatedCodes);
-                }}
-                className="w-fit p-0"
-              >
-                Remove
-              </Button>
-            </div>
-
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                openDialog(code.code, "teacher");
-              }}
-            >
-              <p className="cursor-pointer hover:underline">
-                teachers:{" "}
-                {code.professors && code.professors.length > 0
-                  ? code.professors.join("; ")
-                  : "any (click to edit)"}
-              </p>
-
-              <form
-                id={"teacherdialog" + code.code}
-                className="bg-primary absolute z-10 hidden flex-col rounded-md p-2 text-black no-underline shadow shadow-black"
-              >
-                {professors.map((p) => (
-                  <label key={p} className="flex gap-1">
-                    <input
-                      type="checkbox"
-                      id={p}
-                      defaultChecked={code.professors?.includes(p)}
-                      onClick={() => {
-                        const updatedCodes = codes.map((c) =>
-                          c.code === code.code
-                            ? {
-                                ...c,
-                                professors: c.professors
-                                  ? c.professors.includes(p)
-                                    ? c.professors.filter((prof) => prof !== p)
-                                    : [...c.professors, p]
-                                  : [p],
-                              }
-                            : c,
-                        );
-                        setCodes(updatedCodes);
-                      }}
-                    />
-                    {p}
-                  </label>
-                ))}
-              </form>
-            </div>
-
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                openDialog(code.code, "rating");
-              }}
-            >
-              <p className="cursor-pointer hover:underline">
-                rating range:{" "}
-                {code.ratingRange
-                  ? `${code.ratingRange.from ?? 0} - ${code.ratingRange.to ?? 5}`
-                  : "any (click to edit)"}
-              </p>
-
-              <form
-                id={"ratingdialog" + code.code}
-                className="bg-primary absolute z-10 hidden flex-col gap-2 rounded-md p-2 text-black no-underline shadow shadow-black"
-              >
-                <label className="flex gap-1">
-                  from
-                  <input
-                    defaultValue={code.ratingRange?.from}
-                    type="number"
-                    min={0}
-                    max={5}
-                    step={0.1}
-                    placeholder="0"
-                    autoComplete="off"
-                    onChange={(e) => {
-                      const updatedCodes = codes.map((c) =>
-                        c.code === code.code
-                          ? {
-                              ...c,
-                              ratingRange: {
-                                ...c.ratingRange,
-                                from:
-                                  e.target.value === ""
-                                    ? undefined
-                                    : Number(e.target.value),
-                              },
-                            }
-                          : c,
-                      );
-                      setCodes(updatedCodes);
-                    }}
-                  />
-                </label>
-
-                <label className="flex gap-1">
-                  to
-                  <input
-                    defaultValue={code.ratingRange?.to}
-                    type="number"
-                    min={0}
-                    max={5}
-                    step={0.1}
-                    placeholder="5"
-                    autoComplete="off"
-                    onChange={(e) => {
-                      const updatedCodes = codes.map((c) =>
-                        c.code === code.code
-                          ? {
-                              ...c,
-                              ratingRange: {
-                                ...c.ratingRange,
-                                to:
-                                  e.target.value === ""
-                                    ? undefined
-                                    : Number(e.target.value),
-                              },
-                            }
-                          : c,
-                      );
-                      setCodes(updatedCodes);
-                    }}
-                  />
-                </label>
-              </form>
-            </div>
-
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                openDialog(code.code, "score");
-              }}
-            >
-              <p className="cursor-pointer hover:underline">
-                score range:{" "}
-                {code.scoreRange
-                  ? `${code.scoreRange.from ?? 0} - ${code.scoreRange.to ?? 100}`
-                  : "any (click to edit)"}
-              </p>
-
-              <form
-                id={"scoredialog" + code.code}
-                className="bg-primary absolute z-10 hidden flex-col gap-2 rounded-md p-2 text-black no-underline shadow shadow-black"
-              >
-                <label className="flex gap-1">
-                  from
-                  <input
-                    defaultValue={code.scoreRange?.from}
-                    type="number"
-                    min={0}
-                    max={100}
-                    step={0.1}
-                    placeholder="0"
-                    autoComplete="off"
-                    onChange={(e) => {
-                      const updatedCodes = codes.map((c) =>
-                        c.code === code.code
-                          ? {
-                              ...c,
-                              scoreRange: {
-                                ...c.scoreRange,
-                                from:
-                                  e.target.value === ""
-                                    ? undefined
-                                    : Number(e.target.value),
-                              },
-                            }
-                          : c,
-                      );
-                      setCodes(updatedCodes);
-                    }}
-                  />
-                </label>
-
-                <label className="flex gap-1">
-                  to
-                  <input
-                    defaultValue={code.scoreRange?.to}
-                    type="number"
-                    min={0}
-                    max={100}
-                    step={1}
-                    placeholder="100"
-                    autoComplete="off"
-                    onChange={(e) => {
-                      const updatedCodes = codes.map((c) =>
-                        c.code === code.code
-                          ? {
-                              ...c,
-                              scoreRange: {
-                                ...c.scoreRange,
-                                to:
-                                  e.target.value === ""
-                                    ? undefined
-                                    : Number(e.target.value),
-                              },
-                            }
-                          : c,
-                      );
-                      setCodes(updatedCodes);
-                    }}
-                  />
-                </label>
-              </form>
-            </div>
-          </div>
-        );
-      })}
+      {codes.map((code) => (
+        <ACodeForm
+          code={code}
+          key={code.code}
+          setCodes={setCodes}
+          onRemove={onRemove}
+        />
+      ))}
 
       <form
         className="group bg-bg-secondary hover:bg-secondary flex items-center gap-2 rounded-md p-2 transition"
-        action={action}
         ref={ref}
+        onSubmit={submit}
       >
         <label htmlFor="extraCode" className="w-full">
           <input
@@ -422,31 +193,60 @@ type ACodeTeacherSelectionProps = {
 function ACodeTeacherSelection(props: ACodeTeacherSelectionProps) {
   const { allProfessors, onProfessorClicked, code } = props;
 
+  const ref = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const f = (e: PointerEvent) => {
+      if (!ref.current) return;
+      if (!(e.target instanceof Node)) return;
+      if (!ref.current.contains(e.target)) return;
+
+      return setOpen(false);
+    };
+    document.body.addEventListener("click", f);
+
+    return () => {
+      document.body.removeEventListener("click", f);
+    };
+  }, []);
+
+  const onClick = useCallback((e: MouseEvent) => {
+    e.stopPropagation();
+    setOpen((o) => !o);
+  }, []);
+
   return (
-    <div>
-      <p className="cursor-pointer hover:underline">
+    <div className="relative" role="dialog" aria-modal={true} ref={ref}>
+      <button
+        className="cursor-pointer text-left hover:underline"
+        type="button"
+        onClick={onClick}
+      >
         teachers:{" "}
         {code.professors && code.professors.length > 0
           ? code.professors.join("; ")
           : "any (click to edit)"}
-      </p>
+      </button>
 
-      <form
-        id={`teacherdialog${code.code}`}
-        className="bg-primary absolute z-10 hidden flex-col rounded-md p-2 text-black no-underline shadow shadow-black"
-      >
-        {allProfessors.map((p) => (
-          <label key={p} className="flex gap-1">
-            <input
-              type="checkbox"
-              id={p}
-              defaultChecked={code.professors?.includes(p)}
-              onClick={() => onProfessorClicked(p)}
-            />
-            {p}
-          </label>
-        ))}
-      </form>
+      {open && (
+        <div className="bg-primary absolute z-10 flex-col rounded-md p-2 text-black no-underline shadow shadow-black">
+          {allProfessors.map((p) => (
+            <label key={p} className="flex gap-1">
+              <input
+                type="checkbox"
+                id={p}
+                defaultChecked={code.professors?.includes(p)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onProfessorClicked(p);
+                }}
+              />
+              {p}
+            </label>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
