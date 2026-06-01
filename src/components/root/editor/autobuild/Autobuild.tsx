@@ -1,20 +1,32 @@
+import { useSearch } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { Checkbox } from "src/components/ui/checkbox";
 import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
 import { useSessionStorage } from "src/hooks";
+import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
 import type { Code } from "src/types/autobuild";
 import type { SavedSection } from "src/types/schedule";
 import { Button, PageLoading } from "@/components";
 import CodesForm from "./CodesForm";
 import Results from "./Results";
-import { useSearch } from "@tanstack/react-router";
-import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
+
+type BulidingState =
+  | {
+      type: "form";
+    }
+  | {
+      type: "building";
+    }
+  | {
+      type: "completed";
+      schedules: SavedSection[][];
+    };
 
 function Autobuild() {
-  const [isBuilding, setIsBuilding] = useState<
-    "form" | "building" | "complete"
-  >("form");
+  const [buildingState, setBuildingState] = useState<BulidingState>({
+    type: "form",
+  });
 
   const [codes, setCodes] = useSessionStorage<Code[]>([], "codes");
   const [useCurrent, setUseCurrent] = useSessionStorage(false, "useCurrent");
@@ -23,10 +35,6 @@ function Autobuild() {
     ["00:00", "23:59"],
     "time",
   );
-
-  const [generatedSchedules, setGeneratedSchedules] = useState<
-    SavedSection[][]
-  >([]);
 
   const sections = useSearch({
     from: "/editor/autobuild",
@@ -46,10 +54,11 @@ function Autobuild() {
     [codes, sections, useCurrent, dayOff, time],
   );
 
+  const onReturn = useCallback(() => setBuildingState({ type: "form" }), []);
+
   useEffect(() => {
     const unsub = onWorkerMessage<"generate">((e) => {
-      setGeneratedSchedules(e.data.schedules);
-      setIsBuilding("complete");
+      setBuildingState({ type: "completed", schedules: e.data.schedules });
     });
 
     return () => {
@@ -59,7 +68,7 @@ function Autobuild() {
 
   return (
     <div className="relative box-border flex h-full w-full flex-col items-center gap-2 overflow-x-hidden overflow-y-auto p-2">
-      {isBuilding === "form" && (
+      {buildingState.type === "form" && (
         <>
           <h1 className="font-heading text-center text-xl">Auto Builder</h1>
           <Field orientation="horizontal" className="w-full">
@@ -145,7 +154,7 @@ function Autobuild() {
               variant="special"
               className="w-fit"
               onClick={() => {
-                setIsBuilding("building");
+                setBuildingState({ type: "building" });
                 makeGeneration();
               }}
             >
@@ -154,11 +163,11 @@ function Autobuild() {
           </div>
         </>
       )}
-      {isBuilding === "building" && <PageLoading />}
-      {isBuilding === "complete" && (
+      {buildingState.type === "building" && <PageLoading />}
+      {buildingState.type === "completed" && (
         <Results
-          setIsBuilding={setIsBuilding}
-          generatedSchedules={generatedSchedules}
+          generatedSchedules={buildingState.schedules}
+          onReturn={onReturn}
         />
       )}
     </div>

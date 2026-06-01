@@ -1,10 +1,10 @@
+import { useNavigate } from "@tanstack/react-router";
 import { memo, useCallback, useMemo } from "react";
+import { Virtuoso } from "react-virtuoso";
+import Button from "src/components/Button";
+import { cn } from "src/lib/utils";
 import type { SavedSection } from "src/types/schedule";
 import Schedule from "./Schedule";
-import Button from "src/components/Button";
-import { Virtuoso } from "react-virtuoso";
-import { cn } from "src/lib/utils";
-import { useNavigate } from "@tanstack/react-router";
 
 const Footer = memo((props: { returnFn: () => void }) => {
   const { returnFn } = props;
@@ -47,15 +47,11 @@ const MemoizedSchedule = memo(
 );
 
 type Props = {
-  setIsBuilding: React.Dispatch<
-    React.SetStateAction<"form" | "building" | "complete">
-  >;
   generatedSchedules: SavedSection[][];
+  onReturn: () => void;
 };
 
-export default function Results({ setIsBuilding, generatedSchedules }: Props) {
-  const returnFn = useCallback(() => setIsBuilding("form"), [setIsBuilding]);
-
+export default function Results({ generatedSchedules, onReturn }: Props) {
   const components = useMemo(
     () => ({
       EmptyPlaceholder: () => <NoResult />,
@@ -74,7 +70,7 @@ export default function Results({ setIsBuilding, generatedSchedules }: Props) {
           <MemoizedSchedule index={index} schedule={schedule} />
         )}
       />
-      <Footer returnFn={returnFn} />
+      <Footer returnFn={onReturn} />
     </>
   );
 }
