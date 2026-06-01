@@ -1,9 +1,12 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 // biome-ignore lint/suspicious/noExplicitAny: idk man
 const isFunction = (val: any): val is (...args: any) => any =>
   typeof val === "function";
 
+/**
+ * Helper hook for getting data from local or session storage
+ * */
 function useStorage<T>(
   defaultValue: T,
   key: string,
@@ -13,20 +16,24 @@ function useStorage<T>(
   const storageRef = useRef(getStorage());
   const defaultValueRef = useRef(defaultValue);
 
-  const [state, setState] = useState<T>(() => {
-    const storage = storageRef.current;
-    if (typeof window === "undefined" || !storage) {
-      return defaultValue;
-    }
+  const [state, setState] = useState<T>(defaultValue);
 
-    const data = storageRef.current?.getItem(keyRef.current);
+  useEffect(() => {
+    setState(() => {
+      const storage = storageRef.current;
+      if (typeof window === "undefined" || !storage) {
+        return defaultValueRef.current;
+      }
 
-    if (data) {
-      return JSON.parse(data);
-    }
+      const data = storageRef.current?.getItem(keyRef.current);
 
-    return defaultValue;
-  });
+      if (data) {
+        return JSON.parse(data);
+      }
+
+      return defaultValueRef.current;
+    });
+  }, []);
 
   const update = useCallback((newValue: T | ((prev: T) => T)) => {
     setState((prev) => {
@@ -50,8 +57,14 @@ const getSessionStorage = () =>
 const getLocalStorage = () =>
   typeof localStorage === "undefined" ? undefined : localStorage;
 
+/**
+ * Gets the value stored at the given key in session storage
+ * */
 export const useSessionStorage = <T>(defaultValue: T, key: string) =>
   useStorage(defaultValue, key, getSessionStorage);
 
+/**
+ * Gets the value stored at the given key in local storage
+ * */
 export const useLocalStorage = <T>(defaultValue: T, key: string) =>
   useStorage(defaultValue, key, getLocalStorage);
