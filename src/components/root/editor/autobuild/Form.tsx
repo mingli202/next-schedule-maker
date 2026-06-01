@@ -200,7 +200,7 @@ function ACodeTeacherSelection(props: ACodeTeacherSelectionProps) {
     const f = (e: PointerEvent) => {
       if (!ref.current) return;
       if (!(e.target instanceof Node)) return;
-      if (!ref.current.contains(e.target)) return;
+      if (ref.current.contains(e.target)) return;
 
       return setOpen(false);
     };
