@@ -4,6 +4,7 @@ import Schedule from "./Schedule";
 import Button from "src/components/Button";
 import { Virtuoso } from "react-virtuoso";
 import { cn } from "src/lib/utils";
+import { useNavigate } from "@tanstack/react-router";
 
 const Footer = memo((props: { returnFn: () => void }) => {
   const { returnFn } = props;
@@ -20,11 +21,29 @@ const Footer = memo((props: { returnFn: () => void }) => {
 const NoResult = memo(() => <p>No schedule can be made.</p>);
 
 const MemoizedSchedule = memo(
-  ({ index, schedule }: { index: number; schedule: SavedSection[] }) => (
-    <div className={cn(index !== 0 && "pt-2")}>
-      <Schedule index={index} schedule={schedule} />
-    </div>
-  ),
+  ({ index, schedule }: { index: number; schedule: SavedSection[] }) => {
+    const navigate = useNavigate({ from: "/editor/autobuild" });
+
+    const onScheduleSelected = useCallback(() => {
+      navigate({
+        search: (prev) => ({
+          ...prev,
+          sections: schedule,
+        }),
+      });
+    }, [navigate, schedule]);
+
+    return (
+      <div className={cn(index !== 0 && "pt-2")}>
+        <Schedule
+          index={index}
+          schedule={schedule}
+          onScheduleSelected={onScheduleSelected}
+          onScheduleSaved={() => {}}
+        />
+      </div>
+    );
+  },
 );
 
 type Props = {
