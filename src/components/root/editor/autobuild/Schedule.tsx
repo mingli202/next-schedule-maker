@@ -12,18 +12,16 @@ type Props = {
 };
 
 function Schedule({ schedule, index }: Props) {
-  const divRef = useRef<HTMLDivElement>(null);
   const { sectionsById } = useSectionStore();
 
   return (
     <div
       className={cn(
         "relative box-border grid w-full grid-cols-[repeat(auto-fit,minmax(20rem,1fr))]",
-        "bg-bg-secondary gap-2 rounded-md p-2",
+        "bg-secondary/50 shrink-0 gap-2 rounded-md p-2",
       )}
-      ref={divRef}
     >
-      <div className="bg-slate grid h-40 w-full grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md">
+      <div className="grid h-40 w-full grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md bg-slate-300">
         {schedule.map(({ sectionId, colorIndex }, index) => {
           const section = sectionsById.get(sectionId);
 

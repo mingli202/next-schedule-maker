@@ -20,7 +20,9 @@ function Results({ setIsBuilding, generatedSchedules }: Props) {
         <p>No schedule can be made.</p>
       ) : (
         <>
-          <p>Generated {generatedSchedules.length} schedules</p>
+          <p className="shrink-0">
+            Generated {generatedSchedules.length} schedules
+          </p>
           {generatedSchedules.map((schedule, i) => (
             <Schedule key={i.toString()} schedule={schedule} index={i} />
           ))}
