@@ -1,6 +1,31 @@
-import { useEffect } from "react";
+import { memo, useCallback, useMemo } from "react";
 import type { SavedSection } from "src/types/schedule";
 import Schedule from "./Schedule";
+import Button from "src/components/Button";
+import { Virtuoso } from "react-virtuoso";
+import { cn } from "src/lib/utils";
+
+const Footer = memo((props: { returnFn: () => void }) => {
+  const { returnFn } = props;
+
+  return (
+    <div className="bg-background">
+      <Button variant="special" className="w-fit" onClick={() => returnFn()}>
+        Return
+      </Button>
+    </div>
+  );
+});
+
+const NoResult = memo(() => <p>No schedule can be made.</p>);
+
+const MemoizedSchedule = memo(
+  ({ index, schedule }: { index: number; schedule: SavedSection[] }) => (
+    <div className={cn(index !== 0 && "pt-2")}>
+      <Schedule index={index} schedule={schedule} />
+    </div>
+  ),
+);
 
 type Props = {
   setIsBuilding: React.Dispatch<
@@ -9,27 +34,28 @@ type Props = {
   generatedSchedules: SavedSection[][];
 };
 
-function Results({ setIsBuilding, generatedSchedules }: Props) {
-  useEffect(() => {
-    setIsBuilding("complete");
-  }, [setIsBuilding]);
+export default function Results({ setIsBuilding, generatedSchedules }: Props) {
+  const returnFn = useCallback(() => setIsBuilding("form"), [setIsBuilding]);
+
+  const components = useMemo(
+    () => ({
+      EmptyPlaceholder: () => <NoResult />,
+    }),
+    [],
+  );
 
   return (
-    <div className="relative flex h-[80dvh] w-full flex-col gap-2 overflow-x-hidden overflow-y-auto rounded-md md:h-full">
-      {generatedSchedules.length === 0 ? (
-        <p>No schedule can be made.</p>
-      ) : (
-        <>
-          <p className="shrink-0">
-            Generated {generatedSchedules.length} schedules
-          </p>
-          {generatedSchedules.map((schedule, i) => (
-            <Schedule key={i.toString()} schedule={schedule} index={i} />
-          ))}
-        </>
-      )}
-    </div>
+    <>
+      <Virtuoso
+        components={components}
+        style={{ overflowX: "hidden", width: "100%" }}
+        data={generatedSchedules}
+        overscan={200}
+        itemContent={(index, schedule) => (
+          <MemoizedSchedule index={index} schedule={schedule} />
+        )}
+      />
+      <Footer returnFn={returnFn} />
+    </>
   );
 }
-
-export default Results;
