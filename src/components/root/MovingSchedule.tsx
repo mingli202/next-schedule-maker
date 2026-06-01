@@ -87,7 +87,7 @@ export function MovingSchedule({ index, lastRef, pauseRef }: Props) {
   useEffect(() => {
     isStopped.current = false;
 
-    const unSub = onWorkerMessage<"mini-generate">((e) => {
+    const unSub = onWorkerMessage("mini-generate", (e) => {
       if (e.data.index !== index) {
         return;
       }

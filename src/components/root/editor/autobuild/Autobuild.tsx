@@ -57,7 +57,7 @@ function Autobuild() {
   const onReturn = useCallback(() => setBuildingState({ type: "form" }), []);
 
   useEffect(() => {
-    const unsub = onWorkerMessage<"generate">((e) => {
+    const unsub = onWorkerMessage("generate", (e) => {
       setBuildingState({ type: "completed", schedules: e.data.schedules });
     });
 

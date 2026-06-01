@@ -48,7 +48,7 @@ export function SearchResult() {
   const isFirstLoading = useRef(true);
 
   useEffect(() => {
-    const unsub = onWorkerMessage<"search">((e) => {
+    const unsub = onWorkerMessage("search", (e) => {
       isFirstLoading.current = false;
       setResults(e.data.sections);
     });
