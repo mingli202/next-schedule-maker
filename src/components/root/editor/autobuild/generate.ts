@@ -16,7 +16,7 @@ import type { SectionStore } from "src/types";
 import type { Code } from "src/types/autobuild";
 import type { SavedSection } from "src/types/schedule";
 
-export default async function generate(
+export default function generate(
   codes: Code[],
   currentSections: SavedSection[],
   useCurrent: boolean,
