@@ -51,7 +51,7 @@ type Props = {
   onReturn: () => void;
 };
 
-export default function Results({ generatedSchedules, onReturn }: Props) {
+export default memo(({ generatedSchedules, onReturn }: Props) => {
   const components = useMemo(
     () => ({
       EmptyPlaceholder: () => <NoResult />,
@@ -73,4 +73,4 @@ export default function Results({ generatedSchedules, onReturn }: Props) {
       <Footer returnFn={onReturn} />
     </>
   );
-}
+});
