@@ -6,6 +6,8 @@ import { cn } from "src/lib/utils";
 import type { SavedSection } from "src/types/schedule";
 import Button from "@/components/Button";
 
+const minWidth = 224;
+
 type Props = {
   schedule: SavedSection[];
   index: number;
@@ -29,7 +31,10 @@ function Schedule({
       )}
     >
       <div className="flex w-full flex-wrap gap-2">
-        <div className="box-border grid h-40 min-w-80 grow basis-1/2 grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md bg-slate-300">
+        <div
+          className="box-border grid h-40 flex-1 grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md bg-slate-300"
+          style={{ minWidth }}
+        >
           {schedule.map(({ sectionId, colorIndex }, index) => {
             const section = sectionsById.get(sectionId);
 
@@ -67,7 +72,7 @@ function Schedule({
           })}
         </div>
 
-        <div className="box-border grow">
+        <div className="box-border flex-1" style={{ minWidth }}>
           {schedule.map(({ sectionId, colorIndex }, i) => {
             const section = sectionsById.get(sectionId);
 
