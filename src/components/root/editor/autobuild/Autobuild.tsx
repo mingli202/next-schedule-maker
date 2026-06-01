@@ -3,7 +3,7 @@ import { useSessionStorage } from "src/hooks";
 import type { Code } from "src/types/autobuild";
 import type { SavedSection } from "src/types/schedule";
 import { Button } from "@/components";
-import Form from "./Form";
+import CodesForm from "./Form";
 import Loader from "./Loader";
 import Results from "./Results";
 
@@ -111,7 +111,11 @@ function Autobuild() {
             </div>
 
             <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2">
-              <Form codes={codes} setCodes={setCodes} useCurrent={useCurrent} />
+              <CodesForm
+                codes={codes}
+                setCodes={setCodes}
+                useCurrent={useCurrent}
+              />
             </div>
           </div>
           <div className="bg-background relative bottom-0 z-5 flex items-center justify-center">
