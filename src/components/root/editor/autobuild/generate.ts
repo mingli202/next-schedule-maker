@@ -1,6 +1,7 @@
 import { getNextAvailableColorIndex } from "src/lib/colors";
 import { Iter } from "src/lib/iter";
 import {
+  filterByCode,
   filterByDaysOff,
   filterByMaxRating,
   filterByMaxScore,
@@ -32,9 +33,7 @@ export default async function generate(
     : Iter.from([[]]);
 
   for (const code of codes) {
-    let sectionsForCode = sections.filter(
-      (section) => section.code !== code.code,
-    );
+    let sectionsForCode = filterByCode(sections, code.code);
 
     sectionsForCode = filterByDaysOff(sectionsForCode, dayOff.join(""));
     sectionsForCode = filterByTimeStart(sectionsForCode, time[0]);
@@ -74,13 +73,13 @@ export default async function generate(
     toReturn = toReturn.flatMap((sch) => {
       const schedule = sch
         .map((s) => sectionsById.get(s.sectionId))
-        .filter((s) => !!s);
+        .filter((s) => s !== undefined);
 
-      const validClasses = sectionsForCode.filter((section) =>
+      const validSections = sectionsForCode.filter((section) =>
         isValidAdditionToSchedule(section, schedule),
       );
 
-      const v = validClasses.map((section) => {
+      const v = validSections.map((section) => {
         const colorIndex = getNextAvailableColorIndex(sch);
         return [...sch, { sectionId: section.id, colorIndex }];
       });
