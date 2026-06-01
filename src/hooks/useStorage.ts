@@ -35,26 +35,31 @@ function useStorage<T>(
 
   useEffect(() => {
     const storage = storageRef.current;
-    if (typeof window === "undefined" || !storage) {
-      return;
-    }
-
-    const data = storageRef.current?.getItem(keyRef.current);
-
-    if (!data) {
-      return;
-    }
-
-    try {
-      const parsedData = JSON.parse(data);
-      if (onLoadRef.current) {
-        onLoadRef.current(parsedData);
+    const val = (() => {
+      if (typeof window === "undefined" || !storage) {
+        return defaultValueRef.current;
       }
 
-      setState(parsedData);
-    } catch {
-      storageRef.current?.removeItem(keyRef.current);
+      const data = storageRef.current?.getItem(keyRef.current);
+
+      if (!data) {
+        return defaultValueRef.current;
+      }
+
+      try {
+        const parsedData = JSON.parse(data);
+
+        return parsedData as T;
+      } catch {
+        return defaultValueRef.current;
+      }
+    })();
+
+    if (onLoadRef.current) {
+      onLoadRef.current(val);
     }
+
+    setState(val);
   }, []);
 
   return [state, update, remove] as const;
