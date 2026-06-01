@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { Checkbox } from "src/components/ui/checkbox";
+import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
+import { Input } from "src/components/ui/input";
 import { useSessionStorage } from "src/hooks";
 import type { Code } from "src/types/autobuild";
 import type { SavedSection } from "src/types/schedule";
-import { Button } from "@/components";
+import { Button, PageLoading } from "@/components";
 import CodesForm from "./CodesForm";
-import Loader from "./Loader";
 import Results from "./Results";
-import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
-import { Label } from "src/components/ui/label";
-import { Checkbox } from "src/components/ui/checkbox";
-import { Input } from "src/components/ui/input";
+import { useSearch } from "@tanstack/react-router";
+import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
 
 function Autobuild() {
   const [isBuilding, setIsBuilding] = useState<
@@ -27,6 +27,35 @@ function Autobuild() {
   const [generatedSchedules, setGeneratedSchedules] = useState<
     SavedSection[][]
   >([]);
+
+  const sections = useSearch({
+    from: "/editor/autobuild",
+    select: (s) => s.sections,
+  });
+
+  const makeGeneration = useCallback(
+    () =>
+      postWorkerMessage({
+        type: "generate",
+        codes,
+        currentSections: sections,
+        useCurrent,
+        dayOff,
+        time,
+      }),
+    [codes, sections, useCurrent, dayOff, time],
+  );
+
+  useEffect(() => {
+    const unsub = onWorkerMessage<"generate">((e) => {
+      setGeneratedSchedules(e.data.schedules);
+      setIsBuilding("complete");
+    });
+
+    return () => {
+      unsub();
+    };
+  }, []);
 
   return (
     <div className="relative box-border flex h-full w-full flex-col items-center gap-2 overflow-x-hidden overflow-y-auto p-2">
@@ -115,23 +144,17 @@ function Autobuild() {
             <Button
               variant="special"
               className="w-fit"
-              onClick={() => setIsBuilding("building")}
+              onClick={() => {
+                setIsBuilding("building");
+                makeGeneration();
+              }}
             >
               Generate
             </Button>
           </div>
         </>
       )}
-      {isBuilding === "building" && (
-        <Loader
-          setGeneratedSchedules={setGeneratedSchedules}
-          codes={codes}
-          setIsBuilding={setIsBuilding}
-          useCurrent={useCurrent}
-          dayOff={dayOff}
-          time={time}
-        />
-      )}
+      {isBuilding === "building" && <PageLoading />}
       {isBuilding === "complete" && (
         <Results
           setIsBuilding={setIsBuilding}
