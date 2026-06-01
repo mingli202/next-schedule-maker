@@ -132,7 +132,7 @@ export const filterByMaxScore = (
 /**
  * Section where Section.code includes the given code
  * */
-const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
+export const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
   code.trim() === ""
     ? iter
     : iter.filter((section) => includes(section.code, code));
