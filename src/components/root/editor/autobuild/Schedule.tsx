@@ -9,16 +9,23 @@ import Button from "@/components/Button";
 type Props = {
   schedule: SavedSection[];
   index: number;
+  onScheduleSelected: (schedule: SavedSection[]) => void;
+  onScheduleSaved: (schedule: SavedSection[]) => void;
 };
 
-function Schedule({ schedule, index }: Props) {
+function Schedule({
+  schedule,
+  index,
+  onScheduleSelected,
+  onScheduleSaved,
+}: Props) {
   const { sectionsById } = useSectionStore();
 
   return (
     <div
       className={cn(
         "relative box-border flex w-full flex-col",
-        "bg-secondary/50 gap-2 rounded-md p-2",
+        "bg-secondary/50 gap-2 rounded-xl p-2",
       )}
     >
       <div className="flex w-full flex-wrap gap-2">
@@ -100,9 +107,18 @@ function Schedule({ schedule, index }: Props) {
       <div className="flex items-center justify-between">
         <span className="ml-1">{index + 1}</span>
         <div className="flex">
-          <Button variant="basic" className="w-fit"></Button>
+          <Button
+            variant="basic"
+            className="w-fit"
+            onClick={() => onScheduleSaved(schedule)}
+          ></Button>
 
-          <Button variant="basic" className="w-fit">
+          <Button
+            variant="basic"
+            className="w-fit"
+            title="select"
+            onClick={() => onScheduleSelected(schedule)}
+          >
             <ChevronRight />
           </Button>
         </div>
