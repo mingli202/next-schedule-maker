@@ -9,6 +9,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { FieldLabel } from "src/components/ui/field";
+import { Input } from "src/components/ui/input";
 import { useSectionStore } from "src/lib/store/section";
 import type { Code } from "src/types/autobuild";
 import Button from "@/components/Button";
@@ -164,6 +166,51 @@ function ACodeForm(props: ACodeFormProps) {
     [setCodes, code.code],
   );
 
+  const onRangeChanged = useCallback(
+    (type: "rating" | "score", range: { from?: string; to?: string }) => {
+      const min = range.from;
+      const max = range.to;
+
+      const nmin = (min ?? "") === "" ? undefined : Number(min);
+      const nmax = (max ?? "") === "" ? undefined : Number(max);
+
+      setCodes((codes) =>
+        codes.map((c) => {
+          if (c.code !== code.code) {
+            return c;
+          }
+
+          if (type === "rating") {
+            const ratingRange =
+              c.ratingRange === undefined ? {} : { ...c.ratingRange };
+
+            if (nmin !== undefined) {
+              ratingRange.from = nmin;
+            }
+            if (nmax !== undefined) {
+              ratingRange.to = nmax;
+            }
+
+            return { ...c, ratingRange };
+          } else {
+            const scoreRange =
+              c.scoreRange === undefined ? {} : { ...c.scoreRange };
+
+            if (nmin !== undefined) {
+              scoreRange.from = nmin;
+            }
+            if (nmax !== undefined) {
+              scoreRange.to = nmax;
+            }
+
+            return { ...c, scoreRange };
+          }
+        }),
+      );
+    },
+    [setCodes, code.code],
+  );
+
   return (
     <div className="bg-secondary/50 hover:bg-secondary flex flex-col rounded-md p-2 transition **:outline-none">
       <div className="flex items-center justify-between">
@@ -181,6 +228,9 @@ function ACodeForm(props: ACodeFormProps) {
         code={code}
         onProfessorClicked={onProfessorClicked}
       />
+
+      <ARange code={code} name="rating" onRangeChanged={onRangeChanged} />
+      <ARange code={code} name="score" onRangeChanged={onRangeChanged} />
     </div>
   );
 }
@@ -245,6 +295,106 @@ function ACodeTeacherSelection(props: ACodeTeacherSelectionProps) {
               {p}
             </label>
           ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+type ARangeProps = {
+  code: Code;
+  name: "score" | "rating";
+  onRangeChanged: (
+    type: "rating" | "score",
+    range: {
+      from?: string;
+      to?: string;
+    },
+  ) => void;
+};
+function ARange(props: ARangeProps) {
+  const { code, name, onRangeChanged } = props;
+
+  const displayMin =
+    name === "score" ? code.scoreRange?.from : code.ratingRange?.from;
+  const displayMax =
+    name === "score" ? code.scoreRange?.to : code.ratingRange?.to;
+
+  const ref = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const f = (e: PointerEvent) => {
+      if (!ref.current) return;
+      if (!(e.target instanceof Node)) return;
+      if (ref.current.contains(e.target)) return;
+
+      return setOpen(false);
+    };
+    document.body.addEventListener("click", f);
+
+    return () => {
+      document.body.removeEventListener("click", f);
+    };
+  }, []);
+
+  const onClick = useCallback((e: MouseEvent) => {
+    e.stopPropagation();
+    setOpen((o) => !o);
+  }, []);
+
+  return (
+    <div className="relative" role="dialog" aria-modal={true} ref={ref}>
+      <button
+        className="cursor-pointer text-left hover:underline"
+        type="button"
+        onClick={onClick}
+      >
+        {name}:{" "}
+        {displayMin === undefined && displayMax === undefined ? (
+          "any (click to edit)"
+        ) : (
+          <>
+            {displayMin === undefined ? "any" : displayMin} -{" "}
+            {displayMax === undefined ? "any" : displayMax}
+          </>
+        )}
+      </button>
+
+      {open && (
+        <div className="bg-background ring-ring absolute z-10 flex w-32 flex-col gap-2 rounded-md p-2 no-underline shadow ring-1 shadow-black">
+          <div className="flex gap-1">
+            <FieldLabel htmlFor={`${name}Min`} className="shrink-0">
+              from
+            </FieldLabel>
+            <Input
+              type="number"
+              autoComplete="off"
+              id={`${name}Min`}
+              min={0}
+              max={name === "rating" ? 5 : 100}
+              placeholder="0"
+              step={1}
+              onChange={(e) => onRangeChanged(name, { from: e.target.value })}
+              defaultValue={displayMin}
+            />
+          </div>
+          <div className="flex gap-1">
+            <FieldLabel htmlFor={`${name}Max`} className="shrink-0">
+              to
+            </FieldLabel>
+            <Input
+              type="number"
+              autoComplete="off"
+              id={`${name}Max`}
+              min={0}
+              max={name === "rating" ? 5 : 100}
+              placeholder={name === "rating" ? "5" : "100"}
+              step={1}
+              onChange={(e) => onRangeChanged(name, { to: e.target.value })}
+              defaultValue={displayMax}
+            />
+          </div>
         </div>
       )}
     </div>
