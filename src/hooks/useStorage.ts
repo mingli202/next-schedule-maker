@@ -20,6 +20,19 @@ function useStorage<T>(
 
   const [state, setState] = useState<T>(defaultValue);
 
+  const update = useCallback((newValue: T | ((prev: T) => T)) => {
+    setState((prev) => {
+      const nextValue = isFunction(newValue) ? newValue(prev) : newValue;
+      storageRef.current?.setItem(keyRef.current, JSON.stringify(nextValue));
+      return nextValue;
+    });
+  }, []);
+
+  const remove = useCallback(() => {
+    storageRef.current?.removeItem(keyRef.current);
+    setState(defaultValueRef.current);
+  }, []);
+
   useEffect(() => {
     const storage = storageRef.current;
     if (typeof window === "undefined" || !storage) {
@@ -32,25 +45,16 @@ function useStorage<T>(
       return;
     }
 
-    const parsedData = JSON.parse(data);
-    if (onLoadRef.current) {
-      onLoadRef.current(parsedData);
+    try {
+      const parsedData = JSON.parse(data);
+      if (onLoadRef.current) {
+        onLoadRef.current(parsedData);
+      }
+
+      setState(parsedData);
+    } catch {
+      storageRef.current?.removeItem(keyRef.current);
     }
-
-    setState(parsedData);
-  }, []);
-
-  const update = useCallback((newValue: T | ((prev: T) => T)) => {
-    setState((prev) => {
-      const nextValue = isFunction(newValue) ? newValue(prev) : newValue;
-      storageRef.current?.setItem(keyRef.current, JSON.stringify(nextValue));
-      return nextValue;
-    });
-  }, []);
-
-  const remove = useCallback(() => {
-    storageRef.current?.removeItem(keyRef.current);
-    setState(defaultValueRef.current);
   }, []);
 
   return [state, update, remove] as const;
