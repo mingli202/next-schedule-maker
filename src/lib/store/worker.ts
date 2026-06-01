@@ -38,7 +38,7 @@ export function postWorkerMessage(message: WorkerMessage) {
  * */
 export function onWorkerMessage<T extends WorkerResponse["type"]>(
   type: T,
-  handler: (event: MessageEvent<WorkerResponseOf<T>>) => void,
+  handler: (event: WorkerResponseOf<T>) => void,
 ) {
   const w = getWorker();
 
@@ -51,7 +51,7 @@ export function onWorkerMessage<T extends WorkerResponse["type"]>(
       return;
     }
 
-    handler(e);
+    handler(e.data);
   };
 
   w.addEventListener("message", f);

@@ -50,7 +50,7 @@ export function SearchResult() {
   useEffect(() => {
     const unsub = onWorkerMessage("search", (e) => {
       isFirstLoading.current = false;
-      setResults(e.data.sections);
+      setResults(e.sections);
     });
 
     return () => {

@@ -58,7 +58,7 @@ function Autobuild() {
 
   useEffect(() => {
     const unsub = onWorkerMessage("generate", (e) => {
-      setBuildingState({ type: "completed", schedules: e.data.schedules });
+      setBuildingState({ type: "completed", schedules: e.schedules });
     });
 
     return () => {
