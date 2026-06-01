@@ -9,12 +9,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
+import { Checkbox } from "src/components/ui/checkbox";
+import { Field, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
 import { useSectionStore } from "src/lib/store/section";
 import type { Code } from "src/types/autobuild";
 import Button from "@/components/Button";
-import { Checkbox } from "src/components/ui/checkbox";
 
 type Props = {
   codes: Code[];
