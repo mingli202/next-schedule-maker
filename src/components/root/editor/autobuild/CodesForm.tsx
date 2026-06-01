@@ -44,7 +44,8 @@ export default function CodesForm({ codes, setCodes, useCurrent }: Props) {
             (code) =>
               !codes.some((c) => c.code === code) &&
               (!useCurrent || !currentCodes.includes(code)),
-          ),
+          )
+          .toSorted(),
       ),
     ],
     [sectionsById, codes, currentCodes, useCurrent],
@@ -109,7 +110,12 @@ export default function CodesForm({ codes, setCodes, useCurrent }: Props) {
             ))}
           </datalist>
         </label>
-        <Button className="w-4 shrink-0 p-0" variant="basic" type="submit">
+        <Button
+          className="w-4 shrink-0 p-0"
+          variant="basic"
+          type="submit"
+          title="add"
+        >
           <Plus className="w-4" />
         </Button>
       </form>
