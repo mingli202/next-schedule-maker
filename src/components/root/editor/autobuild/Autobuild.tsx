@@ -3,9 +3,13 @@ import { useSessionStorage } from "src/hooks";
 import type { Code } from "src/types/autobuild";
 import type { SavedSection } from "src/types/schedule";
 import { Button } from "@/components";
-import CodesForm from "./Form";
+import CodesForm from "./CodesForm";
 import Loader from "./Loader";
 import Results from "./Results";
+import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
+import { Label } from "src/components/ui/label";
+import { Checkbox } from "src/components/ui/checkbox";
+import { Input } from "src/components/ui/input";
 
 function Autobuild() {
   const [isBuilding, setIsBuilding] = useState<
@@ -28,88 +32,77 @@ function Autobuild() {
     <div className="relative box-border flex h-full w-full flex-col items-center gap-2 overflow-x-hidden overflow-y-auto p-2">
       {isBuilding === "form" && (
         <>
-          <div className="flex w-full flex-col gap-2">
-            <div>
-              <h1 className="font-heading text-center text-xl">Auto Builder</h1>
-            </div>
-            <label htmlFor="useCurrent" className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="useCurrent"
-                name="useCurrent"
-                onChange={() => setUseCurrent(!useCurrent)}
-                checked={useCurrent}
-              />
-              <p>Use the current schedule as baseline</p>
-            </label>
+          <h1 className="font-heading text-center text-xl">Auto Builder</h1>
+          <Field orientation="horizontal" className="w-full">
+            <Checkbox
+              id="use-current"
+              onCheckedChange={() => setUseCurrent((prev) => !prev)}
+              checked={useCurrent}
+            />
+            <FieldLabel htmlFor="use-current">
+              Use the current schedule as baseline
+            </FieldLabel>
+          </Field>
 
-            <div className="flex gap-3">
-              <p>Days off:</p>
-              {["M", "T", "W", "R", "F"].map((day) => (
-                <label
-                  htmlFor={day}
-                  className="flex items-center gap-2"
-                  key={day}
-                >
-                  <input
-                    type="checkbox"
-                    id={day}
-                    name={day}
-                    onChange={() => {
-                      if (dayOff.includes(day)) {
-                        setDayOff(dayOff.filter((d) => d !== day));
-                      } else {
-                        setDayOff([...dayOff, day]);
-                      }
-                    }}
-                    checked={dayOff.includes(day)}
-                  />
-                  <p>{day}</p>
-                </label>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap gap-1 **:outline-none">
-              <p>Time range: </p>
-              <label className="flex gap-1" htmlFor="from">
-                <input
-                  type="time"
-                  defaultValue={time[0]}
-                  min="08:00"
-                  max="18:00"
-                  step={`${60 * 30}`}
-                  placeholder="18:00"
-                  autoComplete="off"
-                  onChange={(e) => {
-                    setTime([e.target.value, time[1]]);
+          <FieldGroup className="flex w-full flex-row gap-3">
+            <p className="text-sm">Days off:</p>
+            {["M", "T", "W", "R", "F"].map((day) => (
+              <FieldLabel htmlFor={day} key={day} className="flex w-fit gap-2">
+                <Checkbox
+                  id={day}
+                  name={day}
+                  onCheckedChange={() => {
+                    if (dayOff.includes(day)) {
+                      setDayOff(dayOff.filter((d) => d !== day));
+                    } else {
+                      setDayOff([...dayOff, day]);
+                    }
                   }}
-                  className="rounded-md text-black"
-                  id="from"
-                  name="from"
+                  checked={dayOff.includes(day)}
                 />
-              </label>
+                <p>{day}</p>
+              </FieldLabel>
+            ))}
+          </FieldGroup>
 
-              <p>to</p>
+          <div className="flex w-full flex-row flex-wrap items-center gap-1 text-sm **:outline-none">
+            <p>Time range: </p>
+            <Input
+              type="time"
+              defaultValue={time[0]}
+              min="08:00"
+              max="18:00"
+              step={`${60 * 30}`}
+              placeholder="18:00"
+              autoComplete="off"
+              onChange={(e) => {
+                setTime([e.target.value, time[1]]);
+              }}
+              id="from"
+              className="w-fit"
+              name="from"
+            />
 
-              <label className="flex gap-1" htmlFor="to">
-                <input
-                  type="time"
-                  defaultValue={time[1]}
-                  min="08:00"
-                  max="18:00"
-                  step={`${60 * 30}`}
-                  placeholder="18:00"
-                  autoComplete="off"
-                  onChange={(e) => {
-                    setTime([time[0], e.target.value]);
-                  }}
-                  className="rounded-md text-black"
-                  id="to"
-                  name="to"
-                />
-              </label>
-            </div>
+            <p>to</p>
 
+            <Input
+              type="time"
+              defaultValue={time[1]}
+              min="08:00"
+              max="18:00"
+              step={`${60 * 30}`}
+              placeholder="18:00"
+              autoComplete="off"
+              onChange={(e) => {
+                setTime([time[0], e.target.value]);
+              }}
+              className="w-fit"
+              id="to"
+              name="to"
+            />
+          </div>
+
+          <div className="w-full flex-1 overflow-x-hidden overflow-y-auto">
             <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2">
               <CodesForm
                 codes={codes}
@@ -140,22 +133,10 @@ function Autobuild() {
         />
       )}
       {isBuilding === "complete" && (
-        <>
-          <Results
-            setIsBuilding={setIsBuilding}
-            generatedSchedules={generatedSchedules}
-          />
-
-          <div className="bg-background z-10 flex w-full items-center justify-center max-md:order-first">
-            <Button
-              variant="special"
-              className="w-fit"
-              onClick={() => setIsBuilding("form")}
-            >
-              Return
-            </Button>
-          </div>
-        </>
+        <Results
+          setIsBuilding={setIsBuilding}
+          generatedSchedules={generatedSchedules}
+        />
       )}
     </div>
   );
