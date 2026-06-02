@@ -1,6 +1,5 @@
 import type {
   WorkerMessage,
-  WorkerMessageType,
   WorkerResponse,
   WorkerResponseOf,
 } from "src/types/worker";
