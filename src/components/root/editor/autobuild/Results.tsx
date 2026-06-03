@@ -11,7 +11,7 @@ const Footer = memo((props: { returnFn: () => void }) => {
 
   return (
     <div className="bg-background">
-      <Button variant="special" className="w-fit" onClick={() => returnFn()}>
+      <Button variant="special" className="w-fit" onClick={returnFn}>
         Return
       </Button>
     </div>
