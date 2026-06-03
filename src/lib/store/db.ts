@@ -110,6 +110,7 @@ export async function getGeneratedSchedulesCache(key: string) {
 export async function setGeneratedSchedulesCache(
   key: string,
   schedules: SavedSection[][],
+  abortSignal?: AbortSignal,
 ) {
   const database = await getDb();
 
@@ -125,6 +126,10 @@ export async function setGeneratedSchedulesCache(
 
   return new Promise<boolean>((resolve) => {
     const transaction = store.transaction;
+
+    if (abortSignal) {
+      abortSignal.onabort = () => transaction.abort();
+    }
 
     store.put({
       key,
@@ -146,7 +151,10 @@ export async function setGeneratedSchedulesCache(
   });
 }
 
-export async function deleteGeneratedSchedulesCache(key: string) {
+export async function deleteGeneratedSchedulesCache(
+  key: string,
+  abortSignal?: AbortSignal,
+) {
   const database = await getDb();
 
   if (!database) {
@@ -161,6 +169,10 @@ export async function deleteGeneratedSchedulesCache(key: string) {
 
   return new Promise<boolean>((resolve) => {
     const transaction = store.transaction;
+
+    if (abortSignal) {
+      abortSignal.onabort = () => transaction.abort();
+    }
 
     store.delete(key);
 
