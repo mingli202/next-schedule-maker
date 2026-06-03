@@ -116,13 +116,14 @@ function Autobuild() {
   const onReturn = useCallback(() => {
     const schedulesCacheKey = schedulesCacheKeyRef.current;
 
-    setGeneratedSchedules(null);
     schedulesCacheKeyRef.current = null;
+    initialScroll.current = 0;
+
+    setGeneratedSchedules(null);
     setCacheMetadata({
       lastScrolledIndex: 0,
       schedulesCacheKey: null,
     });
-    initialScroll.current = 0;
     setBuildingState({ type: "form" });
 
     if (schedulesCacheKey != null) {
