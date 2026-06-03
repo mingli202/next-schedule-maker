@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { memo, useCallback, useMemo } from "react";
-import { Virtuoso } from "react-virtuoso";
+import { type Components, Virtuoso } from "react-virtuoso";
 import Button from "src/components/Button";
 import { cn } from "src/lib/utils";
 import type { SavedSection } from "src/types/schedule";
@@ -55,11 +55,19 @@ type Props = {
 
 export default memo(
   ({ generatedSchedules, onReturn, onScroll, initialScroll }: Props) => {
-    const components = useMemo(
+    const components: Components<
+      {
+        sectionId: number;
+        colorIndex: number;
+      }[]
+    > = useMemo(
       () => ({
         EmptyPlaceholder: () => <NoResult />,
+        Header: () => (
+          <div>{generatedSchedules.length} schedules generated</div>
+        ),
       }),
-      [],
+      [generatedSchedules.length],
     );
 
     return (
