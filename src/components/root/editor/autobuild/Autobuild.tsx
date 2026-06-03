@@ -154,7 +154,10 @@ function Autobuild() {
       }));
 
       if (previousSchedulesCacheKey !== null) {
-        void deleteGeneratedSchedulesCache(previousSchedulesCacheKey);
+        void deleteGeneratedSchedulesCache(
+          previousSchedulesCacheKey,
+          abortController.signal,
+        );
       }
 
       void setGeneratedSchedulesCache(
