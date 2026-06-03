@@ -95,15 +95,6 @@ function Autobuild() {
     SavedSection[][] | null
   >(null);
 
-  useEffect(() => {
-    if ("schedule" in cacheMetadata) {
-      setCacheMetadata({
-        schedulesCacheKey: cacheMetadata.schedulesCacheKey ?? null,
-        lastScrolledIndex: cacheMetadata.lastScrolledIndex,
-      });
-    }
-  }, [cacheMetadata, setCacheMetadata]);
-
   const sections = useSearch({
     from: "/editor/autobuild",
     select: (s) => s.sections,
