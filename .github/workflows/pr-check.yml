@@ -65,6 +65,7 @@ jobs:
             const lint = '${{ steps.lint.outcome }}';
             const test = '${{ steps.test.outcome }}';
             const build = '${{ steps.build.outcome }}';
+            const marker = '<!-- pr-check-results -->';
 
             const icon = (outcome) => {
               if (outcome === 'success') return '✅';
@@ -74,6 +75,7 @@ jobs:
             };
 
             const body = [
+              marker,
               '## PR Check Results',
               '',
               '| Step | Result |',
@@ -83,12 +85,31 @@ jobs:
               `| Build | ${icon(build)} \`${build}\` |`,
             ].join('\n');
 
-            await github.rest.issues.createComment({
+            const comments = await github.paginate(github.rest.issues.listComments, {
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body,
             });
+
+            const previousComment = comments.find((comment) =>
+              comment.user?.login === 'github-actions[bot]' && comment.body?.includes(marker)
+            );
+
+            if (previousComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: previousComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
 
       - name: Fail if any check failed
         if: ${{ always() }}
