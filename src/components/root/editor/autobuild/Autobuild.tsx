@@ -61,7 +61,7 @@ function Autobuild() {
     "generation-cache",
   );
 
-  const [cache, setCache] = useSessionStorage<{
+  const [cacheMetadata, setCacheMetadata] = useSessionStorage<{
     schedulesCacheKey: string | null;
     lastScrolledIndex: number;
   }>(
@@ -96,13 +96,13 @@ function Autobuild() {
   >(null);
 
   useEffect(() => {
-    if ("schedule" in cache) {
-      setCache({
-        schedulesCacheKey: cache.schedulesCacheKey ?? null,
-        lastScrolledIndex: cache.lastScrolledIndex,
+    if ("schedule" in cacheMetadata) {
+      setCacheMetadata({
+        schedulesCacheKey: cacheMetadata.schedulesCacheKey ?? null,
+        lastScrolledIndex: cacheMetadata.lastScrolledIndex,
       });
     }
-  }, [cache, setCache]);
+  }, [cacheMetadata, setCacheMetadata]);
 
   const sections = useSearch({
     from: "/editor/autobuild",
@@ -127,7 +127,7 @@ function Autobuild() {
 
     setGeneratedSchedules(null);
     schedulesCacheKeyRef.current = null;
-    setCache((c) => ({
+    setCacheMetadata((c) => ({
       lastScrolledIndex: c.lastScrolledIndex,
       schedulesCacheKey: null,
     }));
@@ -136,16 +136,16 @@ function Autobuild() {
     if (schedulesCacheKey != null) {
       void deleteGeneratedSchedulesCache(schedulesCacheKey);
     }
-  }, [setCache]);
+  }, [setCacheMetadata]);
 
   const onScroll = useCallback(
     (start: number) => {
-      setCache((c) => ({
+      setCacheMetadata((c) => ({
         schedulesCacheKey: c.schedulesCacheKey,
         lastScrolledIndex: start,
       }));
     },
-    [setCache],
+    [setCacheMetadata],
   );
 
   useEffect(() => {
@@ -155,7 +155,7 @@ function Autobuild() {
 
       schedulesCacheKeyRef.current = nextSchedulesCacheKey;
       setGeneratedSchedules(e.schedules);
-      setCache((c) => ({
+      setCacheMetadata((c) => ({
         lastScrolledIndex: c.lastScrolledIndex,
         schedulesCacheKey: nextSchedulesCacheKey,
       }));
@@ -171,7 +171,7 @@ function Autobuild() {
             schedulesCacheKeyRef.current === nextSchedulesCacheKey
           ) {
             schedulesCacheKeyRef.current = null;
-            setCache((c) => ({
+            setCacheMetadata((c) => ({
               lastScrolledIndex: c.lastScrolledIndex,
               schedulesCacheKey: null,
             }));
@@ -183,7 +183,7 @@ function Autobuild() {
     return () => {
       unsub();
     };
-  }, [setCache]);
+  }, [setCacheMetadata]);
 
   return (
     <div className="relative box-border flex h-full w-full flex-col items-center gap-2 overflow-x-hidden overflow-y-auto p-2">
