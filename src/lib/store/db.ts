@@ -127,6 +127,11 @@ export async function setGeneratedSchedulesCache(
   return new Promise<boolean>((resolve) => {
     const transaction = store.transaction;
 
+    if (abortSignal?.aborted) {
+      transaction.abort();
+      resolve(false);
+    }
+
     if (abortSignal) {
       abortSignal.onabort = () => transaction.abort();
     }
@@ -169,6 +174,11 @@ export async function deleteGeneratedSchedulesCache(
 
   return new Promise<boolean>((resolve) => {
     const transaction = store.transaction;
+
+    if (abortSignal?.aborted) {
+      transaction.abort();
+      resolve(false);
+    }
 
     if (abortSignal) {
       abortSignal.onabort = () => transaction.abort();
