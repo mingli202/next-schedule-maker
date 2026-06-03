@@ -202,7 +202,7 @@ function Autobuild() {
                 <Checkbox
                   id="use-current"
                   onCheckedChange={() =>
-                    setOptions((c) => ({ ...c, useCurrent: !c.useCurrent }))
+                    setOptions((o) => ({ ...o, useCurrent: !o.useCurrent }))
                   }
                   checked={options.useCurrent}
                 />
@@ -224,14 +224,14 @@ function Autobuild() {
                       name={day}
                       onCheckedChange={() => {
                         if (options.dayOff.includes(day)) {
-                          setOptions((c) => ({
-                            ...c,
-                            dayOff: c.dayOff.filter((d) => d !== day),
+                          setOptions((o) => ({
+                            ...o,
+                            dayOff: o.dayOff.filter((d) => d !== day),
                           }));
                         } else {
-                          setOptions((c) => ({
-                            ...c,
-                            dayOff: [...c.dayOff, day],
+                          setOptions((o) => ({
+                            ...o,
+                            dayOff: [...o.dayOff, day],
                           }));
                         }
                       }}
@@ -253,9 +253,9 @@ function Autobuild() {
                   placeholder="18:00"
                   autoComplete="off"
                   onChange={(e) => {
-                    setOptions((c) => ({
-                      ...c,
-                      time: [e.target.value, c.time[1]],
+                    setOptions((o) => ({
+                      ...o,
+                      time: [e.target.value, o.time[1]],
                     }));
                   }}
                   id="from"
@@ -274,9 +274,9 @@ function Autobuild() {
                   placeholder="18:00"
                   autoComplete="off"
                   onChange={(e) => {
-                    setOptions((c) => ({
-                      ...c,
-                      time: [c.time[0], e.target.value],
+                    setOptions((o) => ({
+                      ...o,
+                      time: [o.time[0], e.target.value],
                     }));
                   }}
                   className="w-fit"
@@ -308,7 +308,8 @@ function Autobuild() {
               </div>
             </>
           )}
-          {buildingState.type === "initial-load" && <PageLoading />}
+          {/* at first show a blank screen to avoid flickering since loading is fast */}
+          {buildingState.type === "initial-load" && null}
           {buildingState.type === "building" && <PageLoading />}
         </>
       ) : (
