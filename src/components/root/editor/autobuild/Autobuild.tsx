@@ -140,6 +140,8 @@ function Autobuild() {
   );
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     const unsub = onWorkerMessage("generate", (e) => {
       const previousSchedulesCacheKey = schedulesCacheKeyRef.current;
       const nextSchedulesCacheKey = createGeneratedSchedulesCacheKey();
@@ -155,23 +157,26 @@ function Autobuild() {
         void deleteGeneratedSchedulesCache(previousSchedulesCacheKey);
       }
 
-      void setGeneratedSchedulesCache(nextSchedulesCacheKey, e.schedules).then(
-        (success) => {
-          if (
-            !success &&
-            schedulesCacheKeyRef.current === nextSchedulesCacheKey
-          ) {
-            schedulesCacheKeyRef.current = null;
-            setCacheMetadata((c) => ({
-              lastScrolledIndex: c.lastScrolledIndex,
-              schedulesCacheKey: null,
-            }));
-          }
-        },
-      );
+      void setGeneratedSchedulesCache(
+        nextSchedulesCacheKey,
+        e.schedules,
+        abortController.signal,
+      ).then((success) => {
+        if (
+          !success &&
+          schedulesCacheKeyRef.current === nextSchedulesCacheKey
+        ) {
+          schedulesCacheKeyRef.current = null;
+          setCacheMetadata((c) => ({
+            lastScrolledIndex: c.lastScrolledIndex,
+            schedulesCacheKey: null,
+          }));
+        }
+      });
     });
 
     return () => {
+      abortController.abort();
       unsub();
     };
   }, [setCacheMetadata]);
