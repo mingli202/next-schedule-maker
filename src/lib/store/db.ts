@@ -130,6 +130,7 @@ export async function setGeneratedSchedulesCache(
     if (abortSignal?.aborted) {
       transaction.abort();
       resolve(false);
+      return;
     }
 
     if (abortSignal) {
@@ -178,6 +179,7 @@ export async function deleteGeneratedSchedulesCache(
     if (abortSignal?.aborted) {
       transaction.abort();
       resolve(false);
+      return;
     }
 
     if (abortSignal) {
