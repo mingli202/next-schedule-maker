@@ -139,6 +139,12 @@ function Autobuild() {
     [setCacheMetadata],
   );
 
+  const setCodes = useCallback(
+    (fn: (code: Code[]) => Code[]) =>
+      setOptions((c) => ({ ...c, codes: fn(c.codes) })),
+    [setOptions],
+  );
+
   useEffect(() => {
     const abortController = new AbortController();
 
@@ -282,9 +288,7 @@ function Autobuild() {
                 <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-2">
                   <CodesForm
                     codes={options.codes}
-                    setCodes={(fn) =>
-                      setOptions((c) => ({ ...c, codes: fn(c.codes) }))
-                    }
+                    setCodes={setCodes}
                     useCurrent={options.useCurrent}
                   />
                 </div>
