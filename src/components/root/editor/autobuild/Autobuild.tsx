@@ -61,7 +61,7 @@ function Autobuild() {
     "generation-cache",
   );
 
-  const [cacheMetadata, setCacheMetadata] = useSessionStorage<{
+  const [_cacheMetadata, setCacheMetadata] = useSessionStorage<{
     schedulesCacheKey: string | null;
     lastScrolledIndex: number;
   }>(
@@ -197,7 +197,6 @@ function Autobuild() {
         <>
           {buildingState.type === "form" && (
             <>
-              <h1 className="font-heading text-center text-xl">Auto Builder</h1>
               <Field orientation="horizontal" className="w-full">
                 <Checkbox
                   id="use-current"
