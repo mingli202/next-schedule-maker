@@ -4,12 +4,28 @@ import { Checkbox } from "src/components/ui/checkbox";
 import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
 import { useSessionStorage } from "src/hooks";
+import {
+  deleteGeneratedSchedulesCache,
+  getGeneratedSchedulesCache,
+  setGeneratedSchedulesCache,
+} from "src/lib/store/db";
 import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
 import type { Code } from "src/types/autobuild";
 import type { SavedSection } from "src/types/schedule";
 import { Button, PageLoading } from "@/components";
 import CodesForm from "./CodesForm";
 import Results from "./Results";
+
+const GENERATED_SCHEDULES_CACHE_KEY = "latest-autobuild";
+
+function createGeneratedSchedulesCacheKey() {
+  const id =
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+  return `${GENERATED_SCHEDULES_CACHE_KEY}-${id}`;
+}
 
 type BulidingState =
   | {
@@ -24,6 +40,7 @@ type BulidingState =
 
 function Autobuild() {
   const initialScroll = useRef<number>(0);
+  const schedulesCacheKeyRef = useRef<string | null>(null);
 
   const [buildingState, setBuildingState] = useState<BulidingState>({
     type: "initial-load",
@@ -45,19 +62,47 @@ function Autobuild() {
   );
 
   const [cache, setCache] = useSessionStorage<{
-    schedules: SavedSection[][] | null;
+    schedulesCacheKey: string | null;
     lastScrolledIndex: number;
   }>(
     {
-      schedules: null,
+      schedulesCacheKey: null,
       lastScrolledIndex: 0,
     },
     "cache",
     (c) => {
       initialScroll.current = c.lastScrolledIndex;
-      setBuildingState({ type: "form" });
+      schedulesCacheKeyRef.current = c.schedulesCacheKey ?? null;
+
+      if (c.schedulesCacheKey == null) {
+        setBuildingState({ type: "form" });
+        return;
+      }
+
+      void getGeneratedSchedulesCache(c.schedulesCacheKey).then(
+        (cachedSchedules) => {
+          if (cachedSchedules !== null) {
+            setGeneratedSchedules(cachedSchedules);
+          }
+
+          setBuildingState({ type: "form" });
+        },
+      );
     },
   );
+
+  const [generatedSchedules, setGeneratedSchedules] = useState<
+    SavedSection[][] | null
+  >(null);
+
+  useEffect(() => {
+    if ("schedule" in cache) {
+      setCache({
+        schedulesCacheKey: cache.schedulesCacheKey ?? null,
+        lastScrolledIndex: cache.lastScrolledIndex,
+      });
+    }
+  }, [cache, setCache]);
 
   const sections = useSearch({
     from: "/editor/autobuild",
@@ -78,17 +123,25 @@ function Autobuild() {
   );
 
   const onReturn = useCallback(() => {
+    const schedulesCacheKey = schedulesCacheKeyRef.current;
+
+    setGeneratedSchedules(null);
+    schedulesCacheKeyRef.current = null;
     setCache((c) => ({
-      ...c,
-      schedules: null,
+      lastScrolledIndex: c.lastScrolledIndex,
+      schedulesCacheKey: null,
     }));
     setBuildingState({ type: "form" });
+
+    if (schedulesCacheKey != null) {
+      void deleteGeneratedSchedulesCache(schedulesCacheKey);
+    }
   }, [setCache]);
 
   const onScroll = useCallback(
     (start: number) => {
       setCache((c) => ({
-        ...c,
+        schedulesCacheKey: c.schedulesCacheKey,
         lastScrolledIndex: start,
       }));
     },
@@ -97,10 +150,34 @@ function Autobuild() {
 
   useEffect(() => {
     const unsub = onWorkerMessage("generate", (e) => {
+      const previousSchedulesCacheKey = schedulesCacheKeyRef.current;
+      const nextSchedulesCacheKey = createGeneratedSchedulesCacheKey();
+
+      schedulesCacheKeyRef.current = nextSchedulesCacheKey;
+      setGeneratedSchedules(e.schedules);
       setCache((c) => ({
-        ...c,
-        schedules: e.schedules,
+        lastScrolledIndex: c.lastScrolledIndex,
+        schedulesCacheKey: nextSchedulesCacheKey,
       }));
+
+      if (previousSchedulesCacheKey !== null) {
+        void deleteGeneratedSchedulesCache(previousSchedulesCacheKey);
+      }
+
+      void setGeneratedSchedulesCache(nextSchedulesCacheKey, e.schedules).then(
+        (success) => {
+          if (
+            !success &&
+            schedulesCacheKeyRef.current === nextSchedulesCacheKey
+          ) {
+            schedulesCacheKeyRef.current = null;
+            setCache((c) => ({
+              lastScrolledIndex: c.lastScrolledIndex,
+              schedulesCacheKey: null,
+            }));
+          }
+        },
+      );
     });
 
     return () => {
@@ -110,7 +187,7 @@ function Autobuild() {
 
   return (
     <div className="relative box-border flex h-full w-full flex-col items-center gap-2 overflow-x-hidden overflow-y-auto p-2">
-      {cache.schedules === null ? (
+      {generatedSchedules === null ? (
         <>
           {buildingState.type === "form" && (
             <>
@@ -227,11 +304,12 @@ function Autobuild() {
               </div>
             </>
           )}
+          {buildingState.type === "initial-load" && <PageLoading />}
           {buildingState.type === "building" && <PageLoading />}
         </>
       ) : (
         <Results
-          generatedSchedules={cache.schedules}
+          generatedSchedules={generatedSchedules}
           onReturn={onReturn}
           onScroll={onScroll}
           initialScroll={initialScroll.current}
