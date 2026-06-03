@@ -1,6 +1,6 @@
 import type { SavedSection } from "src/types/schedule";
 
-const DB_NAME = "asf";
+const DB_NAME = "schedule-maker";
 const DB_VERSION = 2;
 const GENERATED_SCHEDULES_CACHE_STORE = "generated-schedules-cache";
 
@@ -59,7 +59,7 @@ export async function getDb() {
     };
   });
 
-  db = await openingDb.catch(() => null);
+  db = await openingDb;
   openingDb = null;
 
   return db;
