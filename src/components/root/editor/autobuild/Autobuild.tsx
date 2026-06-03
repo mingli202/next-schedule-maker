@@ -118,10 +118,11 @@ function Autobuild() {
 
     setGeneratedSchedules(null);
     schedulesCacheKeyRef.current = null;
-    setCacheMetadata((c) => ({
-      lastScrolledIndex: c.lastScrolledIndex,
+    setCacheMetadata({
+      lastScrolledIndex: 0,
       schedulesCacheKey: null,
-    }));
+    });
+    initialScroll.current = 0;
     setBuildingState({ type: "form" });
 
     if (schedulesCacheKey != null) {
