@@ -27,7 +27,7 @@ function createGeneratedSchedulesCacheKey() {
   return `${GENERATED_SCHEDULES_CACHE_KEY}-${id}`;
 }
 
-type BulidingState =
+type BuildingState =
   | {
       type: "initial-load";
     }
@@ -42,7 +42,7 @@ function Autobuild() {
   const initialScroll = useRef<number>(0);
   const schedulesCacheKeyRef = useRef<string | null>(null);
 
-  const [buildingState, setBuildingState] = useState<BulidingState>({
+  const [buildingState, setBuildingState] = useState<BuildingState>({
     type: "initial-load",
   });
 
