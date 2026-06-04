@@ -406,7 +406,7 @@ function ARange(props: ARangeProps) {
             <Input
               type="number"
               autoComplete="off"
-              id={`${name}Max`}
+              id={`arange-${code.code}${name}Max`}
               min={0}
               max={name === "rating" ? 5 : 100}
               placeholder={name === "rating" ? "5" : "100"}
