@@ -51,6 +51,8 @@ export default function CodesForm({ codes, setCodes, useCurrent }: Props) {
     [sectionsById, codes, currentCodes, useCurrent],
   );
 
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   const submit = useCallback(
     (e: SubmitEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -60,11 +62,12 @@ export default function CodesForm({ codes, setCodes, useCurrent }: Props) {
         return;
       }
       ref.current.reset();
+      setSubmitError(null);
 
       const newInput = formdata.get("extraCode");
       if (!newInput) return;
       if (!codesDatalist.includes(newInput.toString())) {
-        alert("Invlid code");
+        setSubmitError("Invalid code");
         return;
       }
 
@@ -92,32 +95,35 @@ export default function CodesForm({ codes, setCodes, useCurrent }: Props) {
       ))}
 
       <form
-        className="group bg-secondary/50 hover:bg-secondary flex items-center gap-2 rounded-md p-2 transition"
+        className="group bg-secondary/50 hover:bg-secondary flex flex-col gap-2 rounded-md p-2 transition"
         ref={ref}
         onSubmit={submit}
       >
-        <label htmlFor="extraCode" className="w-full">
-          <input
-            id="extraCode"
-            name="extraCode"
-            className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
-            placeholder="Add code..."
-            list="codes"
-          />
-          <datalist id="codes">
-            {codesDatalist.map((code) => (
-              <option value={code} key={`${code}`} />
-            ))}
-          </datalist>
-        </label>
-        <Button
-          className="w-4 shrink-0 p-0"
-          variant="basic"
-          type="submit"
-          title="add"
-        >
-          <Plus className="w-4" />
-        </Button>
+        <div className="flex w-full items-center gap-2">
+          <label htmlFor="extraCode" className="w-full">
+            <input
+              id="extraCode"
+              name="extraCode"
+              className="bg-background group-hover:bg-bg-secondary w-full rounded-md p-2 transition outline-none"
+              placeholder="Add code..."
+              list="codes"
+            />
+            <datalist id="codes">
+              {codesDatalist.map((code) => (
+                <option value={code} key={`${code}`} />
+              ))}
+            </datalist>
+          </label>
+          <Button
+            className="w-4 shrink-0 p-0"
+            variant="basic"
+            type="submit"
+            title="add"
+          >
+            <Plus className="w-4" />
+          </Button>
+        </div>
+        {submitError && <p className="text-destructive">{submitError}</p>}
       </form>
     </>
   );
