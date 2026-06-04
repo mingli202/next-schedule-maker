@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Save } from "lucide-react";
 import { Fragment } from "react";
 import { getColorFromIndex } from "src/lib/colors";
 import { useSectionStore } from "src/lib/store/section";
@@ -116,7 +116,9 @@ function Schedule({
             variant="basic"
             className="w-fit"
             onClick={() => onScheduleSaved(schedule)}
-          ></Button>
+          >
+            <Save />
+          </Button>
 
           <Button
             variant="basic"
