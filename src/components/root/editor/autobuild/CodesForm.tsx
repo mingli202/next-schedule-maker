@@ -220,24 +220,16 @@ function ACodeForm(props: ACodeFormProps) {
             const ratingRange =
               c.ratingRange === undefined ? {} : { ...c.ratingRange };
 
-            if (nmin !== undefined) {
-              ratingRange.from = nmin;
-            }
-            if (nmax !== undefined) {
-              ratingRange.to = nmax;
-            }
+            ratingRange.from = nmin;
+            ratingRange.to = nmax;
 
             return { ...c, ratingRange };
           } else {
             const scoreRange =
               c.scoreRange === undefined ? {} : { ...c.scoreRange };
 
-            if (nmin !== undefined) {
-              scoreRange.from = nmin;
-            }
-            if (nmax !== undefined) {
-              scoreRange.to = nmax;
-            }
+            scoreRange.from = nmin;
+            scoreRange.to = nmax;
 
             return { ...c, scoreRange };
           }
