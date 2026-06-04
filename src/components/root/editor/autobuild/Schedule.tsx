@@ -53,7 +53,7 @@ function Schedule({
 
                   return (
                     <div
-                      key={`${day + section.code + section.section}${i}`}
+                      key={`autobuild-schedule-section-${index}${day}${section.code}${section.section}${i}`}
                       style={{
                         backgroundColor: bgColor,
                         color: textColor,
@@ -86,7 +86,7 @@ function Schedule({
 
             return (
               <div
-                key={`${bgColor}${i.toString()}`}
+                key={`autobuild-schedule-legend-${index}${bgColor}${i.toString()}${sectionId}${section.code}`}
                 className="flex items-center gap-2 text-sm"
               >
                 <div
