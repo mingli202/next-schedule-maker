@@ -211,7 +211,7 @@ function ACodeForm(props: ACodeFormProps) {
           if (
             nmin === undefined &&
             nmax === undefined &&
-            c.ratingRange === undefined
+            (type === "rating" ? c.ratingRange : c.scoreRange) === undefined
           ) {
             return c; // skip creating empty range
           }
