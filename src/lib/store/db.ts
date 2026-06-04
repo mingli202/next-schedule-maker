@@ -133,8 +133,10 @@ export async function setGeneratedSchedulesCache(
       return;
     }
 
+    let abortfn: (() => void) | undefined;
     if (abortSignal) {
-      abortSignal.addEventListener("abort", () => transaction.abort());
+      abortfn = () => transaction.abort();
+      abortSignal.addEventListener("abort", abortfn);
     }
 
     store.put({
@@ -143,9 +145,19 @@ export async function setGeneratedSchedulesCache(
       updatedAt: Date.now(),
     } satisfies GeneratedSchedulesCacheRecord);
 
-    transaction.oncomplete = () => resolve(true);
+    transaction.oncomplete = () => {
+      if (abortfn) {
+        abortSignal?.removeEventListener("abort", abortfn);
+      }
+
+      resolve(true);
+    };
 
     transaction.onerror = () => {
+      if (abortfn) {
+        abortSignal?.removeEventListener("abort", abortfn);
+      }
+
       console.error("Could not write generated schedules cache");
       resolve(false);
     };
@@ -182,15 +194,27 @@ export async function deleteGeneratedSchedulesCache(
       return;
     }
 
+    let abortfn: (() => void) | undefined;
     if (abortSignal) {
-      abortSignal.addEventListener("abort", () => transaction.abort());
+      abortfn = () => transaction.abort();
+      abortSignal.addEventListener("abort", abortfn);
     }
 
     store.delete(key);
 
-    transaction.oncomplete = () => resolve(true);
+    transaction.oncomplete = () => {
+      if (abortfn) {
+        abortSignal?.removeEventListener("abort", abortfn);
+      }
+
+      resolve(true);
+    };
 
     transaction.onerror = () => {
+      if (abortfn) {
+        abortSignal?.removeEventListener("abort", abortfn);
+      }
+
       console.error("Could not delete generated schedules cache");
       resolve(false);
     };
