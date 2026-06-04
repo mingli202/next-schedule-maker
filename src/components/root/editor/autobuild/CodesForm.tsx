@@ -193,6 +193,14 @@ function ACodeForm(props: ACodeFormProps) {
             return c;
           }
 
+          if (
+            nmin === undefined &&
+            nmax === undefined &&
+            c.ratingRange === undefined
+          ) {
+            return c; // skip creating empty range
+          }
+
           if (type === "rating") {
             const ratingRange =
               c.ratingRange === undefined ? {} : { ...c.ratingRange };
