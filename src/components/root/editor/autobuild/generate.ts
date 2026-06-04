@@ -91,8 +91,9 @@ export default function generate(
   return toReturn
     .filter(
       (s) =>
+        s.length !== 0 &&
         s.length ===
-        codes.length + currentSections.length * (useCurrent ? 1 : 0),
+          codes.length + currentSections.length * (useCurrent ? 1 : 0),
     )
     .collect();
 }
