@@ -134,7 +134,7 @@ export async function setGeneratedSchedulesCache(
     }
 
     if (abortSignal) {
-      abortSignal.onabort = () => transaction.abort();
+      abortSignal.addEventListener("abort", () => transaction.abort());
     }
 
     store.put({
@@ -183,7 +183,7 @@ export async function deleteGeneratedSchedulesCache(
     }
 
     if (abortSignal) {
-      abortSignal.onabort = () => transaction.abort();
+      abortSignal.addEventListener("abort", () => transaction.abort());
     }
 
     store.delete(key);
