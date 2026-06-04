@@ -399,7 +399,10 @@ function ARange(props: ARangeProps) {
       {open && (
         <div className="bg-background ring-ring absolute z-10 flex w-32 flex-col gap-2 rounded-md p-2 no-underline shadow ring-1 shadow-black">
           <div className="flex gap-1">
-            <FieldLabel htmlFor={`${name}Min`} className="shrink-0">
+            <FieldLabel
+              htmlFor={`arange-${code.code}${name}Min`}
+              className="shrink-0"
+            >
               from
             </FieldLabel>
             <Input
@@ -415,7 +418,10 @@ function ARange(props: ARangeProps) {
             />
           </div>
           <div className="flex gap-1">
-            <FieldLabel htmlFor={`${name}Max`} className="shrink-0">
+            <FieldLabel
+              htmlFor={`arange-${code.code}${name}Max`}
+              className="shrink-0"
+            >
               to
             </FieldLabel>
             <Input
