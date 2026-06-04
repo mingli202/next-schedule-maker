@@ -32,7 +32,10 @@ export async function getDb() {
   const req = indexedDB.open(DB_NAME, DB_VERSION);
 
   openingDb = new Promise((resolve) => {
+    let timeOut = false;
+
     const t = setTimeout(() => {
+      timeOut = true;
       console.error("Opening database timed out");
       resolve(null);
     }, 5000);
@@ -49,6 +52,11 @@ export async function getDb() {
 
     req.onsuccess = () => {
       clearTimeout(t);
+
+      if (timeOut) {
+        return req.result.close();
+      }
+
       resolve(req.result);
     };
 
