@@ -22,6 +22,8 @@ type Props = {
   useCurrent: boolean;
 };
 
+const codeKey = (codes: string[]) => codes.toSorted().join("\0");
+
 export default function CodesForm({ codes, setCodes, useCurrent }: Props) {
   const ref = useRef<HTMLFormElement>(null);
   const { sectionsById } = useSectionStore();
@@ -31,25 +33,38 @@ export default function CodesForm({ codes, setCodes, useCurrent }: Props) {
     select: (s) => s.sections,
   });
 
-  const currentCodes = currentSections
-    .map((cl) => sectionsById.get(cl.sectionId)?.code)
-    .filter((s) => s !== undefined);
+  const selectedCodesKey = useMemo(
+    () => codeKey(codes.map((code) => code.code)),
+    [codes],
+  );
 
-  const codesDatalist = useMemo(
-    () => [
+  const currentCodesKey = useMemo(
+    () =>
+      codeKey(
+        currentSections
+          .map((cl) => sectionsById.get(cl.sectionId)?.code)
+          .filter((code) => code !== undefined),
+      ),
+    [currentSections, sectionsById],
+  );
+
+  const codesDatalist = useMemo(() => {
+    const selectedCodes = new Set(selectedCodesKey.split("\0").filter(Boolean));
+    const currentCodes = new Set(currentCodesKey.split("\0").filter(Boolean));
+
+    return [
       ...new Set(
         Array.from(sectionsById.values())
           .map((cl) => cl.code)
           .filter(
             (code) =>
-              !codes.some((c) => c.code === code) &&
-              (!useCurrent || !currentCodes.includes(code)),
+              !selectedCodes.has(code) &&
+              (!useCurrent || !currentCodes.has(code)),
           )
           .toSorted(),
       ),
-    ],
-    [sectionsById, codes, currentCodes, useCurrent],
-  );
+    ];
+  }, [sectionsById, selectedCodesKey, currentCodesKey, useCurrent]);
 
   const [submitError, setSubmitError] = useState<string | null>(null);
 
