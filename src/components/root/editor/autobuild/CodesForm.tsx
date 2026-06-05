@@ -195,12 +195,12 @@ function ACodeForm(props: ACodeFormProps) {
   );
 
   const onRangeChanged = useCallback(
-    (type: "rating" | "score", range: { from?: string; to?: string }) => {
+    (type: "rating" | "score", range: { from: string; to: string }) => {
       const min = range.from;
       const max = range.to;
 
-      const nmin = (min ?? "") === "" ? undefined : Number(min);
-      const nmax = (max ?? "") === "" ? undefined : Number(max);
+      const nmin = min === "" ? undefined : Number(min);
+      const nmax = max === "" ? undefined : Number(max);
 
       setCodes((codes) =>
         codes.map((c) => {
@@ -211,7 +211,7 @@ function ACodeForm(props: ACodeFormProps) {
           if (
             nmin === undefined &&
             nmax === undefined &&
-            c.ratingRange === undefined
+            (type === "rating" ? c.ratingRange : c.scoreRange) === undefined
           ) {
             return c; // skip creating empty range
           }
@@ -342,8 +342,8 @@ type ARangeProps = {
   onRangeChanged: (
     type: "rating" | "score",
     range: {
-      from?: string;
-      to?: string;
+      from: string;
+      to: string;
     },
   ) => void;
 };
@@ -413,7 +413,7 @@ function ARange(props: ARangeProps) {
               max={name === "rating" ? 5 : 100}
               placeholder="0"
               step={1}
-              onChange={(e) => onRangeChanged(name, { from: e.target.value })}
+              onChange={(e) => onRangeChanged(name, { from: e.target.value, to: "" })}
               defaultValue={displayMin}
             />
           </div>
@@ -432,7 +432,7 @@ function ARange(props: ARangeProps) {
               max={name === "rating" ? 5 : 100}
               placeholder={name === "rating" ? "5" : "100"}
               step={1}
-              onChange={(e) => onRangeChanged(name, { to: e.target.value })}
+              onChange={(e) => onRangeChanged(name, { from: "", to: e.target.value })}
               defaultValue={displayMax}
             />
           </div>
