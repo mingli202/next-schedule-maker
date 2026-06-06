@@ -27,6 +27,21 @@ const filterByProfessor = (iter: Iter<SectionResponse>, prof: string) =>
       );
 
 /**
+ * Section where there exsist one leclab.prof that includes the given prof
+ * */
+export const filterByProfessors = (
+  iter: Iter<SectionResponse>,
+  profs: string[],
+) =>
+  profs.length === 0
+    ? iter
+    : iter.filter((section) =>
+        section.leclabs.some((leclab) =>
+          profs.some((prof) => includes(leclab.prof, prof)),
+        ),
+      );
+
+/**
  * Section where every prof of every leclab has a higher avg than minRating
  *
  * Section where there does not exist a leclab such that
@@ -34,7 +49,10 @@ const filterByProfessor = (iter: Iter<SectionResponse>, prof: string) =>
  * leclab.rating.status is not found or
  * leclab.avg is less than the minRating allowed
  * */
-const filterByMinRating = (iter: Iter<SectionResponse>, minRating: number) =>
+export const filterByMinRating = (
+  iter: Iter<SectionResponse>,
+  minRating: number,
+) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
@@ -53,7 +71,10 @@ const filterByMinRating = (iter: Iter<SectionResponse>, minRating: number) =>
  * leclab.rating.status is not found or
  * leclab.avg is more than the maxRating allowed
  * */
-const filterByMaxRating = (iter: Iter<SectionResponse>, maxRating: number) =>
+export const filterByMaxRating = (
+  iter: Iter<SectionResponse>,
+  maxRating: number,
+) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
@@ -72,7 +93,10 @@ const filterByMaxRating = (iter: Iter<SectionResponse>, maxRating: number) =>
  * leclab.rating.status is not found or
  * leclab.score is less than the minScore allowed
  * */
-const filterByMinScore = (iter: Iter<SectionResponse>, minScore: number) =>
+export const filterByMinScore = (
+  iter: Iter<SectionResponse>,
+  minScore: number,
+) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
@@ -91,7 +115,10 @@ const filterByMinScore = (iter: Iter<SectionResponse>, minScore: number) =>
  * leclab.rating.status is not found or
  * leclab.score is more than the maxScore allowed
  * */
-const filterByMaxScore = (iter: Iter<SectionResponse>, maxScore: number) =>
+export const filterByMaxScore = (
+  iter: Iter<SectionResponse>,
+  maxScore: number,
+) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
@@ -105,7 +132,7 @@ const filterByMaxScore = (iter: Iter<SectionResponse>, maxScore: number) =>
 /**
  * Section where Section.code includes the given code
  * */
-const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
+export const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
   code.trim() === ""
     ? iter
     : iter.filter((section) => includes(section.code, code));
@@ -117,7 +144,10 @@ const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
  * there exist a dayTime such that
  * dayTime.startTimeHhmm is less than the given timeStart
  * */
-const filterByTimeStart = (iter: Iter<SectionResponse>, timeStart: string) => {
+export const filterByTimeStart = (
+  iter: Iter<SectionResponse>,
+  timeStart: string,
+) => {
   const normalized = normalizeTime(timeStart);
   if (!normalized) return iter;
 
@@ -136,7 +166,10 @@ const filterByTimeStart = (iter: Iter<SectionResponse>, timeStart: string) => {
  * there exist a dayTime such that
  * dayTime.endTimeHhmm is more than the given timeEnd
  * */
-const filterByTimeEnd = (iter: Iter<SectionResponse>, timeEnd: string) => {
+export const filterByTimeEnd = (
+  iter: Iter<SectionResponse>,
+  timeEnd: string,
+) => {
   const normalized = normalizeTime(timeEnd);
   if (!normalized) return iter;
 
@@ -191,7 +224,7 @@ const filterByDomain = (iter: Iter<SectionResponse>, domain: string) =>
  * there exist a dayTime such that
  * any day dayTime.day is in daysOff
  * */
-const filterByDaysOff = (iter: Iter<SectionResponse>, daysOff: string) =>
+export const filterByDaysOff = (iter: Iter<SectionResponse>, daysOff: string) =>
   iter.filter(
     (section) =>
       !section.leclabs.some((leclab) =>

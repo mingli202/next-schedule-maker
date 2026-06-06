@@ -1,52 +1,90 @@
-"use client";
-
-import { Class, SharedCurrentClasses } from "@/types";
-import { useEffect, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { memo, useCallback, useMemo } from "react";
+import { type Components, Virtuoso } from "react-virtuoso";
+import Button from "src/components/Button";
+import { cn } from "src/lib/utils";
+import type { SavedSection } from "src/types/schedule";
 import Schedule from "./Schedule";
 
-type Props = {
-  setIsBuilding: React.Dispatch<
-    React.SetStateAction<"form" | "building" | "complete">
-  >;
-  allClasses: Record<string, Class>;
-  generatedSchedules: SharedCurrentClasses[][];
-};
-
-function Results({ setIsBuilding, generatedSchedules, allClasses }: Props) {
-  const [over, setOver] = useState(0);
-  const [scroll, setScroll] = useState(0);
-
-  useEffect(() => {
-    setIsBuilding("complete");
-  }, [setIsBuilding]);
+const Footer = memo((props: { returnFn: () => void }) => {
+  const { returnFn } = props;
 
   return (
-    <div
-      className="relative flex h-[80dvh] w-full flex-col gap-2 overflow-y-auto overflow-x-hidden rounded-md md:h-full"
-      onScroll={(e) => setScroll(e.currentTarget.scrollTop)}
-    >
-      {generatedSchedules.length === 0 ? (
-        <p>No schedule can be made.</p>
-      ) : (
-        <>
-          <p>Generated {generatedSchedules.length} schedules</p>
-          {generatedSchedules.map(
-            (schedule, i) =>
-              i <= over + 10 && (
-                <Schedule
-                  key={i}
-                  schedule={schedule}
-                  allClasses={allClasses}
-                  scroll={scroll}
-                  setOver={setOver}
-                  index={i}
-                />
-              ),
-          )}
-        </>
-      )}
+    <div className="bg-background">
+      <Button variant="special" className="w-fit" onClick={returnFn}>
+        Return
+      </Button>
     </div>
   );
-}
+});
 
-export default Results;
+const NoResult = memo(() => <p>No schedule can be made.</p>);
+
+const MemoizedSchedule = memo(
+  ({ index, schedule }: { index: number; schedule: SavedSection[] }) => {
+    const navigate = useNavigate({ from: "/editor/autobuild" });
+
+    const onScheduleSelected = useCallback(() => {
+      navigate({
+        search: (prev) => ({
+          ...prev,
+          sections: schedule,
+        }),
+      });
+    }, [navigate, schedule]);
+
+    return (
+      <div className={cn(index !== 0 && "pt-2")}>
+        <Schedule
+          index={index}
+          schedule={schedule}
+          onScheduleSelected={onScheduleSelected}
+          onScheduleSaved={() => {}}
+        />
+      </div>
+    );
+  },
+);
+
+type Props = {
+  generatedSchedules: SavedSection[][];
+  onReturn: () => void;
+  onScroll: (topScrollIndex: number) => void;
+  initialScroll: number;
+};
+
+export default memo(
+  ({ generatedSchedules, onReturn, onScroll, initialScroll }: Props) => {
+    const components: Components<
+      {
+        sectionId: number;
+        colorIndex: number;
+      }[]
+    > = useMemo(
+      () => ({
+        EmptyPlaceholder: () => <NoResult />,
+        Header: () => (
+          <div>{generatedSchedules.length} schedules generated</div>
+        ),
+      }),
+      [generatedSchedules.length],
+    );
+
+    return (
+      <>
+        <Virtuoso
+          components={components}
+          initialTopMostItemIndex={initialScroll}
+          style={{ overflowX: "hidden", width: "100%" }}
+          data={generatedSchedules}
+          rangeChanged={(range) => onScroll(range.startIndex)}
+          overscan={200}
+          itemContent={(index, schedule) => (
+            <MemoizedSchedule index={index} schedule={schedule} />
+          )}
+        />
+        <Footer returnFn={onReturn} />
+      </>
+    );
+  },
+);

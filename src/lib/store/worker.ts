@@ -1,7 +1,7 @@
 import type {
   WorkerMessage,
-  WorkerMessageType,
-  WorkerResponseMap,
+  WorkerResponse,
+  WorkerResponseOf,
 } from "src/types/worker";
 
 let worker: Worker | null = null;
@@ -35,8 +35,9 @@ export function postWorkerMessage(message: WorkerMessage) {
  * Listens to incoming worker message
  * @returns callback to detach message handler
  * */
-export function onWorkerMessage<T extends WorkerMessageType>(
-  handler: (event: MessageEvent<WorkerResponseMap[T]>) => void,
+export function onWorkerMessage<T extends WorkerResponse["type"]>(
+  type: T,
+  handler: (event: WorkerResponseOf<T>) => void,
 ) {
   const w = getWorker();
 
@@ -44,10 +45,18 @@ export function onWorkerMessage<T extends WorkerMessageType>(
     return () => {};
   }
 
-  w.addEventListener("message", handler);
+  const f = (e: MessageEvent<WorkerResponse>) => {
+    if (!isWorkerResponseOfType(e, type)) {
+      return;
+    }
+
+    handler(e.data);
+  };
+
+  w.addEventListener("message", f);
 
   return () => {
-    w.removeEventListener("message", handler);
+    w.removeEventListener("message", f);
   };
 }
 
@@ -57,4 +66,11 @@ export function onWorkerMessage<T extends WorkerMessageType>(
 export function terminateWorker() {
   worker?.terminate();
   worker = null;
+}
+
+function isWorkerResponseOfType<T extends WorkerResponse["type"]>(
+  event: MessageEvent<WorkerResponse>,
+  type: T,
+): event is MessageEvent<WorkerResponseOf<T>> {
+  return event.data.type === type;
 }

@@ -1,9 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import Autobuild from "src/components/root/editor/autobuild/Autobuild";
 
-export const Route = createFileRoute('/editor/autobuild')({
-  component: RouteComponent,
-})
-
-function RouteComponent() {
-  return <div>Hello "/editor/autobuild"!</div>
-}
+export const Route = createFileRoute("/editor/autobuild")({
+  component: Autobuild,
+});

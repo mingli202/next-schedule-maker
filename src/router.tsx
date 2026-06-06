@@ -39,6 +39,7 @@ export const getRouter = () => {
 
     defaultNotFoundComponent: () => <NotFound />,
     defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
+    defaultStructuralSharing: true,
 
     Wrap: ({ children }) => (
       <ConvexClientProvider client={convexQueryClient.convexClient}>

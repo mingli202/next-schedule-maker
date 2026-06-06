@@ -10,7 +10,7 @@ function RouteComponent() {
   const navigate = useNavigate({ from: "/editor/settings" });
 
   return (
-    <div className="relative flex h-full w-full flex-col gap-4 rounded-md p-4">
+    <div className="relative flex h-full w-full flex-col gap-4 rounded-md p-2">
       <h1 className="font-heading shrink-0 text-xl">Options</h1>
       <SettingCard
         title="Live search"

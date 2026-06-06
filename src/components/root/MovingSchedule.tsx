@@ -87,15 +87,15 @@ export function MovingSchedule({ index, lastRef, pauseRef }: Props) {
   useEffect(() => {
     isStopped.current = false;
 
-    const unSub = onWorkerMessage<"mini-generate">((e) => {
-      if (e.data.index !== index) {
+    const unSub = onWorkerMessage("mini-generate", (e) => {
+      if (e.index !== index) {
         return;
       }
-      if (e.data.schedule.length === 0) {
+      if (e.schedule.length === 0) {
         requestNewSchedule();
         return;
       }
-      setSchedule(e.data.schedule);
+      setSchedule(e.schedule);
       isGenerating.current = false;
     });
 

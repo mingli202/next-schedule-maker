@@ -1,10 +1,7 @@
+import generate from "src/components/root/editor/autobuild/generate";
 import { filterDown } from "src/lib/schedule/filterDown";
 import type { SectionStore } from "src/types";
-import type {
-  WorkerMessage,
-  WorkerResponse,
-  WorkerResponseMap,
-} from "src/types/worker";
+import type { WorkerMessage, WorkerResponse } from "src/types/worker";
 import miniGenerate from "@/lib/mini-generate";
 
 let sectionStore: SectionStore | null = null;
@@ -27,18 +24,47 @@ function messageHandler(
       const sch = miniGenerate(sectionStore.sectionsById);
 
       return {
+        type: data.type,
         schedule: sch,
         index: data.index,
-      } satisfies WorkerResponseMap[typeof data.type];
+      };
     }
     case "search": {
       if (!sectionStore) {
-        return { sections: [] };
+        return {
+          type: data.type,
+          sections: [],
+        };
       }
 
       const sections = filterDown(sectionStore, data.search);
 
-      return { sections } satisfies WorkerResponseMap[typeof data.type];
+      return {
+        type: data.type,
+        sections,
+      };
+    }
+    case "generate": {
+      if (!sectionStore) {
+        return {
+          type: data.type,
+          schedules: [],
+        };
+      }
+
+      const schedules = generate(
+        data.codes,
+        data.currentSections,
+        data.useCurrent,
+        data.dayOff,
+        data.time,
+        sectionStore.sectionsById,
+      );
+
+      return {
+        type: data.type,
+        schedules,
+      };
     }
   }
 }

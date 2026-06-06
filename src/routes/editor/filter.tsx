@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { type SubmitEvent, useCallback, useMemo, useState } from "react";
 import { Button } from "src/components";
+import { Checkbox } from "src/components/ui/checkbox";
 import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
 import { Label } from "src/components/ui/label";
@@ -128,7 +129,7 @@ function RouteComponent() {
   );
 
   return (
-    <div className="flex-1 overflow-x-hidden overflow-y-auto p-4 pb-0">
+    <div className="flex-1 overflow-x-hidden overflow-y-auto p-2 pb-0">
       <form
         className="relative flex w-full flex-col gap-4"
         onSubmit={handleSubmit}
@@ -364,15 +365,13 @@ function RouteComponent() {
           <div className="flex flex-wrap items-center gap-3">
             {["M", "T", "W", "R", "F"].map((day) => (
               <Label key={day} htmlFor={day}>
-                <span>{day}</span>
-                <input
+                <Checkbox
                   name="day"
                   value={day}
-                  type="checkbox"
                   id={day}
                   defaultChecked={search.daysOff?.includes(day)}
-                  className="accent-primary h-4 w-4"
                 />
+                <span>{day}</span>
               </Label>
             ))}
           </div>
@@ -380,24 +379,20 @@ function RouteComponent() {
 
         <div className="flex flex-wrap items-center gap-3">
           <Label htmlFor="honours">
-            <span>Honours</span>
-            <input
+            <Checkbox
               name="honours"
-              type="checkbox"
               id="honours"
               defaultChecked={search.honours}
-              className="accent-primary h-4 w-4"
             />
+            <span>Honours</span>
           </Label>
           <Label htmlFor="blended">
-            <span>Blended</span>
-            <input
+            <Checkbox
               name="blended"
-              type="checkbox"
               id="blended"
               defaultChecked={search.blended}
-              className="accent-primary h-4 w-4"
             />
+            <span>Blended</span>
           </Label>
         </div>
 
@@ -417,6 +412,7 @@ function RouteComponent() {
               });
 
               setCourse("");
+              setDomain("");
               setTitle("");
               setCode("");
             }}
