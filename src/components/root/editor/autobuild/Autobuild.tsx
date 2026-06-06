@@ -15,6 +15,7 @@ import type { SavedSection } from "src/types/schedule";
 import { Button, PageLoading } from "@/components";
 import CodesForm from "./CodesForm";
 import Results from "./Results";
+import { SessionStorageKey } from "src/lib/storageKeys";
 
 const GENERATED_SCHEDULES_CACHE_KEY = "latest-autobuild";
 
@@ -58,7 +59,7 @@ function Autobuild() {
       dayOff: [],
       time: ["00:00", "23:59"],
     },
-    "generation-cache",
+    SessionStorageKey.AutobuilderOptions,
   );
 
   const [_cacheMetadata, setCacheMetadata] = useSessionStorage<{
@@ -69,7 +70,7 @@ function Autobuild() {
       schedulesCacheKey: null,
       lastScrolledIndex: 0,
     },
-    "cache",
+    SessionStorageKey.AutobuilderGenerationCacheMetadata,
     (c) => {
       initialScroll.current = c.lastScrolledIndex;
       schedulesCacheKeyRef.current = c.schedulesCacheKey ?? null;
