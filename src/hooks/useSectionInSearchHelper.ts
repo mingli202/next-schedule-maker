@@ -43,6 +43,7 @@ export function useSectionInSearchHelper(sectionId: number) {
 
     if (canAddSection()) {
       navigate({
+        to: ".",
         search: (prev) => ({
           ...prev,
           sections: [
@@ -59,6 +60,7 @@ export function useSectionInSearchHelper(sectionId: number) {
 
   const removeSection = useCallback(() => {
     navigate({
+      to: ".",
       search: (prev) => ({
         ...prev,
         sections: prev.sections.filter(
