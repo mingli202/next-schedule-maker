@@ -68,6 +68,7 @@ export function useSavedSchedule() {
       }
 
       if (isAuthenticated) {
+        console.log("setting in convex");
         createSchedule({
           name,
           source,
@@ -76,6 +77,7 @@ export function useSavedSchedule() {
         return;
       }
 
+      console.log("setting in indexedDb");
       const id = generateId();
       const now = Date.now();
 
@@ -104,6 +106,7 @@ export function useSavedSchedule() {
       }
 
       if (isAuthenticated) {
+        console.log("updating in convex");
         updateSchedule({
           name: name,
           scheduleId: scheduleId as Id<"schedules">,
@@ -111,6 +114,7 @@ export function useSavedSchedule() {
         return;
       }
 
+      console.log("updating in indexedDb");
       setLocalSavedSchedules((oldSchedules) => {
         if (!oldSchedules) {
           return null;
@@ -138,21 +142,21 @@ export function useSavedSchedule() {
       }
 
       if (isAuthenticated) {
+        console.log(`deleting ${scheduleId} in convex`);
         removeSchedule({
           scheduleId: scheduleId as Id<"schedules">,
         });
         return;
       }
 
+      console.log(`deleting ${scheduleId} in indexedDb`);
       setLocalSavedSchedules((prev) => {
         const savedSchedules = prev?.savedSchedules ?? [];
 
         return {
           key: SAVED_SCHEDULES_KEY,
           updatedAt: Date.now(),
-          savedSchedules: savedSchedules.filter(
-            (_schedule, index) => String(index) !== scheduleId,
-          ),
+          savedSchedules: savedSchedules.filter((s) => s.id !== scheduleId),
         };
       });
     },

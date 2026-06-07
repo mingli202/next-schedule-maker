@@ -47,6 +47,7 @@ export function useIndexedDb<T extends IndexedDbStoreName>(
     ) => {
       setValue((prev) => {
         const nextValue = isFunction(newValue) ? newValue(prev) : newValue;
+        console.log("nextValue:", nextValue);
 
         if (nextValue == null) {
           indexedDbDelete(
@@ -69,7 +70,7 @@ export function useIndexedDb<T extends IndexedDbStoreName>(
     [],
   );
 
-  const remove = useCallback(() => set(null), [set]);
+  const deleteStore = useCallback(() => set(null), [set]);
 
-  return { value, set, remove, error } as const;
+  return { value, set, deleteStore, error } as const;
 }
