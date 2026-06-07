@@ -4,6 +4,7 @@ import { Checkbox } from "src/components/ui/checkbox";
 import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
 import { useSessionStorage } from "src/hooks";
+import { SessionStorageKey } from "src/lib/storageKeys";
 import {
   deleteGeneratedSchedulesCache,
   getGeneratedSchedulesCache,
@@ -15,7 +16,6 @@ import type { SavedSection } from "src/types/schedule";
 import { Button, PageLoading } from "@/components";
 import CodesForm from "./CodesForm";
 import Results from "./Results";
-import { SessionStorageKey } from "src/lib/storageKeys";
 
 const GENERATED_SCHEDULES_CACHE_KEY = "latest-autobuild";
 
@@ -59,7 +59,7 @@ function Autobuild() {
       dayOff: [],
       time: ["00:00", "23:59"],
     },
-    SessionStorageKey.AutobuilderOptions,
+    SessionStorageKey.AUTOBUILDER_OPTIONS,
   );
 
   const [_cacheMetadata, setCacheMetadata] = useSessionStorage<{
@@ -70,7 +70,7 @@ function Autobuild() {
       schedulesCacheKey: null,
       lastScrolledIndex: 0,
     },
-    SessionStorageKey.AutobuilderGenerationCacheMetadata,
+    SessionStorageKey.AUTOBUILDER_GENERATION_CACHE_METADATA,
     (c) => {
       initialScroll.current = c.lastScrolledIndex;
       schedulesCacheKeyRef.current = c.schedulesCacheKey ?? null;
@@ -83,7 +83,7 @@ function Autobuild() {
       void getGeneratedSchedulesCache(c.schedulesCacheKey).then(
         (cachedSchedules) => {
           if (cachedSchedules !== null) {
-            setGeneratedSchedules(cachedSchedules);
+            setGeneratedSchedules(cachedSchedules.schedules);
           }
 
           setBuildingState({ type: "form" });
