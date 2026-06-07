@@ -1,7 +1,13 @@
 import type { SavedSchedule } from "convex/types";
 import { type HTMLMotionProps, motion } from "framer-motion";
 import { CircleCheck, CircleX, Trash } from "lucide-react";
-import { type HTMLAttributes, useCallback, useState } from "react";
+import {
+  type HTMLAttributes,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { getColorFromIndex } from "src/lib/colors";
 import { useSectionStore } from "src/lib/store/section";
 import { cn } from "src/lib/utils";
@@ -26,6 +32,7 @@ function ScheduleCard({
   onScheduleNameChange,
   ...props
 }: Props & HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div">) {
+  const editRef = useRef<HTMLDivElement>(null);
   const { sectionsById } = useSectionStore();
 
   const [editName, setEditName] = useState(false);
@@ -38,6 +45,28 @@ function ScheduleCard({
     },
     [onScheduleNameChange, schedule.id],
   );
+
+  const onEdit = useCallback(() => {
+    if (disableEdit) return;
+
+    setEditName(true);
+  }, [disableEdit]);
+
+  useEffect(() => {
+    const f = (e: PointerEvent) => {
+      if (!editRef.current) return;
+      if (!(e.target instanceof Node)) return;
+      if (editRef.current.contains(e.target)) return;
+
+      setEditName(false);
+    };
+
+    document.body.addEventListener("click", f);
+
+    return () => {
+      document.body.removeEventListener("click", f);
+    };
+  }, []);
 
   return (
     <motion.div
@@ -59,9 +88,6 @@ function ScheduleCard({
           "col-span-5 row-[span_20/span_20] grid h-20 w-full shrink-0 cursor-pointer grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md bg-slate-300 transition hover:bg-slate-300/90",
         )}
         title="select"
-        onClick={() => {
-          onScheduleSelect(schedule.id);
-        }}
       >
         {schedule.sections.map(({ sectionId, colorIndex }) => {
           const sch = sectionsById.get(sectionId);
@@ -91,7 +117,11 @@ function ScheduleCard({
         })}
       </button>
 
-      <div className="flex h-full items-center justify-between gap-2">
+      <div
+        className="flex h-full items-center justify-between gap-2"
+        id="asdf"
+        ref={editRef}
+      >
         {editName ? (
           <form
             className="bg-background box-border flex basis-full items-center overflow-hidden rounded-md"
@@ -126,19 +156,7 @@ function ScheduleCard({
             <button
               type="button"
               className={cn(!disableEdit && "cursor-pointer", "line-clamp-1")}
-              onClick={() => {
-                if (disableEdit) return;
-
-                document.getRootNode().addEventListener(
-                  "click",
-                  () => {
-                    setEditName(false);
-                  },
-                  { once: true },
-                );
-
-                setEditName(true);
-              }}
+              onClick={onEdit}
               title="edit"
             >
               {schedule.name && schedule.name !== ""
