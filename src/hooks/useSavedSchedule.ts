@@ -6,25 +6,15 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
+import { useIndexedDb } from "src/hooks/useIndexedDb";
 import { IndexedDbKey, LocalStorageKey } from "src/lib/storageKeys";
-import { indexedDbGet, indexedDbSet } from "src/lib/store/db";
-import type { SavedSection } from "src/types/schedule";
+import type {
+  SavedSchedule,
+  SaveScheduleInput,
+} from "src/types/savedSchedule";
 
 const SAVED_SCHEDULES_KEY = LocalStorageKey.SAVED_SCHEDULES;
-
-export type SavedSchedule = {
-  id: string;
-  name: string;
-  source: string;
-  sections: Array<SavedSection>;
-};
-
-export type SaveScheduleInput = {
-  name?: string;
-  source?: string;
-  sections: Array<SavedSection>;
-};
 
 /**
  * Loads saved schedules from Convex when authenticated, otherwise uses IndexedDB.
@@ -32,7 +22,11 @@ export type SaveScheduleInput = {
  * */
 export function useSavedSchedule() {
   const { isAuthenticated, isLoading } = useConvexAuth();
-  const [localSchedules, setLocalSchedules] = useState<Array<SavedSchedule>>([]);
+  const {
+    value: localSavedSchedules,
+    update: updateLocalSavedSchedules,
+    error: localSavedSchedulesError,
+  } = useIndexedDb(IndexedDbKey.SAVED_SCHEDULES_STORE, SAVED_SCHEDULES_KEY);
 
   const schedulesQuery = useQuery(
     convexQuery(
@@ -57,35 +51,6 @@ export function useSavedSchedule() {
     mutationFn: useConvexMutation(api.schedules.mutations.deleteSchedule),
   });
 
-  useEffect(() => {
-    if (isLoading || isAuthenticated) {
-      return;
-    }
-
-    let ignore = false;
-
-    indexedDbGet(IndexedDbKey.SAVED_SCHEDULES_STORE, SAVED_SCHEDULES_KEY).then(
-      (record) => {
-        if (ignore) {
-          return;
-        }
-
-        setLocalSchedules(
-          (record?.savedSchedules ?? []).map((sections, index) => ({
-            id: String(index),
-            name: `Schedule ${index + 1}`,
-            source: "indexed-db",
-            sections,
-          })),
-        );
-      },
-    );
-
-    return () => {
-      ignore = true;
-    };
-  }, [isAuthenticated, isLoading]);
-
   const setSavedSchedule = useCallback(
     (schedule: SaveScheduleInput) => {
       const name = schedule.name ?? "Untitled";
@@ -104,25 +69,17 @@ export function useSavedSchedule() {
         return;
       }
 
-      setLocalSchedules((prev) => {
-        const next = [
-          ...prev,
-          {
-            id: String(prev.length),
-            name,
-            source,
-            sections: schedule.sections,
-          },
-        ];
+      updateLocalSavedSchedules((prev) => {
+        const savedSchedules = prev?.savedSchedules ?? [];
 
-        indexedDbSet(IndexedDbKey.SAVED_SCHEDULES_STORE, SAVED_SCHEDULES_KEY, {
-          savedSchedules: next.map(({ sections }) => sections),
-        });
-
-        return next;
+        return {
+          key: SAVED_SCHEDULES_KEY,
+          updatedAt: Date.now(),
+          savedSchedules: [...savedSchedules, schedule.sections],
+        };
       });
     },
-    [createSchedule, isAuthenticated, isLoading],
+    [createSchedule, isAuthenticated, isLoading, updateLocalSavedSchedules],
   );
 
   const deleteSavedSchedule = useCallback(
@@ -138,23 +95,29 @@ export function useSavedSchedule() {
         return;
       }
 
-      setLocalSchedules((prev) => {
-        const next = prev
-          .filter((schedule) => schedule.id !== scheduleId)
-          .map((schedule, index) => ({
-            ...schedule,
-            id: String(index),
-          }));
+      updateLocalSavedSchedules((prev) => {
+        const savedSchedules = prev?.savedSchedules ?? [];
 
-        indexedDbSet(IndexedDbKey.SAVED_SCHEDULES_STORE, SAVED_SCHEDULES_KEY, {
-          savedSchedules: next.map(({ sections }) => sections),
-        });
-
-        return next;
+        return {
+          key: SAVED_SCHEDULES_KEY,
+          updatedAt: Date.now(),
+          savedSchedules: savedSchedules.filter(
+            (_schedule, index) => String(index) !== scheduleId,
+          ),
+        };
       });
     },
-    [isAuthenticated, isLoading, removeSchedule],
+    [isAuthenticated, isLoading, removeSchedule, updateLocalSavedSchedules],
   );
+
+  const localSchedules: Array<SavedSchedule> = (
+    localSavedSchedules?.savedSchedules ?? []
+  ).map((sections, index) => ({
+    id: String(index),
+    name: `Schedule ${index + 1}`,
+    source: "indexed-db",
+    sections,
+  }));
 
   const schedules = isAuthenticated
     ? (schedulesQuery.data ?? []).map((schedule) => ({
@@ -174,7 +137,11 @@ export function useSavedSchedule() {
       (isAuthenticated && schedulesQuery.isPending) ||
       isCreatingSchedule ||
       isDeletingSchedule,
-    error: schedulesQuery.error ?? createScheduleError ?? deleteScheduleError,
+    error:
+      schedulesQuery.error ??
+      createScheduleError ??
+      deleteScheduleError ??
+      localSavedSchedulesError,
   } as const;
 }
 
