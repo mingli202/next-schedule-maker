@@ -3,7 +3,7 @@ import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import type { SavedSchedule, SavedScheduleInput } from "convex/types";
-import { useCallback } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIndexedDb } from "src/hooks/useIndexedDb";
 import { IndexedDbKey } from "src/lib/storageKeys";
 import { generateId } from "src/lib/utils";
@@ -17,6 +17,13 @@ const SAVED_SCHEDULES_KEY = IndexedDbKey.SAVED_SCHEDULES_STORE;
  * */
 export function useSavedSchedule() {
   const { isAuthenticated, isLoading } = useConvexAuth();
+
+  const [pendingSchedules, setPendingSchedules] = useState<SavedSchedule[]>([]);
+  const [clientToServerIdMap, setClientToServerIdMap] = useState<
+    Record<string, Id<"schedules">>
+  >({});
+  const pendingDeleteOnCreateRef = useRef(new Set<string>());
+
   const {
     value: localSavedSchedules,
     set: setLocalSavedSchedules,
@@ -28,31 +35,15 @@ export function useSavedSchedule() {
     isAuthenticated ? {} : "skip",
   );
 
-  const createSchedule = useMutation(
-    api.schedules.mutations.createSchedule,
-  ).withOptimisticUpdate((localStore, args) => {
-    const schedules = localStore.getQuery(api.schedules.queries.getSchedules, {});
-
-    if (!schedules) {
-      return;
-    }
-
-    localStore.setQuery(api.schedules.queries.getSchedules, {}, [
-      ...schedules,
-      {
-        id: generateId(),
-        creationTime: Date.now(),
-        name: args.name,
-        source: args.source,
-        sections: args.sections,
-      },
-    ]);
-  });
+  const createSchedule = useMutation(api.schedules.mutations.createSchedule);
 
   const updateSchedule = useMutation(
     api.schedules.mutations.updateSchedule,
   ).withOptimisticUpdate((localStore, args) => {
-    const schedules = localStore.getQuery(api.schedules.queries.getSchedules, {});
+    const schedules = localStore.getQuery(
+      api.schedules.queries.getSchedules,
+      {},
+    );
 
     if (!schedules) {
       return;
@@ -76,7 +67,10 @@ export function useSavedSchedule() {
   const removeSchedule = useMutation(
     api.schedules.mutations.deleteSchedule,
   ).withOptimisticUpdate((localStore, args) => {
-    const schedules = localStore.getQuery(api.schedules.queries.getSchedules, {});
+    const schedules = localStore.getQuery(
+      api.schedules.queries.getSchedules,
+      {},
+    );
 
     if (!schedules) {
       return;
@@ -99,12 +93,53 @@ export function useSavedSchedule() {
       }
 
       if (isAuthenticated) {
-        console.log("setting in convex");
-        createSchedule({
+        const optimisticId = generateId();
+
+        setPendingSchedules((prev) => [
+          ...prev,
+          {
+            id: optimisticId,
+            creationTime: Date.now(),
+            name,
+            source,
+            sections: schedule.sections,
+          },
+        ]);
+
+        void createSchedule({
           name,
           source,
           sections: schedule.sections,
-        });
+        })
+          .then((createdScheduleId) => {
+            if (!createdScheduleId) {
+              setPendingSchedules((prev) =>
+                prev.filter((s) => s.id !== optimisticId),
+              );
+              return;
+            }
+
+            if (pendingDeleteOnCreateRef.current.has(optimisticId)) {
+              pendingDeleteOnCreateRef.current.delete(optimisticId);
+              setPendingSchedules((prev) =>
+                prev.filter((s) => s.id !== optimisticId),
+              );
+              void removeSchedule({
+                scheduleId: createdScheduleId,
+              });
+              return;
+            }
+
+            setClientToServerIdMap((prev) => ({
+              ...prev,
+              [optimisticId]: createdScheduleId,
+            }));
+          })
+          .catch(() => {
+            setPendingSchedules((prev) =>
+              prev.filter((s) => s.id !== optimisticId),
+            );
+          });
         return;
       }
 
@@ -127,7 +162,13 @@ export function useSavedSchedule() {
         } satisfies IndexedDbRecordWithoutKey<"saved-schedules-store">;
       });
     },
-    [createSchedule, isAuthenticated, isLoading, setLocalSavedSchedules],
+    [
+      createSchedule,
+      isAuthenticated,
+      isLoading,
+      removeSchedule,
+      setLocalSavedSchedules,
+    ],
   );
 
   const updateSavedScheduleName = useCallback(
@@ -137,10 +178,25 @@ export function useSavedSchedule() {
       }
 
       if (isAuthenticated) {
-        console.log("updating in convex");
+        const pendingSchedule = pendingSchedules.find(
+          (s) => s.id === scheduleId,
+        );
+
+        if (pendingSchedule && !clientToServerIdMap[scheduleId]) {
+          setPendingSchedules((prev) =>
+            prev.map((schedule) =>
+              schedule.id === scheduleId ? { ...schedule, name } : schedule,
+            ),
+          );
+          return;
+        }
+
+        const resolvedScheduleId =
+          clientToServerIdMap[scheduleId] ?? (scheduleId as Id<"schedules">);
+
         updateSchedule({
           name: name,
-          scheduleId: scheduleId as Id<"schedules">,
+          scheduleId: resolvedScheduleId,
         });
         return;
       }
@@ -163,7 +219,14 @@ export function useSavedSchedule() {
         } satisfies IndexedDbRecordWithoutKey<"saved-schedules-store">;
       });
     },
-    [isLoading, isAuthenticated, updateSchedule, setLocalSavedSchedules],
+    [
+      isLoading,
+      isAuthenticated,
+      pendingSchedules,
+      clientToServerIdMap,
+      updateSchedule,
+      setLocalSavedSchedules,
+    ],
   );
 
   const deleteSavedSchedule = useCallback(
@@ -173,9 +236,23 @@ export function useSavedSchedule() {
       }
 
       if (isAuthenticated) {
-        console.log(`deleting ${scheduleId} in convex`);
+        const pendingSchedule = pendingSchedules.find(
+          (s) => s.id === scheduleId,
+        );
+
+        if (pendingSchedule && !clientToServerIdMap[scheduleId]) {
+          pendingDeleteOnCreateRef.current.add(scheduleId);
+          setPendingSchedules((prev) =>
+            prev.filter((s) => s.id !== scheduleId),
+          );
+          return;
+        }
+
+        const resolvedScheduleId =
+          clientToServerIdMap[scheduleId] ?? (scheduleId as Id<"schedules">);
+
         removeSchedule({
-          scheduleId: scheduleId as Id<"schedules">,
+          scheduleId: resolvedScheduleId,
         });
         return;
       }
@@ -191,13 +268,84 @@ export function useSavedSchedule() {
         };
       });
     },
-    [isAuthenticated, isLoading, removeSchedule, setLocalSavedSchedules],
+    [
+      isAuthenticated,
+      isLoading,
+      pendingSchedules,
+      clientToServerIdMap,
+      removeSchedule,
+      setLocalSavedSchedules,
+    ],
   );
 
   const localSchedules: SavedSchedule[] =
     localSavedSchedules?.savedSchedules ?? [];
 
-  const schedules = isAuthenticated ? (schedulesQuery ?? []) : localSchedules;
+  useEffect(() => {
+    if (!isAuthenticated || !schedulesQuery || pendingSchedules.length === 0) {
+      return;
+    }
+
+    const serverIds = new Set(schedulesQuery.map((schedule) => schedule.id));
+
+    setPendingSchedules((prev) =>
+      prev.filter((schedule) => {
+        const serverId = clientToServerIdMap[schedule.id];
+
+        if (!serverId) {
+          return true;
+        }
+
+        return !serverIds.has(serverId);
+      }),
+    );
+  }, [
+    isAuthenticated,
+    schedulesQuery,
+    pendingSchedules.length,
+    clientToServerIdMap,
+  ]);
+
+  const schedules = useMemo(() => {
+    if (!isAuthenticated) {
+      return localSchedules;
+    }
+
+    const serverToClientIdMap = new Map<string, string>(
+      Object.entries(clientToServerIdMap).map(([clientId, serverId]) => [
+        serverId,
+        clientId,
+      ]),
+    );
+
+    const serverSchedules = (schedulesQuery ?? []).map((schedule) => {
+      const aliasedId = serverToClientIdMap.get(schedule.id);
+
+      if (!aliasedId) {
+        return schedule;
+      }
+
+      return {
+        ...schedule,
+        id: aliasedId,
+      };
+    });
+
+    const serverScheduleIds = new Set(
+      serverSchedules.map((schedule) => schedule.id),
+    );
+    const onlyPending = pendingSchedules.filter(
+      (schedule) => !serverScheduleIds.has(schedule.id),
+    );
+
+    return [...serverSchedules, ...onlyPending];
+  }, [
+    isAuthenticated,
+    localSchedules,
+    schedulesQuery,
+    clientToServerIdMap,
+    pendingSchedules,
+  ]);
 
   const isInitialLoading =
     isLoading || (isAuthenticated && schedulesQuery === undefined);
