@@ -23,7 +23,7 @@ export function useSavedSchedule() {
   const { isAuthenticated, isLoading } = useConvexAuth();
   const {
     value: localSavedSchedules,
-    update: updateLocalSavedSchedules,
+    set: setLocalSavedSchedules,
     error: localSavedSchedulesError,
   } = useIndexedDb(IndexedDbKey.SAVED_SCHEDULES_STORE, SAVED_SCHEDULES_KEY);
 
@@ -40,6 +40,14 @@ export function useSavedSchedule() {
     error: createScheduleError,
   } = useMutation({
     mutationFn: useConvexMutation(api.schedules.mutations.createSchedule),
+  });
+
+  const {
+    mutate: updateSchedule,
+    isPending: isUpdatingSchedule,
+    error: updateScheduleError,
+  } = useMutation({
+    mutationFn: useConvexMutation(api.schedules.mutations.updateSchedule),
   });
 
   const {
@@ -71,7 +79,7 @@ export function useSavedSchedule() {
       const id = generateId();
       const now = Date.now();
 
-      updateLocalSavedSchedules((prev) => {
+      setLocalSavedSchedules((prev) => {
         const savedSchedules = prev?.savedSchedules ?? [];
 
         return {
@@ -86,7 +94,37 @@ export function useSavedSchedule() {
         } satisfies IndexedDbRecordWithoutKey<"saved-schedules-store">;
       });
     },
-    [createSchedule, isAuthenticated, isLoading, updateLocalSavedSchedules],
+    [createSchedule, isAuthenticated, isLoading, setLocalSavedSchedules],
+  );
+
+  const updateSavedSchedule = useCallback(
+    (newSchedule: SavedSchedule) => {
+      if (isLoading) {
+        return;
+      }
+
+      if (isAuthenticated) {
+        updateSchedule({
+          name: newSchedule.name,
+          scheduleId: newSchedule.id as Id<"schedules">,
+          source: newSchedule.source,
+        });
+        return;
+      }
+
+      setLocalSavedSchedules((oldSchedules) => {
+        if (!oldSchedules) {
+          return null;
+        }
+
+        return {
+          savedSchedules: oldSchedules.savedSchedules.map((s) =>
+            s.id === newSchedule.id ? newSchedule : s,
+          ),
+        };
+      });
+    },
+    [isLoading, isAuthenticated, updateSchedule, setLocalSavedSchedules],
   );
 
   const deleteSavedSchedule = useCallback(
@@ -102,7 +140,7 @@ export function useSavedSchedule() {
         return;
       }
 
-      updateLocalSavedSchedules((prev) => {
+      setLocalSavedSchedules((prev) => {
         const savedSchedules = prev?.savedSchedules ?? [];
 
         return {
@@ -114,7 +152,7 @@ export function useSavedSchedule() {
         };
       });
     },
-    [isAuthenticated, isLoading, removeSchedule, updateLocalSavedSchedules],
+    [isAuthenticated, isLoading, removeSchedule, setLocalSavedSchedules],
   );
 
   const localSchedules: SavedSchedule[] =
@@ -128,14 +166,17 @@ export function useSavedSchedule() {
     schedules,
     setSavedSchedule,
     deleteSavedSchedule,
+    updateSavedSchedule,
     isLoading:
       isLoading ||
       (isAuthenticated && schedulesQuery.isPending) ||
       isCreatingSchedule ||
+      isUpdatingSchedule ||
       isDeletingSchedule,
     error:
       schedulesQuery.error ??
       createScheduleError ??
+      updateScheduleError ??
       deleteScheduleError ??
       localSavedSchedulesError,
   } as const;
