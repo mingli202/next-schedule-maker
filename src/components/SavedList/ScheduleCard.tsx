@@ -10,7 +10,7 @@ import Button from "../Button";
 type Props = {
   schedule: SavedSchedule;
   disableEdit?: boolean;
-  selectedId: string;
+  selectedId?: string;
   onScheduleSelect: (scheduleId: string) => void;
   onScheduleDelete: (scheduleId: string) => void;
   onSheduleNameChange: (oldName: string, newName: string) => void;
