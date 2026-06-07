@@ -6,13 +6,12 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
+import type { SavedSchedule, SavedScheduleInput } from "convex/types";
 import { useCallback } from "react";
 import { useIndexedDb } from "src/hooks/useIndexedDb";
 import { IndexedDbKey, LocalStorageKey } from "src/lib/storageKeys";
-import type {
-  SavedSchedule,
-  SaveScheduleInput,
-} from "src/types/savedSchedule";
+import { generateId } from "src/lib/utils";
+import type { IndexedDbRecordWithoutKey } from "src/types/indexedDb";
 
 const SAVED_SCHEDULES_KEY = LocalStorageKey.SAVED_SCHEDULES;
 
@@ -52,7 +51,7 @@ export function useSavedSchedule() {
   });
 
   const setSavedSchedule = useCallback(
-    (schedule: SaveScheduleInput) => {
+    (schedule: SavedScheduleInput) => {
       const name = schedule.name ?? "Untitled";
       const source = schedule.source ?? "default";
 
@@ -69,14 +68,22 @@ export function useSavedSchedule() {
         return;
       }
 
+      const id = generateId();
+      const now = Date.now();
+
       updateLocalSavedSchedules((prev) => {
         const savedSchedules = prev?.savedSchedules ?? [];
 
         return {
-          key: SAVED_SCHEDULES_KEY,
-          updatedAt: Date.now(),
-          savedSchedules: [...savedSchedules, schedule.sections],
-        };
+          savedSchedules: [
+            ...savedSchedules,
+            {
+              ...schedule,
+              id,
+              creationTime: now,
+            },
+          ],
+        } satisfies IndexedDbRecordWithoutKey<"saved-schedules-store">;
       });
     },
     [createSchedule, isAuthenticated, isLoading, updateLocalSavedSchedules],
@@ -110,22 +117,11 @@ export function useSavedSchedule() {
     [isAuthenticated, isLoading, removeSchedule, updateLocalSavedSchedules],
   );
 
-  const localSchedules: Array<SavedSchedule> = (
-    localSavedSchedules?.savedSchedules ?? []
-  ).map((sections, index) => ({
-    id: String(index),
-    name: `Schedule ${index + 1}`,
-    source: "indexed-db",
-    sections,
-  }));
+  const localSchedules: SavedSchedule[] =
+    localSavedSchedules?.savedSchedules ?? [];
 
   const schedules = isAuthenticated
-    ? (schedulesQuery.data ?? []).map((schedule) => ({
-        id: schedule._id,
-        name: schedule.name,
-        source: schedule.source,
-        sections: schedule.sections,
-      }))
+    ? (schedulesQuery.data ?? [])
     : localSchedules;
 
   return {
@@ -149,7 +145,7 @@ export function useCreateSchedule() {
   const { setSavedSchedule, deleteSavedSchedule, ...rest } = useSavedSchedule();
 
   const update = useCallback(
-    (schedule: SaveScheduleInput) => {
+    (schedule: SavedScheduleInput) => {
       setSavedSchedule(schedule);
     },
     [setSavedSchedule],
