@@ -5,7 +5,7 @@ export const SessionStorageKey = {
 } as const;
 
 export const LocalStorageKey = {
-  SAVED_SCHEDULES: "saved-schedules",
+  DISMISS_LOGGEDOUT_NOTICE: "dismiss-loggedout-notice",
 } as const;
 
 export const IndexedDbKey = {

@@ -9,11 +9,11 @@ import type { Id } from "convex/_generated/dataModel";
 import type { SavedSchedule, SavedScheduleInput } from "convex/types";
 import { useCallback } from "react";
 import { useIndexedDb } from "src/hooks/useIndexedDb";
-import { IndexedDbKey, LocalStorageKey } from "src/lib/storageKeys";
+import { IndexedDbKey } from "src/lib/storageKeys";
 import { generateId } from "src/lib/utils";
 import type { IndexedDbRecordWithoutKey } from "src/types/indexedDb";
 
-const SAVED_SCHEDULES_KEY = LocalStorageKey.SAVED_SCHEDULES;
+const SAVED_SCHEDULES_KEY = IndexedDbKey.SAVED_SCHEDULES_STORE;
 
 /**
  * Loads saved schedules from Convex when authenticated, otherwise uses IndexedDB.
