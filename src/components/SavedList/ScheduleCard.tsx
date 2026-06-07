@@ -84,7 +84,7 @@ function ScheduleCard({
                   gridRowEnd: end,
                   backgroundColor: bgColor,
                 }}
-                key={`${sch.code + sch.section + day}${schedule.id}`}
+                key={`${sch.code}-${sch.section}-${day}-${schedule.id}-${start}-${end}`}
               />
             );
           });
