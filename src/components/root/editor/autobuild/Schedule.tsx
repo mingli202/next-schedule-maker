@@ -46,14 +46,14 @@ function Schedule({
 
             return (
               <Fragment
-                key={`${sectionId}${index}${section.code}${section.section}`}
+                key={`${sectionId}${index.toString()}${section.code}${section.section}`}
               >
                 {section.viewData.map((c, i) => {
                   const [day, [start, end]] = Object.entries(c)[0];
 
                   return (
                     <div
-                      key={`autobuild-schedule-section-${index}${day}${section.code}${section.section}${i}`}
+                      key={`autobuild-schedule-section-${index.toString()}${day}${section.code}${section.section}${i.toString()}`}
                       style={{
                         backgroundColor: bgColor,
                         color: textColor,

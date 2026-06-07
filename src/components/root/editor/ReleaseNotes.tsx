@@ -94,7 +94,7 @@ export default function ReleaseNotes() {
                   {version} {currentVersion === version ? "(Latest)" : null}
                 </p>
                 {details.map((detail, i) => (
-                  <li key={i}>{detail}</li>
+                  <li key={i.toString() + detail}>{detail}</li>
                 ))}
               </ul>
             ))}
