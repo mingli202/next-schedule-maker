@@ -5,6 +5,7 @@ import { Button, PageLoading } from "src/components";
 import SavedList from "src/components/SavedList";
 import { useSavedSchedule } from "src/hooks/useSavedSchedule";
 import { CurrentScheduleSectionsLegend } from "./CurrentScheduleSectionsLegend";
+import { LoginIndicator } from "./LoginIndicator";
 
 export default function SavedSchedules() {
   const navigate = useNavigate({ from: "/editor/saved" });
@@ -66,6 +67,8 @@ export default function SavedSchedules() {
         onSheduleNameChange={updateSavedScheduleName}
         savedSchedules={schedules}
       />
+
+      <LoginIndicator />
 
       <CurrentScheduleSectionsLegend />
     </div>
