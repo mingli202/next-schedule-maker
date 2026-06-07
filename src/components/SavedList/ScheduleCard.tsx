@@ -42,7 +42,7 @@ function ScheduleCard({
   return (
     <motion.div
       className={cn(
-        "bg-bg-secondary flex h-fit w-full flex-col gap-1 rounded-md p-1 transition",
+        "bg-secondary/50 flex h-fit w-full flex-col gap-1 rounded-md p-1 transition",
         {
           "bg-secondary": selectedId === schedule.id,
         },
@@ -56,7 +56,7 @@ function ScheduleCard({
       <button
         type="button"
         className={cn(
-          "bg-slate hover:bg-slate/90 col-span-5 row-[span_20/span_20] grid h-20 w-full shrink-0 cursor-pointer grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md transition",
+          "col-span-5 row-[span_20/span_20] grid h-20 w-full shrink-0 cursor-pointer grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md bg-slate-300 transition hover:bg-slate-300/90",
         )}
         title="select"
         onClick={() => {
