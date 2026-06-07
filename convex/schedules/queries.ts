@@ -7,9 +7,11 @@ export const getSchedules = query({
 
     if (!user) return;
 
-    return await ctx.db
+    const schedules = await ctx.db
       .query("schedules")
       .withIndex("by_userId_source", (q) => q.eq("userId", user._id))
       .collect();
+
+    return schedules;
   },
 });

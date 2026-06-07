@@ -6,6 +6,7 @@ const schema = defineSchema({
   users: defineTable({
     firebaseId: v.string(),
     collectionPolicy: CollectionPolicy,
+    schedulesVersion: v.number(),
   }).index("by_firebaseId", ["firebaseId"]),
 
   schedules: defineTable({
