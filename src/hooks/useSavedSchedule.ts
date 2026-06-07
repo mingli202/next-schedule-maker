@@ -28,11 +28,66 @@ export function useSavedSchedule() {
     isAuthenticated ? {} : "skip",
   );
 
-  const createSchedule = useMutation(api.schedules.mutations.createSchedule);
+  const createSchedule = useMutation(
+    api.schedules.mutations.createSchedule,
+  ).withOptimisticUpdate((localStore, args) => {
+    const schedules = localStore.getQuery(api.schedules.queries.getSchedules, {});
 
-  const updateSchedule = useMutation(api.schedules.mutations.updateSchedule);
+    if (!schedules) {
+      return;
+    }
 
-  const removeSchedule = useMutation(api.schedules.mutations.deleteSchedule);
+    localStore.setQuery(api.schedules.queries.getSchedules, {}, [
+      ...schedules,
+      {
+        id: generateId(),
+        creationTime: Date.now(),
+        name: args.name,
+        source: args.source,
+        sections: args.sections,
+      },
+    ]);
+  });
+
+  const updateSchedule = useMutation(
+    api.schedules.mutations.updateSchedule,
+  ).withOptimisticUpdate((localStore, args) => {
+    const schedules = localStore.getQuery(api.schedules.queries.getSchedules, {});
+
+    if (!schedules) {
+      return;
+    }
+
+    localStore.setQuery(
+      api.schedules.queries.getSchedules,
+      {},
+      schedules.map((schedule) =>
+        schedule.id === args.scheduleId
+          ? {
+              ...schedule,
+              ...(args.name !== undefined ? { name: args.name } : {}),
+              ...(args.source !== undefined ? { source: args.source } : {}),
+            }
+          : schedule,
+      ),
+    );
+  });
+
+  const removeSchedule = useMutation(
+    api.schedules.mutations.deleteSchedule,
+  ).withOptimisticUpdate((localStore, args) => {
+    const schedules = localStore.getQuery(api.schedules.queries.getSchedules, {});
+
+    if (!schedules) {
+      return;
+    }
+
+    localStore.setQuery(
+      api.schedules.queries.getSchedules,
+      {},
+      schedules.filter((schedule) => schedule.id !== args.scheduleId),
+    );
+  });
 
   const setSavedSchedule = useCallback(
     (schedule: SavedScheduleInput) => {
