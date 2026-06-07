@@ -105,6 +105,8 @@ function ScheduleCard({
               id="name"
               className="bg-background w-full outline-none"
               defaultValue={schedule.name}
+              // biome-ignore lint/a11y/noAutofocus: no, this is peak
+              autoFocus
             />
             <Button variant="basic" type="submit" className="shrink-0 p-1">
               <CircleCheck className="h-3 w-3 md:h-4 md:w-4" />
