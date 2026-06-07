@@ -18,14 +18,22 @@ export function useIndexedDb<T extends IndexedDbStoreName>(
   const keyRef = useRef(key);
   const storeNameRef = useRef(storeName);
   const onLoadRef = useRef(onLoad);
-  const abortController = useRef(new AbortController());
+  const writeQueueRef = useRef<Promise<unknown>>(Promise.resolve());
 
   const [value, setValue] = useState<IndexedDbRecordWithoutKey<T> | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
+
     indexedDbGet(storeNameRef.current, keyRef.current).then((res) => {
+      if (cancelled) {
+        return;
+      }
+
       setValue(res);
+
+      console.log("got value from indexeddb", res);
 
       if (onLoadRef.current) {
         onLoadRef.current(res);
@@ -33,7 +41,7 @@ export function useIndexedDb<T extends IndexedDbStoreName>(
     });
 
     return () => {
-      abortController.current.abort();
+      cancelled = true;
     };
   }, []);
 
@@ -49,20 +57,21 @@ export function useIndexedDb<T extends IndexedDbStoreName>(
         const nextValue = isFunction(newValue) ? newValue(prev) : newValue;
         console.log("nextValue:", nextValue);
 
-        if (nextValue == null) {
-          indexedDbDelete(
-            storeNameRef.current,
-            keyRef.current,
-            abortController.current.signal,
-          ).catch((e) => setError(e));
-        } else {
-          indexedDbSet(
-            storeNameRef.current,
-            keyRef.current,
-            nextValue,
-            abortController.current.signal,
-          ).catch((e) => setError(e));
-        }
+        writeQueueRef.current = writeQueueRef.current
+          .then(() => {
+            if (nextValue == null) {
+              return indexedDbDelete(storeNameRef.current, keyRef.current);
+            }
+
+            return indexedDbSet(
+              storeNameRef.current,
+              keyRef.current,
+              nextValue,
+            );
+          })
+          .catch((e) => {
+            setError(String(e));
+          });
 
         return nextValue;
       });
