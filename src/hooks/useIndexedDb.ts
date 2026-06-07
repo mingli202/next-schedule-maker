@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { indexedDbDelete, indexedDbGet, indexedDbSet } from "src/lib/store/db";
 import { isFunction } from "src/lib/utils";
-import type { IndexedDbRecord, IndexedDbStoreName } from "src/types/indexedDb";
+import type {
+  IndexedDbRecord,
+  IndexedDbRecordWithoutKey,
+  IndexedDbStoreName,
+} from "src/types/indexedDb";
 
 /**
  * Load/save data in indexedDb
@@ -16,7 +20,7 @@ export function useIndexedDb<T extends IndexedDbStoreName>(
   const onLoadRef = useRef(onLoad);
   const abortController = useRef(new AbortController());
 
-  const [value, setValue] = useState<IndexedDbRecord<T> | null>(null);
+  const [value, setValue] = useState<IndexedDbRecordWithoutKey<T> | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -36,8 +40,10 @@ export function useIndexedDb<T extends IndexedDbStoreName>(
   const update = useCallback(
     (
       newValue:
-        | (IndexedDbRecord<T> | null)
-        | ((prev: IndexedDbRecord<T> | null) => IndexedDbRecord<T> | null),
+        | (IndexedDbRecordWithoutKey<T> | null)
+        | ((
+            prev: IndexedDbRecordWithoutKey<T> | null,
+          ) => IndexedDbRecordWithoutKey<T> | null),
     ) => {
       setValue((prev) => {
         const nextValue = isFunction(newValue) ? newValue(prev) : newValue;
