@@ -383,13 +383,3 @@ export function useSavedSchedule() {
     error: localSavedSchedulesError,
   } as const;
 }
-
-export function useCreateSchedule() {
-  const { setSavedSchedule, deleteSavedSchedule, ...rest } = useSavedSchedule();
-
-  return {
-    ...rest,
-    update: setSavedSchedule,
-    remove: deleteSavedSchedule,
-  } as const;
-}
