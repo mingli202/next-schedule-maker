@@ -1,11 +1,7 @@
-import {
-  convexQuery,
-  useConvexAuth,
-  useConvexMutation,
-} from "@convex-dev/react-query";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useConvexAuth } from "@convex-dev/react-query";
 import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
+import { useMutation, useQuery } from "convex/react";
 import type { SavedSchedule, SavedScheduleInput } from "convex/types";
 import { useCallback } from "react";
 import { useIndexedDb } from "src/hooks/useIndexedDb";
@@ -28,35 +24,15 @@ export function useSavedSchedule() {
   } = useIndexedDb(IndexedDbKey.SAVED_SCHEDULES_STORE, SAVED_SCHEDULES_KEY);
 
   const schedulesQuery = useQuery(
-    convexQuery(
-      api.schedules.queries.getSchedules,
-      isAuthenticated ? {} : "skip",
-    ),
+    api.schedules.queries.getSchedules,
+    isAuthenticated ? {} : "skip",
   );
 
-  const {
-    mutate: createSchedule,
-    isPending: isCreatingSchedule,
-    error: createScheduleError,
-  } = useMutation({
-    mutationFn: useConvexMutation(api.schedules.mutations.createSchedule),
-  });
+  const createSchedule = useMutation(api.schedules.mutations.createSchedule);
 
-  const {
-    mutate: updateSchedule,
-    isPending: isUpdatingSchedule,
-    error: updateScheduleError,
-  } = useMutation({
-    mutationFn: useConvexMutation(api.schedules.mutations.updateSchedule),
-  });
+  const updateSchedule = useMutation(api.schedules.mutations.updateSchedule);
 
-  const {
-    mutate: removeSchedule,
-    isPending: isDeletingSchedule,
-    error: deleteScheduleError,
-  } = useMutation({
-    mutationFn: useConvexMutation(api.schedules.mutations.deleteSchedule),
-  });
+  const removeSchedule = useMutation(api.schedules.mutations.deleteSchedule);
 
   const setSavedSchedule = useCallback(
     (schedule: SavedScheduleInput) => {
@@ -166,27 +142,18 @@ export function useSavedSchedule() {
   const localSchedules: SavedSchedule[] =
     localSavedSchedules?.savedSchedules ?? [];
 
-  const schedules = isAuthenticated
-    ? (schedulesQuery.data ?? [])
-    : localSchedules;
+  const schedules = isAuthenticated ? (schedulesQuery ?? []) : localSchedules;
+
+  const isInitialLoading =
+    isLoading || (isAuthenticated && schedulesQuery === undefined);
 
   return {
     schedules,
     setSavedSchedule,
     deleteSavedSchedule,
     updateSavedScheduleName,
-    isLoading:
-      isLoading ||
-      (isAuthenticated && schedulesQuery.isPending) ||
-      isCreatingSchedule ||
-      isUpdatingSchedule ||
-      isDeletingSchedule,
-    error:
-      schedulesQuery.error ??
-      createScheduleError ??
-      updateScheduleError ??
-      deleteScheduleError ??
-      localSavedSchedulesError,
+    isLoading: isInitialLoading,
+    error: localSavedSchedulesError,
   } as const;
 }
 
