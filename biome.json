@@ -34,7 +34,8 @@
     },
     "includes": [
       "**",
-      "!src/client/**"
+      "!src/client/**",
+      "!src/components/ui/**"
     ]
   },
   "javascript": {
