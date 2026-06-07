@@ -22,11 +22,11 @@ export default function SavedList({
     <div className="basis-full overflow-x-hidden overflow-y-auto max-md:text-sm">
       <div className="grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))] gap-1 md:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
         <AnimatePresence>
-          {Object.entries(savedSchedules).map(([id, s]) => {
+          {savedSchedules.map((s) => {
             return (
               <ScheduleCard
                 schedule={s}
-                key={id}
+                key={s.id}
                 selectedId={selectedId}
                 onScheduleSelect={setSelectedId}
                 onScheduleDelete={onScheduleDelete}
