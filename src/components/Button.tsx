@@ -57,34 +57,31 @@ function Button({
   const [circleSize, setCircleSize] = useState<number>();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const handleBasicHover = useCallback(
-    async (e: React.PointerEvent<HTMLButtonElement>) => {
-      const styles = {
-        opacity: [0.3, 0],
-        scale: [0, 3],
-      };
+  const handleBasicHover = async (e: React.PointerEvent<HTMLButtonElement>) => {
+    const styles = {
+      opacity: [0.3, 0],
+      scale: [0, 3],
+    };
 
-      const bounds = ref.current?.getBoundingClientRect();
+    const bounds = ref.current?.getBoundingClientRect();
 
-      if (!bounds) {
-        return;
-      }
+    if (!bounds) {
+      return;
+    }
 
-      const offset = bounds.width / 2;
-      const x = e.clientX - bounds.x - offset;
-      const y = e.clientY - bounds.y - offset;
+    const offset = bounds.width / 2;
+    const x = e.clientX - bounds.x - offset;
+    const y = e.clientY - bounds.y - offset;
 
-      await animate(
-        scope.current,
-        { x: [x], y: [y], ...styles },
-        {
-          duration: 0.5,
-          times: [0, 1],
-        },
-      );
-    },
-    [animate, scope.current],
-  );
+    await animate(
+      scope.current,
+      { x: [x], y: [y], ...styles },
+      {
+        duration: 0.5,
+        times: [0, 1],
+      },
+    );
+  };
 
   const updateMousePosition = useCallback(
     (e: React.PointerEvent<HTMLButtonElement>) => {
