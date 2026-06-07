@@ -66,7 +66,7 @@ export function CurrentScheduleSectionsLegend() {
             <button
               type="button"
               key={`schedule indicator ${cl.id}`}
-              className="cursor-pointer rounded-md p-1"
+              className="w-full cursor-pointer rounded-md p-1 text-left"
               style={{
                 backgroundColor: bgColor,
                 color: textColor,
