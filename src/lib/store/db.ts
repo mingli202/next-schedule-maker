@@ -8,9 +8,11 @@ import {
 import type { SavedSection } from "src/types/schedule";
 import type { z } from "zod";
 import { IndexedDbKey } from "../storageKeys";
+import { newPromiseWithTimout } from "../timeout";
 
 const DB_NAME = "schedule-maker";
-const DB_VERSION = 2;
+const DB_VERSION = 3;
+const INDEXED_DB_TIMEOUT_MS = 5000;
 
 let db: IDBDatabase | null = null;
 let openingDb: Promise<IDBDatabase | null> | null = null;
@@ -33,15 +35,7 @@ export async function getDb() {
 
   const req = indexedDB.open(DB_NAME, DB_VERSION);
 
-  openingDb = new Promise((resolve) => {
-    let timeOut = false;
-
-    const t = setTimeout(() => {
-      timeOut = true;
-      console.error("Opening database timed out");
-      resolve(null);
-    }, 5000);
-
+  openingDb = newPromiseWithTimout<IDBDatabase | null>((timeout, resolve) => {
     req.onupgradeneeded = () => {
       const nextDb = req.result;
 
@@ -55,9 +49,7 @@ export async function getDb() {
     };
 
     req.onsuccess = () => {
-      clearTimeout(t);
-
-      if (timeOut) {
+      if (timeout.isTimedOut) {
         return req.result.close();
       }
 
@@ -65,10 +57,12 @@ export async function getDb() {
     };
 
     req.onerror = () => {
-      clearTimeout(t);
       console.error("Could not open database");
       resolve(null);
     };
+  }, INDEXED_DB_TIMEOUT_MS).catch((e) => {
+    console.error(e);
+    return null;
   });
 
   db = await openingDb;
