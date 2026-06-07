@@ -11,6 +11,78 @@ import type { IndexedDbRecordWithoutKey } from "src/types/indexedDb";
 
 const SAVED_SCHEDULES_KEY = IndexedDbKey.SAVED_SCHEDULES_STORE;
 
+type ScheduleIdMap = Record<string, Id<"schedules">>;
+
+function toSavedSchedule(
+  id: string,
+  schedule: SavedScheduleInput,
+  name: string,
+  source: string,
+): SavedSchedule {
+  return {
+    id,
+    creationTime: Date.now(),
+    name,
+    source,
+    sections: schedule.sections,
+  };
+}
+
+function mergeAuthenticatedSchedules(
+  serverSchedules: SavedSchedule[] | null | undefined,
+  pendingSchedules: SavedSchedule[],
+  clientToServerIdMap: ScheduleIdMap,
+) {
+  const serverToClientIdMap = new Map<string, string>(
+    Object.entries(clientToServerIdMap).map(([clientId, serverId]) => [
+      serverId,
+      clientId,
+    ]),
+  );
+
+  const normalizedServerSchedules = (serverSchedules ?? []).map((schedule) => {
+    const aliasedId = serverToClientIdMap.get(schedule.id);
+
+    return aliasedId
+      ? {
+          ...schedule,
+          id: aliasedId,
+        }
+      : schedule;
+  });
+
+  const serverIds = new Set(
+    normalizedServerSchedules.map((schedule) => schedule.id),
+  );
+  const remainingPending = pendingSchedules.filter(
+    (schedule) => !serverIds.has(schedule.id),
+  );
+
+  return [...normalizedServerSchedules, ...remainingPending];
+}
+
+function pruneResolvedPendingSchedules(
+  pendingSchedules: SavedSchedule[],
+  serverSchedules: SavedSchedule[] | null | undefined,
+  clientToServerIdMap: ScheduleIdMap,
+) {
+  if (pendingSchedules.length === 0 || !serverSchedules) {
+    return pendingSchedules;
+  }
+
+  const serverIds = new Set(serverSchedules.map((schedule) => schedule.id));
+
+  return pendingSchedules.filter((schedule) => {
+    const mappedServerId = clientToServerIdMap[schedule.id];
+
+    if (!mappedServerId) {
+      return true;
+    }
+
+    return !serverIds.has(mappedServerId);
+  });
+}
+
 /**
  * Loads saved schedules from Convex when authenticated, otherwise uses IndexedDB.
  * @returns the schedules, a setter and deleter
@@ -19,9 +91,9 @@ export function useSavedSchedule() {
   const { isAuthenticated, isLoading } = useConvexAuth();
 
   const [pendingSchedules, setPendingSchedules] = useState<SavedSchedule[]>([]);
-  const [clientToServerIdMap, setClientToServerIdMap] = useState<
-    Record<string, Id<"schedules">>
-  >({});
+  const [clientToServerIdMap, setClientToServerIdMap] = useState<ScheduleIdMap>(
+    {},
+  );
   const pendingDeleteOnCreateRef = useRef(new Set<string>());
 
   const {
@@ -83,6 +155,19 @@ export function useSavedSchedule() {
     );
   });
 
+  const resolveScheduleId = useCallback(
+    (scheduleId: string) =>
+      clientToServerIdMap[scheduleId] ?? (scheduleId as Id<"schedules">),
+    [clientToServerIdMap],
+  );
+
+  const isPendingOnlyScheduleId = useCallback(
+    (scheduleId: string) =>
+      pendingSchedules.some((schedule) => schedule.id === scheduleId) &&
+      !clientToServerIdMap[scheduleId],
+    [pendingSchedules, clientToServerIdMap],
+  );
+
   const setSavedSchedule = useCallback(
     (schedule: SavedScheduleInput) => {
       const name = schedule.name ?? "Untitled";
@@ -93,17 +178,11 @@ export function useSavedSchedule() {
       }
 
       if (isAuthenticated) {
-        const optimisticId = generateId();
+        const clientScheduleId = generateId();
 
         setPendingSchedules((prev) => [
           ...prev,
-          {
-            id: optimisticId,
-            creationTime: Date.now(),
-            name,
-            source,
-            sections: schedule.sections,
-          },
+          toSavedSchedule(clientScheduleId, schedule, name, source),
         ]);
 
         void createSchedule({
@@ -114,15 +193,15 @@ export function useSavedSchedule() {
           .then((createdScheduleId) => {
             if (!createdScheduleId) {
               setPendingSchedules((prev) =>
-                prev.filter((s) => s.id !== optimisticId),
+                prev.filter((s) => s.id !== clientScheduleId),
               );
               return;
             }
 
-            if (pendingDeleteOnCreateRef.current.has(optimisticId)) {
-              pendingDeleteOnCreateRef.current.delete(optimisticId);
+            if (pendingDeleteOnCreateRef.current.has(clientScheduleId)) {
+              pendingDeleteOnCreateRef.current.delete(clientScheduleId);
               setPendingSchedules((prev) =>
-                prev.filter((s) => s.id !== optimisticId),
+                prev.filter((s) => s.id !== clientScheduleId),
               );
               void removeSchedule({
                 scheduleId: createdScheduleId,
@@ -132,18 +211,17 @@ export function useSavedSchedule() {
 
             setClientToServerIdMap((prev) => ({
               ...prev,
-              [optimisticId]: createdScheduleId,
+              [clientScheduleId]: createdScheduleId,
             }));
           })
           .catch(() => {
             setPendingSchedules((prev) =>
-              prev.filter((s) => s.id !== optimisticId),
+              prev.filter((s) => s.id !== clientScheduleId),
             );
           });
         return;
       }
 
-      console.log("setting in indexedDb");
       const id = generateId();
       const now = Date.now();
 
@@ -178,11 +256,7 @@ export function useSavedSchedule() {
       }
 
       if (isAuthenticated) {
-        const pendingSchedule = pendingSchedules.find(
-          (s) => s.id === scheduleId,
-        );
-
-        if (pendingSchedule && !clientToServerIdMap[scheduleId]) {
+        if (isPendingOnlyScheduleId(scheduleId)) {
           setPendingSchedules((prev) =>
             prev.map((schedule) =>
               schedule.id === scheduleId ? { ...schedule, name } : schedule,
@@ -191,17 +265,13 @@ export function useSavedSchedule() {
           return;
         }
 
-        const resolvedScheduleId =
-          clientToServerIdMap[scheduleId] ?? (scheduleId as Id<"schedules">);
-
         updateSchedule({
-          name: name,
-          scheduleId: resolvedScheduleId,
+          name,
+          scheduleId: resolveScheduleId(scheduleId),
         });
         return;
       }
 
-      console.log("updating in indexedDb");
       setLocalSavedSchedules((oldSchedules) => {
         if (!oldSchedules) {
           return null;
@@ -222,8 +292,8 @@ export function useSavedSchedule() {
     [
       isLoading,
       isAuthenticated,
-      pendingSchedules,
-      clientToServerIdMap,
+      isPendingOnlyScheduleId,
+      resolveScheduleId,
       updateSchedule,
       setLocalSavedSchedules,
     ],
@@ -236,11 +306,7 @@ export function useSavedSchedule() {
       }
 
       if (isAuthenticated) {
-        const pendingSchedule = pendingSchedules.find(
-          (s) => s.id === scheduleId,
-        );
-
-        if (pendingSchedule && !clientToServerIdMap[scheduleId]) {
+        if (isPendingOnlyScheduleId(scheduleId)) {
           pendingDeleteOnCreateRef.current.add(scheduleId);
           setPendingSchedules((prev) =>
             prev.filter((s) => s.id !== scheduleId),
@@ -248,16 +314,12 @@ export function useSavedSchedule() {
           return;
         }
 
-        const resolvedScheduleId =
-          clientToServerIdMap[scheduleId] ?? (scheduleId as Id<"schedules">);
-
         removeSchedule({
-          scheduleId: resolvedScheduleId,
+          scheduleId: resolveScheduleId(scheduleId),
         });
         return;
       }
 
-      console.log(`deleting ${scheduleId} in indexedDb`);
       setLocalSavedSchedules((prev) => {
         const savedSchedules = prev?.savedSchedules ?? [];
 
@@ -271,8 +333,8 @@ export function useSavedSchedule() {
     [
       isAuthenticated,
       isLoading,
-      pendingSchedules,
-      clientToServerIdMap,
+      isPendingOnlyScheduleId,
+      resolveScheduleId,
       removeSchedule,
       setLocalSavedSchedules,
     ],
@@ -282,63 +344,25 @@ export function useSavedSchedule() {
     localSavedSchedules?.savedSchedules ?? [];
 
   useEffect(() => {
-    if (!isAuthenticated || !schedulesQuery || pendingSchedules.length === 0) {
+    if (!isAuthenticated) {
       return;
     }
 
-    const serverIds = new Set(schedulesQuery.map((schedule) => schedule.id));
-
     setPendingSchedules((prev) =>
-      prev.filter((schedule) => {
-        const serverId = clientToServerIdMap[schedule.id];
-
-        if (!serverId) {
-          return true;
-        }
-
-        return !serverIds.has(serverId);
-      }),
+      pruneResolvedPendingSchedules(prev, schedulesQuery, clientToServerIdMap),
     );
-  }, [
-    isAuthenticated,
-    schedulesQuery,
-    pendingSchedules.length,
-    clientToServerIdMap,
-  ]);
+  }, [isAuthenticated, schedulesQuery, clientToServerIdMap]);
 
   const schedules = useMemo(() => {
     if (!isAuthenticated) {
       return localSchedules;
     }
 
-    const serverToClientIdMap = new Map<string, string>(
-      Object.entries(clientToServerIdMap).map(([clientId, serverId]) => [
-        serverId,
-        clientId,
-      ]),
+    return mergeAuthenticatedSchedules(
+      schedulesQuery,
+      pendingSchedules,
+      clientToServerIdMap,
     );
-
-    const serverSchedules = (schedulesQuery ?? []).map((schedule) => {
-      const aliasedId = serverToClientIdMap.get(schedule.id);
-
-      if (!aliasedId) {
-        return schedule;
-      }
-
-      return {
-        ...schedule,
-        id: aliasedId,
-      };
-    });
-
-    const serverScheduleIds = new Set(
-      serverSchedules.map((schedule) => schedule.id),
-    );
-    const onlyPending = pendingSchedules.filter(
-      (schedule) => !serverScheduleIds.has(schedule.id),
-    );
-
-    return [...serverSchedules, ...onlyPending];
   }, [
     isAuthenticated,
     localSchedules,
@@ -363,23 +387,9 @@ export function useSavedSchedule() {
 export function useCreateSchedule() {
   const { setSavedSchedule, deleteSavedSchedule, ...rest } = useSavedSchedule();
 
-  const update = useCallback(
-    (schedule: SavedScheduleInput) => {
-      setSavedSchedule(schedule);
-    },
-    [setSavedSchedule],
-  );
-
-  const remove = useCallback(
-    (scheduleId: string) => {
-      deleteSavedSchedule(scheduleId);
-    },
-    [deleteSavedSchedule],
-  );
-
   return {
     ...rest,
-    update,
-    remove,
+    update: setSavedSchedule,
+    remove: deleteSavedSchedule,
   } as const;
 }
