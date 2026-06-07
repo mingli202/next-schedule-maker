@@ -5,6 +5,7 @@ import ScheduleCard from "./ScheduleCard";
 
 type Props = {
   savedSchedules: SavedSchedule[];
+  onScheduleSelect: (schedule: SavedSchedule) => void;
   onScheduleDelete: (scheduleId: string) => void;
   onSheduleNameChange: (schduleId: string, newName: string) => void;
   noEdit?: boolean;
@@ -12,6 +13,7 @@ type Props = {
 
 export default function SavedList({
   savedSchedules,
+  onScheduleSelect,
   onScheduleDelete,
   onSheduleNameChange,
   noEdit,
@@ -28,7 +30,10 @@ export default function SavedList({
                 schedule={s}
                 key={s.id}
                 selectedId={selectedId}
-                onScheduleSelect={setSelectedId}
+                onScheduleSelect={(scheduleId) => {
+                  setSelectedId(scheduleId);
+                  onScheduleSelect(s);
+                }}
                 onScheduleDelete={onScheduleDelete}
                 onSheduleNameChange={onSheduleNameChange}
                 initial={{ opacity: 0, y: 5 }}

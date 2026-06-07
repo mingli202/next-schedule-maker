@@ -1,4 +1,5 @@
-import { useSearch } from "@tanstack/react-router";
+import { useNavigate, useSearch } from "@tanstack/react-router";
+import type { SavedSchedule } from "convex/types";
 import { useCallback } from "react";
 import { Button, PageLoading } from "src/components";
 import SavedList from "src/components/SavedList";
@@ -6,6 +7,8 @@ import { useSavedSchedule } from "src/hooks/useSavedSchedule";
 import { CurrentScheduleSectionsLegend } from "./CurrentScheduleSectionsLegend";
 
 export default function SavedSchedules() {
+  const navigate = useNavigate({ from: "/editor/saved" });
+
   const currentSections = useSearch({
     from: "/editor/saved",
     select: (s) => s.sections,
@@ -27,6 +30,19 @@ export default function SavedSchedules() {
     });
   }, [currentSections, setSavedSchedule]);
 
+  const handleSavedScheduleSelect = useCallback(
+    (schedule: SavedSchedule) => {
+      navigate({
+        to: ".",
+        search: (prev) => ({
+          ...prev,
+          sections: schedule.sections,
+        }),
+      });
+    },
+    [navigate],
+  );
+
   if (isLoading) {
     return <PageLoading />;
   }
@@ -45,6 +61,7 @@ export default function SavedSchedules() {
       </div>
 
       <SavedList
+        onScheduleSelect={handleSavedScheduleSelect}
         onScheduleDelete={deleteSavedSchedule}
         onSheduleNameChange={updateSavedScheduleName}
         savedSchedules={schedules}
