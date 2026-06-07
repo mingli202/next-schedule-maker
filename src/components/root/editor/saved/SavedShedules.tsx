@@ -7,7 +7,7 @@ import { CurrentScheduleSectionsLegend } from "./CurrentScheduleSectionsLegend";
 
 export default function SavedSchedules() {
   const currentSections = useSearch({
-    from: "/editor/filter",
+    from: "/editor/saved",
     select: (s) => s.sections,
   });
 
