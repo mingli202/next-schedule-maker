@@ -4,7 +4,7 @@ import { newPromiseWithTimeout } from "./timeout";
 
 given("a promise with a timeout", () => {
   when("promises times out", () => {
-    then("promise body should not run", async () => {
+    then("timeout body should not run", async () => {
       // Arrange
       let didRun = false;
       let didCatch = false;
