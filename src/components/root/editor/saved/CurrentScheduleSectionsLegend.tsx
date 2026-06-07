@@ -74,10 +74,10 @@ export function CurrentScheduleSectionsLegend() {
               onClick={() => removeSection(sectionId)}
             >
               <p className="font-bold">
-                {cl.code} {cl.leclabs[0]?.title}
+                {cl.code} {cl.leclabs[0]?.title ?? ""}
               </p>
               <p>
-                {cl.section} {cl.leclabs[0]?.prof}
+                {cl.section} {cl.leclabs[0]?.prof ?? ""}
               </p>
             </button>
           );
