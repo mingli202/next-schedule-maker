@@ -37,7 +37,7 @@ export function useIndexedDb<T extends IndexedDbStoreName>(
     };
   }, []);
 
-  const update = useCallback(
+  const set = useCallback(
     (
       newValue:
         | (IndexedDbRecordWithoutKey<T> | null)
@@ -69,7 +69,7 @@ export function useIndexedDb<T extends IndexedDbStoreName>(
     [],
   );
 
-  const remove = useCallback(() => update(null), [update]);
+  const remove = useCallback(() => set(null), [set]);
 
-  return { value, update, remove, error } as const;
+  return { value, set, remove, error } as const;
 }
