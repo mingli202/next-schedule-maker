@@ -88,6 +88,9 @@ function ScheduleCard({
           "col-span-5 row-[span_20/span_20] grid h-20 w-full shrink-0 cursor-pointer grid-cols-5 grid-rows-[repeat(20,1fr)] overflow-hidden rounded-md bg-slate-300 transition hover:bg-slate-300/90",
         )}
         title="select"
+        onClick={() => {
+          onScheduleSelect(schedule.id);
+        }}
       >
         {schedule.sections.map(({ sectionId, colorIndex }) => {
           const sch = sectionsById.get(sectionId);
