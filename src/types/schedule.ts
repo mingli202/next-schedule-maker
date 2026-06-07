@@ -31,5 +31,4 @@ export const SearchSectionParams = z.object({
   blended: z.boolean().optional(),
   honours: z.boolean().optional(),
 });
-
 export type SearchSectionParams = z.infer<typeof SearchSectionParams>;

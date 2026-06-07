@@ -1,3 +1,4 @@
+import { SavedSchedule } from "convex/types";
 import { IndexedDbKey } from "src/lib/storageKeys";
 import { z } from "zod";
 import type { RecordValues } from ".";
@@ -15,11 +16,16 @@ export const IndexedDbSchema = {
   }),
   [IndexedDbKey.SAVED_SCHEDULES_STORE]: z.object({
     ...IndexedDbSchemaValueBase.shape,
-    savedSchedules: z.array(z.array(SavedSection)),
+    savedSchedules: z.array(SavedSchedule),
   }),
 } as const;
 
 export type IndexedDbStoreName = RecordValues<typeof IndexedDbKey>;
 export type IndexedDbRecord<T extends IndexedDbStoreName> = z.infer<
   (typeof IndexedDbSchema)[T]
+>;
+
+export type IndexedDbRecordWithoutKey<T extends IndexedDbStoreName> = Omit<
+  IndexedDbRecord<T>,
+  "key" | "updatedAt"
 >;

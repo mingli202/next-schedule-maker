@@ -1,6 +1,7 @@
 import type { RecordValues } from "src/types";
 import {
   type IndexedDbRecord,
+  type IndexedDbRecordWithoutKey,
   IndexedDbSchema,
   type IndexedDbStoreName,
 } from "src/types/indexedDb";
@@ -139,7 +140,7 @@ export async function indexedDbGet<T extends IndexedDbStoreName>(
 export async function indexedDbSet<T extends IndexedDbStoreName>(
   storeName: T,
   key: string,
-  value: Omit<IndexedDbRecord<T>, "key" | "updatedAt">,
+  value: IndexedDbRecordWithoutKey<T>,
   abortSignal?: AbortSignal,
 ) {
   const database = await getDb();
