@@ -8,3 +8,13 @@ export const cn = (...styles: ClassValue[]) => {
 export function capitalize(s: string): string {
   return s.slice(0, 1).toUpperCase() + s.slice(1);
 }
+
+// biome-ignore lint/suspicious/noExplicitAny: idk man
+export const isFunction = (val: any): val is (...args: any) => any =>
+  typeof val === "function";
+
+export function generateId() {
+  return typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}

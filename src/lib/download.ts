@@ -121,7 +121,7 @@ export default async function download(
 
       const cellWidth = cell.value.toString().length;
 
-      if (c.width! < cellWidth) {
+      if ((c.width ?? 0) < cellWidth) {
         c.width = cellWidth;
       }
     });

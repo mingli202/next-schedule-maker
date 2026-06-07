@@ -57,9 +57,7 @@ export const filterByMinRating = (
     (section) =>
       !section.leclabs.some(
         (leclab) =>
-          !leclab.rating ||
-          leclab.rating.status !== "found" ||
-          leclab.rating.avg < minRating,
+          leclab.rating?.status !== "found" || leclab.rating.avg < minRating,
       ),
   );
 
@@ -79,9 +77,7 @@ export const filterByMaxRating = (
     (section) =>
       !section.leclabs.some(
         (leclab) =>
-          !leclab.rating ||
-          leclab.rating.status !== "found" ||
-          leclab.rating.avg > maxRating,
+          leclab.rating?.status !== "found" || leclab.rating.avg > maxRating,
       ),
   );
 
@@ -101,9 +97,7 @@ export const filterByMinScore = (
     (section) =>
       !section.leclabs.some(
         (leclab) =>
-          !leclab.rating ||
-          leclab.rating.status !== "found" ||
-          leclab.rating.score < minScore,
+          leclab.rating?.status !== "found" || leclab.rating.score < minScore,
       ),
   );
 
@@ -123,9 +117,7 @@ export const filterByMaxScore = (
     (section) =>
       !section.leclabs.some(
         (leclab) =>
-          !leclab.rating ||
-          leclab.rating.status !== "found" ||
-          leclab.rating.score > maxScore,
+          leclab.rating?.status !== "found" || leclab.rating.score > maxScore,
       ),
   );
 

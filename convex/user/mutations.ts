@@ -15,6 +15,7 @@ export const createUser = mutation({
       return ctx.db.insert("users", {
         firebaseId,
         collectionPolicy: "on",
+        schedulesVersion: 0,
       });
     }
     return user._id;

@@ -1,9 +1,5 @@
 import { expect } from "bun:test";
-import {
-  type DayTimeResponse,
-  getSectionSectionsSectionIdGet,
-  type SectionResponse,
-} from "@/client";
+import type { DayTimeResponse, SectionResponse } from "@/client";
 import { given, then, when } from "../test-util";
 import isValidAdditionToSchedule, {
   isOverlap,

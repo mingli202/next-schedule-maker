@@ -1,13 +1,13 @@
-export interface IOption<T> {
+export interface Option<T> {
   /**
    * Returns None if the option is None, otherwise returns optb.
    * */
-  and<U>(optb: IOption<U>): IOption<U>;
+  and<U>(optb: Option<U>): Option<U>;
 
   /**
    * Returns None if the option is None, otherwise calls f with the wrapped value and returns the result.
    * */
-  andThen<U>(f: (val: T) => IOption<U>): IOption<U>;
+  andThen<U>(f: (val: T) => Option<U>): Option<U>;
 
   /**
    * Returns the contained Some value
@@ -20,7 +20,7 @@ export interface IOption<T> {
    * - Some(t) if predicate returns true (where t is the wrapped value), and
    * - None if predicate returns false.
    * */
-  filter(predicate: (val: T) => boolean): IOption<T>;
+  filter(predicate: (val: T) => boolean): Option<T>;
 
   /**
    * Returns true if the option is a None value.
@@ -45,27 +45,27 @@ export interface IOption<T> {
   /**
    * Maps an Option<T> to Option<U> by applying a function to a contained value (if Some) or returns None (if None).
    * */
-  map<U>(f: (val: T) => U): IOption<U>;
+  map<U>(f: (val: T) => U): Option<U>;
 
   /**
    * Returns the provided default result (if none), or applies a function to the contained value (if any).
    * */
-  mapOr<U>(defaultValue: U, f: (val: T) => U): IOption<U>;
+  mapOr<U>(defaultValue: U, f: (val: T) => U): Option<U>;
 
   /**
    * Computes a default function result (if none), or applies a different function to the contained value (if any).
    * */
-  mapOrElse<U>(defaultFunc: () => U, f: (val: T) => U): IOption<U>;
+  mapOrElse<U>(defaultFunc: () => U, f: (val: T) => U): Option<U>;
 
   /**
    * Returns the option if it contains a value, otherwise returns optb.
    * */
-  or(optb: IOption<T>): IOption<T>;
+  or(optb: Option<T>): Option<T>;
 
   /**
    * Returns the option if it contains a value, otherwise calls f and returns the result
    * */
-  orElse(f: () => IOption<T>): IOption<T>;
+  orElse(f: () => Option<T>): Option<T>;
 
   /**
    * Returns the contained Some value, consuming the self value.
@@ -83,14 +83,14 @@ export interface IOption<T> {
   unwrapOrElse(f: () => T): T;
 }
 
-export class Some<T> implements IOption<T> {
+export class Some<T> implements Option<T> {
   constructor(private value: T) {}
 
-  and<U>(optb: IOption<U>): IOption<U> {
+  and<U>(optb: Option<U>): Option<U> {
     return optb;
   }
 
-  andThen<U>(f: (val: T) => IOption<U>): IOption<U> {
+  andThen<U>(f: (val: T) => Option<U>): Option<U> {
     return f(this.value);
   }
 
@@ -98,7 +98,7 @@ export class Some<T> implements IOption<T> {
     return this.value;
   }
 
-  filter(predicate: (val: T) => boolean): IOption<T> {
+  filter(predicate: (val: T) => boolean): Option<T> {
     return predicate(this.value) ? this : none<T>();
   }
 
@@ -118,23 +118,23 @@ export class Some<T> implements IOption<T> {
     return predicate(this.value);
   }
 
-  map<U>(f: (val: T) => U): IOption<U> {
+  map<U>(f: (val: T) => U): Option<U> {
     return some(f(this.value));
   }
 
-  mapOr<U>(_defaultValue: U, f: (val: T) => U): IOption<U> {
+  mapOr<U>(_defaultValue: U, f: (val: T) => U): Option<U> {
     return some(f(this.value));
   }
 
-  mapOrElse<U>(_defaultFunc: () => U, f: (val: T) => U): IOption<U> {
+  mapOrElse<U>(_defaultFunc: () => U, f: (val: T) => U): Option<U> {
     return some(f(this.value));
   }
 
-  or(_optb: IOption<T>): IOption<T> {
+  or(_optb: Option<T>): Option<T> {
     return this;
   }
 
-  orElse(_f: () => IOption<T>): IOption<T> {
+  orElse(_f: () => Option<T>): Option<T> {
     return this;
   }
 
@@ -151,12 +151,12 @@ export class Some<T> implements IOption<T> {
   }
 }
 
-export class None<T> implements IOption<T> {
-  and<U>(_optb: IOption<U>): IOption<U> {
+export class None<T> implements Option<T> {
+  and<U>(_optb: Option<U>): Option<U> {
     return none<U>();
   }
 
-  andThen<U>(_f: (val: T) => IOption<U>): IOption<U> {
+  andThen<U>(_f: (val: T) => Option<U>): Option<U> {
     return none<U>();
   }
 
@@ -164,7 +164,7 @@ export class None<T> implements IOption<T> {
     throw new Error(msg);
   }
 
-  filter(_predicate: (val: T) => boolean): IOption<T> {
+  filter(_predicate: (val: T) => boolean): Option<T> {
     return this;
   }
 
@@ -184,23 +184,23 @@ export class None<T> implements IOption<T> {
     return false;
   }
 
-  map<U>(_f: (val: T) => U): IOption<U> {
+  map<U>(_f: (val: T) => U): Option<U> {
     return none<U>();
   }
 
-  mapOr<U>(defaultValue: U, _f: (val: T) => U): IOption<U> {
+  mapOr<U>(defaultValue: U, _f: (val: T) => U): Option<U> {
     return some(defaultValue);
   }
 
-  mapOrElse<U>(defaultFunc: () => U, _f: (val: T) => U): IOption<U> {
+  mapOrElse<U>(defaultFunc: () => U, _f: (val: T) => U): Option<U> {
     return some(defaultFunc());
   }
 
-  or(optb: IOption<T>): IOption<T> {
+  or(optb: Option<T>): Option<T> {
     return optb;
   }
 
-  orElse(f: () => IOption<T>): IOption<T> {
+  orElse(f: () => Option<T>): Option<T> {
     return f();
   }
 
@@ -217,9 +217,9 @@ export class None<T> implements IOption<T> {
   }
 }
 
-export function some<T>(val: T): IOption<T> {
+export function some<T>(val: T): Option<T> {
   return new Some<T>(val);
 }
-export function none<T>(): IOption<T> {
+export function none<T>(): Option<T> {
   return new None<T>();
 }

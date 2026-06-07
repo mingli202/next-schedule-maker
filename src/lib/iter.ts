@@ -1,4 +1,4 @@
-import { type IOption, none, some } from "./option";
+import { none, type Option, some } from "./option";
 
 /**
  * Custom implementation of a lazy iterator
@@ -113,7 +113,7 @@ export class Iter<T> implements Iterable<T> {
    * Creates an iterator that both filters and maps.
    * The returned iterator yields only the values for which the supplied closure returns Some(value).
    * */
-  public filterMap<U>(fn: (val: T, index: number) => IOption<U>): Iter<U> {
+  public filterMap<U>(fn: (val: T, index: number) => Option<U>): Iter<U> {
     const source = this;
 
     return new Iter(function* () {
@@ -135,7 +135,7 @@ export class Iter<T> implements Iterable<T> {
    *
    * find() takes a closure that returns true or false. It applies this closure to each element of the iterator, and if any of them return true, then find() returns Some(element). If they all return false, it returns None.
    * */
-  public find(predicate: (val: T, index: number) => boolean): IOption<T> {
+  public find(predicate: (val: T, index: number) => boolean): Option<T> {
     let index = 0;
     for (const val of this) {
       if (predicate(val, index)) {
@@ -150,7 +150,7 @@ export class Iter<T> implements Iterable<T> {
   /**
    * Applies function to the elements of iterator and returns the first non-none result.
    * */
-  public findMap<U>(f: (val: T, index: number) => IOption<U>): IOption<U> {
+  public findMap<U>(f: (val: T, index: number) => Option<U>): Option<U> {
     let index = 0;
     for (const val of this) {
       const res = f(val, index);
@@ -236,7 +236,7 @@ export class Iter<T> implements Iterable<T> {
    *
    * mapWhile() takes a closure as an argument. It will call this closure on each element of the iterator, and yield elements while it returns Some(_).
    * */
-  public mapWhile<U>(f: (val: T, index: number) => IOption<U>): Iter<U> {
+  public mapWhile<U>(f: (val: T, index: number) => Option<U>): Iter<U> {
     const source = this;
 
     return new Iter(function* () {

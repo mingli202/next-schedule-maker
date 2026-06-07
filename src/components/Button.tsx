@@ -5,7 +5,12 @@ import {
   useAnimate,
 } from "framer-motion";
 import { LoaderCircle } from "lucide-react";
-import { type ButtonHTMLAttributes, useRef, useState } from "react";
+import {
+  type ButtonHTMLAttributes,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
@@ -52,66 +57,73 @@ function Button({
   const [circleSize, setCircleSize] = useState<number>();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const handleBasicHover = async (e: React.PointerEvent<HTMLButtonElement>) => {
-    const styles = {
-      opacity: [0.3, 0],
-      scale: [0, 3],
-    };
+  const handleBasicHover = useCallback(
+    async (e: React.PointerEvent<HTMLButtonElement>) => {
+      const styles = {
+        opacity: [0.3, 0],
+        scale: [0, 3],
+      };
 
-    const bounds = ref.current?.getBoundingClientRect();
+      const bounds = ref.current?.getBoundingClientRect();
 
-    if (!bounds) {
-      return;
-    }
+      if (!bounds) {
+        return;
+      }
 
-    const offset = bounds.width / 2;
-    const x = e.clientX - bounds.x - offset;
-    const y = e.clientY - bounds.y - offset;
+      const offset = bounds.width / 2;
+      const x = e.clientX - bounds.x - offset;
+      const y = e.clientY - bounds.y - offset;
 
-    await animate(
-      scope.current,
-      { x: [x], y: [y], ...styles },
-      {
-        duration: 0.5,
-        times: [0, 1],
-      },
-    );
-  };
+      await animate(
+        scope.current,
+        { x: [x], y: [y], ...styles },
+        {
+          duration: 0.5,
+          times: [0, 1],
+        },
+      );
+    },
+    [animate, scope.current],
+  );
 
-  const handleSpecialHover = async (
-    e: React.PointerEvent<HTMLButtonElement>,
-  ) => {
-    updateMousePosition(e);
-    const bounds = ref.current?.getBoundingClientRect();
+  const updateMousePosition = useCallback(
+    (e: React.PointerEvent<HTMLButtonElement>) => {
+      const bounds = ref.current?.getBoundingClientRect();
 
-    if (!bounds) {
-      return;
-    }
+      if (!bounds) {
+        return;
+      }
 
-    const x = e.clientX - bounds.x;
-    const y = e.clientY - bounds.y;
+      const x = e.clientX - bounds.x;
+      const y = e.clientY - bounds.y;
+      setMousePosition({ x, y });
+    },
+    [],
+  );
 
-    const maxDistance = Math.max(
-      Math.hypot(x, y),
-      Math.hypot(bounds.width - x, y),
-      Math.hypot(x, bounds.height - y),
-      Math.hypot(bounds.width - x, bounds.height - y),
-    );
+  const handleSpecialHover = useCallback(
+    async (e: React.PointerEvent<HTMLButtonElement>) => {
+      updateMousePosition(e);
+      const bounds = ref.current?.getBoundingClientRect();
 
-    setCircleSize(maxDistance * 2);
-  };
+      if (!bounds) {
+        return;
+      }
 
-  const updateMousePosition = (e: React.PointerEvent<HTMLButtonElement>) => {
-    const bounds = ref.current?.getBoundingClientRect();
+      const x = e.clientX - bounds.x;
+      const y = e.clientY - bounds.y;
 
-    if (!bounds) {
-      return;
-    }
+      const maxDistance = Math.max(
+        Math.hypot(x, y),
+        Math.hypot(bounds.width - x, y),
+        Math.hypot(x, bounds.height - y),
+        Math.hypot(bounds.width - x, bounds.height - y),
+      );
 
-    const x = e.clientX - bounds.x;
-    const y = e.clientY - bounds.y;
-    setMousePosition({ x, y });
-  };
+      setCircleSize(maxDistance * 2);
+    },
+    [updateMousePosition],
+  );
 
   return (
     <Tooltip delayDuration={700}>

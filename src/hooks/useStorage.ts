@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-
-// biome-ignore lint/suspicious/noExplicitAny: idk man
-const isFunction = (val: any): val is (...args: any) => any =>
-  typeof val === "function";
+import { isFunction } from "src/lib/utils";
 
 /**
  * Helper hook for getting data from local or session storage

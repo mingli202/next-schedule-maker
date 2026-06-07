@@ -4,12 +4,14 @@ import { Checkbox } from "src/components/ui/checkbox";
 import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
 import { useSessionStorage } from "src/hooks";
+import { SessionStorageKey } from "src/lib/storageKeys";
 import {
   deleteGeneratedSchedulesCache,
   getGeneratedSchedulesCache,
   setGeneratedSchedulesCache,
 } from "src/lib/store/db";
 import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
+import { generateId } from "src/lib/utils";
 import type { Code } from "src/types/autobuild";
 import type { SavedSection } from "src/types/schedule";
 import { Button, PageLoading } from "@/components";
@@ -19,10 +21,7 @@ import Results from "./Results";
 const GENERATED_SCHEDULES_CACHE_KEY = "latest-autobuild";
 
 function createGeneratedSchedulesCacheKey() {
-  const id =
-    typeof crypto !== "undefined" && "randomUUID" in crypto
-      ? crypto.randomUUID()
-      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const id = generateId();
 
   return `${GENERATED_SCHEDULES_CACHE_KEY}-${id}`;
 }
@@ -58,7 +57,7 @@ function Autobuild() {
       dayOff: [],
       time: ["00:00", "23:59"],
     },
-    "generation-cache",
+    SessionStorageKey.AUTOBUILDER_OPTIONS,
   );
 
   const [_cacheMetadata, setCacheMetadata] = useSessionStorage<{
@@ -69,7 +68,7 @@ function Autobuild() {
       schedulesCacheKey: null,
       lastScrolledIndex: 0,
     },
-    "cache",
+    SessionStorageKey.AUTOBUILDER_GENERATION_CACHE_METADATA,
     (c) => {
       initialScroll.current = c.lastScrolledIndex;
       schedulesCacheKeyRef.current = c.schedulesCacheKey ?? null;
@@ -82,7 +81,7 @@ function Autobuild() {
       void getGeneratedSchedulesCache(c.schedulesCacheKey).then(
         (cachedSchedules) => {
           if (cachedSchedules !== null) {
-            setGeneratedSchedules(cachedSchedules);
+            setGeneratedSchedules(cachedSchedules.schedules);
           }
 
           setBuildingState({ type: "form" });

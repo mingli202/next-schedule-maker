@@ -1,10 +1,5 @@
 import { useConvexAuth } from "@convex-dev/react-query";
-import {
-  createFileRoute,
-  Link,
-  Navigate,
-  useNavigate,
-} from "@tanstack/react-router";
+import { createFileRoute, Link, Navigate } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import {
   createUserWithEmailAndPassword,
@@ -41,8 +36,6 @@ const auth = getAuth();
 
 function RouteComponent() {
   const { isAuthenticated, isLoading } = useConvexAuth();
-
-  const navigate = useNavigate();
 
   const [isSignup, setIsSignup] = useState(false);
   const [type, setType] = useState<"password" | "text">("text");
