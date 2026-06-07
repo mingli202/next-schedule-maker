@@ -64,7 +64,7 @@ export default function SavedSchedules() {
       <SavedList
         onScheduleSelect={handleSavedScheduleSelect}
         onScheduleDelete={deleteSavedSchedule}
-        onSheduleNameChange={updateSavedScheduleName}
+        onScheduleNameChange={updateSavedScheduleName}
         savedSchedules={schedules}
       />
 

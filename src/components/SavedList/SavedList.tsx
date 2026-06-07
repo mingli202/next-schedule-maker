@@ -6,7 +6,7 @@ type Props = {
   savedSchedules: SavedSchedule[];
   onScheduleSelect: (schedule: SavedSchedule) => void;
   onScheduleDelete: (scheduleId: string) => void;
-  onSheduleNameChange: (schduleId: string, newName: string) => void;
+  onScheduleNameChange: (schduleId: string, newName: string) => void;
   noEdit?: boolean;
 };
 
@@ -14,7 +14,7 @@ export default function SavedList({
   savedSchedules,
   onScheduleSelect,
   onScheduleDelete,
-  onSheduleNameChange,
+  onScheduleNameChange,
   noEdit,
 }: Props) {
   return (
@@ -30,7 +30,7 @@ export default function SavedList({
                   onScheduleSelect(s);
                 }}
                 onScheduleDelete={onScheduleDelete}
-                onSheduleNameChange={onSheduleNameChange}
+                onScheduleNameChange={onScheduleNameChange}
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 disableEdit={noEdit}

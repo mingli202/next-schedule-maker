@@ -13,7 +13,7 @@ type Props = {
   selectedId?: string;
   onScheduleSelect: (scheduleId: string) => void;
   onScheduleDelete: (scheduleId: string) => void;
-  onSheduleNameChange: (scheduleId: string, newName: string) => void;
+  onScheduleNameChange: (scheduleId: string, newName: string) => void;
 };
 
 function ScheduleCard({
@@ -23,7 +23,7 @@ function ScheduleCard({
   selectedId,
   onScheduleSelect,
   onScheduleDelete,
-  onSheduleNameChange,
+  onScheduleNameChange,
   ...props
 }: Props & HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div">) {
   const { sectionsById } = useSectionStore();
@@ -34,9 +34,9 @@ function ScheduleCard({
     (formdata: FormData) => {
       setEditName(false);
       const name = formdata.get("name")?.toString() ?? "Untitled";
-      onSheduleNameChange(schedule.id, name);
+      onScheduleNameChange(schedule.id, name);
     },
-    [onSheduleNameChange, schedule.id],
+    [onScheduleNameChange, schedule.id],
   );
 
   return (

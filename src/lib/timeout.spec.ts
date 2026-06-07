@@ -1,6 +1,6 @@
 import { expect } from "bun:test";
 import { given, then, when } from "./test-util";
-import { newPromiseWithTimout } from "./timeout";
+import { newPromiseWithTimeout } from "./timeout";
 
 given("a promise with a timeout", () => {
   when("promises times out", () => {
@@ -10,7 +10,7 @@ given("a promise with a timeout", () => {
       let didCatch = false;
 
       // Act
-      await newPromiseWithTimout<string>((timeout, resolve) => {
+      await newPromiseWithTimeout<string>((timeout, resolve) => {
         // some long executing code
         setTimeout(() => {
           if (!timeout.isTimedOut) {
@@ -33,7 +33,7 @@ given("a promise with a timeout", () => {
       let didCatch = false;
 
       // Act
-      const val = await newPromiseWithTimout<string>((_, resolve) => {
+      const val = await newPromiseWithTimeout<string>((_, resolve) => {
         // some long executing code
         setTimeout(() => {
           resolve("value");

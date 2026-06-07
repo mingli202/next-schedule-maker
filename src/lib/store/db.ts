@@ -8,7 +8,7 @@ import {
 import type { SavedSection } from "src/types/schedule";
 import type { z } from "zod";
 import { IndexedDbKey } from "../storageKeys";
-import { newPromiseWithTimout } from "../timeout";
+import { newPromiseWithTimeout } from "../timeout";
 
 const DB_NAME = "schedule-maker";
 const DB_VERSION = 3;
@@ -35,7 +35,7 @@ export async function getDb() {
 
   const req = indexedDB.open(DB_NAME, DB_VERSION);
 
-  openingDb = newPromiseWithTimout<IDBDatabase | null>((timeout, resolve) => {
+  openingDb = newPromiseWithTimeout<IDBDatabase | null>((timeout, resolve) => {
     req.onupgradeneeded = () => {
       const nextDb = req.result;
 

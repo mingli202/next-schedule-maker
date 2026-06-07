@@ -2,7 +2,7 @@
  * Returns a promise that timesout after the given @param timeoutMs
  * Rejects the promise if timeout
  * */
-export async function newPromiseWithTimout<T>(
+export async function newPromiseWithTimeout<T>(
   fn: (
     timedOut: { isTimedOut: boolean },
     resolve: (value: T) => void,
