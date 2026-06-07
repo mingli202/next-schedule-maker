@@ -1,6 +1,7 @@
 import { useConvexAuth } from "@convex-dev/react-query";
 import { Link } from "@tanstack/react-router";
 import { X } from "lucide-react";
+import { useEffect } from "react";
 import { useLocalStorage } from "src/hooks";
 import { LocalStorageKey } from "src/lib/storageKeys";
 
@@ -12,16 +13,13 @@ export function LoginIndicator() {
     LocalStorageKey.DISMISS_LOGGEDOUT_NOTICE,
   );
 
-  if (isLoading) {
-    return null;
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      setDismiss(false);
+    }
+  }, [isAuthenticated, setDismiss]);
 
-  if (isAuthenticated) {
-    setDismiss(false);
-    return null;
-  }
-
-  if (dimiss) {
+  if (isLoading || isAuthenticated || dimiss) {
     return null;
   }
 
