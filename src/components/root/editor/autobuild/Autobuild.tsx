@@ -11,6 +11,7 @@ import {
   setGeneratedSchedulesCache,
 } from "src/lib/store/db";
 import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
+import { generateId } from "src/lib/utils";
 import type { Code } from "src/types/autobuild";
 import type { SavedSection } from "src/types/schedule";
 import { Button, PageLoading } from "@/components";
@@ -20,10 +21,7 @@ import Results from "./Results";
 const GENERATED_SCHEDULES_CACHE_KEY = "latest-autobuild";
 
 function createGeneratedSchedulesCacheKey() {
-  const id =
-    typeof crypto !== "undefined" && "randomUUID" in crypto
-      ? crypto.randomUUID()
-      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const id = generateId();
 
   return `${GENERATED_SCHEDULES_CACHE_KEY}-${id}`;
 }
