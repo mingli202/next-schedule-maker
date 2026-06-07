@@ -1,1 +1,1 @@
-// export { default } from "./SavedList";
+export { default } from "./SavedList";

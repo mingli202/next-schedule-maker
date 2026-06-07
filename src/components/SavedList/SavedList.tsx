@@ -6,7 +6,7 @@ import ScheduleCard from "./ScheduleCard";
 type Props = {
   savedSchedules: SavedSchedule[];
   onScheduleDelete: (scheduleId: string) => void;
-  onSheduleNameChange: (oldName: string, newName: string) => void;
+  onSheduleNameChange: (schduleId: string, newName: string) => void;
   noEdit?: boolean;
 };
 

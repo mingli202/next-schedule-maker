@@ -1,85 +1,35 @@
-"use client";
+import { useSearch } from "@tanstack/react-router";
+import { useCallback } from "react";
+import { Button, PageLoading } from "src/components";
+import SavedList from "src/components/SavedList";
+import { useSavedSchedule } from "src/hooks/useSavedSchedule";
+import { CurrentScheduleSectionsLegend } from "./CurrentScheduleSectionsLegend";
 
-import { app, db } from "@/backend";
-import { Class, Saved } from "@/types";
-import { getAuth } from "firebase/auth";
+export default function SavedSchedules() {
+  const currentSections = useSearch({
+    from: "/editor/filter",
+    select: (s) => s.sections,
+  });
 
-import { useContext, useEffect, useState } from "react";
-import { onValue, push, ref, set } from "firebase/database";
+  const {
+    schedules,
+    updateSavedScheduleName,
+    deleteSavedSchedule,
+    setSavedSchedule,
+    isLoading,
+  } = useSavedSchedule();
 
-import Button from "@/components/Button";
-import {
-  ScheduleClassesContext,
-  ScheduleDispatchContext,
-} from "../../ScheduleContext";
-
-import SavedList from "@/components/SavedList";
-
-type Props = {
-  allClasses: Record<string, Class>;
-};
-
-function SavedSchedules({ allClasses }: Props) {
-  const [savedSchedules, setSavedSchedules] = useState<Record<string, Saved>>();
-  const currentClasses = useContext(ScheduleClassesContext);
-  const dispatch = useContext(ScheduleDispatchContext);
-
-  async function handleClick() {
-    const user = getAuth(app).currentUser;
-
-    const newSchedule: Saved = {
-      data: currentClasses,
-      name: `Untitled`,
-      semester: "winter2026",
-    } as const;
-
-    if (!user) {
-      const schedules = { ...savedSchedules };
-      schedules[Math.random().toString()] = newSchedule;
-
-      localStorage.setItem(
-        "savedScheduleswinter2026",
-        JSON.stringify(schedules),
-      );
-
-      setSavedSchedules(schedules);
-      return;
-    }
-
-    await set(push(ref(db, `/users/${user.uid}/schedules`)), newSchedule).catch(
-      (err) => console.log(err),
-    );
-  }
-
-  useEffect(() => {
-    const auth = getAuth(app);
-    const user = auth.currentUser;
-    if (!user) {
-      const schedules: Record<string, Saved> = JSON.parse(
-        localStorage.getItem("savedScheduleswinter2026") ?? "{}",
-      );
-
-      setSavedSchedules(schedules);
-
-      return;
-    }
-
-    const schedulesRef = ref(db, `/users/${user.uid}/schedules`);
-
-    const unsub = onValue(schedulesRef, async (snapshot) => {
-      if (!snapshot.exists()) {
-        setSavedSchedules(undefined);
-        return;
-      }
-
-      const value = snapshot.val() as Record<string, Saved>;
-      setSavedSchedules(value);
+  const handleClick = useCallback(() => {
+    setSavedSchedule({
+      name: "Untitled",
+      source: "default",
+      sections: currentSections,
     });
+  }, [currentSections, setSavedSchedule]);
 
-    return () => {
-      unsub();
-    };
-  }, []);
+  if (isLoading) {
+    return <PageLoading />;
+  }
 
   return (
     <div className="relative flex h-full w-full flex-col gap-2">
@@ -95,65 +45,12 @@ function SavedSchedules({ allClasses }: Props) {
       </div>
 
       <SavedList
-        setSavedSchedules={setSavedSchedules}
-        savedSchedules={savedSchedules ?? {}}
-        allClasses={allClasses}
-        stateType={{
-          type: "dispatch",
-          dispatch: dispatch,
-        }}
+        onScheduleDelete={deleteSavedSchedule}
+        onSheduleNameChange={updateSavedScheduleName}
+        savedSchedules={schedules}
       />
 
-      <div className="shrink-0 basis-1/3 overflow-x-hidden overflow-y-auto">
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-1 text-sm">
-          <div className="bg-bg-secondary col-span-full flex h-fit gap-2 rounded-md p-2">
-            <p className="basis-full">Course Count: {currentClasses.length}</p>
-
-            <Button
-              className="shrink-0 p-0"
-              disableBgEffect
-              variant="basic"
-              onClick={() => {
-                dispatch({ type: "set", schedule: [] });
-              }}
-            >
-              Clear
-            </Button>
-          </div>
-
-          {currentClasses.map((cl, i) => {
-            if (!Object.hasOwn(allClasses, cl.id)) {
-              return null;
-            }
-            const c = allClasses[cl.id];
-            return (
-              <div
-                key={cl.id + `${i}`}
-                className="cursor-pointer rounded-md p-1"
-                style={{
-                  backgroundColor: cl.bgColor,
-                  color: cl.textColor,
-                }}
-                onClick={() =>
-                  dispatch({
-                    type: "delete",
-                    id: cl.id,
-                  })
-                }
-              >
-                <p className="font-bold">
-                  {c.code} {c.lecture?.title}
-                </p>
-                <p>
-                  {c.section} {c.lecture?.prof}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <CurrentScheduleSectionsLegend />
     </div>
   );
 }
-
-export default SavedSchedules;

@@ -13,7 +13,7 @@ type Props = {
   selectedId?: string;
   onScheduleSelect: (scheduleId: string) => void;
   onScheduleDelete: (scheduleId: string) => void;
-  onSheduleNameChange: (oldName: string, newName: string) => void;
+  onSheduleNameChange: (scheduleId: string, newName: string) => void;
 };
 
 function ScheduleCard({
@@ -34,9 +34,9 @@ function ScheduleCard({
     (formdata: FormData) => {
       setEditName(false);
       const name = formdata.get("name")?.toString() ?? "Untitled";
-      onSheduleNameChange(schedule.name, name);
+      onSheduleNameChange(schedule.id, name);
     },
-    [schedule.name, onSheduleNameChange],
+    [onSheduleNameChange, schedule.id],
   );
 
   return (

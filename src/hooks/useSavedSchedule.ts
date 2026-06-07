@@ -97,17 +97,16 @@ export function useSavedSchedule() {
     [createSchedule, isAuthenticated, isLoading, setLocalSavedSchedules],
   );
 
-  const updateSavedSchedule = useCallback(
-    (newSchedule: SavedSchedule) => {
+  const updateSavedScheduleName = useCallback(
+    (scheduleId: string, name: string) => {
       if (isLoading) {
         return;
       }
 
       if (isAuthenticated) {
         updateSchedule({
-          name: newSchedule.name,
-          scheduleId: newSchedule.id as Id<"schedules">,
-          source: newSchedule.source,
+          name: name,
+          scheduleId: scheduleId as Id<"schedules">,
         });
         return;
       }
@@ -119,9 +118,14 @@ export function useSavedSchedule() {
 
         return {
           savedSchedules: oldSchedules.savedSchedules.map((s) =>
-            s.id === newSchedule.id ? newSchedule : s,
+            s.id === scheduleId
+              ? {
+                  ...s,
+                  name,
+                }
+              : s,
           ),
-        };
+        } satisfies IndexedDbRecordWithoutKey<"saved-schedules-store">;
       });
     },
     [isLoading, isAuthenticated, updateSchedule, setLocalSavedSchedules],
@@ -166,7 +170,7 @@ export function useSavedSchedule() {
     schedules,
     setSavedSchedule,
     deleteSavedSchedule,
-    updateSavedSchedule,
+    updateSavedScheduleName,
     isLoading:
       isLoading ||
       (isAuthenticated && schedulesQuery.isPending) ||
