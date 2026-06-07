@@ -26,6 +26,12 @@ export async function newPromiseWithTimeout<T>(
       resolve(value);
     };
 
-    fn(timedOut, resolveAndCancel, reject);
+    // biome-ignore lint/suspicious/noExplicitAny: it's the def vro
+    const rejectAndCancel = (reason?: any) => {
+      clearTimeout(t);
+      reject(reason);
+    };
+
+    fn(timedOut, resolveAndCancel, rejectAndCancel);
   });
 }
