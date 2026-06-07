@@ -33,8 +33,6 @@ export function useIndexedDb<T extends IndexedDbStoreName>(
 
       setValue(res);
 
-      console.log("got value from indexeddb", res);
-
       if (onLoadRef.current) {
         onLoadRef.current(res);
       }
@@ -55,7 +53,6 @@ export function useIndexedDb<T extends IndexedDbStoreName>(
     ) => {
       setValue((prev) => {
         const nextValue = isFunction(newValue) ? newValue(prev) : newValue;
-        console.log("nextValue:", nextValue);
 
         writeQueueRef.current = writeQueueRef.current
           .then(() => {
