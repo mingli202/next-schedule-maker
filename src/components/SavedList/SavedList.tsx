@@ -1,6 +1,5 @@
 import type { SavedSchedule } from "convex/types";
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
 import ScheduleCard from "./ScheduleCard";
 
 type Props = {
@@ -18,8 +17,6 @@ export default function SavedList({
   onSheduleNameChange,
   noEdit,
 }: Props) {
-  const [selectedId, setSelectedId] = useState<string>();
-
   return (
     <div className="basis-full overflow-x-hidden overflow-y-auto max-md:text-sm">
       <div className="grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))] gap-1 md:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
@@ -29,9 +26,7 @@ export default function SavedList({
               <ScheduleCard
                 schedule={s}
                 key={s.id}
-                selectedId={selectedId}
-                onScheduleSelect={(scheduleId) => {
-                  setSelectedId(scheduleId);
+                onScheduleSelect={() => {
                   onScheduleSelect(s);
                 }}
                 onScheduleDelete={onScheduleDelete}
