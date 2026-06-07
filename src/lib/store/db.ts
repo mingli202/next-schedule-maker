@@ -1,14 +1,15 @@
+import type { RecordValues } from "src/types";
+import {
+  type IndexedDbRecord,
+  IndexedDbSchema,
+  type IndexedDbStoreName,
+} from "src/types/indexedDb";
 import type { SavedSection } from "src/types/schedule";
+import type { z } from "zod";
+import { IndexedDbKey } from "../storageKeys";
 
 const DB_NAME = "schedule-maker";
 const DB_VERSION = 2;
-const GENERATED_SCHEDULES_CACHE_STORE = "generated-schedules-cache";
-
-type GeneratedSchedulesCacheRecord = {
-  key: string;
-  schedules: SavedSection[][];
-  updatedAt: number;
-};
 
 let db: IDBDatabase | null = null;
 let openingDb: Promise<IDBDatabase | null> | null = null;
@@ -43,10 +44,12 @@ export async function getDb() {
     req.onupgradeneeded = () => {
       const nextDb = req.result;
 
-      if (!nextDb.objectStoreNames.contains(GENERATED_SCHEDULES_CACHE_STORE)) {
-        nextDb.createObjectStore(GENERATED_SCHEDULES_CACHE_STORE, {
-          keyPath: "key",
-        });
+      for (const store of Object.values(IndexedDbKey)) {
+        if (!nextDb.objectStoreNames.contains(store)) {
+          nextDb.createObjectStore(store, {
+            keyPath: "key",
+          });
+        }
       }
     };
 
@@ -73,51 +76,70 @@ export async function getDb() {
   return db;
 }
 
-function getGeneratedSchedulesStore(
+/**
+ * Gets the store associated with the given database in the given mode with the given storeName
+ * */
+function getStore(
   database: IDBDatabase,
   mode: IDBTransactionMode,
+  storeName: RecordValues<typeof IndexedDbKey>,
 ) {
-  if (!database.objectStoreNames.contains(GENERATED_SCHEDULES_CACHE_STORE)) {
-    console.error("Generated schedules cache store does not exist");
+  if (!database.objectStoreNames.contains(storeName)) {
+    console.error(`IndexedDB store does not exist: ${storeName}`);
     return null;
   }
 
-  return database
-    .transaction(GENERATED_SCHEDULES_CACHE_STORE, mode)
-    .objectStore(GENERATED_SCHEDULES_CACHE_STORE);
+  return database.transaction(storeName, mode).objectStore(storeName);
 }
 
-export async function getGeneratedSchedulesCache(key: string) {
+/**
+ * Gets the value at the given key of the given store
+ * */
+export async function indexedDbGet<T extends IndexedDbStoreName>(
+  storeName: T,
+  key: string,
+): Promise<IndexedDbRecord<T> | null> {
   const database = await getDb();
 
   if (!database) {
     return null;
   }
 
-  const store = getGeneratedSchedulesStore(database, "readonly");
+  const store = getStore(database, "readonly", storeName);
 
   if (!store) {
     return null;
   }
 
-  return new Promise<SavedSection[][] | null>((resolve) => {
+  const schema = IndexedDbSchema[storeName];
+
+  return new Promise<z.infer<typeof schema> | null>((resolve) => {
     const req = store.get(key);
 
     req.onsuccess = () => {
-      const result = req.result as GeneratedSchedulesCacheRecord | undefined;
-      resolve(result?.schedules ?? null);
+      const result = schema.safeParse(req.result);
+
+      if (result.success) {
+        resolve(result.data as IndexedDbRecord<T>);
+      } else {
+        resolve(null);
+      }
     };
 
     req.onerror = () => {
-      console.error("Could not read generated schedules cache");
+      console.error(`Could not read IndexedDB store: ${storeName}`);
       resolve(null);
     };
   });
 }
 
-export async function setGeneratedSchedulesCache(
+/**
+ * Sets the value at the given key of the given store with the given value
+ * */
+export async function indexedDbSet<T extends IndexedDbStoreName>(
+  storeName: T,
   key: string,
-  schedules: SavedSection[][],
+  value: Omit<IndexedDbRecord<T>, "key" | "updatedAt">,
   abortSignal?: AbortSignal,
 ) {
   const database = await getDb();
@@ -126,7 +148,7 @@ export async function setGeneratedSchedulesCache(
     return false;
   }
 
-  const store = getGeneratedSchedulesStore(database, "readwrite");
+  const store = getStore(database, "readwrite", storeName);
 
   if (!store) {
     return false;
@@ -148,10 +170,10 @@ export async function setGeneratedSchedulesCache(
     }
 
     store.put({
+      ...value,
       key,
-      schedules,
       updatedAt: Date.now(),
-    } satisfies GeneratedSchedulesCacheRecord);
+    });
 
     transaction.oncomplete = () => {
       if (abortfn) {
@@ -166,18 +188,22 @@ export async function setGeneratedSchedulesCache(
         abortSignal?.removeEventListener("abort", abortfn);
       }
 
-      console.error("Could not write generated schedules cache");
+      console.error(`Could not write IndexedDB store: ${storeName}`);
       resolve(false);
     };
 
     transaction.onabort = () => {
-      console.error("Writing generated schedules cache was aborted");
+      console.error(`Writing IndexedDB store was aborted: ${storeName}`);
       resolve(false);
     };
   });
 }
 
-export async function deleteGeneratedSchedulesCache(
+/**
+ * Deletes the value at the given key of the given store
+ * */
+export async function indexedDbDelete<T extends IndexedDbStoreName>(
+  storeName: T,
   key: string,
   abortSignal?: AbortSignal,
 ) {
@@ -187,7 +213,7 @@ export async function deleteGeneratedSchedulesCache(
     return false;
   }
 
-  const store = getGeneratedSchedulesStore(database, "readwrite");
+  const store = getStore(database, "readwrite", storeName);
 
   if (!store) {
     return false;
@@ -223,13 +249,48 @@ export async function deleteGeneratedSchedulesCache(
         abortSignal?.removeEventListener("abort", abortfn);
       }
 
-      console.error("Could not delete generated schedules cache");
+      console.error(`Could not delete IndexedDB store record: ${storeName}`);
       resolve(false);
     };
 
     transaction.onabort = () => {
-      console.error("Deleting generated schedules cache was aborted");
+      console.error(
+        `Deleting IndexedDB store record was aborted: ${storeName}`,
+      );
       resolve(false);
     };
   });
+}
+
+/**
+ * Gets the generated schedules cache
+ * */
+export async function getGeneratedSchedulesCache(key: string) {
+  return indexedDbGet(IndexedDbKey.GENERATED_SCHEDULES_CACHE_STORE, key);
+}
+
+export async function setGeneratedSchedulesCache(
+  key: string,
+  schedules: Array<Array<SavedSection>>,
+  abortSignal?: AbortSignal,
+) {
+  return indexedDbSet(
+    IndexedDbKey.GENERATED_SCHEDULES_CACHE_STORE,
+    key,
+    {
+      schedules,
+    },
+    abortSignal,
+  );
+}
+
+export async function deleteGeneratedSchedulesCache(
+  key: string,
+  abortSignal?: AbortSignal,
+) {
+  return indexedDbDelete(
+    IndexedDbKey.GENERATED_SCHEDULES_CACHE_STORE,
+    key,
+    abortSignal,
+  );
 }
