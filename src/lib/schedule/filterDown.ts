@@ -1,5 +1,5 @@
-import type { SectionResponse } from "src/client";
 import type { SectionStore } from "src/types";
+import type { Section } from "src/types/generated";
 import type { SavedSection, SearchSectionParams } from "src/types/schedule";
 import { Iter } from "../iter";
 import isValidAdditionToSchedule from "./isValidAdditionToSchedule";
@@ -19,7 +19,7 @@ const normalizeTime = (value: string) => {
 /**
  * Section where there exsist one leclab.prof that includes the given prof
  * */
-const filterByProfessor = (iter: Iter<SectionResponse>, prof: string) =>
+const filterByProfessor = (iter: Iter<Section>, prof: string) =>
   prof.trim() === ""
     ? iter
     : iter.filter((section) =>
@@ -29,10 +29,7 @@ const filterByProfessor = (iter: Iter<SectionResponse>, prof: string) =>
 /**
  * Section where there exsist one leclab.prof that includes the given prof
  * */
-export const filterByProfessors = (
-  iter: Iter<SectionResponse>,
-  profs: string[],
-) =>
+export const filterByProfessors = (iter: Iter<Section>, profs: string[]) =>
   profs.length === 0
     ? iter
     : iter.filter((section) =>
@@ -49,10 +46,7 @@ export const filterByProfessors = (
  * leclab.rating.status is not found or
  * leclab.avg is less than the minRating allowed
  * */
-export const filterByMinRating = (
-  iter: Iter<SectionResponse>,
-  minRating: number,
-) =>
+export const filterByMinRating = (iter: Iter<Section>, minRating: number) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
@@ -69,10 +63,7 @@ export const filterByMinRating = (
  * leclab.rating.status is not found or
  * leclab.avg is more than the maxRating allowed
  * */
-export const filterByMaxRating = (
-  iter: Iter<SectionResponse>,
-  maxRating: number,
-) =>
+export const filterByMaxRating = (iter: Iter<Section>, maxRating: number) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
@@ -89,10 +80,7 @@ export const filterByMaxRating = (
  * leclab.rating.status is not found or
  * leclab.score is less than the minScore allowed
  * */
-export const filterByMinScore = (
-  iter: Iter<SectionResponse>,
-  minScore: number,
-) =>
+export const filterByMinScore = (iter: Iter<Section>, minScore: number) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
@@ -109,10 +97,7 @@ export const filterByMinScore = (
  * leclab.rating.status is not found or
  * leclab.score is more than the maxScore allowed
  * */
-export const filterByMaxScore = (
-  iter: Iter<SectionResponse>,
-  maxScore: number,
-) =>
+export const filterByMaxScore = (iter: Iter<Section>, maxScore: number) =>
   iter.filter(
     (section) =>
       !section.leclabs.some(
@@ -124,7 +109,7 @@ export const filterByMaxScore = (
 /**
  * Section where Section.code includes the given code
  * */
-export const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
+export const filterByCode = (iter: Iter<Section>, code: string) =>
   code.trim() === ""
     ? iter
     : iter.filter((section) => includes(section.code, code));
@@ -136,10 +121,7 @@ export const filterByCode = (iter: Iter<SectionResponse>, code: string) =>
  * there exist a dayTime such that
  * dayTime.startTimeHhmm is less than the given timeStart
  * */
-export const filterByTimeStart = (
-  iter: Iter<SectionResponse>,
-  timeStart: string,
-) => {
+export const filterByTimeStart = (iter: Iter<Section>, timeStart: string) => {
   const normalized = normalizeTime(timeStart);
   if (!normalized) return iter;
 
@@ -158,10 +140,7 @@ export const filterByTimeStart = (
  * there exist a dayTime such that
  * dayTime.endTimeHhmm is more than the given timeEnd
  * */
-export const filterByTimeEnd = (
-  iter: Iter<SectionResponse>,
-  timeEnd: string,
-) => {
+export const filterByTimeEnd = (iter: Iter<Section>, timeEnd: string) => {
   const normalized = normalizeTime(timeEnd);
   if (!normalized) return iter;
 
@@ -176,19 +155,19 @@ export const filterByTimeEnd = (
 /**
  * Blended sections
  * */
-const filterByBlended = (iter: Iter<SectionResponse>) =>
+const filterByBlended = (iter: Iter<Section>) =>
   iter.filter((section) => section.more.startsWith("BLENDED"));
 
 /**
  * Honours sections
  * */
-const filterByHonours = (iter: Iter<SectionResponse>) =>
+const filterByHonours = (iter: Iter<Section>) =>
   iter.filter((section) => section.more.startsWith("For Honours"));
 
 /**
  * Section with titles that starts with
  * */
-const filterByTitle = (iter: Iter<SectionResponse>, title: string) =>
+const filterByTitle = (iter: Iter<Section>, title: string) =>
   title.trim() === ""
     ? iter
     : iter.filter((section) => startsWith(section.title, title));
@@ -196,7 +175,7 @@ const filterByTitle = (iter: Iter<SectionResponse>, title: string) =>
 /**
  * Sections with course that starts with
  * */
-const filterByCourse = (iter: Iter<SectionResponse>, course: string) =>
+const filterByCourse = (iter: Iter<Section>, course: string) =>
   course.trim() === ""
     ? iter
     : iter.filter((section) => startsWith(section.course, course));
@@ -204,7 +183,7 @@ const filterByCourse = (iter: Iter<SectionResponse>, course: string) =>
 /**
  * Sections with domain that starts with
  * */
-const filterByDomain = (iter: Iter<SectionResponse>, domain: string) =>
+const filterByDomain = (iter: Iter<Section>, domain: string) =>
   domain.trim() === ""
     ? iter
     : iter.filter((section) => startsWith(section.domain, domain));
@@ -216,7 +195,7 @@ const filterByDomain = (iter: Iter<SectionResponse>, domain: string) =>
  * there exist a dayTime such that
  * any day dayTime.day is in daysOff
  * */
-export const filterByDaysOff = (iter: Iter<SectionResponse>, daysOff: string) =>
+export const filterByDaysOff = (iter: Iter<Section>, daysOff: string) =>
   iter.filter(
     (section) =>
       !section.leclabs.some((leclab) =>
@@ -235,7 +214,7 @@ const dayReg = /^[MTWRF]+ *[MTWRF ]*$/g;
  * Filter from a general query q by matching various patterns.
  * */
 const filterByQuery = (
-  iter: Iter<SectionResponse>,
+  iter: Iter<Section>,
   q: string,
   professors: string[],
 ) => {
@@ -338,7 +317,7 @@ const filterByQuery = (
 export function filterDown(
   sectionStore: SectionStore,
   search: SearchSectionParams & { sections: SavedSection[] | undefined },
-): SectionResponse[] {
+): Section[] {
   const {
     q,
     course,

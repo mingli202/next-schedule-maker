@@ -1,42 +1,34 @@
 import { expect } from "bun:test";
-import type { DayTimeResponse, SectionResponse } from "@/client";
+import type { DayTime, LecLab, Section } from "src/types/generated";
 import { given, then, when } from "../test-util";
 import isValidAdditionToSchedule, {
   isOverlap,
   isValidDayTimes,
 } from "./isValidAdditionToSchedule";
 
-const dayTimeFrom = (
-  day: string,
-  start: string,
-  end: string,
-): DayTimeResponse => ({
+const dayTimeFrom = (day: string, start: string, end: string): DayTime => ({
   day,
   startTimeHhmm: start,
   endTimeHhmm: end,
-  id: -1,
-  leclabId: -1,
 });
 
-const sectionFrom = (
-  code: string,
-  dayTimesByLecLab: DayTimeResponse[][],
-): SectionResponse => ({
-  id: -1,
+const sectionFrom = (code: string, dayTimesByLecLab: DayTime[][]): Section => ({
+  id: "-1",
   course: "TEST",
   section: "A",
   domain: "TEST",
   code,
   title: "Test Section",
-  leclabs: dayTimesByLecLab.map((dayTimes, index) => ({
-    id: -(index + 1),
-    title: `L${index + 1}`,
-    type: "lecture",
-    sectionId: -1,
-    prof: "Prof",
-    rating: null,
-    dayTimes,
-  })),
+  leclabs: dayTimesByLecLab.map(
+    (dayTimes, index) =>
+      ({
+        title: `L${index + 1}`,
+        type: "lecture",
+        prof: "Prof",
+        rating: null,
+        dayTimes,
+      }) satisfies LecLab,
+  ),
   more: "",
   viewData: [],
 });
@@ -62,8 +54,8 @@ given.each([
   when("isOverlap is called on them", () => {
     then("overlap should be true", () => {
       // arrange
-      const dayTimes1: DayTimeResponse = dayTimeFrom(d1[0], d1[1], d1[2]);
-      const dayTimes2: DayTimeResponse = dayTimeFrom(d2[0], d2[1], d2[2]);
+      const dayTimes1: DayTime = dayTimeFrom(d1[0], d1[1], d1[2]);
+      const dayTimes2: DayTime = dayTimeFrom(d2[0], d2[1], d2[2]);
       // act
       const res1 = isOverlap(dayTimes1, dayTimes2);
       const res2 = isOverlap(dayTimes2, dayTimes1);
@@ -87,8 +79,8 @@ given.each([
   when("isOverlap is called on them", () => {
     then("overlap should be false", () => {
       // arrange
-      const dayTimes1: DayTimeResponse = dayTimeFrom(d1[0], d1[1], d1[2]);
-      const dayTimes2: DayTimeResponse = dayTimeFrom(d2[0], d2[1], d2[2]);
+      const dayTimes1: DayTime = dayTimeFrom(d1[0], d1[1], d1[2]);
+      const dayTimes2: DayTime = dayTimeFrom(d2[0], d2[1], d2[2]);
       // act
       const res1 = isOverlap(dayTimes1, dayTimes2);
       const res2 = isOverlap(dayTimes2, dayTimes1);
@@ -103,7 +95,7 @@ given("a list of non-overlapping dayTimes", () => {
   when("isValidDayTimes is called", () => {
     then("it should return true", () => {
       // arrange
-      const dayTimes: DayTimeResponse[] = [
+      const dayTimes: DayTime[] = [
         dayTimeFrom("M", "0830", "1000"),
         dayTimeFrom("M", "1000", "1130"),
         dayTimeFrom("T", "0900", "1030"),
@@ -120,7 +112,7 @@ given("a list with at least one overlapping pair of dayTimes", () => {
   when("isValidDayTimes is called", () => {
     then("it should return false", () => {
       // arrange
-      const dayTimes: DayTimeResponse[] = [
+      const dayTimes: DayTime[] = [
         dayTimeFrom("M", "0830", "1000"),
         dayTimeFrom("MW", "0930", "1100"),
         dayTimeFrom("F", "1300", "1400"),
@@ -156,7 +148,7 @@ given("a schedule with no code or time conflict", () => {
         [dayTimeFrom("M", "0830", "1000")],
         [dayTimeFrom("W", "1200", "1300")],
       ]);
-      const schedule: SectionResponse[] = [
+      const schedule: Section[] = [
         sectionFrom("CMPUT175 B1", [[dayTimeFrom("T", "0830", "1000")]]),
       ];
       // act
@@ -174,7 +166,7 @@ given("a schedule that already contains the same section code", () => {
       const sectionToCheck = sectionFrom("CMPUT174 A1", [
         [dayTimeFrom("M", "0830", "1000")],
       ]);
-      const schedule: SectionResponse[] = [
+      const schedule: Section[] = [
         sectionFrom("CMPUT174 A1", [[dayTimeFrom("F", "1300", "1400")]]),
       ];
       // act
@@ -192,7 +184,7 @@ given("a schedule with a time conflict", () => {
       const sectionToCheck = sectionFrom("CMPUT174 A1", [
         [dayTimeFrom("MW", "0830", "1000")],
       ]);
-      const schedule: SectionResponse[] = [
+      const schedule: Section[] = [
         sectionFrom("CMPUT175 B1", [[dayTimeFrom("W", "0930", "1030")]]),
       ];
       // act

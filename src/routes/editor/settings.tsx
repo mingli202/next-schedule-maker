@@ -33,7 +33,7 @@ function RouteComponent() {
           navigate({
             search: (prev) => ({
               ...prev,
-              previewSectionId: prev.previewSectionId ? undefined : -1,
+              previewSectionId: prev.previewSectionId ? undefined : "none",
             }),
           })
         }

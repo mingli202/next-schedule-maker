@@ -7,13 +7,14 @@ export default function PreviewHover() {
     select: (s) => s.previewSectionId,
   });
 
-  if (previewSectionId === undefined || previewSectionId < 0) return null;
+  if (previewSectionId === undefined || previewSectionId === "none")
+    return null;
 
   return <PreviewHoverInner previewSectionId={previewSectionId} />;
 }
 
 type PreviewHoverInnerProps = {
-  previewSectionId: number;
+  previewSectionId: string;
 };
 function PreviewHoverInner({ previewSectionId }: PreviewHoverInnerProps) {
   const { sectionsById } = useSectionStore();

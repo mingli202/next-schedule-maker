@@ -1,15 +1,15 @@
 import { motion, type Variants } from "framer-motion";
 import { Minimize } from "lucide-react";
-import type { SectionResponse } from "@/client";
+import type { Section } from "src/types/generated";
 import { cn } from "@/lib/utils";
 import Button from "../Button";
 import SectionCard from "../SectionCard";
 
 type ExpandSectionProps = {
-  section: SectionResponse;
+  section: Section;
   bgColor: string;
   textColor: string;
-  onRemoveSectionClicked: (sectionId: number) => void;
+  onRemoveSectionClicked: (sectionId: string) => void;
   onMinimizeClicked: () => void;
 };
 

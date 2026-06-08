@@ -1,35 +1,28 @@
 import { expect } from "bun:test";
 import type { SectionStore } from "src/types";
+import type { DayTime, LecLab, Rating, Section } from "src/types/generated";
 import type { SearchSectionParams } from "src/types/schedule";
-import type {
-  DayTimeResponse,
-  LecLabResponse,
-  RatingResponse,
-  SectionResponse,
-} from "@/client";
 import { given, then, when } from "../test-util";
-import { filterDown } from "./filterDown";
+import { filterDown as baseFilterDown } from "./filterDown";
 
 const dayTimeFrom = (
-  id: number,
-  leclabId: number,
+  _id: number,
+  _leclabId: number,
   day: string,
   start: string,
   end: string,
-): DayTimeResponse => ({
-  id,
+): DayTime => ({
   day,
   startTimeHhmm: start,
   endTimeHhmm: end,
-  leclabId,
 });
 
 const ratingFrom = (
   prof: string,
   avg: number,
   score: number,
-  status: RatingResponse["status"] = "found",
-): RatingResponse => ({
+  status: Rating["status"] = "found",
+): Rating => ({
   prof,
   score,
   avg,
@@ -42,23 +35,21 @@ const ratingFrom = (
 
 const leclabFrom = (
   id: number,
-  sectionId: number,
+  _sectionId: number,
   prof: string,
-  rating: RatingResponse | null,
-  dayTimes: DayTimeResponse[],
-): LecLabResponse => ({
-  id,
+  rating: Rating | null,
+  dayTimes: DayTime[],
+): LecLab => ({
   title: `L${id}`,
   type: "lecture",
-  sectionId,
   prof,
   rating,
   dayTimes,
 });
 
-const sections: SectionResponse[] = [
+const sections: Section[] = [
   {
-    id: 1,
+    id: "1",
     course: "Science",
     section: "A",
     domain: "CS",
@@ -76,7 +67,7 @@ const sections: SectionResponse[] = [
     viewData: [],
   },
   {
-    id: 2,
+    id: "2",
     course: "Science",
     section: "B",
     domain: "CS",
@@ -91,7 +82,7 @@ const sections: SectionResponse[] = [
     viewData: [],
   },
   {
-    id: 3,
+    id: "3",
     course: "Arts",
     section: "C",
     domain: "MATH",
@@ -106,7 +97,7 @@ const sections: SectionResponse[] = [
     viewData: [],
   },
   {
-    id: 4,
+    id: "4",
     course: "Arts",
     section: "D",
     domain: "PHYS",
@@ -121,7 +112,7 @@ const sections: SectionResponse[] = [
     viewData: [],
   },
   {
-    id: 5,
+    id: "5",
     course: "Business",
     section: "E",
     domain: "ECON",
@@ -136,7 +127,7 @@ const sections: SectionResponse[] = [
     viewData: [],
   },
   {
-    id: 6,
+    id: "6",
     course: "Science",
     section: "F",
     domain: "BIO",
@@ -166,10 +157,13 @@ const store: SectionStore = {
   codes: new Set(sections.map((section) => section.code)),
 };
 
-const idsFrom = (res: SectionResponse[]) =>
-  res.map((section) => section.id).sort((a, b) => a - b);
+const filterDown = (sectionStore: SectionStore, search: SearchSectionParams) =>
+  baseFilterDown(sectionStore, { ...search, sections: undefined });
 
-const expectIds = (res: SectionResponse[], expected: number[]) => {
+const idsFrom = (res: Section[]) =>
+  res.map((section) => Number(section.id)).sort((a, b) => a - b);
+
+const expectIds = (res: Section[], expected: number[]) => {
   expect(idsFrom(res)).toEqual([...expected].sort((a, b) => a - b));
 };
 

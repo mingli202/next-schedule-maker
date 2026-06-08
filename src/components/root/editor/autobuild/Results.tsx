@@ -71,7 +71,7 @@ export default memo(
   ({ generatedSchedules, onReturn, onScroll, initialScroll }: Props) => {
     const components: Components<
       {
-        sectionId: number;
+        sectionId: string;
         colorIndex: number;
       }[]
     > = useMemo(

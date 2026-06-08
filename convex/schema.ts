@@ -18,7 +18,7 @@ const schema = defineSchema({
   sections: defineTable({
     userId: v.id("users"),
     scheduleId: v.id("schedules"),
-    sectionId: v.number(),
+    sectionId: v.string(),
     colorIndex: v.number(),
   })
     .index("by_userId", ["userId"])

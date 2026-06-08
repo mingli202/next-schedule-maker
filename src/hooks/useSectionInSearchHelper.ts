@@ -4,7 +4,7 @@ import { getNextAvailableColorIndex } from "src/lib/colors";
 import isValidAdditionToSchedule from "src/lib/schedule/isValidAdditionToSchedule";
 import { useSectionStore } from "src/lib/store/section";
 
-export function useSectionInSearchHelper(sectionId: number) {
+export function useSectionInSearchHelper(sectionId: string) {
   const navigate = useNavigate({ from: "/editor" });
 
   const savedSections = useSearch({

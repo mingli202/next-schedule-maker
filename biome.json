@@ -34,7 +34,6 @@
     },
     "includes": [
       "**",
-      "!src/client/**",
       "!src/components/ui/**"
     ]
   },

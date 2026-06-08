@@ -9,7 +9,7 @@ import ExpandSection from "./ExpandSection";
 
 type SectionBlockProps = {
   // section id to show
-  sectionId: number;
+  sectionId: string;
   // section color
   colorIndex: number;
   // can't remove class from current schedule in view
@@ -18,7 +18,7 @@ type SectionBlockProps = {
   disableControls?: boolean;
 
   // handler for removing the section
-  onRemoveSectionClicked?: (sectionId: number) => void;
+  onRemoveSectionClicked?: (sectionId: string) => void;
 };
 
 export default function SectionBlock({

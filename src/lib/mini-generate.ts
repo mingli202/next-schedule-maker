@@ -1,4 +1,4 @@
-import type { SectionResponse } from "@/client";
+import type { SectionStore } from "src/types";
 import type { SavedSection } from "@/types/schedule";
 import { getNextAvailableColorIndex } from "./colors";
 import isValidAdditionToSchedule from "./schedule/isValidAdditionToSchedule";
@@ -21,7 +21,7 @@ const programs = [
   ...Array(2).fill("visual"),
 ];
 
-function miniGenerate(sectionsById: Map<number, SectionResponse>) {
+function miniGenerate(sectionsById: SectionStore["sectionsById"]) {
   const allCodes = Object.fromEntries(
     Object.entries(prefix).map(([n, p]) => [n, getCodes(sectionsById, p)]),
   );
@@ -54,7 +54,7 @@ function miniGenerate(sectionsById: Map<number, SectionResponse>) {
   return generate(codes, sectionsById);
 }
 
-function getCodes(sectionsById: Map<number, SectionResponse>, prefix = "") {
+function getCodes(sectionsById: SectionStore["sectionsById"], prefix = "") {
   return [
     ...new Set(
       Array.from(sectionsById.values())
@@ -68,7 +68,7 @@ function getCodes(sectionsById: Map<number, SectionResponse>, prefix = "") {
   ];
 }
 
-function generate(codes: string[], sectionsById: Map<number, SectionResponse>) {
+function generate(codes: string[], sectionsById: SectionStore["sectionsById"]) {
   const sections = Array.from(sectionsById.values()).filter((section) =>
     codes.includes(section.code),
   );

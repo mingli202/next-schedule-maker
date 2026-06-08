@@ -23,7 +23,7 @@ export function CurrentScheduleSectionsLegend() {
   }, [navigate]);
 
   const removeSection = useCallback(
-    (sectionId: number) => {
+    (sectionId: string) => {
       navigate({
         to: ".",
         search: (prev) => ({

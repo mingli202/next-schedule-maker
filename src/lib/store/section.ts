@@ -1,8 +1,5 @@
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { SectionResponse } from "src/client";
-import type { SectionStore } from "src/types";
-import { zSectionResponse } from "src/types/client/zod.gen";
-import { z } from "zod";
+import { SectionByIdSchema, type SectionStore } from "src/types";
 
 export const allSectionsQueryOptions = queryOptions({
   queryKey: ["section-store"],
@@ -20,28 +17,32 @@ export async function fetchStore(): Promise<SectionStore> {
     "https://raw.githubusercontent.com/mingli202/scraper/refs/heads/main/data/RPHOR200_-_Schedule_of_classes_June_5/all_sections_final.json",
   );
 
-  let sections: SectionResponse[] = [];
+  let sectionsMap: SectionByIdSchema = {};
 
   if (res.ok) {
-    const json = await res.json();
-    sections = z.array(zSectionResponse).parse(json);
+    try {
+      const json = await res.json();
+      sectionsMap = SectionByIdSchema.parse(json);
+    } catch (e) {
+      console.error("Failed to parse sections data: ", e);
+    }
   } else {
     console.error("Failed to fetch from github");
   }
 
-  const sectionsById = new Map(
-    sections.map((section) => [section.id, section] as const),
-  );
+  const sections = Object.entries(sectionsMap);
+
+  const sectionsById = new Map(sections);
 
   const professors = new Set(
     sections
-      .flatMap((section) => section.leclabs.map((leclab) => leclab.prof))
+      .flatMap(([_, section]) => section.leclabs.map((leclab) => leclab.prof))
       .filter((prof) => prof.trim() !== ""),
   );
 
   const codes = new Set(
     sections
-      .map((section) => section.code)
+      .map(([_, section]) => section.code)
       .filter((code) => code.trim() !== ""),
   );
 
