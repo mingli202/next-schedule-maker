@@ -6,6 +6,7 @@ import { Input } from "src/components/ui/input";
 import { useSessionStorage } from "src/hooks";
 import { SessionStorageKey } from "src/lib/storageKeys";
 import {
+  clearGeneratedSchedulesCache,
   deleteGeneratedSchedulesCache,
   getGeneratedSchedulesCache,
   setGeneratedSchedulesCache,
@@ -74,6 +75,7 @@ function Autobuild() {
       schedulesCacheKeyRef.current = c.schedulesCacheKey ?? null;
 
       if (c.schedulesCacheKey == null) {
+        void clearGeneratedSchedulesCache();
         setBuildingState({ type: "form" });
         return;
       }

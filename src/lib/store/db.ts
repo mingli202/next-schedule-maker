@@ -258,6 +258,66 @@ export async function indexedDbDelete<T extends IndexedDbStoreName>(
 }
 
 /**
+ * Clears all values in the given store
+ * */
+export async function indexedDbClear<T extends IndexedDbStoreName>(
+  storeName: T,
+  abortSignal?: AbortSignal,
+) {
+  const database = await getDb();
+
+  if (!database) {
+    return false;
+  }
+
+  const store = getStore(database, "readwrite", storeName);
+
+  if (!store) {
+    return false;
+  }
+
+  return new Promise<boolean>((resolve) => {
+    const transaction = store.transaction;
+
+    if (abortSignal?.aborted) {
+      transaction.abort();
+      resolve(false);
+      return;
+    }
+
+    let abortfn: (() => void) | undefined;
+    if (abortSignal) {
+      abortfn = () => transaction.abort();
+      abortSignal.addEventListener("abort", abortfn);
+    }
+
+    store.clear();
+
+    transaction.oncomplete = () => {
+      if (abortfn) {
+        abortSignal?.removeEventListener("abort", abortfn);
+      }
+
+      resolve(true);
+    };
+
+    transaction.onerror = () => {
+      if (abortfn) {
+        abortSignal?.removeEventListener("abort", abortfn);
+      }
+
+      console.error(`Could not clear IndexedDB store: ${storeName}`);
+      resolve(false);
+    };
+
+    transaction.onabort = () => {
+      console.error(`Clearing IndexedDB store was aborted: ${storeName}`);
+      resolve(false);
+    };
+  });
+}
+
+/**
  * Gets the generated schedules cache
  * */
 export async function getGeneratedSchedulesCache(key: string) {
@@ -286,6 +346,13 @@ export async function deleteGeneratedSchedulesCache(
   return indexedDbDelete(
     IndexedDbKey.GENERATED_SCHEDULES_CACHE_STORE,
     key,
+    abortSignal,
+  );
+}
+
+export async function clearGeneratedSchedulesCache(abortSignal?: AbortSignal) {
+  return indexedDbClear(
+    IndexedDbKey.GENERATED_SCHEDULES_CACHE_STORE,
     abortSignal,
   );
 }
