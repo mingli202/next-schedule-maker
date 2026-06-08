@@ -4,12 +4,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "src/components/ui/tooltip";
-import { cn } from "src/lib/utils";
 
 export function SearchBarInfo() {
   return (
     <Tooltip delayDuration={0}>
-      <div className={cn("group relative flex cursor-default font-bold")}>
+      <div className="relative flex cursor-default font-bold">
         <TooltipTrigger asChild>
           <Info className="h-5 w-5" />
         </TooltipTrigger>
