@@ -4,6 +4,21 @@ export const ViewData = z.array(z.record(z.string(), z.array(z.number())));
 
 export type ViewData = z.infer<typeof ViewData>;
 
+export const StatusEnum = { FOUND: "found", FOUNDNT: "foundn't" } as const;
+
+export const Status = z.enum(StatusEnum);
+
+export type Status = z.infer<typeof Status>;
+
+export const LecLabTypeEnum = {
+	LECTURE: "lecture",
+	LAB: "laboratory",
+} as const;
+
+export const LecLabType = z.enum(LecLabTypeEnum);
+
+export type LecLabType = z.infer<typeof LecLabType>;
+
 export const DayTime = z.object({
 	day: z.string(),
 	startTimeHhmm: z.string(),
