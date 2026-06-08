@@ -21,7 +21,7 @@ export function SearchBarInfo() {
             <li>{"r>, r<, r="} matches a rating range.</li>
             <li>{"s>, s<, s="} matches a score range.</li>
             <li>
-              M, T, W, R, F or any combinasion of these letters will match days
+              M, T, W, R, F or any combination of these letters will match days
               off.
             </li>
             <li>
