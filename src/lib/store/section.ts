@@ -1,28 +1,40 @@
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { SectionByIdSchema, type SectionStore } from "src/types";
+import type { SectionByIdSchema, SectionStore } from "src/types";
+import { type DataVersionCommit, LatestVersionCommit } from "src/types/enums";
+import { GlobalAllSections } from "src/types/generated";
 
-export const allSectionsQueryOptions = queryOptions({
-  queryKey: ["section-store"],
-  queryFn: () => fetchStore(),
-  staleTime: Infinity,
-});
+export const allSectionsQueryOptions = (
+  commit: DataVersionCommit = LatestVersionCommit,
+) =>
+  queryOptions({
+    queryKey: ["section-store"],
+    queryFn: () => fetchStore(commit),
+    staleTime: Infinity,
+  });
 
-export function useSectionStore() {
-  const { data } = useSuspenseQuery(allSectionsQueryOptions);
+export function useSectionStore(
+  commit: DataVersionCommit = LatestVersionCommit,
+) {
+  const { data } = useSuspenseQuery(allSectionsQueryOptions(commit));
   return data;
 }
 
-export async function fetchStore(): Promise<SectionStore> {
+export async function fetchStore(
+  commit: DataVersionCommit,
+): Promise<SectionStore> {
   const res = await fetch(
-    "https://raw.githubusercontent.com/mingli202/scraper/refs/heads/main/data/RPHOR200_-_Schedule_of_classes_June_5/all_sections_final.json",
+    `https://raw.githubusercontent.com/mingli202/scraper/refs/heads/${commit}/all_sections_final.json`,
   );
 
   let sectionsMap: SectionByIdSchema = {};
+  let semester = "";
 
   if (res.ok) {
     try {
       const json = await res.json();
-      sectionsMap = SectionByIdSchema.parse(json);
+      const globalAllSections = GlobalAllSections.parse(json);
+      semester = globalAllSections.semester;
+      sectionsMap = globalAllSections.sectionsById;
     } catch (e) {
       console.error("Failed to parse sections data: ", e);
     }
@@ -47,8 +59,9 @@ export async function fetchStore(): Promise<SectionStore> {
   );
 
   return {
+    semester,
     sectionsById,
     professors,
     codes,
-  } as const;
+  } satisfies SectionStore;
 }

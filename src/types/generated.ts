@@ -62,6 +62,6 @@ export type Section = z.infer<typeof Section>;
 
 export const GlobalAllSections = z.object({
 	semester: z.string(),
-	sectionsById: z.record(z.string(), z.record(z.string(), Any)),
+	sectionsById: z.record(z.string(), Section),
 });
 export type GlobalAllSections = z.infer<typeof GlobalAllSections>;
