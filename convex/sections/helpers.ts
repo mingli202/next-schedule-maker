@@ -6,7 +6,7 @@ export async function saveSection(
   userId: Id<"users">,
   section: {
     scheduleId: Id<"schedules">;
-    sectionId: number;
+    sectionId: string;
     colorIndex: number;
   },
 ): Promise<Id<"sections">> {

@@ -10,7 +10,7 @@ export const createSchedule = mutation({
     source: v.string(),
     sections: v.array(
       v.object({
-        sectionId: v.number(),
+        sectionId: v.string(),
         colorIndex: v.number(),
       }),
     ),
