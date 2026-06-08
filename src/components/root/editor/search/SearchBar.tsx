@@ -1,8 +1,10 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
+import { Info } from "lucide-react";
 import { type SubmitEvent, useCallback, useRef } from "react";
 import { Field, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
 import { useDebounce } from "src/hooks";
+import { SearchBarInfo } from "./SearchBarInfo";
 
 const activeSearchDelayMili = 200;
 
@@ -41,7 +43,7 @@ export function SearchBar() {
 
   return (
     <form onSubmit={handleSubmit} autoComplete="off" ref={formRef}>
-      <Field>
+      <Field orientation="horizontal">
         <FieldLabel htmlFor="search" className="hidden">
           search
         </FieldLabel>
@@ -54,6 +56,7 @@ export function SearchBar() {
           onChange={handleChange}
           defaultValue={q}
         />
+        <SearchBarInfo />
       </Field>
     </form>
   );
