@@ -26,7 +26,7 @@ import type { DataModel } from "./dataModel.js";
  */
 type Env = {
   readonly DEV_FIREBASE_PROJECT_ID: string;
-  readonly ENV: "DEV" | undefined;
+  readonly ENV: "DEV" | "PROD";
   readonly FIREBASE_PROJECT_ID: string;
 };
 
