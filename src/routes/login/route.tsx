@@ -12,7 +12,7 @@ import { useState } from "react";
 import { Button } from "src/components";
 import { Field, FieldGroup, FieldLabel } from "src/components/ui/field";
 import { Input } from "src/components/ui/input";
-import useFormState from "src/hooks/useFormState";
+import { useFormState } from "src/hooks";
 import { getAuth, provider } from "src/integrations/firebase";
 import { cn } from "src/lib/utils";
 

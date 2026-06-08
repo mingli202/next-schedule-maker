@@ -2,6 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { memo, useCallback, useMemo } from "react";
 import { type Components, Virtuoso } from "react-virtuoso";
 import Button from "src/components/Button";
+import { useSavedSchedule } from "src/hooks";
 import { cn } from "src/lib/utils";
 import type { SavedSection } from "src/types/schedule";
 import Schedule from "./Schedule";
@@ -33,13 +34,26 @@ const MemoizedSchedule = memo(
       });
     }, [navigate, schedule]);
 
+    const { setSavedSchedule } = useSavedSchedule();
+
+    const onScheduleSaved = useCallback(
+      (schedule: SavedSection[]) => {
+        setSavedSchedule({
+          sections: schedule,
+          name: "Untitled",
+          source: "default",
+        });
+      },
+      [setSavedSchedule],
+    );
+
     return (
       <div className={cn(index !== 0 && "pt-2")}>
         <Schedule
           index={index}
           schedule={schedule}
           onScheduleSelected={onScheduleSelected}
-          onScheduleSaved={() => {}}
+          onScheduleSaved={onScheduleSaved}
         />
       </div>
     );

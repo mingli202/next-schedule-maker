@@ -35,7 +35,7 @@ function View({
 
         disableControls
           ? "h-full grid-cols-5 grid-rows-[repeat(20,1fr)] md:h-full md:w-full md:p-2"
-          : "h-160 grid-cols-[2rem_repeat(5,1fr)] grid-rows-[repeat(21,1fr)] md:h-full md:min-w-160 md:grid-cols-[3rem_repeat(5,1fr)]",
+          : "h-full min-h-0 grid-cols-[2rem_repeat(5,1fr)] grid-rows-[repeat(21,1fr)] md:min-w-160 md:grid-cols-[3rem_repeat(5,1fr)]",
 
         className,
       )}
@@ -44,7 +44,7 @@ function View({
       {!disableControls && (
         <>
           <p className="absolute top-0 left-0 col-span-1 row-span-1 p-2 text-[0.5rem] md:text-xs">
-            Winter 2026 (December 11 pdf)
+            Fall 2026 (June 5 pdf)
           </p>
           <div className="grid-rows-[repeat(20,1fr) col-span-1 row-[span_21/span_21] mr-4 grid grid-cols-1">
             <Hours />

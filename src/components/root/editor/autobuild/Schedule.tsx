@@ -87,10 +87,10 @@ function Schedule({
             return (
               <div
                 key={`autobuild-schedule-legend-${index}${bgColor}${i.toString()}${sectionId}${section.code}`}
-                className="flex items-center gap-2 text-sm"
+                className="flex gap-2 text-sm"
               >
                 <div
-                  className="flex h-5 w-5 items-center justify-center overflow-hidden rounded-sm"
+                  className="flex h-5 w-5 shrink-0 items-center justify-center overflow-hidden rounded-sm"
                   style={{ backgroundColor: bgColor, color: textColor }}
                 >
                   {i + 1}
@@ -116,6 +116,7 @@ function Schedule({
             variant="basic"
             className="w-fit"
             onClick={() => onScheduleSaved(schedule)}
+            title="save"
           >
             <Save />
           </Button>

@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { type ComponentProps, useCallback, useRef } from "react";
 import { View } from "src/components";
 import { DragIndicator, SidePane } from "src/components/root/editor";
+import ReleaseNotes from "src/components/root/editor/ReleaseNotes";
 import { EditorInViewParams } from "@/types/schedule";
 
 export const Route = createFileRoute("/editor")({
@@ -33,10 +34,17 @@ function RouteComponent() {
   }, []);
 
   return (
-    <div className="text-text box-border flex w-screen overflow-x-hidden overflow-y-auto p-2 text-sm max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
-      <SidePane className="basis-1/3" ref={menuRef} />
+    <div className="text-text relative box-border flex w-screen overflow-hidden p-2 text-sm max-md:flex-col md:h-dvh md:text-base">
+      <SidePane
+        className="min-h-0 max-w-dvh max-md:h-screen md:basis-1/3"
+        ref={menuRef}
+      />
       <DragIndicator onNewXPos={onNewXPost} />
-      <ViewWrapper className="basis-2/3" ref={viewRef} />
+      <ViewWrapper
+        className="min-h-0 max-md:h-[70dvh] md:basis-2/3"
+        ref={viewRef}
+      />
+      <ReleaseNotes />
     </div>
   );
 }

@@ -16,7 +16,7 @@ import { Virtuoso } from "react-virtuoso";
 import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
 import SectionCard from "src/components/SectionCard";
-import { useSectionInSearchHelper } from "src/hooks/useSectionInSearchHelper";
+import { useSectionInSearchHelper } from "src/hooks";
 import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
 import { cn } from "src/lib/utils";
 
