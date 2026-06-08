@@ -34,10 +34,13 @@ function RouteComponent() {
   }, []);
 
   return (
-    <div className="text-text relative box-border flex w-screen overflow-x-hidden overflow-y-auto p-2 text-sm max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
-      <SidePane className="basis-1/3" ref={menuRef} />
+    <div className="text-text relative box-border flex h-dvh w-screen overflow-hidden p-2 text-sm max-md:flex-col md:text-base">
+      <SidePane
+        className="min-h-0 max-w-[100dvh] max-md:basis-[30%] md:basis-1/3"
+        ref={menuRef}
+      />
       <DragIndicator onNewXPos={onNewXPost} />
-      <ViewWrapper className="basis-2/3" ref={viewRef} />
+      <ViewWrapper className="min-h-0 max-md:basis-[70%] md:basis-2/3" ref={viewRef} />
       <ReleaseNotes />
     </div>
   );

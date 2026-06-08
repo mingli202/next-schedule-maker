@@ -35,7 +35,7 @@ function View({
 
         disableControls
           ? "h-full grid-cols-5 grid-rows-[repeat(20,1fr)] md:h-full md:w-full md:p-2"
-          : "h-160 grid-cols-[2rem_repeat(5,1fr)] grid-rows-[repeat(21,1fr)] md:h-full md:min-w-160 md:grid-cols-[3rem_repeat(5,1fr)]",
+          : "h-full min-h-0 grid-cols-[2rem_repeat(5,1fr)] grid-rows-[repeat(21,1fr)] md:min-w-160 md:grid-cols-[3rem_repeat(5,1fr)]",
 
         className,
       )}
