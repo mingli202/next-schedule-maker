@@ -15,7 +15,7 @@ export const SavedSchedule = z.object({
   source: z.string(),
   sections: z.array(
     z.object({
-      sectionId: z.number(),
+      sectionId: z.string(),
       colorIndex: z.number(),
     }),
   ),
@@ -27,7 +27,7 @@ export const SavedScheduleInput = v.object({
   source: v.string(),
   sections: v.array(
     v.object({
-      sectionId: v.number(),
+      sectionId: v.string(),
       colorIndex: v.number(),
     }),
   ),
