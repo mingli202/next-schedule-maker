@@ -148,6 +148,7 @@ const sections: Section[] = [
 ];
 
 const store: SectionStore = {
+  semester: "fall 2026",
   sectionsById: new Map(sections.map((section) => [section.id, section])),
   professors: new Set(
     sections

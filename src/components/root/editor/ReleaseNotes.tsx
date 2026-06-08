@@ -13,8 +13,9 @@ const versionHistory = [
   [
     "Fall 2026 June 5, v1",
     [
-      "Generated schedules and sections search result performance optmization",
-      "Remade the entire app in a better framework to setup the stage for upcoming features",
+      "Generated schedules and sections search result performance optmization.",
+      "Remade the entire app in a better framework to setup the stage for upcoming features.",
+      "Seeing how this release goes before rolling out the new features.",
       "Upcoming feature: auto parse the pdf so you don't have to wait for me to update ts",
       "Upcoming feature: section add/delete/edit so you can correct inaccurate information and have it reflected on your machine",
       "Upcoming feature: a mobile app?? 😭😭😭",

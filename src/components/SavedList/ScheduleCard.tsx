@@ -158,7 +158,10 @@ function ScheduleCard({
           <>
             <button
               type="button"
-              className={cn(!disableEdit && "cursor-pointer", "line-clamp-1")}
+              className={cn(
+                !disableEdit && "cursor-pointer",
+                "line-clamp-1 text-left",
+              )}
               onClick={onEdit}
               title="edit"
             >

@@ -1,9 +1,8 @@
 import type { RecordValues } from "@/types";
 
-export const ScheduleOfClasssesVersion = {
-  "11/12/2025": "0108fb155d2b6bcafbd8fa5301ac4e9166686913",
+export const DataVersionCommit = {
+  Fall2026: "main",
 } as const;
+export const LatestVersionCommit = DataVersionCommit.Fall2026;
 
-export type ScheduleOfClasssesVersion = RecordValues<
-  typeof ScheduleOfClasssesVersion
->;
+export type DataVersionCommit = RecordValues<typeof DataVersionCommit>;
