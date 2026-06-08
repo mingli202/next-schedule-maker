@@ -98,31 +98,31 @@ export default function ReleaseNotes() {
           onClick={handleClick}
         >
           <div
-            className="border-primary bg-background flex w-[min(35rem,80%)] flex-col gap-2 rounded-md border-4 border-solid p-2 md:gap-4 md:p-4"
+            className="border-primary bg-background flex max-h-9/10 w-[min(35rem,80%)] flex-col gap-2 rounded-md border-4 border-solid p-2 md:gap-4 md:p-4"
             ref={popupRef}
           >
-            <div>
-              <div className="flex items-center justify-between gap-2 text-xl md:text-2xl">
-                <h1>What{"'"}s new in Fall 2026</h1>
-                <Button variant="basic" className="p-0" onClick={close}>
-                  <X className="h-5 w-5 md:h-6 md:w-6" />
-                </Button>
-              </div>
+            <div className="flex items-center justify-between gap-2 text-xl md:text-2xl">
+              <h1>What{"'"}s new in Fall 2026</h1>
+              <Button variant="basic" className="p-0" onClick={close}>
+                <X className="h-5 w-5 md:h-6 md:w-6" />
+              </Button>
             </div>
 
-            {versionHistory.map(([version, details]) => (
-              <ul
-                className="bg-secondary/50 list-outside list-disc rounded-sm p-2 [&>li]:ml-6"
-                key={version}
-              >
-                <p>
-                  {version} {currentVersion === version ? "(Latest)" : null}
-                </p>
-                {details.map((detail, i) => (
-                  <li key={i.toString() + detail}>{detail}</li>
-                ))}
-              </ul>
-            ))}
+            <div className="flex flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto">
+              {versionHistory.map(([version, details]) => (
+                <ul
+                  className="bg-secondary/50 shrink-0 list-outside list-disc rounded-sm p-2 [&>li]:ml-6"
+                  key={version}
+                >
+                  <p>
+                    {version} {currentVersion === version ? "(Latest)" : null}
+                  </p>
+                  {details.map((detail, i) => (
+                    <li key={i.toString() + detail}>{detail}</li>
+                  ))}
+                </ul>
+              ))}
+            </div>
           </div>
         </motion.div>
       )}
