@@ -1,6 +1,6 @@
-import type { SectionResponse } from "src/client";
 import type { RecordValues, SectionStore } from ".";
 import type { Code } from "./autobuild";
+import type { Section } from "./generated";
 import type { SavedSection, SearchSectionParams } from "./schedule";
 
 export const WorkerMessageType = {
@@ -42,7 +42,7 @@ export type WorkerResponse =
     }
   | {
       type: "search";
-      sections: SectionResponse[];
+      sections: Section[];
     }
   | {
       type: "generate";

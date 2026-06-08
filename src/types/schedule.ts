@@ -1,14 +1,14 @@
 import z from "zod";
 
 export const SavedSection = z.object({
-  sectionId: z.number(),
+  sectionId: z.string(),
   colorIndex: z.number(),
 });
 export type SavedSection = z.infer<typeof SavedSection>;
 
 export const EditorInViewParams = z.object({
   sections: z.array(SavedSection).catch([]),
-  previewSectionId: z.number().optional(),
+  previewSectionId: z.string().optional(),
   activeSearch: z.boolean().optional(),
   excludeInvalid: z.boolean().optional(),
 });
