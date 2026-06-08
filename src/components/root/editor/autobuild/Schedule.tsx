@@ -61,7 +61,7 @@ function Schedule({
                         gridRowStart: start,
                         gridRowEnd: end,
                       }}
-                      className="flex items-center justify-center overflow-hidden text-xs"
+                      className="flex items-center justify-center overflow-hidden rounded-xs text-xs"
                     >
                       {index + 1}
                     </div>

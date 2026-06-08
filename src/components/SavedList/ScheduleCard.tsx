@@ -71,7 +71,7 @@ function ScheduleCard({
   return (
     <motion.div
       className={cn(
-        "bg-secondary/50 flex h-fit w-full flex-col gap-1 rounded-md p-1 transition",
+        "bg-secondary/50 flex h-fit w-full flex-col gap-1 rounded-[calc(var(--radius)+var(--spacing)-2px)] p-1 transition",
         {
           "bg-secondary": selectedId === schedule.id,
         },
@@ -106,7 +106,7 @@ function ScheduleCard({
 
             return (
               <div
-                className="rounded-sm"
+                className="rounded-xs"
                 style={{
                   gridColumn: day,
                   gridRowStart: start,

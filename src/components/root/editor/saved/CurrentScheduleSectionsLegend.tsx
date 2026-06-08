@@ -40,7 +40,7 @@ export function CurrentScheduleSectionsLegend() {
   return (
     <div className="shrink-0 basis-1/3 overflow-x-hidden overflow-y-auto">
       <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-1 text-sm">
-        <div className="bg-bg-secondary col-span-full flex h-fit gap-2 rounded-md p-2">
+        <div className="bg-secondary/50 col-span-full flex h-fit gap-2 rounded-md p-2">
           <p className="basis-full">Course Count: {sections.length}</p>
 
           <Button
