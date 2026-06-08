@@ -4,7 +4,7 @@ import type { Id } from "convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import type { SavedSchedule, SavedScheduleInput } from "convex/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useIndexedDb } from "src/hooks/useIndexedDb";
+import { useIndexedDb } from "src/hooks";
 import { IndexedDbKey } from "src/lib/storageKeys";
 import { generateId } from "src/lib/utils";
 import type { IndexedDbRecordWithoutKey } from "src/types/indexedDb";

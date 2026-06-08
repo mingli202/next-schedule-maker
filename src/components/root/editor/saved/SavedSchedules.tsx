@@ -3,7 +3,7 @@ import type { SavedSchedule } from "convex/types";
 import { useCallback } from "react";
 import { Button, PageLoading } from "src/components";
 import SavedList from "src/components/SavedList";
-import { useSavedSchedule } from "src/hooks/useSavedSchedule";
+import { useSavedSchedule } from "src/hooks";
 import { CurrentScheduleSectionsLegend } from "./CurrentScheduleSectionsLegend";
 import { LoginIndicator } from "./LoginIndicator";
 

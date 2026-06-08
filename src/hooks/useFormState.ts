@@ -12,7 +12,7 @@ import {
  * @param submitHandler - The handler function that handles the form submission. e.preventDefault() is already called.
  * @returns The error message, the handleSubmit function, and the isPending state.
  * */
-export default function useFormState(
+export function useFormState(
   submitHandler: (
     e: SubmitEvent<HTMLFormElement>,
   ) => Promise<string | undefined | null>,

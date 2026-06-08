@@ -2,10 +2,10 @@ import { useNavigate } from "@tanstack/react-router";
 import { memo, useCallback, useMemo } from "react";
 import { type Components, Virtuoso } from "react-virtuoso";
 import Button from "src/components/Button";
+import { useSavedSchedule } from "src/hooks";
 import { cn } from "src/lib/utils";
 import type { SavedSection } from "src/types/schedule";
 import Schedule from "./Schedule";
-import { useSavedSchedule } from "src/hooks/useSavedSchedule";
 
 const Footer = memo((props: { returnFn: () => void }) => {
   const { returnFn } = props;
