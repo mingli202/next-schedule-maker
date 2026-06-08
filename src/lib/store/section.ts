@@ -7,7 +7,7 @@ export const allSectionsQueryOptions = (
   commit: DataVersionCommit = LatestVersionCommit,
 ) =>
   queryOptions({
-    queryKey: ["section-store"],
+    queryKey: ["section-store", commit],
     queryFn: () => fetchStore(commit),
     staleTime: Infinity,
   });
