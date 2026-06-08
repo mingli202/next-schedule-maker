@@ -23,7 +23,9 @@ export async function fetchStore(): Promise<SectionStore> {
     try {
       const json = await res.json();
       sectionsMap = SectionByIdSchema.parse(json);
-    } catch {}
+    } catch (e) {
+      console.error("Failed to parse sections data: ", e);
+    }
   } else {
     console.error("Failed to fetch from github");
   }
