@@ -1,6 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { type MouseEvent, useLayoutEffect, useRef, useState } from "react";
+import {
+  type MouseEvent,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { Button } from "@/components";
 
 const versionHistory = [
@@ -62,13 +68,17 @@ export default function ReleaseNotes() {
     }
   }, []);
 
+  const close = useCallback(() => {
+    setSeenReleaseNotes(currentVersion);
+    localStorage.setItem(key, currentVersion);
+  }, [currentVersion]);
+
   function handleClick(e: MouseEvent) {
     if (!popupRef.current) return;
     if (!(e.target instanceof Node)) return;
     if (popupRef.current.contains(e.target)) return;
 
-    setSeenReleaseNotes(currentVersion);
-    localStorage.setItem(key, currentVersion);
+    close();
   }
 
   return (
@@ -94,7 +104,7 @@ export default function ReleaseNotes() {
             <div>
               <div className="flex items-center justify-between gap-2 text-xl md:text-2xl">
                 <h1>What{"'"}s new in Fall 2026</h1>
-                <Button variant="basic" className="p-0" onClick={handleClick}>
+                <Button variant="basic" className="p-0" onClick={close}>
                   <X className="h-5 w-5 md:h-6 md:w-6" />
                 </Button>
               </div>
