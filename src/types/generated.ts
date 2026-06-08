@@ -4,18 +4,12 @@ export const ViewData = z.array(z.record(z.string(), z.array(z.number())));
 
 export type ViewData = z.infer<typeof ViewData>;
 
-export const Section = z.object({
-	id: z.string(),
-	course: z.string(),
-	section: z.string(),
-	domain: z.string(),
-	code: z.string(),
-	title: z.string(),
-	leclabs: z.array(LecLab),
-	more: z.string(),
-	viewData: ViewData,
+export const DayTime = z.object({
+	day: z.string(),
+	startTimeHhmm: z.string(),
+	endTimeHhmm: z.string(),
 });
-export type Section = z.infer<typeof Section>;
+export type DayTime = z.infer<typeof DayTime>;
 
 export const Rating = z.object({
 	prof: z.string(),
@@ -38,9 +32,15 @@ export const LecLab = z.object({
 });
 export type LecLab = z.infer<typeof LecLab>;
 
-export const DayTime = z.object({
-	day: z.string(),
-	startTimeHhmm: z.string(),
-	endTimeHhmm: z.string(),
+export const Section = z.object({
+	id: z.string(),
+	course: z.string(),
+	section: z.string(),
+	domain: z.string(),
+	code: z.string(),
+	title: z.string(),
+	leclabs: z.array(LecLab),
+	more: z.string(),
+	viewData: ViewData,
 });
-export type DayTime = z.infer<typeof DayTime>;
+export type Section = z.infer<typeof Section>;
