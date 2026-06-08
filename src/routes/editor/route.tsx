@@ -3,6 +3,7 @@ import { type ComponentProps, useCallback, useRef } from "react";
 import { View } from "src/components";
 import { DragIndicator, SidePane } from "src/components/root/editor";
 import { EditorInViewParams } from "@/types/schedule";
+import ReleaseNotes from "src/components/root/editor/ReleaseNotes";
 
 export const Route = createFileRoute("/editor")({
   head: () => ({
@@ -33,10 +34,11 @@ function RouteComponent() {
   }, []);
 
   return (
-    <div className="text-text box-border flex w-screen overflow-x-hidden overflow-y-auto p-2 text-sm max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
+    <div className="text-text relative box-border flex w-screen overflow-x-hidden overflow-y-auto p-2 text-sm max-md:flex-col md:h-screen md:overflow-hidden md:text-base">
       <SidePane className="basis-1/3" ref={menuRef} />
       <DragIndicator onNewXPos={onNewXPost} />
       <ViewWrapper className="basis-2/3" ref={viewRef} />
+      <ReleaseNotes />
     </div>
   );
 }

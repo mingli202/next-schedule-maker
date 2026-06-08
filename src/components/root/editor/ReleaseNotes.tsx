@@ -1,9 +1,19 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { useLayoutEffect, useState } from "react";
+import { type MouseEvent, useLayoutEffect, useRef, useState } from "react";
 import { Button } from "@/components";
 
 const versionHistory = [
+  [
+    "Fall 2026 June 5, v1",
+    [
+      "Generated schedules and sections search result performance optmization",
+      "Remade the entire app in a better framework to setup the stage for upcoming features",
+      "Upcoming feature: auto parse the pdf so you don't have to wait for me to update ts",
+      "Upcoming feature: section add/delete/edit so you can correct inaccurate information and have it reflected on your machine",
+      "Upcoming feature: a mobile app?? 😭😭😭",
+    ],
+  ],
   [
     "Winter 2026 December 11, v1",
     [
@@ -41,6 +51,8 @@ export default function ReleaseNotes() {
     currentVersion,
   );
 
+  const popupRef = useRef<HTMLDivElement>(null);
+
   useLayoutEffect(() => {
     setSeenReleaseNotes(localStorage.getItem(key));
 
@@ -50,7 +62,11 @@ export default function ReleaseNotes() {
     }
   }, []);
 
-  function handleClick() {
+  function handleClick(e: MouseEvent) {
+    if (!popupRef.current) return;
+    if (!(e.target instanceof Node)) return;
+    if (popupRef.current.contains(e.target)) return;
+
     setSeenReleaseNotes(currentVersion);
     localStorage.setItem(key, currentVersion);
   }
@@ -71,14 +87,13 @@ export default function ReleaseNotes() {
           }}
           onClick={handleClick}
         >
-          <button
+          <div
             className="border-primary bg-background flex w-[min(35rem,80%)] flex-col gap-2 rounded-md border-4 border-solid p-2 md:gap-4 md:p-4"
-            onClick={(e) => e.stopPropagation()}
-            type="button"
+            ref={popupRef}
           >
             <div>
               <div className="flex items-center justify-between gap-2 text-xl md:text-2xl">
-                <h1>What{"'"}s new in Winter 2026</h1>
+                <h1>What{"'"}s new in Fall 2026</h1>
                 <Button variant="basic" className="p-0" onClick={handleClick}>
                   <X className="h-5 w-5 md:h-6 md:w-6" />
                 </Button>
@@ -87,7 +102,7 @@ export default function ReleaseNotes() {
 
             {versionHistory.map(([version, details]) => (
               <ul
-                className="bg-bg-secondary list-outside list-disc rounded-sm p-2 [&>li]:ml-6"
+                className="bg-secondary/50 list-outside list-disc rounded-sm p-2 [&>li]:ml-6"
                 key={version}
               >
                 <p>
@@ -98,7 +113,7 @@ export default function ReleaseNotes() {
                 ))}
               </ul>
             ))}
-          </button>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
