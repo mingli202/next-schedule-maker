@@ -5,7 +5,7 @@ import SectionBlock from "./SectionBlock";
 type Props = {
   disableRemove?: boolean;
   disableControls?: boolean;
-  onRemoveSectionClicked?: (sectionId: number) => void;
+  onRemoveSectionClicked?: (sectionId: string) => void;
   savedSections: SavedSection[];
 };
 

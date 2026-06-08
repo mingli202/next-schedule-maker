@@ -4,8 +4,8 @@ import { cn } from "src/lib/utils";
 import Button from "@/components/Button";
 
 const searchFn = (prev: {
-  previewSectionId?: number | undefined;
-  sections?: { sectionId: number; colorIndex: number }[] | undefined;
+  previewSectionId?: string | undefined;
+  sections?: { sectionId: string; colorIndex: number }[] | undefined;
 }) => ({
   ...prev,
   sections: prev.sections ?? [],

@@ -54,7 +54,7 @@ function ViewWrapper(props: ComponentProps<"div">) {
   const navigate = useNavigate();
 
   const onRemoveSectionClicked = useCallback(
-    (sectionId: number) => {
+    (sectionId: string) => {
       navigate({
         to: ".",
         search: (prev) => ({

@@ -1,12 +1,12 @@
 import ExcelJS from "exceljs";
 import FileSaver from "file-saver";
-import type { SectionResponse } from "src/client";
+import type { SectionStore } from "src/types";
 import type { SavedSection } from "src/types/schedule";
 import { getColorFromIndex } from "./colors";
 
 export default async function download(
   sections: SavedSection[],
-  sectionById: Map<number, SectionResponse>,
+  sectionById: SectionStore["sectionsById"],
 ) {
   const workbook = new ExcelJS.Workbook();
 

@@ -13,12 +13,12 @@ import {
 } from "lucide-react";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
-import type { SectionResponse } from "src/client";
 import Button from "src/components/Button";
 import SectionCard from "src/components/SectionCard";
 import { useSectionInSearchHelper } from "src/hooks";
 import { onWorkerMessage, postWorkerMessage } from "src/lib/store/worker";
 import { cn } from "src/lib/utils";
+import type { Section } from "src/types/generated";
 
 export function SearchResult() {
   const search = useSearch({
@@ -44,7 +44,7 @@ export function SearchResult() {
     }),
   });
 
-  const [results, setResults] = useState<SectionResponse[]>([]);
+  const [results, setResults] = useState<Section[]>([]);
   const isFirstLoading = useRef(true);
 
   useEffect(() => {
@@ -153,9 +153,9 @@ const MemoizedSectionCard = memo(
     section,
     index,
   }: {
-    onHover: (sectionId: number) => void;
+    onHover: (sectionId: string) => void;
     index: number;
-    section: SectionResponse;
+    section: Section;
   }) => {
     return (
       <div className={cn(index !== 0 && "pt-2")}>
@@ -163,7 +163,7 @@ const MemoizedSectionCard = memo(
           section={section}
           footer={<SectionCardFooter sectionId={section.id} />}
           onMouseEnter={() => onHover(section.id)}
-          onMouseLeave={() => onHover(-1)}
+          onMouseLeave={() => onHover("none")}
         />
       </div>
     );
@@ -171,15 +171,16 @@ const MemoizedSectionCard = memo(
 );
 
 type ResultProps = {
-  sections: SectionResponse[];
+  sections: Section[];
 };
 const Result = memo(
   ({ sections }: ResultProps) => {
     const navigate = useNavigate({ from: "/editor/search" });
 
     const onHover = useCallback(
-      (sectionId: number) => {
+      (sectionId: string) => {
         navigate({
+          to: ".",
           search: (prev) => ({
             ...prev,
             previewSectionId:
@@ -223,7 +224,7 @@ const Result = memo(
     ),
 );
 
-const SectionCardFooter = memo((props: { sectionId: number }) => {
+const SectionCardFooter = memo((props: { sectionId: string }) => {
   const { sectionId } = props;
 
   const { addSection, canAddSection, isSectionIncluded, removeSection } =

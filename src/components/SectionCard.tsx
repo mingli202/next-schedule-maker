@@ -1,10 +1,10 @@
 import type { HTMLProps, ReactNode } from "react";
-import type { SectionResponse } from "@/client";
+import type { Section } from "src/types/generated";
 import { cn } from "@/lib/utils";
-import LecLab from "./LecLab";
+import LecLabComponent from "./LecLab";
 
 type SectionCardProps = {
-  section: SectionResponse;
+  section: Section;
   footer?: ReactNode;
   leclabClassName?: string;
 } & HTMLProps<HTMLDivElement>;
@@ -35,8 +35,8 @@ export default function SectionCard({
       </div>
 
       {section.leclabs.map((leclab) => (
-        <LecLab
-          key={leclab.id}
+        <LecLabComponent
+          key={section.id + JSON.stringify(leclab.dayTimes)}
           leclab={leclab}
           className={cn("p-2", leclabClassName)}
         />

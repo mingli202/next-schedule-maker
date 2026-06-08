@@ -16,7 +16,7 @@ type Props = ComponentProps<"div"> & {
   // the sections to view
   savedSections: SavedSection[];
 
-  onRemoveSectionClicked?: (sectionId: number) => void;
+  onRemoveSectionClicked?: (sectionId: string) => void;
 };
 
 function View({
