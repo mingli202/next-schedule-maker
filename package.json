@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "bun test",
-    "lint": "biome lint",
+    "lint": "tsc --noEmit && biome lint",
     "format": "prettier",
     "check": "prettier --write . && eslint --fix"
   },
