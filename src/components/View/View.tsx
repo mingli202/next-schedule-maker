@@ -44,7 +44,7 @@ function View({
       {!disableControls && (
         <>
           <p className="absolute top-0 left-0 col-span-1 row-span-1 p-2 text-[0.5rem] md:text-xs">
-            Winter 2026 (December 11 pdf)
+            Fall 2026 (June 5 pdf)
           </p>
           <div className="grid-rows-[repeat(20,1fr) col-span-1 row-[span_21/span_21] mr-4 grid grid-cols-1">
             <Hours />

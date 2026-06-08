@@ -28,7 +28,7 @@ export default async function download(
   ];
 
   // TODO: change for next semester
-  const sheet = workbook.addWorksheet("Winter2026 Schedule");
+  const sheet = workbook.addWorksheet("Fall2026 Schedule");
 
   sheet.columns = [
     "",
@@ -132,7 +132,7 @@ export default async function download(
     const filetype =
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const blob = new Blob([buffer], { type: filetype });
-    FileSaver.saveAs(blob, "Winter2026 Schedule.xlsx");
+    FileSaver.saveAs(blob, "Fall2026_Schedule.xlsx");
     alert("File downloaded!");
   } catch (err) {
     console.log(err);
