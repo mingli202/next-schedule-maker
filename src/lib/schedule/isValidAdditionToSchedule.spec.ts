@@ -1,5 +1,5 @@
 import { expect } from "bun:test";
-import type { DayTime, Section } from "src/types/generated";
+import type { DayTime, LecLab, Section } from "src/types/generated";
 import { given, then, when } from "../test-util";
 import isValidAdditionToSchedule, {
   isOverlap,
@@ -19,15 +19,16 @@ const sectionFrom = (code: string, dayTimesByLecLab: DayTime[][]): Section => ({
   domain: "TEST",
   code,
   title: "Test Section",
-  leclabs: dayTimesByLecLab.map((dayTimes, index) => ({
-    id: -(index + 1),
-    title: `L${index + 1}`,
-    type: "lecture",
-    sectionId: -1,
-    prof: "Prof",
-    rating: null,
-    dayTimes,
-  })),
+  leclabs: dayTimesByLecLab.map(
+    (dayTimes, index) =>
+      ({
+        title: `L${index + 1}`,
+        type: "lecture",
+        prof: "Prof",
+        rating: null,
+        dayTimes,
+      }) satisfies LecLab,
+  ),
   more: "",
   viewData: [],
 });
