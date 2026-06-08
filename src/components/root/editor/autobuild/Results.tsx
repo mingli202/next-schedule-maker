@@ -5,6 +5,7 @@ import Button from "src/components/Button";
 import { cn } from "src/lib/utils";
 import type { SavedSection } from "src/types/schedule";
 import Schedule from "./Schedule";
+import { useSavedSchedule } from "src/hooks/useSavedSchedule";
 
 const Footer = memo((props: { returnFn: () => void }) => {
   const { returnFn } = props;
@@ -33,13 +34,26 @@ const MemoizedSchedule = memo(
       });
     }, [navigate, schedule]);
 
+    const { setSavedSchedule } = useSavedSchedule();
+
+    const onScheduleSaved = useCallback(
+      (schedule: SavedSection[]) => {
+        setSavedSchedule({
+          sections: schedule,
+          name: "Untitled",
+          source: "default",
+        });
+      },
+      [setSavedSchedule],
+    );
+
     return (
       <div className={cn(index !== 0 && "pt-2")}>
         <Schedule
           index={index}
           schedule={schedule}
           onScheduleSelected={onScheduleSelected}
-          onScheduleSaved={() => {}}
+          onScheduleSaved={onScheduleSaved}
         />
       </div>
     );
