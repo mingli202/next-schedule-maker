@@ -34,9 +34,9 @@ export default function SectionCard({
         </h1>
       </div>
 
-      {section.leclabs.map((leclab) => (
+      {section.leclabs.map((leclab, i) => (
         <LecLabComponent
-          key={section.id + JSON.stringify(leclab.dayTimes)}
+          key={section.id + JSON.stringify(leclab.dayTimes) + i.toString()}
           leclab={leclab}
           className={cn("p-2", leclabClassName)}
         />
