@@ -1,7 +1,6 @@
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { SectionResponse } from "src/client";
 import type { SectionStore } from "src/types";
-import { zSectionResponse } from "src/types/client/zod.gen";
+import { Section } from "src/types/generated";
 import { z } from "zod";
 
 export const allSectionsQueryOptions = queryOptions({
@@ -20,11 +19,11 @@ export async function fetchStore(): Promise<SectionStore> {
     "https://raw.githubusercontent.com/mingli202/scraper/refs/heads/main/data/RPHOR200_-_Schedule_of_classes_June_5/all_sections_final.json",
   );
 
-  let sections: SectionResponse[] = [];
+  let sections: Section[] = [];
 
   if (res.ok) {
     const json = await res.json();
-    sections = z.array(zSectionResponse).parse(json);
+    sections = z.array(Section).parse(json);
   } else {
     console.error("Failed to fetch from github");
   }

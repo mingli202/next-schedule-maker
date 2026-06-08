@@ -1,5 +1,5 @@
 import type { QueryClient } from "@tanstack/react-query";
-import type { SectionResponse } from "src/client";
+import type { Section } from "./generated";
 
 export type RecordValues<T extends Record<string | number | symbol, unknown>> =
   T[keyof T];
@@ -9,7 +9,7 @@ export type RouterContext = {
 };
 
 export type SectionStore = {
-  readonly sectionsById: Map<number, SectionResponse>;
+  readonly sectionsById: Map<string, Section>;
   readonly professors: Set<string>;
   readonly codes: Set<string>;
 };
