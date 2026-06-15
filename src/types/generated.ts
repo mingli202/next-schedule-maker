@@ -60,8 +60,17 @@ export const Section = z.object({
 });
 export type Section = z.infer<typeof Section>;
 
+export const SectionsDiff = z.object({
+	previousSectionsChanged: z.array(Section),
+	sectionsAdded: z.array(z.string()),
+	sectionsRemoved: z.array(Section),
+});
+export type SectionsDiff = z.infer<typeof SectionsDiff>;
+
 export const GlobalAllSections = z.object({
 	semester: z.string(),
 	sectionsById: z.record(z.string(), Section),
+	filename: z.string(),
+	sectionsDiff: SectionsDiff,
 });
 export type GlobalAllSections = z.infer<typeof GlobalAllSections>;

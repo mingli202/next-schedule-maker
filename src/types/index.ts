@@ -1,7 +1,7 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import type { DataVersionCommit } from "./enums";
-import { Section } from "./generated";
+import { Section, type SectionsDiff } from "./generated";
 
 export type RecordValues<T extends Record<string | number | symbol, unknown>> =
   T[keyof T];
@@ -15,6 +15,8 @@ export type SectionByIdSchema = z.infer<typeof SectionByIdSchema>;
 
 export type SectionStore = {
   readonly semester: string;
+  readonly filename: string;
+  readonly sectionsDiff: SectionsDiff;
   readonly sectionsById: Map<string, Section>;
   readonly professors: Set<string>;
   readonly codes: Set<string>;
