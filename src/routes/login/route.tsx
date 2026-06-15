@@ -130,6 +130,7 @@ function RouteComponent() {
                   <Link
                     to="/forgot"
                     className="text-sm opacity-50 transition hover:opacity-100"
+                    replace
                   >
                     Forgot?
                   </Link>
