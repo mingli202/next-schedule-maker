@@ -1,7 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { type ComponentProps, useCallback, useRef } from "react";
 import { View } from "src/components";
-import { DragIndicator, SidePane } from "src/components/root/editor";
+import {
+  DragIndicator,
+  SidePane,
+  StatusFooter,
+} from "src/components/root/editor";
 import ReleaseNotes from "src/components/root/editor/ReleaseNotes";
 import { EditorInViewParams } from "@/types/schedule";
 
@@ -34,22 +38,22 @@ function RouteComponent() {
   }, []);
 
   return (
-    <div className="text-text relative box-border flex w-screen overflow-hidden p-2 text-sm max-md:flex-col md:h-dvh md:text-base">
-      <SidePane
-        className="min-h-0 max-w-dvh max-md:h-screen md:basis-1/3"
-        ref={menuRef}
-      />
-      <DragIndicator onNewXPos={onNewXPost} />
-      <ViewWrapper
-        className="min-h-0 max-md:h-[70dvh] md:basis-2/3"
-        ref={viewRef}
-      />
-      <ReleaseNotes />
+    <div className="relative flex w-screen flex-col overflow-hidden text-sm md:h-screen md:text-base">
+      <div className="flex max-md:flex-col md:flex-1">
+        <SidePane
+          className="max-w-dvh p-2 max-md:h-[93vh] md:basis-1/3"
+          ref={menuRef}
+        />
+        <DragIndicator onNewXPos={onNewXPost} />
+        <ViewWrapper className="max-md:h-[70vh] md:basis-2/3" ref={viewRef} />
+        <ReleaseNotes />
+      </div>
+      <StatusFooter />
     </div>
   );
 }
 
-function ViewWrapper(props: ComponentProps<"div">) {
+function ViewWrapper({ ...props }: ComponentProps<"div">) {
   const sections = Route.useSearch({ select: (s) => s.sections });
   const navigate = useNavigate();
 
