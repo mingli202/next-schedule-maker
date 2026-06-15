@@ -1,7 +1,7 @@
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import type { SectionByIdSchema, SectionStore } from "src/types";
 import { type DataVersionCommit, LatestVersionCommit } from "src/types/enums";
-import { GlobalAllSections } from "src/types/generated";
+import { GlobalAllSections, type SectionsDiff } from "src/types/generated";
 
 export const allSectionsQueryOptions = (
   commit: DataVersionCommit = LatestVersionCommit,
@@ -28,12 +28,21 @@ export async function fetchStore(
 
   let sectionsMap: SectionByIdSchema = {};
   let semester = "";
+  let filename = "";
+  let sectionsDiff: SectionsDiff = {
+    previousSectionsChanged: [],
+    sectionsAdded: [],
+    sectionsRemoved: [],
+  };
 
   if (res.ok) {
     try {
       const json = await res.json();
       const globalAllSections = GlobalAllSections.parse(json);
+
       semester = globalAllSections.semester;
+      filename = globalAllSections.filename;
+      sectionsDiff = globalAllSections.sectionsDiff;
       sectionsMap = globalAllSections.sectionsById;
     } catch (e) {
       console.error("Failed to parse sections data: ", e);
@@ -60,6 +69,8 @@ export async function fetchStore(
 
   return {
     semester,
+    filename,
+    sectionsDiff,
     sectionsById,
     professors,
     codes,
