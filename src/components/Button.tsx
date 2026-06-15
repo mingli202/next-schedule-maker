@@ -11,11 +11,18 @@ import {
   useRef,
   useState,
 } from "react";
+import type { RecordValues } from "src/types";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
+export const ButtonVariant = {
+  Basic: "basic",
+  Special: "special",
+} as const;
+export type ButtonVariant = RecordValues<typeof ButtonVariant>;
+
 type Props = {
-  variant?: "basic" | "special";
+  variant?: ButtonVariant;
 } & {
   disableBgEffect?: boolean;
   disableScaleEffect?: boolean;
