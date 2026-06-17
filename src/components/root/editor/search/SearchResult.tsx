@@ -157,13 +157,31 @@ const MemoizedSectionCard = memo(
     index: number;
     section: Section;
   }) => {
+    const mouseOver = useRef(false);
+
     return (
       <div className={cn(index !== 0 && "pt-2")}>
         <SectionCard
           section={section}
           footer={<SectionCardFooter sectionId={section.id} />}
-          onMouseEnter={() => onHover(section.id)}
-          onMouseLeave={() => onHover("none")}
+          onMouseEnter={() => {
+            if (mouseOver.current) {
+              return;
+            }
+            mouseOver.current = true;
+            return onHover(section.id);
+          }}
+          onMouseOver={() => {
+            if (mouseOver.current) {
+              return;
+            }
+            mouseOver.current = true;
+            return onHover(section.id);
+          }}
+          onMouseLeave={() => {
+            mouseOver.current = false;
+            return onHover("none");
+          }}
         />
       </div>
     );

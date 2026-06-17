@@ -53,6 +53,8 @@ export function useSectionInSearchHelper(sectionId: string) {
               colorIndex: getNextAvailableColorIndex(prev.sections),
             },
           ],
+          previewSectionId:
+            prev.previewSectionId === undefined ? undefined : "none",
         }),
       });
     }
