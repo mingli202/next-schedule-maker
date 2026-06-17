@@ -156,6 +156,12 @@ const store: SectionStore = {
       .filter((prof) => prof.trim() !== ""),
   ),
   codes: new Set(sections.map((section) => section.code)),
+  filename: "",
+  sectionsDiff: {
+    previousSectionsChanged: [],
+    sectionsAdded: [],
+    sectionsRemoved: [],
+  },
 };
 
 const filterDown = (sectionStore: SectionStore, search: SearchSectionParams) =>

@@ -53,7 +53,7 @@ function RouteComponent() {
         </Field>
       </form>
 
-      <Link to="/login" className="hover:underline">
+      <Link to="/login" className="hover:underline" replace>
         Back to sign in
       </Link>
     </div>

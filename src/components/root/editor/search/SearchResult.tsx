@@ -177,7 +177,6 @@ const MemoizedSectionCard = memo(
         <SectionCard
           section={section}
           footer={<SectionCardFooter sectionId={section.id} />}
-          onMouseEnter={onMouseOver}
           onMouseOver={onMouseOver}
           onMouseLeave={onMouseLeave}
         />

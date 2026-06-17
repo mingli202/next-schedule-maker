@@ -1,7 +1,7 @@
 import type { RecordValues } from "@/types";
 
 export const DataVersionCommit = {
-  Fall2026: "223da53964cb95211c69e6d1183ea14c1555371a",
+  Fall2026: "8394a819ab28d04e3c89e020338a1848a0f96775",
 } as const;
 export const LatestVersionCommit = DataVersionCommit.Fall2026;
 

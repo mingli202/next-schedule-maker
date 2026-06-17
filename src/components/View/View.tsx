@@ -31,7 +31,7 @@ function View({
     <div
       className={cn(
         "relative box-border grid w-full",
-        "bg-primary text-primary-foreground rounded-md p-2 md:p-4",
+        "bg-primary text-primary-foreground p-2 md:p-4",
 
         disableControls
           ? "h-full grid-cols-5 grid-rows-[repeat(20,1fr)] md:h-full md:w-full md:p-2"
@@ -43,9 +43,6 @@ function View({
     >
       {!disableControls && (
         <>
-          <p className="absolute top-0 left-0 col-span-1 row-span-1 p-2 text-[0.5rem] md:text-xs">
-            Fall 2026 (June 5 pdf)
-          </p>
           <div className="grid-rows-[repeat(20,1fr) col-span-1 row-[span_21/span_21] mr-4 grid grid-cols-1">
             <Hours />
           </div>
