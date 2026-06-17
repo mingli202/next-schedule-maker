@@ -25,5 +25,5 @@ export function useReleaseNotes() {
     setShouldOpen(true);
   }, []);
 
-  return [shouldOpen, close, open] as const;
+  return { shouldOpen, open, close } as const;
 }

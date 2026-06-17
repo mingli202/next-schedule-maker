@@ -1,41 +1,20 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import {
-  type MouseEvent,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import { useSectionStore } from "src/lib/store/section";
+import { type MouseEvent, useRef } from "react";
 import { versionHistory } from "src/lib/version-history";
 import { Button } from "@/components";
 
-export default function ReleaseNotes() {
-  const store = useSectionStore();
-
-  const key = "last-seen-version";
-  const currentVersion = store.filename;
-  const [seenReleaseNotes, setSeenReleaseNotes] = useState<string | null>(
-    currentVersion,
-  );
-
+type ReleaseNotesProps = {
+  shouldOpen: boolean;
+  close: () => void;
+  semester: string;
+};
+export default function ReleaseNotes({
+  shouldOpen,
+  close,
+  semester,
+}: ReleaseNotesProps) {
   const popupRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    setSeenReleaseNotes(localStorage.getItem(key));
-
-    const s = new Set(versionHistory.map((v) => v[0]));
-    if (s.size !== versionHistory.length) {
-      throw new Error("Has duplicate version name");
-    }
-  }, []);
-
-  const close = useCallback(() => {
-    setSeenReleaseNotes(currentVersion);
-    // localStorage.setItem(key, currentVersion);
-  }, [currentVersion]);
-
   function handleClick(e: MouseEvent) {
     if (!popupRef.current) return;
     if (!(e.target instanceof Node)) return;
@@ -46,7 +25,7 @@ export default function ReleaseNotes() {
 
   return (
     <AnimatePresence>
-      {seenReleaseNotes === currentVersion ? null : (
+      {shouldOpen ? (
         <motion.div
           className="bot-0 bg-background/50 absolute top-0 z-9999 flex h-screen w-screen items-center justify-center backdrop-blur-md backdrop-filter"
           initial={{
@@ -66,7 +45,7 @@ export default function ReleaseNotes() {
           >
             <div className="flex items-center justify-between gap-2 text-xl md:text-2xl">
               <h1>
-                What{"'"}s new in {store.semester}
+                What{"'"}s new in {semester}
               </h1>
               <Button variant="basic" className="p-0" onClick={close}>
                 <X className="h-5 w-5 md:h-6 md:w-6" />
@@ -79,9 +58,7 @@ export default function ReleaseNotes() {
                   className="bg-secondary/50 shrink-0 list-outside list-disc rounded-sm p-2 [&>li]:ml-6"
                   key={version}
                 >
-                  <p>
-                    {version} {currentVersion === version ? "(Latest)" : null}
-                  </p>
+                  <p>{version}</p>
                   {details.map((detail, i) => (
                     <li key={i.toString() + detail}>{detail}</li>
                   ))}
@@ -90,7 +67,7 @@ export default function ReleaseNotes() {
             </div>
           </div>
         </motion.div>
-      )}
+      ) : null}
     </AnimatePresence>
   );
 }
