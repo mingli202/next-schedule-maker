@@ -20,13 +20,10 @@ export function useSectionStore(
 }
 
 export async function fetchStore(
-  _commit: DataVersionCommit,
+  commit: DataVersionCommit,
 ): Promise<SectionStore> {
-  // const res = await fetch(
-  //   `https://raw.githubusercontent.com/mingli202/scraper/refs/heads/${commit}/all_sections_final.json`,
-  // );
   const res = await fetch(
-    "https://raw.githubusercontent.com/mingli202/scraper/refs/heads/diff/all_sections_final.json",
+    `https://raw.githubusercontent.com/mingli202/scraper/${commit}/all_sections_final.json`,
   );
 
   let sectionsMap: SectionByIdSchema = {};
