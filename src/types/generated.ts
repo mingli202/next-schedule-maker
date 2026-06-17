@@ -72,5 +72,6 @@ export const GlobalAllSections = z.object({
 	sectionsById: z.record(z.string(), Section),
 	filename: z.string(),
 	sectionsDiff: SectionsDiff,
+	comments: z.array(z.string()),
 });
 export type GlobalAllSections = z.infer<typeof GlobalAllSections>;
