@@ -1,20 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { useConvexAuth } from "convex/react";
-import { getAuth, signOut } from "firebase/auth";
-import { useCallback } from "react";
+import { signOut } from "firebase/auth";
 import { Button } from "src/components";
 import { ButtonVariant } from "src/components/Button";
-import { app } from "src/integrations/firebase";
+import { getAuth } from "src/integrations/firebase";
 import { useSectionStore } from "src/lib/store/section";
+
+const auth = getAuth();
 
 export function StatusFooter() {
   const store = useSectionStore();
   const { isLoading, isAuthenticated } = useConvexAuth();
-
-  const logOut = useCallback(async () => {
-    const auth = getAuth(app);
-    await signOut(auth);
-  }, []);
 
   return (
     <div className="bg-secondary/50 flex items-center justify-between text-xs">
@@ -23,7 +19,7 @@ export function StatusFooter() {
           <Button
             className="rounded-none py-1"
             variant={ButtonVariant.Special}
-            onClick={logOut}
+            onClick={() => signOut(auth)}
           >
             Log out
           </Button>
