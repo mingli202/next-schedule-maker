@@ -1,18 +1,19 @@
 import { Link } from "@tanstack/react-router";
 import { useConvexAuth } from "convex/react";
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { useCallback } from "react";
 import { Button } from "src/components";
 import { ButtonVariant } from "src/components/Button";
-import { app } from "src/integrations/firebase";
+import { getAuth } from "src/integrations/firebase";
 import { useSectionStore } from "src/lib/store/section";
+
+const auth = getAuth();
 
 export function StatusFooter() {
   const store = useSectionStore();
   const { isLoading, isAuthenticated } = useConvexAuth();
 
   const logOut = useCallback(async () => {
-    const auth = getAuth(app);
     await signOut(auth);
   }, []);
 
