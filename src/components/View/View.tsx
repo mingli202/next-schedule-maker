@@ -31,7 +31,7 @@ function View({
     <div
       className={cn(
         "relative box-border grid w-full",
-        "bg-primary text-primary-foreground p-2",
+        "bg-primary text-primary-foreground p-2 md:p-4",
 
         disableControls
           ? "h-full grid-cols-5 grid-rows-[repeat(20,1fr)] md:h-full md:w-full md:p-2"
