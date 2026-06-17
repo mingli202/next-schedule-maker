@@ -23,7 +23,7 @@ export async function fetchStore(
   commit: DataVersionCommit,
 ): Promise<SectionStore> {
   const res = await fetch(
-    `https://raw.githubusercontent.com/mingli202/scraper/refs/heads/${commit}/all_sections_final.json`,
+    `https://raw.githubusercontent.com/mingli202/scraper/${commit}/all_sections_final.json`,
   );
 
   let sectionsMap: SectionByIdSchema = {};
