@@ -35,11 +35,7 @@ export function StatusFooter() {
 
   return (
     <>
-      <ReleaseNotes
-        shouldOpen={shouldOpen}
-        close={close}
-        semester={store.semester}
-      />
+      <ReleaseNotes shouldOpen={shouldOpen} close={close} store={store} />
       <div className="bg-secondary/50 flex w-full items-center text-xs">
         <div>
           {isLoading ? null : isAuthenticated ? (
