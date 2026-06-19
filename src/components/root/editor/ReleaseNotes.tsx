@@ -1,32 +1,21 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { type MouseEvent, useRef, useState } from "react";
-import Button from "src/components/Button";
-import SectionCard from "src/components/SectionCard";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "src/components/ui/tooltip";
+import { type MouseEvent, useRef } from "react";
 import type { SectionStore } from "src/types";
 import type { Section } from "src/types/generated";
 
+// TODO: show the actual diff
 const SectionButton = ({ section }: { section: Section }) => {
-  const [open, setOpen] = useState<boolean>(false);
-
   return (
-    <Tooltip open={open} onOpenChange={setOpen}>
-      <TooltipTrigger asChild>
-        <Button
-          className="bg-secondary/50 ring-secondary ring"
-          onClick={() => setOpen(true)}
-        >
-          {section.id}
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent>
-        <SectionCard section={section} />
-      </TooltipContent>
-    </Tooltip>
+    // <Tooltip>
+    //   <TooltipTrigger asChild>
+    <p className="bg-secondary/50 ring-secondary rounded-sm px-2 py-1 ring">
+      {section.id}
+    </p>
+    //   </TooltipTrigger>
+    //   <TooltipContent>
+    //     <div>Hello world</div>
+    //   </TooltipContent>
+    // </Tooltip>
   );
 };
 
@@ -57,7 +46,7 @@ export default function ReleaseNotes({
     <AnimatePresence>
       {shouldOpen ? (
         <motion.div
-          className="bg-background/50 absolute top-0 left-0 z-9999 flex h-screen w-screen items-center justify-center backdrop-blur-md backdrop-filter"
+          className="bg-background/50 fixed top-0 left-0 z-9999 flex h-screen w-screen items-center justify-center backdrop-blur-md backdrop-filter"
           initial={{
             opacity: 0,
           }}
@@ -70,7 +59,7 @@ export default function ReleaseNotes({
           onClick={handleClick}
         >
           <div className="flex h-9/10 w-9/10 gap-2" ref={popupRef}>
-            <div className="bg-background ring-secondary flex basis-2/3 flex-col gap-6 rounded-md p-10 ring-2">
+            <div className="bg-background ring-secondary flex basis-3/5 flex-col gap-6 rounded-md p-14 ring-2">
               <div className="flex flex-col gap-2">
                 <h1 className="text-xl">
                   What{"'"}s new in {semester}
@@ -119,8 +108,10 @@ export default function ReleaseNotes({
                   </div>
                 ) : null}
               </div>
+
+              {/* <p>(click on section to see detail)</p> */}
             </div>
-            <div className="bg-background ring-secondary basis-1/3 rounded-md ring-2"></div>
+            <div className="bg-background ring-secondary basis-2/5 rounded-md ring-2"></div>
           </div>
         </motion.div>
       ) : null}
