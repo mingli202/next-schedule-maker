@@ -1,19 +1,49 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
-import { type MouseEvent, useRef } from "react";
-import { versionHistory } from "src/lib/version-history";
-import { Button } from "@/components";
+import { type MouseEvent, useRef, useState } from "react";
+import Button from "src/components/Button";
+import SectionCard from "src/components/SectionCard";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "src/components/ui/tooltip";
+import type { SectionStore } from "src/types";
+import type { Section } from "src/types/generated";
+
+const SectionButton = ({ section }: { section: Section }) => {
+  const [open, setOpen] = useState<boolean>(false);
+
+  return (
+    <Tooltip open={open} onOpenChange={setOpen}>
+      <TooltipTrigger asChild>
+        <Button
+          className="bg-secondary/50 ring-secondary ring"
+          onClick={() => setOpen(true)}
+        >
+          {section.id}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>
+        <SectionCard section={section} />
+      </TooltipContent>
+    </Tooltip>
+  );
+};
 
 type ReleaseNotesProps = {
   shouldOpen: boolean;
   close: () => void;
-  semester: string;
+  store: SectionStore;
 };
 export default function ReleaseNotes({
   shouldOpen,
   close,
-  semester,
+  store,
 }: ReleaseNotesProps) {
+  const { semester, comments, filename, sectionsDiff, sectionsById } = store;
+  const { sectionsAdded, previousSectionsChanged, sectionsRemoved } =
+    sectionsDiff;
+
   const popupRef = useRef<HTMLDivElement>(null);
   function handleClick(e: MouseEvent) {
     if (!popupRef.current) return;
@@ -27,7 +57,7 @@ export default function ReleaseNotes({
     <AnimatePresence>
       {shouldOpen ? (
         <motion.div
-          className="bot-0 bg-background/50 absolute top-0 z-9999 flex h-screen w-screen items-center justify-center backdrop-blur-md backdrop-filter"
+          className="bg-background/50 absolute top-0 left-0 z-9999 flex h-screen w-screen items-center justify-center backdrop-blur-md backdrop-filter"
           initial={{
             opacity: 0,
           }}
@@ -39,32 +69,58 @@ export default function ReleaseNotes({
           }}
           onClick={handleClick}
         >
-          <div
-            className="border-primary bg-background flex max-h-9/10 w-[min(35rem,80%)] flex-col gap-2 rounded-md border-4 border-solid p-2 md:gap-4 md:p-4"
-            ref={popupRef}
-          >
-            <div className="flex items-center justify-between gap-2 text-xl md:text-2xl">
-              <h1>
-                What{"'"}s new in {semester}
-              </h1>
-              <Button variant="basic" className="p-0" onClick={close}>
-                <X className="h-5 w-5 md:h-6 md:w-6" />
-              </Button>
-            </div>
+          <div className="flex h-9/10 w-9/10 gap-2" ref={popupRef}>
+            <div className="bg-background ring-secondary flex basis-2/3 flex-col gap-6 rounded-md p-10 ring-2">
+              <div className="flex flex-col gap-2">
+                <h1 className="text-xl">
+                  What{"'"}s new in {semester}
+                </h1>
+                <p>{filename} update</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                {comments.map((comment, i) => (
+                  <p key={`${comment}-${i.toString()}`}>{comment}</p>
+                ))}
+              </div>
 
-            <div className="flex flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto">
-              {versionHistory.map(([version, details]) => (
-                <ul
-                  className="bg-secondary/50 shrink-0 list-outside list-disc rounded-sm p-2 [&>li]:ml-6"
-                  key={version}
-                >
-                  <p>{version}</p>
-                  {details.map((detail, i) => (
-                    <li key={i.toString() + detail}>{detail}</li>
-                  ))}
-                </ul>
-              ))}
+              <div className="flex flex-col gap-2">
+                <p>Sections added ({sectionsAdded.length})</p>
+                {sectionsAdded.length > 0 ? (
+                  <div className="flex flex-wrap gap-2">
+                    {sectionsAdded.map((s) => {
+                      const section = sectionsById.get(s);
+                      if (!section) {
+                        return null;
+                      }
+                      return <SectionButton key={s} section={section} />;
+                    })}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <p>Sections removed ({sectionsRemoved.length})</p>
+                {sectionsRemoved.length > 0 ? (
+                  <div className="flex flex-wrap gap-2">
+                    {sectionsRemoved.map((s) => (
+                      <SectionButton key={s.id} section={s} />
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <p>Sections changed ({previousSectionsChanged.length})</p>
+                {previousSectionsChanged.length > 0 ? (
+                  <div className="flex flex-wrap gap-2">
+                    {previousSectionsChanged.map((s) => (
+                      <SectionButton key={s.id} section={s} />
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             </div>
+            <div className="bg-background ring-secondary basis-1/3 rounded-md ring-2"></div>
           </div>
         </motion.div>
       ) : null}
