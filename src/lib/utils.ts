@@ -18,3 +18,16 @@ export function generateId() {
     ? crypto.randomUUID()
     : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
+
+/**
+ * Helper generic function for sorting
+ * */
+export function compare<T>(a: T, b: T): number {
+  if (a > b) {
+    return 1;
+  }
+  if (a < b) {
+    return -1;
+  }
+  return 0;
+}
