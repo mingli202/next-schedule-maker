@@ -113,6 +113,8 @@
   --shadow-xl:
     0 1px 3px 0px oklch(0 0 0 / 0.1), 0 8px 10px -1px oklch(0 0 0 / 0.1);
   --shadow-2xl: 0 1px 3px 0px oklch(0 0 0 / 0.25);
+
+  --view-bg: oklch(86.9% 0.022 252.894);
 }
 
 @theme inline {
@@ -168,6 +170,8 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  --color-view-bg: var(--view-bg);
 }
 
 * {
