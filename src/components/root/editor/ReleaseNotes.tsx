@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { type MouseEvent, useRef } from "react";
 import type { SectionStore } from "src/types";
 import type { Section } from "src/types/generated";
+import { SavedSchedulesDiff } from "./SavedSchedulesDiff";
 
 // TODO: show the actual diff
 const SectionButton = ({ section }: { section: Section }) => {
@@ -111,7 +112,10 @@ export default function ReleaseNotes({
 
               {/* <p>(click on section to see detail)</p> */}
             </div>
-            <div className="bg-background ring-secondary basis-2/5 rounded-md ring-2"></div>
+            <SavedSchedulesDiff
+              sectionsRemoved={sectionsRemoved}
+              previousSectionsChanged={previousSectionsChanged}
+            />
           </div>
         </motion.div>
       ) : null}
