@@ -174,7 +174,9 @@ function ScheduleDiff({
       {modifiedSections.map(({ oldSection, newSection }, i) => {
         const El = newSection
           ? OverlappingDiv
-          : (props: ComponentProps<"div">) => <div {...props} />;
+          : ({ className, ...props }: ComponentProps<"div">) => (
+              <div className={cn(redBg, className)} {...props} />
+            );
 
         return (
           <div
@@ -186,7 +188,10 @@ function ScheduleDiff({
             </El>
             <div className="flex w-full flex-col gap-1">
               <p>
-                {oldSection.code} {oldSection.section}
+                {oldSection.code} {oldSection.section}{" "}
+                {newSection ? null : (
+                  <span className={cn(redText)}>(removed)</span>
+                )}
               </p>
               {newSection && (
                 <>
@@ -282,7 +287,7 @@ function LeclabsDiff({
           <LecLabComponent
             key={`${sectionId}-extraoldleclab-${JSON.stringify(leclab.dayTimes)}-${i.toString()}`}
             leclab={leclab}
-            className={cn(redBg, "text-red-900")}
+            className={cn(redText, "bg-red-900")}
           />
         ))}
       {Iter.from(newLecLabs)
@@ -291,7 +296,7 @@ function LeclabsDiff({
           <LecLabComponent
             key={`${sectionId}-extranewleclab-${JSON.stringify(leclab.dayTimes)}-${i.toString()}`}
             leclab={leclab}
-            className={cn(greenBg, "text-green-900")}
+            className={cn(greenText, "bg-green-900")}
           />
         ))}
     </>
@@ -326,7 +331,7 @@ function LecLabDiff({
             <TeacherStats leclab={oldLeclab} />
           </>
         ) : (
-          <div className="flex gap-1">
+          <div className="flex w-full flex-col">
             <div className={cn("flex gap-1", redText)}>
               {oldLeclab.prof}
               <TeacherStats leclab={oldLeclab} />
@@ -447,10 +452,10 @@ function Diff({ oldStr, newStr }: { oldStr: string; newStr: string }) {
   return oldStr === newStr ? (
     oldStr
   ) : (
-    <div className="flex gap-1">
-      <p className={redText}>{oldStr}</p>
+    <p>
+      <span className={cn(redText)}>{oldStr}</span>
       {" -> "}
-      <p className={greenText}>{newStr}</p>
-    </div>
+      <span className={cn(greenText)}>{newStr}</span>
+    </p>
   );
 }
