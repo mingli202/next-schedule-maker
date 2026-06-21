@@ -452,7 +452,7 @@ function Diff({ oldStr, newStr }: { oldStr: string; newStr: string }) {
   ) : (
     <>
       <span className={cn(redText)}>{oldStr}</span>
-      {" > "}
+      {" → "}
       <span className={cn(greenText)}>{newStr}</span>
     </>
   );
