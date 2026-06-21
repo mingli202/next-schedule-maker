@@ -138,7 +138,7 @@ function Button({
         <motion.button
           {...props}
           className={cn(
-            "relative overflow-hidden rounded-lg p-2 hover:cursor-pointer",
+            "relative overflow-hidden rounded-lg px-2 py-1 hover:cursor-pointer",
             variant === "basic" && "bg-transparent opacity-50",
             variant === "special" && "text-accent-foreground bg-accent z-10",
             isPending &&
@@ -194,7 +194,7 @@ function Button({
                   ref={scope}
                   className={cn(
                     "bg-background absolute top-0 left-0 z-1 h-full w-full",
-                    "overflow-hidden p-2",
+                    "overflow-hidden px-2 py-1",
                     className,
                   )}
                   style={{

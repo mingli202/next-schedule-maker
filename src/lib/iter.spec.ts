@@ -428,6 +428,44 @@ given("an iter", () => {
       expect(iter.collect()).toStrictEqual([1, 2, 2, 4, 3, 6, 4, 8, 5, 10]);
     });
   });
+
+  when("zip() is called", () => {
+    then("should pair values from both iterators in order", () => {
+      const iter = Iter.from([1, 2, 3]).zip(Iter.from(["a", "b", "c"]));
+
+      expect(iter.collect()).toStrictEqual([
+        [1, "a"],
+        [2, "b"],
+        [3, "c"],
+      ]);
+    });
+
+    then("should stop when either iterator is exhausted", () => {
+      const iter = Iter.from([1, 2, 3, 4]).zip(Iter.from(["a", "b"]));
+
+      expect(iter.collect()).toStrictEqual([
+        [1, "a"],
+        [2, "b"],
+      ]);
+    });
+
+    then("should be lazy and only consume what is needed", () => {
+      let rightCalls = 0;
+      const right = Iter.from([10, 20, 30]).map((val) => {
+        rightCalls++;
+        return val;
+      });
+
+      const iter = Iter.from([1, 2, 3]).zip(right);
+
+      expect(rightCalls).toBe(0);
+      expect(iter.take(2).collect()).toStrictEqual([
+        [1, 10],
+        [2, 20],
+      ]);
+      expect(rightCalls).toBe(2);
+    });
+  });
 });
 
 test("test whether iterator is consumed or not after collect", () => {

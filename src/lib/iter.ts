@@ -345,4 +345,25 @@ export class Iter<T> implements Iterable<T> {
       }
     });
   }
+
+  /**
+   * Zips two iterators together into pairs.
+   *
+   * The returned iterator yields pairs until either source iterator is exhausted.
+   * */
+  public zip<U>(other: Iter<U>): Iter<[T, U]> {
+    const source = this;
+    return new Iter(function* () {
+      const otherIterator = other[Symbol.iterator]();
+
+      for (const val of source) {
+        const nextOther = otherIterator.next();
+        if (nextOther.done) {
+          break;
+        }
+
+        yield [val, nextOther.value];
+      }
+    });
+  }
 }

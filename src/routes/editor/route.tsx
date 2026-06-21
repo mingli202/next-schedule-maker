@@ -6,7 +6,6 @@ import {
   SidePane,
   StatusFooter,
 } from "src/components/root/editor";
-import ReleaseNotes from "src/components/root/editor/ReleaseNotes";
 import { EditorInViewParams } from "@/types/schedule";
 
 export const Route = createFileRoute("/editor")({
@@ -46,7 +45,6 @@ function RouteComponent() {
         />
         <DragIndicator onNewXPos={onNewXPost} />
         <ViewWrapper className="max-md:h-[70vh] md:basis-2/3" ref={viewRef} />
-        <ReleaseNotes />
       </div>
       <StatusFooter />
     </div>

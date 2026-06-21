@@ -35,7 +35,7 @@ function View({
 
         disableControls
           ? "h-full grid-cols-5 grid-rows-[repeat(20,1fr)] md:h-full md:w-full md:p-2"
-          : "h-full min-h-0 grid-cols-[2rem_repeat(5,1fr)] grid-rows-[repeat(21,1fr)] md:min-w-160 md:grid-cols-[3rem_repeat(5,1fr)]",
+          : "h-full grid-cols-[2rem_repeat(5,1fr)] grid-rows-[repeat(21,1fr)] md:min-w-160 md:grid-cols-[3rem_repeat(5,1fr)]",
 
         className,
       )}
@@ -62,7 +62,7 @@ function View({
       <div
         className={cn(
           "relative grid grid-cols-5 grid-rows-[repeat(20,1fr)]",
-          "shadow-background/30 h-full rounded-md bg-slate-300 shadow-lg",
+          "shadow-background/30 bg-view-bg h-full rounded-md shadow-lg",
           "text-[8px] leading-2.5 md:text-[14px] md:leading-3.5",
 
           disableControls
@@ -79,7 +79,7 @@ function View({
                 <div
                   key={index.toString()}
                   className="col-span-full row-span-1 mx-2 box-border h-px -translate-y-1/2 rounded-full bg-gray-400"
-                ></div>
+                />
               );
             })}
         </div>

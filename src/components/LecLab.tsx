@@ -14,8 +14,9 @@ export default function LecLabComponent({ leclab, className }: Props) {
 
       <div className="relative flex items-center gap-2">
         <User className="h-4 opacity-50" />
-        {leclab.prof}
-        <TeacherStats leclab={leclab} />
+        <span>
+          {leclab.prof} <TeacherStats leclab={leclab} />
+        </span>
       </div>
 
       {leclab.dayTimes.map((dayTime) => {

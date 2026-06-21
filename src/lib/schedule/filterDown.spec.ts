@@ -1,51 +1,10 @@
 import { expect } from "bun:test";
+import { dayTimeFrom, leclabFrom, ratingFrom } from "src/lib/test-helpers/schedule";
 import type { SectionStore } from "src/types";
-import type { DayTime, LecLab, Rating, Section } from "src/types/generated";
+import type { Section } from "src/types/generated";
 import type { SearchSectionParams } from "src/types/schedule";
 import { given, then, when } from "../test-util";
 import { filterDown as baseFilterDown } from "./filterDown";
-
-const dayTimeFrom = (
-  _id: number,
-  _leclabId: number,
-  day: string,
-  start: string,
-  end: string,
-): DayTime => ({
-  day,
-  startTimeHhmm: start,
-  endTimeHhmm: end,
-});
-
-const ratingFrom = (
-  prof: string,
-  avg: number,
-  score: number,
-  status: Rating["status"] = "found",
-): Rating => ({
-  prof,
-  score,
-  avg,
-  nRating: 10,
-  takeAgain: 60,
-  difficulty: 3,
-  status,
-  pId: null,
-});
-
-const leclabFrom = (
-  id: number,
-  _sectionId: number,
-  prof: string,
-  rating: Rating | null,
-  dayTimes: DayTime[],
-): LecLab => ({
-  title: `L${id}`,
-  type: "lecture",
-  prof,
-  rating,
-  dayTimes,
-});
 
 const sections: Section[] = [
   {
@@ -162,6 +121,7 @@ const store: SectionStore = {
     sectionsAdded: [],
     sectionsRemoved: [],
   },
+  comments: [],
 };
 
 const filterDown = (sectionStore: SectionStore, search: SearchSectionParams) =>

@@ -34,6 +34,7 @@ export async function fetchStore(
     sectionsAdded: [],
     sectionsRemoved: [],
   };
+  let comments: string[] = [];
 
   if (res.ok) {
     try {
@@ -42,8 +43,11 @@ export async function fetchStore(
 
       semester = globalAllSections.semester;
       filename = globalAllSections.filename;
-      sectionsDiff = globalAllSections.sectionsDiff;
+      if (globalAllSections.sectionsDiff !== null) {
+        sectionsDiff = globalAllSections.sectionsDiff;
+      }
       sectionsMap = globalAllSections.sectionsById;
+      comments = globalAllSections.comments;
     } catch (e) {
       console.error("Failed to parse sections data: ", e);
     }
@@ -71,6 +75,7 @@ export async function fetchStore(
     semester,
     filename,
     sectionsDiff,
+    comments,
     sectionsById,
     professors,
     codes,
