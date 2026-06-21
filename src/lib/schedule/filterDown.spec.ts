@@ -162,6 +162,7 @@ const store: SectionStore = {
     sectionsAdded: [],
     sectionsRemoved: [],
   },
+  comments: [],
 };
 
 const filterDown = (sectionStore: SectionStore, search: SearchSectionParams) =>
