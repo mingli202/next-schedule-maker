@@ -18,8 +18,8 @@ export function useReleaseNotes() {
 
   const close = useCallback(() => {
     setShouldOpen(false);
-    // localStorage.setItem(key, currentVersion);
-  }, []);
+    localStorage.setItem(key, currentVersion);
+  }, [currentVersion]);
 
   const open = useCallback(() => {
     setShouldOpen(true);
