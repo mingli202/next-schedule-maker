@@ -1,6 +1,6 @@
 import { api } from "convex/_generated/api";
 import { useMutation } from "convex/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "src/components";
 import { ButtonVariant } from "src/components/Button";
 import {
@@ -26,13 +26,13 @@ const MAX_FEEDBACK_LENGTH = 3000;
 export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
   const submitFeedback = useMutation(api.feedback.mutations.submitFeedback);
 
-  const [feedback, setFeedback] = useState("");
+  const ref = useRef<HTMLFormElement>(null);
+
+  const [charsRemaining, setCharsRemaining] = useState(MAX_FEEDBACK_LENGTH);
   const [isSent, setIsSent] = useState(false);
 
-  const charsRemaining = MAX_FEEDBACK_LENGTH - feedback.length;
-
   const resetForm = () => {
-    setFeedback("");
+    ref.current?.reset();
     setIsSent(false);
   };
 
@@ -47,19 +47,19 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
     setIsSent(false);
     const formData = new FormData(e.target);
 
-    const trimmedFeedback = feedback.trim();
+    const contactInfo = formData.get("contact-info")?.toString();
+    const feedback = formData.get("feedback-message")?.toString();
+
+    const trimmedFeedback = feedback?.trim();
     if (!trimmedFeedback) {
       return "Please add your feedback before sending.";
     }
-
-    const contactInfo = formData.get("contact-info")?.toString();
 
     try {
       await submitFeedback({
         feedback: trimmedFeedback,
         contactInfo,
       });
-      setFeedback("");
       setIsSent(true);
       e.target.reset();
     } catch {
@@ -96,13 +96,15 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
             <Label htmlFor="feedback-message">Feedback</Label>
             <Textarea
               id="feedback-message"
-              value={feedback}
+              name="feedback-message"
               maxLength={MAX_FEEDBACK_LENGTH}
               onChange={(event) => {
                 if (isSent) {
                   setIsSent(false);
                 }
-                return setFeedback(event.target.value);
+                setCharsRemaining(
+                  MAX_FEEDBACK_LENGTH - event.target.value.length,
+                );
               }}
               placeholder="Share your feedback..."
               className="min-h-32"
