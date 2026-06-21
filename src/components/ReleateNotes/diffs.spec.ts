@@ -1,26 +1,7 @@
 import { expect } from "bun:test";
+import { dayTimeFrom, leclabFrom } from "src/lib/test-helpers/schedule";
 import { given, then, when } from "src/lib/test-util";
-import type { DayTime, LecLab } from "src/types/generated";
 import { matchDaytimesForDiff, matchLeclabsForDiff } from "./diffs";
-
-const dayTimeFrom = (day: string, start: string, end: string): DayTime => ({
-  day,
-  startTimeHhmm: start,
-  endTimeHhmm: end,
-});
-
-const leclabFrom = (
-  title: string,
-  type: LecLab["type"],
-  prof: string,
-  dayTimes: DayTime[],
-): LecLab => ({
-  title,
-  type,
-  prof,
-  rating: null,
-  dayTimes,
-});
 
 given("realistic section diff where leclabs are only reordered", () => {
   when("matching old and new leclabs", () => {

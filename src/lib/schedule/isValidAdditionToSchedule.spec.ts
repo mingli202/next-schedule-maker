@@ -1,16 +1,11 @@
 import { expect } from "bun:test";
+import { dayTimeFrom } from "src/lib/test-helpers/schedule";
 import type { DayTime, LecLab, Section } from "src/types/generated";
 import { given, then, when } from "../test-util";
 import isValidAdditionToSchedule, {
   isOverlap,
   isValidDayTimes,
 } from "./isValidAdditionToSchedule";
-
-const dayTimeFrom = (day: string, start: string, end: string): DayTime => ({
-  day,
-  startTimeHhmm: start,
-  endTimeHhmm: end,
-});
 
 const sectionFrom = (code: string, dayTimesByLecLab: DayTime[][]): Section => ({
   id: "-1",
