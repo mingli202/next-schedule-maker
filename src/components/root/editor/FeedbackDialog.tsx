@@ -64,6 +64,7 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
       });
       setFeedback("");
       setIsSent(true);
+      e.target.reset();
     } catch {
       return "Failed to send feedback. Please try again.";
     }
@@ -87,6 +88,11 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
               id="contact-info"
               name="contact-info"
               placeholder="name@example.com or 514-586-1268"
+              onChange={() => {
+                if (isSent) {
+                  setIsSent(false);
+                }
+              }}
             />
           </div>
           <div className="space-y-2">
@@ -95,7 +101,12 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
               id="feedback-message"
               value={feedback}
               maxLength={MAX_FEEDBACK_LENGTH}
-              onChange={(event) => setFeedback(event.target.value)}
+              onChange={(event) => {
+                if (isSent) {
+                  setIsSent(false);
+                }
+                return setFeedback(event.target.value);
+              }}
               placeholder="Share your feedback..."
               className="min-h-32"
             />
