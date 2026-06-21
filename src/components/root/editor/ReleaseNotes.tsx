@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { type MouseEvent, useRef } from "react";
+import { type MouseEvent, type ReactNode, useRef } from "react";
 import SectionCard from "src/components/SectionCard";
 import {
   HoverCard,
@@ -8,10 +8,20 @@ import {
 } from "src/components/ui/hover-card";
 import type { SectionStore } from "src/types";
 import type { Section } from "src/types/generated";
-import { SavedSchedulesDiff } from "./SavedSchedulesDiff";
+import {
+  ChangedSectionPreviewCard,
+  SavedSchedulesDiff,
+} from "./SavedSchedulesDiff";
 
-// TODO: show the actual diff
-const SectionButton = ({ section }: { section: Section }) => {
+const SectionButton = ({
+  section,
+  content,
+  contentClassName,
+}: {
+  section: Section;
+  content: ReactNode;
+  contentClassName?: string;
+}) => {
   return (
     <HoverCard openDelay={0} closeDelay={0}>
       <HoverCardTrigger asChild>
@@ -19,13 +29,13 @@ const SectionButton = ({ section }: { section: Section }) => {
           {section.id}
         </p>
       </HoverCardTrigger>
-      <HoverCardContent className="ring-secondary w-sm rounded-xl p-0 ring-2">
-        <SectionCard
-          section={section}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        />
+      <HoverCardContent
+        className="ring-secondary w-sm rounded-xl p-0 ring-2"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <div className={contentClassName}>{content}</div>
       </HoverCardContent>
     </HoverCard>
   );
@@ -93,7 +103,13 @@ export default function ReleaseNotes({
                       if (!section) {
                         return null;
                       }
-                      return <SectionButton key={s} section={section} />;
+                      return (
+                        <SectionButton
+                          key={s}
+                          section={section}
+                          content={<SectionCard section={section} />}
+                        />
+                      );
                     })}
                   </div>
                 ) : null}
@@ -104,7 +120,11 @@ export default function ReleaseNotes({
                 {sectionsRemoved.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
                     {sectionsRemoved.map((s) => (
-                      <SectionButton key={s.id} section={s} />
+                      <SectionButton
+                        key={s.id}
+                        section={s}
+                        content={<SectionCard section={s} />}
+                      />
                     ))}
                   </div>
                 ) : null}
@@ -114,9 +134,27 @@ export default function ReleaseNotes({
                 <p>Sections changed ({previousSectionsChanged.length})</p>
                 {previousSectionsChanged.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
-                    {previousSectionsChanged.map((s) => (
-                      <SectionButton key={s.id} section={s} />
-                    ))}
+                    {previousSectionsChanged.map((s) => {
+                      const newSection = sectionsById.get(s.id);
+                      const section = newSection ?? s;
+
+                      return (
+                        <SectionButton
+                          key={s.id}
+                          section={section}
+                          content={
+                            newSection ? (
+                              <ChangedSectionPreviewCard
+                                oldSection={s}
+                                newSection={newSection}
+                              />
+                            ) : (
+                              <SectionCard section={s} />
+                            )
+                          }
+                        />
+                      );
+                    })}
                   </div>
                 ) : null}
               </div>

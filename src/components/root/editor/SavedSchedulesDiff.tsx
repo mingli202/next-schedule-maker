@@ -459,3 +459,62 @@ function Diff({ oldStr, newStr }: { oldStr: string; newStr: string }) {
     </p>
   );
 }
+
+type ChangedSectionPreviewCardProps = {
+  oldSection: Section;
+  newSection: Section;
+  className?: string;
+};
+export function ChangedSectionPreviewCard({
+  oldSection,
+  newSection,
+  className,
+}: ChangedSectionPreviewCardProps) {
+  const renderInlineDiff = (oldStr: string, newStr: string) =>
+    oldStr === newStr ? (
+      newStr
+    ) : (
+      <>
+        <span className={cn(redText)}>{oldStr}</span>
+        {" -> "}
+        <span className={cn(greenText)}>{newStr}</span>
+      </>
+    );
+
+  return (
+    <div
+      className={cn(
+        "bg-secondary/50 flex flex-col gap-2 rounded-xl p-2",
+        className,
+      )}
+    >
+      <div>
+        <h2 className="font-light">
+          {renderInlineDiff(
+            `${oldSection.course}: ${oldSection.domain} ${oldSection.code}`,
+            `${newSection.course}: ${newSection.domain} ${newSection.code}`,
+          )}
+        </h2>
+
+        <h1 className="font-heading text-base font-bold md:text-xl">
+          {renderInlineDiff(
+            `${oldSection.section} ${oldSection.title}`,
+            `${newSection.section} ${newSection.title}`,
+          )}
+        </h1>
+      </div>
+
+      <LeclabsDiff
+        oldLeclabs={oldSection.leclabs}
+        newLecLabs={newSection.leclabs}
+        sectionId={oldSection.id}
+      />
+
+      {oldSection.more !== "" || newSection.more !== "" ? (
+        <div className="opacity-70">
+          {renderInlineDiff(oldSection.more, newSection.more)}
+        </div>
+      ) : null}
+    </div>
+  );
+}
