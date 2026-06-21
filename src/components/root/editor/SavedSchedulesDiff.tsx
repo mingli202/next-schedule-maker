@@ -450,11 +450,11 @@ function Diff({ oldStr, newStr }: { oldStr: string; newStr: string }) {
   return oldStr === newStr ? (
     oldStr
   ) : (
-    <span>
+    <>
       <span className={cn(redText)}>{oldStr}</span>
-      {" -> "}
+      {" > "}
       <span className={cn(greenText)}>{newStr}</span>
-    </span>
+    </>
   );
 }
 
