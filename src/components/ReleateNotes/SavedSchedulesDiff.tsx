@@ -5,11 +5,6 @@ import { useSectionStore } from "src/lib/store/section";
 import { cn } from "src/lib/utils";
 import type { Section } from "src/types/generated";
 import SectionCard from "../SectionCard";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "../ui/hover-card";
 import { ChangedSectionPreviewCard } from "./ChangedSectionPreviewCard";
 import { greenBg, redBg, redText } from "./colors";
 import { Diff, LeclabsDiff } from "./diffs";
@@ -292,31 +287,5 @@ function OverlappingDiv({
       />
       {children}
     </div>
-  );
-}
-
-function SectionIdHoverCard({
-  code,
-  sectionNumber,
-  newSection,
-}: {
-  code: string;
-  sectionNumber: string;
-  newSection: Section;
-}) {
-  return (
-    <HoverCard>
-      <HoverCardTrigger className="hover:cursor-pointer hover:underline">
-        {code} {sectionNumber}
-      </HoverCardTrigger>
-      <HoverCardContent
-        className="ring-secondary w-sm rounded-xl p-0 ring-2"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <SectionCard section={newSection} />
-      </HoverCardContent>
-    </HoverCard>
   );
 }
