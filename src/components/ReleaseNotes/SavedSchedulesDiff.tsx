@@ -104,13 +104,17 @@ export function SavedSchedulesDiff({
         </div>
       </div>
       <div>Affected schedules ({affectedSchedules.length})</div>
-      <div className="w-full flex-1 overflow-x-hidden overflow-y-auto">
-        <div className="flex flex-col gap-2">
-          {affectedSchedules.map(({ id, ...schedules }) => (
-            <ScheduleDiff key={id} {...schedules} id={id} />
-          ))}
+      {affectedSchedules.length > 0 ? (
+        <div className="w-full flex-1 overflow-x-hidden overflow-y-auto">
+          <div className="flex flex-col gap-2">
+            {affectedSchedules.map(({ id, ...schedules }) => (
+              <ScheduleDiff key={id} {...schedules} id={id} />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <p>No saved schedules containing modified sections</p>
+      )}
     </div>
   );
 }
