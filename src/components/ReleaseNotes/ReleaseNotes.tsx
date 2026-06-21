@@ -103,12 +103,11 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
                   <div className="flex flex-wrap gap-2">
                     {previousSectionsChanged.map((s) => {
                       const newSection = sectionsById.get(s.id);
-                      const section = newSection ?? s;
 
                       return (
                         <SectionButton
                           key={s.id}
-                          sectionId={section.id}
+                          sectionId={s.id}
                           content={
                             newSection ? (
                               <ChangedSectionPreviewCard
