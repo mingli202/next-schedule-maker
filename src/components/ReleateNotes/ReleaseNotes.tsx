@@ -29,7 +29,7 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
     <AnimatePresence>
       {shouldOpen ? (
         <motion.div
-          className="bg-background/50 fixed top-0 left-0 z-40 flex h-screen w-screen items-start justify-center overflow-x-hidden overflow-y-auto py-4 backdrop-blur-md backdrop-filter md:items-center md:py-0 md:overflow-hidden"
+          className="bg-background/50 fixed top-0 left-0 z-40 flex h-screen w-screen items-start justify-center overflow-x-hidden overflow-y-auto py-4 backdrop-blur-md backdrop-filter md:items-center md:overflow-hidden md:py-0"
           initial={{
             opacity: 0,
           }}
@@ -45,20 +45,23 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
             className="flex w-9/10 gap-2 max-md:flex-col md:h-9/10"
             ref={popupRef}
           >
-            <div className="bg-background ring-secondary flex flex-col gap-4 rounded-md p-10 ring-2 max-md:max-h-[65vh] max-md:overflow-y-auto md:basis-3/5 md:gap-6 md:p-14">
-              <div className="flex flex-col gap-2">
+            <div className="bg-background ring-secondary flex flex-col gap-4 overflow-x-hidden rounded-md p-10 ring-2 max-md:max-h-[65vh] max-md:overflow-y-auto md:basis-3/5 md:gap-6 md:p-14">
+              <div className="flex shrink-0 flex-col gap-2">
                 <h1 className="text-xl">
                   What{"'"}s new in {semester}
                 </h1>
-                <p>{filename} update</p>
+                <p className="flex items-baseline gap-1">
+                  <span className="truncate">{filename}</span>
+                  <span className="shrink-0">update</span>
+                </p>
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex shrink-0 flex-col gap-2">
                 {comments.map((comment, i) => (
                   <p key={`${comment}-${i.toString()}`}>{comment}</p>
                 ))}
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex shrink-0 flex-col gap-2">
                 <p>Sections added ({sectionsAdded.length})</p>
                 {sectionsAdded.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
@@ -79,7 +82,7 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
                 ) : null}
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex shrink-0 flex-col gap-2">
                 <p>Sections removed ({sectionsRemoved.length})</p>
                 {sectionsRemoved.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
@@ -94,7 +97,7 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
                 ) : null}
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex shrink-0 flex-col gap-2">
                 <p>Sections changed ({previousSectionsChanged.length})</p>
                 {previousSectionsChanged.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
@@ -123,7 +126,7 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
                 ) : null}
               </div>
 
-              <p>(hover on section to see detail)</p>
+              <p className="shrink-0 pt-1">(hover on section to see detail)</p>
             </div>
 
             <SavedSchedulesDiff
