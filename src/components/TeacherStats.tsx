@@ -1,7 +1,7 @@
 import type { HTMLProps } from "react";
 import { cn } from "src/lib/utils";
 import type { LecLab } from "src/types/generated";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 
 type Props = {
   leclab: LecLab;
@@ -14,13 +14,13 @@ export default function TeacherStats({ leclab, className }: Props) {
   }
 
   return (
-    <Tooltip delayDuration={0}>
-      <TooltipTrigger asChild>
-        <span className={cn("font-bold", className)}>
+    <HoverCard openDelay={200} closeDelay={200}>
+      <HoverCardTrigger asChild>
+        <span className={cn("font-bold hover:cursor-pointer", className)}>
           {rating.score === 0 ? "N/A" : rating.score}
         </span>
-      </TooltipTrigger>
-      <TooltipContent
+      </HoverCardTrigger>
+      <HoverCardContent
         className="w-48 text-sm font-normal shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
@@ -38,7 +38,7 @@ export default function TeacherStats({ leclab, className }: Props) {
         <p className="font-bold">
           Overall Score: {rating.score === 0 ? "N/A" : `${rating.score}/100`}
         </p>
-      </TooltipContent>
-    </Tooltip>
+      </HoverCardContent>
+    </HoverCard>
   );
 }
