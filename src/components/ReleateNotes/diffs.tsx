@@ -93,6 +93,16 @@ const leclabExactKey = (leclab: LecLab) =>
 const leclabTypeAndTitleKey = (leclab: LecLab) =>
   `${leclab.type ?? "lecture"}|${leclab.title}`;
 
+export function matchLeclabsForDiff(
+  oldLeclabs: LecLab[],
+  newLecLabs: LecLab[],
+) {
+  return matchByStableKeys(oldLeclabs, newLecLabs, [
+    leclabExactKey,
+    leclabTypeAndTitleKey,
+  ]);
+}
+
 export function LeclabsDiff({
   sectionId,
   oldLeclabs,
@@ -102,10 +112,9 @@ export function LeclabsDiff({
   oldLeclabs: LecLab[];
   newLecLabs: LecLab[];
 }) {
-  const { matchedOldItems, addedNewItems } = matchByStableKeys(
+  const { matchedOldItems, addedNewItems } = matchLeclabsForDiff(
     oldLeclabs,
     newLecLabs,
-    [leclabExactKey, leclabTypeAndTitleKey],
   );
 
   return (
@@ -126,12 +135,12 @@ export function LeclabsDiff({
         ),
       )}
       {addedNewItems.map(({ item, index }) => (
-          <LecLabComponent
-            key={`${sectionId}-extranewleclab-${index.toString()}`}
-            leclab={item}
-            className={cn(greenText, "bg-green-900")}
-          />
-        ))}
+        <LecLabComponent
+          key={`${sectionId}-extranewleclab-${index.toString()}`}
+          leclab={item}
+          className={cn(greenText, "bg-green-900")}
+        />
+      ))}
     </>
   );
 }
@@ -192,10 +201,9 @@ export function DaytimesDiff({
   oldDaytimes: DayTime[];
   newDaytimes: DayTime[];
 }) {
-  const { matchedOldItems, addedNewItems } = matchByStableKeys(
+  const { matchedOldItems, addedNewItems } = matchDaytimesForDiff(
     oldDaytimes,
     newDaytimes,
-    [dayTimeExactKey, dayTimeDayKey, dayTimeTimeKey],
   );
 
   return (
@@ -224,16 +232,27 @@ export function DaytimesDiff({
         ),
       )}
       {addedNewItems.map(({ item, index }) => (
-          <div
-            className={cn("flex items-center gap-2", greenText)}
-            key={`${title}-added-daytime-${index.toString()}`}
-          >
-            <Clock className="h-4 opacity-50" />
-            {item.day} {item.startTimeHhmm}-{item.endTimeHhmm}
-          </div>
-        ))}
+        <div
+          className={cn("flex items-center gap-2", greenText)}
+          key={`${title}-added-daytime-${index.toString()}`}
+        >
+          <Clock className="h-4 opacity-50" />
+          {item.day} {item.startTimeHhmm}-{item.endTimeHhmm}
+        </div>
+      ))}
     </>
   );
+}
+
+export function matchDaytimesForDiff(
+  oldDaytimes: DayTime[],
+  newDaytimes: DayTime[],
+) {
+  return matchByStableKeys(oldDaytimes, newDaytimes, [
+    dayTimeExactKey,
+    dayTimeDayKey,
+    dayTimeTimeKey,
+  ]);
 }
 
 export function Diff({ oldStr, newStr }: { oldStr: string; newStr: string }) {
