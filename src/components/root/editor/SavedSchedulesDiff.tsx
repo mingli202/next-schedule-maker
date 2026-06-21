@@ -452,11 +452,11 @@ function Diff({ oldStr, newStr }: { oldStr: string; newStr: string }) {
   return oldStr === newStr ? (
     oldStr
   ) : (
-    <p>
+    <span>
       <span className={cn(redText)}>{oldStr}</span>
       {" -> "}
       <span className={cn(greenText)}>{newStr}</span>
-    </p>
+    </span>
   );
 }
 
@@ -470,17 +470,6 @@ export function ChangedSectionPreviewCard({
   newSection,
   className,
 }: ChangedSectionPreviewCardProps) {
-  const renderInlineDiff = (oldStr: string, newStr: string) =>
-    oldStr === newStr ? (
-      newStr
-    ) : (
-      <>
-        <span className={cn(redText)}>{oldStr}</span>
-        {" -> "}
-        <span className={cn(greenText)}>{newStr}</span>
-      </>
-    );
-
   return (
     <div
       className={cn(
@@ -490,17 +479,15 @@ export function ChangedSectionPreviewCard({
     >
       <div>
         <h2 className="font-light">
-          {renderInlineDiff(
-            `${oldSection.course}: ${oldSection.domain} ${oldSection.code}`,
-            `${newSection.course}: ${newSection.domain} ${newSection.code}`,
-          )}
+          <Diff oldStr={oldSection.course} newStr={newSection.course} />
+          {": "}
+          <Diff oldStr={oldSection.domain} newStr={newSection.domain} />{" "}
+          <Diff oldStr={oldSection.code} newStr={newSection.code} />
         </h2>
 
         <h1 className="font-heading text-base font-bold md:text-xl">
-          {renderInlineDiff(
-            `${oldSection.section} ${oldSection.title}`,
-            `${newSection.section} ${newSection.title}`,
-          )}
+          <Diff oldStr={oldSection.section} newStr={newSection.section} />{" "}
+          <Diff oldStr={oldSection.title} newStr={newSection.title} />
         </h1>
       </div>
 
@@ -511,9 +498,9 @@ export function ChangedSectionPreviewCard({
       />
 
       {oldSection.more !== "" || newSection.more !== "" ? (
-        <div className="opacity-70">
-          {renderInlineDiff(oldSection.more, newSection.more)}
-        </div>
+        <p className="opacity-70">
+          <Diff oldStr={oldSection.more} newStr={newSection.more} />
+        </p>
       ) : null}
     </div>
   );
