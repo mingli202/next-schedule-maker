@@ -62,6 +62,7 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
       });
       setIsSent(true);
       e.target.reset();
+      setCharsRemaining(MAX_FEEDBACK_LENGTH);
     } catch {
       return "Failed to send feedback. Please try again.";
     }
