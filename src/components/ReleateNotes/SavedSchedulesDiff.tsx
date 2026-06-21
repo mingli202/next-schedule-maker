@@ -10,10 +10,10 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "../ui/hover-card";
+import { ChangedSectionPreviewCard } from "./ChangedSectionPreviewCard";
 import { greenBg, redBg, redText } from "./colors";
 import { Diff, LeclabsDiff } from "./diffs";
 import { SectionButton } from "./SectionButton";
-import { ChangedSectionPreviewCard } from "./ChangedSectionPreviewCard";
 
 type ModifiedSection = {
   oldSection: Section;
@@ -96,7 +96,7 @@ export function SavedSchedulesDiff({
   );
 
   return (
-    <div className="bg-background ring-secondary flex basis-2/5 flex-col gap-2 rounded-md p-3 ring-2">
+    <div className="bg-background ring-secondary flex flex-col gap-2 rounded-md p-3 ring-2 max-md:max-h-[85vh] max-md:overflow-y-auto md:basis-2/5">
       <div className="flex gap-2">
         <div className="flex items-center gap-1">
           <div className={cn("h-2 w-2 rounded-full", redBg)} /> old
@@ -182,28 +182,26 @@ function ScheduleDiff({
               {i + 1}
             </El>
             <div className="flex w-full flex-col gap-1">
-              <p>
-                <SectionButton
-                  key={oldSection.id}
-                  sectionId={oldSection.id}
-                  className="rounded-none bg-[none] px-0 py-0 ring-0"
-                  openDelay={500}
-                  content={
-                    newSection ? (
-                      <ChangedSectionPreviewCard
-                        oldSection={oldSection}
-                        newSection={newSection}
-                      />
-                    ) : (
-                      <SectionCard section={oldSection} />
-                    )
-                  }
-                />
+              <SectionButton
+                key={oldSection.id}
+                sectionId={oldSection.id}
+                className="rounded-none bg-[none] px-0 py-0 ring-0"
+                openDelay={500}
+                content={
+                  newSection ? (
+                    <ChangedSectionPreviewCard
+                      oldSection={oldSection}
+                      newSection={newSection}
+                    />
+                  ) : (
+                    <SectionCard section={oldSection} />
+                  )
+                }
+              />
 
-                {newSection ? null : (
-                  <span className={cn(redText)}> (removed)</span>
-                )}
-              </p>
+              {newSection ? null : (
+                <span className={cn(redText)}> (removed)</span>
+              )}
               {newSection && (
                 <>
                   {oldSection.course !== newSection.course && (

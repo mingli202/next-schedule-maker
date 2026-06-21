@@ -29,7 +29,7 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
     <AnimatePresence>
       {shouldOpen ? (
         <motion.div
-          className="bg-background/50 fixed top-0 left-0 z-40 flex h-screen w-screen items-center justify-center backdrop-blur-md backdrop-filter"
+          className="bg-background/50 fixed top-0 left-0 z-40 flex h-screen w-screen items-start justify-center overflow-x-hidden overflow-y-auto py-4 backdrop-blur-md backdrop-filter md:items-center md:py-0 md:overflow-hidden"
           initial={{
             opacity: 0,
           }}
@@ -41,8 +41,11 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
           }}
           onClick={handleClick}
         >
-          <div className="flex h-9/10 w-9/10 gap-2" ref={popupRef}>
-            <div className="bg-background ring-secondary flex basis-3/5 flex-col gap-6 rounded-md p-14 ring-2">
+          <div
+            className="flex w-9/10 gap-2 max-md:flex-col md:h-9/10"
+            ref={popupRef}
+          >
+            <div className="bg-background ring-secondary flex flex-col gap-4 rounded-md p-10 ring-2 max-md:max-h-[65vh] max-md:overflow-y-auto md:basis-3/5 md:gap-6 md:p-14">
               <div className="flex flex-col gap-2">
                 <h1 className="text-xl">
                   What{"'"}s new in {semester}
@@ -122,6 +125,7 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
 
               <p>(hover on section to see detail)</p>
             </div>
+
             <SavedSchedulesDiff
               sectionsRemoved={sectionsRemoved}
               previousSectionsChanged={previousSectionsChanged}
