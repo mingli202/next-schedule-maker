@@ -5,7 +5,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 type Props = {
   leclab: LecLab;
-} & HTMLProps<HTMLDivElement>;
+} & HTMLProps<HTMLSpanElement>;
 export default function TeacherStats({ leclab, className }: Props) {
   const rating = leclab.rating;
 
@@ -15,33 +15,30 @@ export default function TeacherStats({ leclab, className }: Props) {
 
   return (
     <Tooltip delayDuration={0}>
-      <div
-        className={cn(
-          "group relative flex cursor-default font-bold",
-          className,
-        )}
+      <TooltipTrigger asChild>
+        <span className={cn("font-bold", className)}>
+          {rating.score === 0 ? "N/A" : rating.score}
+        </span>
+      </TooltipTrigger>
+      <TooltipContent
+        className="w-48 text-sm font-normal shadow-lg"
+        onClick={(e) => e.stopPropagation()}
       >
-        <TooltipTrigger asChild>
-          <p>{rating.score === 0 ? "N/A" : rating.score}</p>
-        </TooltipTrigger>
-        <TooltipContent className="w-48 text-sm font-normal shadow-lg">
-          <p>Rating: {rating.avg === 0 ? "N/A" : `${rating.avg}/5`}</p>
-          <p>
-            Difficulty:{" "}
-            {rating.difficulty === 0 ? "N/A" : `${rating.difficulty}/5`}
-          </p>
-          <p>
-            Raters: {rating.nRating === 0 ? "N/A" : `${rating.nRating} raters`}
-          </p>
-          <p>
-            Take again:{" "}
-            {rating.takeAgain === 0 ? "N/A" : `${rating.takeAgain}%`}
-          </p>
-          <p className="font-bold">
-            Overall Score: {rating.score === 0 ? "N/A" : `${rating.score}/100`}
-          </p>
-        </TooltipContent>
-      </div>
+        <p>Rating: {rating.avg === 0 ? "N/A" : `${rating.avg}/5`}</p>
+        <p>
+          Difficulty:{" "}
+          {rating.difficulty === 0 ? "N/A" : `${rating.difficulty}/5`}
+        </p>
+        <p>
+          Raters: {rating.nRating === 0 ? "N/A" : `${rating.nRating} raters`}
+        </p>
+        <p>
+          Take again: {rating.takeAgain === 0 ? "N/A" : `${rating.takeAgain}%`}
+        </p>
+        <p className="font-bold">
+          Overall Score: {rating.score === 0 ? "N/A" : `${rating.score}/100`}
+        </p>
+      </TooltipContent>
     </Tooltip>
   );
 }

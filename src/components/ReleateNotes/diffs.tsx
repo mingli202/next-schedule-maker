@@ -73,20 +73,17 @@ export function LecLabDiff({
       <div className="relative flex items-center gap-2">
         <User className="h-4 opacity-50" />
         {oldLeclab.prof === newLeclab.prof ? (
-          <>
-            {oldLeclab.prof}
-            <TeacherStats leclab={oldLeclab} />
-          </>
+          <span>
+            {oldLeclab.prof} <TeacherStats leclab={oldLeclab} />
+          </span>
         ) : (
           <div className="flex w-full flex-col">
-            <div className={cn("flex gap-1", redText)}>
-              {oldLeclab.prof}
-              <TeacherStats leclab={oldLeclab} />
-            </div>
-            <div className={cn("flex gap-1", greenText)}>
-              {newLeclab.prof}
-              <TeacherStats leclab={newLeclab} />
-            </div>
+            <span className={redText}>
+              {oldLeclab.prof} <TeacherStats leclab={oldLeclab} />
+            </span>
+            <span className={greenText}>
+              {newLeclab.prof} <TeacherStats leclab={newLeclab} />
+            </span>
           </div>
         )}
       </div>
