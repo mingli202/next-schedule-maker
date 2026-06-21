@@ -4,8 +4,16 @@ import isValidAdditionToSchedule from "src/lib/schedule/isValidAdditionToSchedul
 import { useSectionStore } from "src/lib/store/section";
 import { cn } from "src/lib/utils";
 import type { Section } from "src/types/generated";
+import SectionCard from "../SectionCard";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
 import { greenBg, redBg, redText } from "./colors";
 import { Diff, LeclabsDiff } from "./diffs";
+import { SectionButton } from "./SectionButton";
+import { ChangedSectionPreviewCard } from "./ChangedSectionPreviewCard";
 
 type ModifiedSection = {
   oldSection: Section;
@@ -175,9 +183,25 @@ function ScheduleDiff({
             </El>
             <div className="flex w-full flex-col gap-1">
               <p>
-                {oldSection.code} {oldSection.section}{" "}
+                <SectionButton
+                  key={oldSection.id}
+                  sectionId={oldSection.id}
+                  className="rounded-none bg-[none] px-0 py-0 ring-0"
+                  openDelay={500}
+                  content={
+                    newSection ? (
+                      <ChangedSectionPreviewCard
+                        oldSection={oldSection}
+                        newSection={newSection}
+                      />
+                    ) : (
+                      <SectionCard section={oldSection} />
+                    )
+                  }
+                />
+
                 {newSection ? null : (
-                  <span className={cn(redText)}>(removed)</span>
+                  <span className={cn(redText)}> (removed)</span>
                 )}
               </p>
               {newSection && (
@@ -270,5 +294,31 @@ function OverlappingDiv({
       />
       {children}
     </div>
+  );
+}
+
+function SectionIdHoverCard({
+  code,
+  sectionNumber,
+  newSection,
+}: {
+  code: string;
+  sectionNumber: string;
+  newSection: Section;
+}) {
+  return (
+    <HoverCard>
+      <HoverCardTrigger className="hover:cursor-pointer hover:underline">
+        {code} {sectionNumber}
+      </HoverCardTrigger>
+      <HoverCardContent
+        className="ring-secondary w-sm rounded-xl p-0 ring-2"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <SectionCard section={newSection} />
+      </HoverCardContent>
+    </HoverCard>
   );
 }

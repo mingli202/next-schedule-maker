@@ -1,43 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { type MouseEvent, type ReactNode, useRef } from "react";
+import { type MouseEvent, useRef } from "react";
 import SectionCard from "src/components/SectionCard";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "src/components/ui/hover-card";
 import type { SectionStore } from "src/types";
-import type { Section } from "src/types/generated";
 import { ChangedSectionPreviewCard } from "./ChangedSectionPreviewCard";
 import { SavedSchedulesDiff } from "./SavedSchedulesDiff";
-
-const SectionButton = ({
-  section,
-  content,
-  contentClassName,
-}: {
-  section: Section;
-  content: ReactNode;
-  contentClassName?: string;
-}) => {
-  return (
-    <HoverCard openDelay={0} closeDelay={0}>
-      <HoverCardTrigger asChild>
-        <p className="bg-secondary/50 ring-secondary rounded-sm px-2 py-1 ring hover:cursor-pointer">
-          {section.id}
-        </p>
-      </HoverCardTrigger>
-      <HoverCardContent
-        className="ring-secondary w-sm rounded-xl p-0 ring-2"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <div className={contentClassName}>{content}</div>
-      </HoverCardContent>
-    </HoverCard>
-  );
-};
+import { SectionButton } from "./SectionButton";
 
 type ReleaseNotesProps = {
   shouldOpen: boolean;
@@ -100,7 +67,7 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
                       return (
                         <SectionButton
                           key={s}
-                          section={section}
+                          sectionId={section.id}
                           content={<SectionCard section={section} />}
                         />
                       );
@@ -116,7 +83,7 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
                     {sectionsRemoved.map((s) => (
                       <SectionButton
                         key={s.id}
-                        section={s}
+                        sectionId={s.id}
                         content={<SectionCard section={s} />}
                       />
                     ))}
@@ -135,7 +102,7 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
                       return (
                         <SectionButton
                           key={s.id}
-                          section={section}
+                          sectionId={section.id}
                           content={
                             newSection ? (
                               <ChangedSectionPreviewCard
