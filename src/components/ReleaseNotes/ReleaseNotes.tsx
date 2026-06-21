@@ -1,10 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { type MouseEvent, useRef } from "react";
+import { type MouseEvent, useRef, useState } from "react";
 import SectionCard from "src/components/SectionCard";
 import type { SectionStore } from "src/types";
 import { ChangedSectionPreviewCard } from "./ChangedSectionPreviewCard";
 import { SavedSchedulesDiff } from "./SavedSchedulesDiff";
 import { SectionButton } from "./SectionButton";
+import Button, { ButtonVariant } from "../Button";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { versionHistory } from "src/lib/version-history";
 
 type ReleaseNotesProps = {
   shouldOpen: boolean;
@@ -126,6 +129,8 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
               </div>
 
               <p className="shrink-0 pt-1">(hover on section to see detail)</p>
+
+              <LegacyVersions />
             </div>
 
             <SavedSchedulesDiff
@@ -136,5 +141,43 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
         </motion.div>
       ) : null}
     </AnimatePresence>
+  );
+}
+
+function LegacyVersions() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="flex w-full shrink-0 flex-col gap-2">
+      <Button
+        variant={ButtonVariant.Basic}
+        onClick={() => setOpen((o) => !o)}
+        className="flex items-center"
+      >
+        {open ? (
+          <>
+            <ChevronUp />
+            hide
+          </>
+        ) : (
+          <>
+            <ChevronDown />
+            view
+          </>
+        )}{" "}
+        legacy versions
+      </Button>
+      {open &&
+        versionHistory.map(([version, details]) => (
+          <ul
+            className="bg-secondary/50 shrink-0 list-outside list-disc rounded-sm p-2 [&>li]:ml-6"
+            key={version}
+          >
+            <p>{version}</p>
+            {details.map((detail, i) => (
+              <li key={i.toString() + detail}>{detail}</li>
+            ))}
+          </ul>
+        ))}
+    </div>
   );
 }
