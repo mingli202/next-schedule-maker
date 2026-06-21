@@ -1,5 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { type MouseEvent, useRef } from "react";
+import SectionCard from "src/components/SectionCard";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "src/components/ui/hover-card";
 import type { SectionStore } from "src/types";
 import type { Section } from "src/types/generated";
 import { SavedSchedulesDiff } from "./SavedSchedulesDiff";
@@ -7,16 +13,21 @@ import { SavedSchedulesDiff } from "./SavedSchedulesDiff";
 // TODO: show the actual diff
 const SectionButton = ({ section }: { section: Section }) => {
   return (
-    // <Tooltip>
-    //   <TooltipTrigger asChild>
-    <p className="bg-secondary/50 ring-secondary rounded-sm px-2 py-1 ring">
-      {section.id}
-    </p>
-    //   </TooltipTrigger>
-    //   <TooltipContent>
-    //     <div>Hello world</div>
-    //   </TooltipContent>
-    // </Tooltip>
+    <HoverCard openDelay={0} closeDelay={0}>
+      <HoverCardTrigger asChild>
+        <p className="bg-secondary/50 ring-secondary rounded-sm px-2 py-1 ring hover:cursor-pointer">
+          {section.id}
+        </p>
+      </HoverCardTrigger>
+      <HoverCardContent className="ring-secondary w-sm rounded-xl p-0 ring-2">
+        <SectionCard
+          section={section}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        />
+      </HoverCardContent>
+    </HoverCard>
   );
 };
 
@@ -47,7 +58,7 @@ export default function ReleaseNotes({
     <AnimatePresence>
       {shouldOpen ? (
         <motion.div
-          className="bg-background/50 fixed top-0 left-0 z-9999 flex h-screen w-screen items-center justify-center backdrop-blur-md backdrop-filter"
+          className="bg-background/50 fixed top-0 left-0 z-40 flex h-screen w-screen items-center justify-center backdrop-blur-md backdrop-filter"
           initial={{
             opacity: 0,
           }}
@@ -110,7 +121,7 @@ export default function ReleaseNotes({
                 ) : null}
               </div>
 
-              {/* <p>(click on section to see detail)</p> */}
+              <p>(hover on section to see detail)</p>
             </div>
             <SavedSchedulesDiff
               sectionsRemoved={sectionsRemoved}
