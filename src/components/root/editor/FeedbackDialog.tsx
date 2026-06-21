@@ -85,6 +85,7 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
             <Label htmlFor="contact-info">Contact info (optional)</Label>
             <Input
               id="contact-info"
+              name="contact-info"
               placeholder="name@example.com or 514-586-1268"
             />
           </div>
