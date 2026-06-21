@@ -8,10 +8,8 @@ import {
 } from "src/components/ui/hover-card";
 import type { SectionStore } from "src/types";
 import type { Section } from "src/types/generated";
-import {
-  ChangedSectionPreviewCard,
-  SavedSchedulesDiff,
-} from "./SavedSchedulesDiff";
+import { ChangedSectionPreviewCard } from "./ChangedSectionPreviewCard";
+import { SavedSchedulesDiff } from "./SavedSchedulesDiff";
 
 const SectionButton = ({
   section,
@@ -46,11 +44,7 @@ type ReleaseNotesProps = {
   close: () => void;
   store: SectionStore;
 };
-export default function ReleaseNotes({
-  shouldOpen,
-  close,
-  store,
-}: ReleaseNotesProps) {
+export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
   const { semester, comments, filename, sectionsDiff, sectionsById } = store;
   const { sectionsAdded, previousSectionsChanged, sectionsRemoved } =
     sectionsDiff;

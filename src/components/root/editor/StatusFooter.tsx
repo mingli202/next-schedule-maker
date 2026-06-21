@@ -4,11 +4,11 @@ import { signOut } from "firebase/auth";
 import type { ComponentProps } from "react";
 import { Button } from "src/components";
 import { ButtonVariant } from "src/components/Button";
+import { ReleaseNotes } from "src/components/ReleateNotes";
 import { useReleaseNotes } from "src/hooks";
 import { getAuth } from "src/integrations/firebase";
 import { useSectionStore } from "src/lib/store/section";
 import { cn } from "src/lib/utils";
-import ReleaseNotes from "./ReleaseNotes";
 
 const auth = getAuth();
 
