@@ -22,7 +22,7 @@ export const SectionButton = ({
   closeDelay?: number;
 }) => {
   return (
-    <HoverCard openDelay={openDelay ?? 10} closeDelay={closeDelay ?? 10}>
+    <HoverCard openDelay={openDelay ?? 200} closeDelay={closeDelay ?? 200}>
       <HoverCardTrigger asChild>
         <p
           className={cn(
