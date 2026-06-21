@@ -34,7 +34,7 @@
     "framer-motion": "^12.40.0",
     "lucide-react": "^0.575.0",
     "nitro": "npm:nitro-nightly@v3.0.260603-beta",
-    "radix-ui": "^1.4.3",
+    "radix-ui": "^1.6.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-firebase-hooks": "^5.1.1",
