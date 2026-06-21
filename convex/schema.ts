@@ -26,10 +26,7 @@ const schema = defineSchema({
 
   feedback: defineTable({
     feedback: v.string(),
-    email: v.optional(v.string()),
-    phone: v.optional(v.string()),
-    firebaseId: v.optional(v.string()),
-    userId: v.optional(v.id("users")),
+    contactInfo: v.optional(v.string()),
   }),
 });
 
