@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact, { reactCompilerPreset } from "@vitejs/plugin-react";
-import viteTsConfigPaths from "vite-tsconfig-paths";
 import { fileURLToPath, URL } from "url";
 import babel from "@rolldown/plugin-babel";
 
@@ -15,14 +14,11 @@ const config = defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
       src: fileURLToPath(new URL("./src", import.meta.url)),
     },
+    tsconfigPaths: true,
   },
   plugins: [
     devtools(),
     nitro(),
-    // this is the plugin that enables path aliases
-    viteTsConfigPaths({
-      projects: ["./tsconfig.json"],
-    }),
     tailwindcss(),
     tanstackStart(),
     viteReact({}),
