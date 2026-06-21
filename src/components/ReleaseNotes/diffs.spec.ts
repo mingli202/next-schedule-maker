@@ -76,6 +76,56 @@ given(
   },
 );
 
+given("section diff where only leclab title changes", () => {
+  when("matching old and new leclabs", () => {
+    then("it should still match the same leclab", () => {
+      const oldLeclabs = [
+        leclabFrom("LEC 01", "lecture", "Smith, Alice", [
+          dayTimeFrom("MW", "0900", "1000"),
+        ]),
+      ];
+      const newLeclabs = [
+        leclabFrom("PHYSICAL EDUCATION", "lecture", "Smith, Alice", [
+          dayTimeFrom("MW", "0900", "1000"),
+        ]),
+      ];
+
+      const { matchedOldItems, addedNewItems } = matchLeclabsForDiff(
+        oldLeclabs,
+        newLeclabs,
+      );
+
+      expect(matchedOldItems.map((item) => item.newIndex)).toEqual([0]);
+      expect(addedNewItems).toEqual([]);
+    });
+  });
+});
+
+given("section diff where title and time change but instructor/type stay the same", () => {
+  when("matching old and new leclabs", () => {
+    then("it should keep the leclab paired so daytime diff is shown inline", () => {
+      const oldLeclabs = [
+        leclabFrom("LEC 01", "lecture", "Smith, Alice", [
+          dayTimeFrom("M", "1000", "1200"),
+        ]),
+      ];
+      const newLeclabs = [
+        leclabFrom("PHYSICAL EDUCATION", "lecture", "Smith, Alice", [
+          dayTimeFrom("M", "1200", "1400"),
+        ]),
+      ];
+
+      const { matchedOldItems, addedNewItems } = matchLeclabsForDiff(
+        oldLeclabs,
+        newLeclabs,
+      );
+
+      expect(matchedOldItems.map((item) => item.newIndex)).toEqual([0]);
+      expect(addedNewItems).toEqual([]);
+    });
+  });
+});
+
 given(
   "realistic section diff where day times are reordered, changed, removed, and added",
   () => {

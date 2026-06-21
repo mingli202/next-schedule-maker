@@ -87,19 +87,30 @@ const dayTimeDayKey = (dayTime: DayTime) => dayTime.day;
 const dayTimeTimeKey = (dayTime: DayTime) =>
   `${dayTime.startTimeHhmm}|${dayTime.endTimeHhmm}`;
 
-const leclabExactKey = (leclab: LecLab) =>
-  `${leclab.type ?? "lecture"}|${leclab.title}|${leclab.prof}|${[...leclab.dayTimes].map(dayTimeExactKey).sort().join(",")}`;
+const leclabTypeKey = (leclab: LecLab) => leclab.type ?? "lecture";
 
-const leclabTypeAndTitleKey = (leclab: LecLab) =>
-  `${leclab.type ?? "lecture"}|${leclab.title}`;
+const leclabTypeProfAndExactDayTimesKey = (leclab: LecLab) =>
+  `${leclabTypeKey(leclab)}|${leclab.prof}|${[...leclab.dayTimes].map(dayTimeExactKey).sort().join(",")}`;
+
+const leclabTypeProfAndDayKey = (leclab: LecLab) =>
+  `${leclabTypeKey(leclab)}|${leclab.prof}|${[...leclab.dayTimes].map(dayTimeDayKey).sort().join(",")}`;
+
+const leclabTypeAndExactDayTimesKey = (leclab: LecLab) =>
+  `${leclabTypeKey(leclab)}|${[...leclab.dayTimes].map(dayTimeExactKey).sort().join(",")}`;
+
+const leclabTypeAndProfKey = (leclab: LecLab) =>
+  `${leclabTypeKey(leclab)}|${leclab.prof}`;
 
 export function matchLeclabsForDiff(
   oldLeclabs: LecLab[],
   newLecLabs: LecLab[],
 ) {
   return matchByStableKeys(oldLeclabs, newLecLabs, [
-    leclabExactKey,
-    leclabTypeAndTitleKey,
+    leclabTypeProfAndExactDayTimesKey,
+    leclabTypeProfAndDayKey,
+    leclabTypeAndExactDayTimesKey,
+    leclabTypeAndProfKey,
+    leclabTypeKey,
   ]);
 }
 
