@@ -10,7 +10,7 @@ export default function TeacherStats({ leclab, className }: Props) {
   const rating = leclab.rating;
 
   if (!rating || rating.status === "foundn't") {
-    return <p className="font-bold">N/A</p>;
+    return <span className="font-bold">N/A</span>;
   }
 
   return (
