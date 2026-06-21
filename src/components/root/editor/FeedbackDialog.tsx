@@ -1,6 +1,6 @@
 import { api } from "convex/_generated/api";
 import { useMutation } from "convex/react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Button } from "src/components";
 import { ButtonVariant } from "src/components/Button";
 import {
@@ -29,10 +29,7 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
   const [feedback, setFeedback] = useState("");
   const [isSent, setIsSent] = useState(false);
 
-  const charsRemaining = useMemo(
-    () => MAX_FEEDBACK_LENGTH - feedback.length,
-    [feedback.length],
-  );
+  const charsRemaining = MAX_FEEDBACK_LENGTH - feedback.length;
 
   const resetForm = () => {
     setFeedback("");
