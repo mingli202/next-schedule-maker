@@ -1,5 +1,5 @@
 import { Clock, User } from "lucide-react";
-import { type ComponentProps, useMemo } from "react";
+import { type ComponentProps, Fragment, useMemo } from "react";
 import LecLabComponent from "src/components/LecLab";
 import TeacherStats from "src/components/TeacherStats";
 import { useSavedSchedule } from "src/hooks";
@@ -152,22 +152,20 @@ function ScheduleDiff({
         ))}
 
         {modifiedSections.map(({ oldSection, newSection }, i) => (
-          <>
+          <Fragment key={`modified-${id}-section-${oldSection.id}`}>
             <SectionTimes
               section={oldSection}
-              key={`old-${id}-section-${oldSection.id}`}
               className={cn("z-10", redBg)}
               index={i}
             />
             {newSection && (
               <SectionTimes
                 section={newSection}
-                key={`new-${id}-section-${newSection.id}`}
                 className={cn("z-10", greenBg)}
                 index={i}
               />
             )}
-          </>
+          </Fragment>
         ))}
       </div>
 
