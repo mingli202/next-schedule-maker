@@ -36,6 +36,7 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
 
   const resetForm = () => {
     setFeedback("");
+    setIsSent(false);
   };
 
   const handleOpenChange = (nextOpen: boolean) => {
@@ -61,6 +62,7 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
         contactInfo,
       });
       setFeedback("");
+      setIsSent(true);
     } catch {
       return "Failed to send feedback. Please try again.";
     }
@@ -72,8 +74,9 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
         <DialogHeader>
           <DialogTitle>Share feedback</DialogTitle>
           <DialogDescription>
-            Tell me what is working and what should be improved. Btw, your
-            feedback is anonymized. So don't hold back, I won't come after you.
+            Tell me what is working and what should be improved. Also, your
+            feedback is anonymized unless you provide a contact info. So don't
+            hold back, I won't come after you.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -100,7 +103,7 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
           </div>
           {error && <p className="text-destructive text-sm">{error}</p>}
           {isSent && (
-            <p className="text-sm text-green-700">Feedback sent. Thank you.</p>
+            <p className="text-sm text-green-600">Feedback sent. Thank you.</p>
           )}
           <DialogFooter>
             <Button
