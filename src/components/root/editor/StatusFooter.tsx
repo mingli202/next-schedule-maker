@@ -57,10 +57,10 @@ export function StatusFooter() {
           )}
         </div>
         <div className="flex-1" />
-        <LittleButton onClick={open}>Release notes</LittleButton>
         <LittleButton onClick={() => setIsFeedbackOpen(true)}>
           Feedback
         </LittleButton>
+        <LittleButton onClick={open}>Release notes</LittleButton>
         <LittleButton className="flex gap-1">
           {store.semester}
           <span className="hidden md:block"> ({store.filename})</span>
