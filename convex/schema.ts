@@ -23,6 +23,11 @@ const schema = defineSchema({
   })
     .index("by_userId", ["userId"])
     .index("by_scheduleId", ["scheduleId"]),
+
+  feedback: defineTable({
+    feedback: v.string(),
+    contactInfo: v.optional(v.string()),
+  }),
 });
 
 export default schema;
