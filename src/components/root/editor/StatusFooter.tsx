@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useConvexAuth } from "convex/react";
 import { signOut } from "firebase/auth";
+import { MessageCircle, Sparkles } from "lucide-react";
 import { type ComponentProps, useState } from "react";
 import { Button } from "src/components";
 import { ButtonVariant } from "src/components/Button";
@@ -20,6 +21,7 @@ const LittleButton = ({
 }: ComponentProps<typeof Button>) => (
   <Button
     className={cn(
+      "flex items-center gap-1",
       className,
       "rounded-none py-1",
       variant !== ButtonVariant.Special && "hover:bg-foreground/20",
@@ -58,10 +60,14 @@ export function StatusFooter() {
         </div>
         <div className="flex-1" />
         <LittleButton onClick={() => setIsFeedbackOpen(true)}>
-          Feedback
+          <MessageCircle className="h-3 w-3" />
+          <span className="hidden md:block">Feedback</span>
         </LittleButton>
-        <LittleButton onClick={open}>Release notes</LittleButton>
-        <LittleButton className="flex gap-1">
+        <LittleButton onClick={open}>
+          <Sparkles className="h-3 w-3" />
+          <span className="hidden md:block">Release notes</span>
+        </LittleButton>
+        <LittleButton>
           {store.semester}
           <span className="hidden md:block"> ({store.filename})</span>
         </LittleButton>

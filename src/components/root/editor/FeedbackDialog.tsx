@@ -74,7 +74,7 @@ export function FeedbackDialog({ open, onOpenChange }: FeedbackDialogProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Share feedback</DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-left">
             Tell me what feature you would like to see and what should be
             improved. Your feedback is anonymized unless you provide a contact
             info. So don't hold back, I won't come after you.
