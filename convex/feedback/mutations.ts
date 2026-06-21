@@ -8,7 +8,7 @@ export const submitFeedback = mutation({
   },
   handler: async (ctx, args) => {
     const feedback = args.feedback.trim();
-    const contactInfo = args.contactInfo;
+    const contactInfo = args.contactInfo?.trim() || undefined;
 
     if (!feedback) {
       throw new Error("Feedback is required.");
