@@ -1,13 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown, ChevronUp, X } from "lucide-react";
 import { type MouseEvent, useRef, useState } from "react";
 import SectionCard from "src/components/SectionCard";
+import { versionHistory } from "src/lib/version-history";
 import type { SectionStore } from "src/types";
+import Button, { ButtonVariant } from "../Button";
 import { ChangedSectionPreviewCard } from "./ChangedSectionPreviewCard";
 import { SavedSchedulesDiff } from "./SavedSchedulesDiff";
 import { SectionButton } from "./SectionButton";
-import Button, { ButtonVariant } from "../Button";
-import { ChevronDown, ChevronUp } from "lucide-react";
-import { versionHistory } from "src/lib/version-history";
 
 type ReleaseNotesProps = {
   shouldOpen: boolean;
@@ -50,9 +50,14 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
           >
             <div className="bg-background ring-secondary flex flex-col gap-4 overflow-x-hidden rounded-md p-10 ring-2 max-md:max-h-[65vh] max-md:overflow-y-auto md:basis-3/5 md:gap-6 md:p-14">
               <div className="flex shrink-0 flex-col gap-2">
-                <h1 className="text-xl">
-                  What{"'"}s new in {semester}
-                </h1>
+                <div className="flex items-center justify-between gap-2">
+                  <h1 className="text-xl">
+                    What{"'"}s new in {semester}
+                  </h1>
+                  <Button variant={ButtonVariant.Basic} onClick={close}>
+                    <X />
+                  </Button>
+                </div>
                 <p className="flex items-baseline gap-1">
                   <span className="truncate">{filename}</span>
                   <span className="shrink-0">update</span>
