@@ -13,6 +13,14 @@ const schema = defineSchema({
     userId: v.id("users"),
     name: v.string(),
     source: v.string(), // source of data
+    sections: v.optional(
+      v.array(
+        v.object({
+          sectionId: v.string(),
+          colorIndex: v.number(),
+        }),
+      ),
+    ),
   }).index("by_userId_source", ["userId", "source"]),
 
   sections: defineTable({
