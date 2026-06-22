@@ -15,20 +15,12 @@ export const getSchedules = query({
 
     return await Promise.all(
       schedules.map(async (schedule) => {
-        const sections = await ctx.db
-          .query("sections")
-          .withIndex("by_scheduleId", (q) => q.eq("scheduleId", schedule._id))
-          .collect();
-
         return {
           id: schedule._id,
           creationTime: schedule._creationTime,
           name: schedule.name,
           source: schedule.source,
-          sections: sections.map(({ sectionId, colorIndex }) => ({
-            sectionId,
-            colorIndex,
-          })),
+          sections: schedule.sections,
         } satisfies SavedSchedule;
       }),
     );
