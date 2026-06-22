@@ -3,6 +3,17 @@ import { v } from "convex/values";
 import { CollectionPolicy } from "./types";
 
 const schema = defineSchema({
+  sectionsBackup: defineTable({
+    backup: v.array(
+      v.object({
+        userId: v.id("users"),
+        scheduleId: v.id("schedules"),
+        sectionId: v.string(),
+        colorIndex: v.number(),
+      }),
+    ),
+  }),
+
   users: defineTable({
     firebaseId: v.string(),
     collectionPolicy: CollectionPolicy,
@@ -20,15 +31,6 @@ const schema = defineSchema({
       }),
     ),
   }).index("by_userId_source", ["userId", "source"]),
-
-  sections: defineTable({
-    userId: v.id("users"),
-    scheduleId: v.id("schedules"),
-    sectionId: v.string(),
-    colorIndex: v.number(),
-  })
-    .index("by_userId", ["userId"])
-    .index("by_scheduleId", ["scheduleId"]),
 
   feedback: defineTable({
     feedback: v.string(),

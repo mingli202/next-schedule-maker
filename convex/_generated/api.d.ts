@@ -9,7 +9,6 @@
  */
 
 import type * as feedback_mutations from "../feedback/mutations.js";
-import type * as migration from "../migration.js";
 import type * as schedules_helpers from "../schedules/helpers.js";
 import type * as schedules_mutations from "../schedules/mutations.js";
 import type * as schedules_queries from "../schedules/queries.js";
@@ -26,7 +25,6 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   "feedback/mutations": typeof feedback_mutations;
-  migration: typeof migration;
   "schedules/helpers": typeof schedules_helpers;
   "schedules/mutations": typeof schedules_mutations;
   "schedules/queries": typeof schedules_queries;
