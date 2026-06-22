@@ -12,8 +12,6 @@ import type * as feedback_mutations from "../feedback/mutations.js";
 import type * as schedules_helpers from "../schedules/helpers.js";
 import type * as schedules_mutations from "../schedules/mutations.js";
 import type * as schedules_queries from "../schedules/queries.js";
-import type * as sections_helpers from "../sections/helpers.js";
-import type * as sections_mutations from "../sections/mutations.js";
 import type * as types from "../types.js";
 import type * as user_helpers from "../user/helpers.js";
 import type * as user_mutations from "../user/mutations.js";
@@ -30,8 +28,6 @@ declare const fullApi: ApiFromModules<{
   "schedules/helpers": typeof schedules_helpers;
   "schedules/mutations": typeof schedules_mutations;
   "schedules/queries": typeof schedules_queries;
-  "sections/helpers": typeof sections_helpers;
-  "sections/mutations": typeof sections_mutations;
   types: typeof types;
   "user/helpers": typeof user_helpers;
   "user/mutations": typeof user_mutations;

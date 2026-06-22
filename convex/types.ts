@@ -8,17 +8,18 @@ export const CollectionPolicy = v.union(
 );
 export type CollectionPolicy = typeof CollectionPolicy.type;
 
+export const SavedSection = z.object({
+  sectionId: z.string(),
+  colorIndex: z.number(),
+});
+export type SavedSection = z.infer<typeof SavedSection>;
+
 export const SavedSchedule = z.object({
   id: z.string(),
   creationTime: z.number(),
   name: z.string(),
   source: z.string(),
-  sections: z.array(
-    z.object({
-      sectionId: z.string(),
-      colorIndex: z.number(),
-    }),
-  ),
+  sections: z.array(SavedSection),
 });
 export type SavedSchedule = z.infer<typeof SavedSchedule>;
 
