@@ -1,20 +1,21 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Sparkles, X } from "lucide-react";
 import { type MouseEvent, useRef, useState } from "react";
 import SectionCard from "src/components/SectionCard";
+import { useReleaseNotes } from "src/hooks";
 import { versionHistory } from "src/lib/version-history";
 import type { SectionStore } from "src/types";
 import Button, { ButtonVariant } from "../Button";
+import { LittleButton } from "../LittleButton";
 import { ChangedSectionPreviewCard } from "./ChangedSectionPreviewCard";
 import { SavedSchedulesDiff } from "./SavedSchedulesDiff";
 import { SectionButton } from "./SectionButton";
 
 type ReleaseNotesProps = {
-  shouldOpen: boolean;
-  close: () => void;
   store: SectionStore;
 };
-export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
+export function ReleaseNotes({ store }: ReleaseNotesProps) {
+  const { shouldOpen, open, close } = useReleaseNotes();
   const { semester, comments, filename, sectionsDiff, sectionsById } = store;
   const { sectionsAdded, previousSectionsChanged, sectionsRemoved } =
     sectionsDiff;
@@ -29,123 +30,131 @@ export function ReleaseNotes({ shouldOpen, close, store }: ReleaseNotesProps) {
   }
 
   return (
-    <AnimatePresence>
-      {shouldOpen ? (
-        <motion.div
-          className="bg-background/50 fixed top-0 left-0 z-40 flex h-screen w-screen items-start justify-center overflow-x-hidden overflow-y-auto py-4 backdrop-blur-md backdrop-filter md:items-center md:overflow-hidden md:py-0"
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          exit={{
-            opacity: 0,
-          }}
-          onClick={handleClick}
-        >
-          <div
-            className="flex w-9/10 gap-2 max-md:flex-col md:h-9/10"
-            ref={popupRef}
+    <>
+      <LittleButton onClick={open}>
+        <Sparkles className="h-3 w-3" />
+        <span className="hidden md:block">Release notes</span>
+      </LittleButton>
+      <AnimatePresence>
+        {shouldOpen ? (
+          <motion.div
+            className="bg-background/50 fixed top-0 left-0 z-40 flex h-screen w-screen items-start justify-center overflow-x-hidden overflow-y-auto py-4 backdrop-blur-md backdrop-filter md:items-center md:overflow-hidden md:py-0"
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            onClick={handleClick}
           >
-            <div className="bg-background ring-secondary flex flex-col gap-4 overflow-x-hidden rounded-md p-10 ring-2 max-md:max-h-[65vh] max-md:overflow-y-auto md:basis-3/5 md:gap-6 md:p-14">
-              <div className="flex shrink-0 flex-col gap-2">
-                <div className="flex items-center justify-between gap-2">
-                  <h1 className="text-xl">
-                    What{"'"}s new in {semester}
-                  </h1>
-                  <Button variant={ButtonVariant.Basic} onClick={close}>
-                    <X />
-                  </Button>
+            <div
+              className="flex w-9/10 gap-2 max-md:flex-col md:h-9/10"
+              ref={popupRef}
+            >
+              <div className="bg-background ring-secondary flex flex-col gap-4 overflow-x-hidden rounded-md p-10 ring-2 max-md:max-h-[65vh] max-md:overflow-y-auto md:basis-3/5 md:gap-6 md:p-14">
+                <div className="flex shrink-0 flex-col gap-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <h1 className="text-xl">
+                      What{"'"}s new in {semester}
+                    </h1>
+                    <Button variant={ButtonVariant.Basic} onClick={close}>
+                      <X />
+                    </Button>
+                  </div>
+                  <p className="flex items-baseline gap-1">
+                    <span className="truncate">{filename}</span>
+                    <span className="shrink-0">update</span>
+                  </p>
                 </div>
-                <p className="flex items-baseline gap-1">
-                  <span className="truncate">{filename}</span>
-                  <span className="shrink-0">update</span>
-                </p>
-              </div>
-              <div className="flex shrink-0 flex-col gap-2">
-                {comments.map((comment, i) => (
-                  <p key={`${comment}-${i.toString()}`}>{comment}</p>
-                ))}
-              </div>
+                <div className="flex shrink-0 flex-col gap-2">
+                  {comments.map((comment, i) => (
+                    <p key={`${comment}-${i.toString()}`}>{comment}</p>
+                  ))}
+                </div>
 
-              <div className="flex shrink-0 flex-col gap-2">
-                <p>Sections added ({sectionsAdded.length})</p>
-                {sectionsAdded.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
-                    {sectionsAdded.map((s) => {
-                      const section = sectionsById.get(s);
-                      if (!section) {
-                        return null;
-                      }
-                      return (
-                        <SectionButton
-                          key={s}
-                          sectionId={section.id}
-                          content={<SectionCard section={section} />}
-                        />
-                      );
-                    })}
-                  </div>
-                ) : null}
-              </div>
+                <div className="flex shrink-0 flex-col gap-2">
+                  <p>Sections added ({sectionsAdded.length})</p>
+                  {sectionsAdded.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {sectionsAdded.map((s) => {
+                        const section = sectionsById.get(s);
+                        if (!section) {
+                          return null;
+                        }
+                        return (
+                          <SectionButton
+                            key={s}
+                            sectionId={section.id}
+                            content={<SectionCard section={section} />}
+                          />
+                        );
+                      })}
+                    </div>
+                  ) : null}
+                </div>
 
-              <div className="flex shrink-0 flex-col gap-2">
-                <p>Sections removed ({sectionsRemoved.length})</p>
-                {sectionsRemoved.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
-                    {sectionsRemoved.map((s) => (
-                      <SectionButton
-                        key={s.id}
-                        sectionId={s.id}
-                        content={<SectionCard section={s} />}
-                      />
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-
-              <div className="flex shrink-0 flex-col gap-2">
-                <p>Sections changed ({previousSectionsChanged.length})</p>
-                {previousSectionsChanged.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
-                    {previousSectionsChanged.map((s) => {
-                      const newSection = sectionsById.get(s.id);
-
-                      return (
+                <div className="flex shrink-0 flex-col gap-2">
+                  <p>Sections removed ({sectionsRemoved.length})</p>
+                  {sectionsRemoved.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {sectionsRemoved.map((s) => (
                         <SectionButton
                           key={s.id}
                           sectionId={s.id}
-                          content={
-                            newSection ? (
-                              <ChangedSectionPreviewCard
-                                oldSection={s}
-                                newSection={newSection}
-                              />
-                            ) : (
-                              <SectionCard section={s} />
-                            )
-                          }
+                          content={<SectionCard section={s} />}
                         />
-                      );
-                    })}
-                  </div>
-                ) : null}
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+
+                <div className="flex shrink-0 flex-col gap-2">
+                  <p>Sections changed ({previousSectionsChanged.length})</p>
+                  {previousSectionsChanged.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                      {previousSectionsChanged.map((s) => {
+                        const newSection = sectionsById.get(s.id);
+
+                        return (
+                          <SectionButton
+                            key={s.id}
+                            sectionId={s.id}
+                            content={
+                              newSection ? (
+                                <ChangedSectionPreviewCard
+                                  oldSection={s}
+                                  newSection={newSection}
+                                />
+                              ) : (
+                                <SectionCard section={s} />
+                              )
+                            }
+                          />
+                        );
+                      })}
+                    </div>
+                  ) : null}
+                </div>
+
+                <p className="shrink-0 pt-1">
+                  (hover on section to see detail)
+                </p>
+
+                <LegacyVersions />
               </div>
 
-              <p className="shrink-0 pt-1">(hover on section to see detail)</p>
-
-              <LegacyVersions />
+              <SavedSchedulesDiff
+                sectionsRemoved={sectionsRemoved}
+                previousSectionsChanged={previousSectionsChanged}
+              />
             </div>
-
-            <SavedSchedulesDiff
-              sectionsRemoved={sectionsRemoved}
-              previousSectionsChanged={previousSectionsChanged}
-            />
-          </div>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </>
   );
 }
 
