@@ -36,6 +36,18 @@ const schema = defineSchema({
     feedback: v.string(),
     contactInfo: v.optional(v.string()),
   }),
+
+  userUploads: defineTable({
+    userId: v.id("users"),
+    uploadId: v.id("uploads"),
+    displayName: v.optional(v.string()),
+  }).index("by_userId", ["userId"]),
+
+  uploads: defineTable({
+    semester: v.string(),
+    sectionsById: v.string(),
+    filename: v.string(),
+  }),
 });
 
 export default schema;
