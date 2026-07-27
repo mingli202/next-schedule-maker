@@ -8,7 +8,8 @@ import { api } from "convex/_generated/api";
 import type { Doc, Id } from "convex/_generated/dataModel";
 import type { SectionStore } from "src/types";
 import { GlobalAllSections, type Section } from "src/types/generated";
-import type { DataSource } from "./data-source";
+import { getSectionsDiff } from "../section-diff";
+import { type DataSource, useDataSourceStore } from "./data-source";
 
 export const SECTION_STORE_KEY = "section-store";
 
@@ -31,6 +32,7 @@ const sharedOptions = {
     const jitter = (baseDelay * (Math.random() - 0.5)) / 5;
     return baseDelay + jitter;
   },
+  structuralSharing: addDiff as (a: unknown, b: unknown) => SectionStore,
 } as const;
 
 /**
@@ -42,18 +44,23 @@ export const allSectionsQueryOptions = (
   if (source.type === "latest") {
     return queryOptions({
       queryKey: [SECTION_STORE_KEY, source.type],
-      queryFn: ({ signal }) => fetchStore(signal),
+      queryFn: ({ signal }) => {
+        return fetchStore(signal);
+      },
       ...sharedOptions,
-      select: erase(mapBackendOutput),
+      select: mapBackendOutput,
     });
   }
 
   return queryFromConvex(source.id);
 };
 
-export function useSectionStore(
-  source: DataSource = { type: "latest" },
-): SectionStore {
+/**
+ * The section store
+ * */
+export function useSectionStore(): SectionStore {
+  const source = useDataSourceStore((s) => s.dataSource);
+
   const { data } = useSuspenseQuery(allSectionsQueryOptions(source));
   return data;
 }
@@ -156,8 +163,24 @@ function profsFromSections(sections: [string, Section][]): Set<string> {
   );
 }
 
-function erase<TQueryFnData>(
-  fn: (data: TQueryFnData) => SectionStore,
-): (data: unknown) => SectionStore {
-  return fn as (data: unknown) => SectionStore;
+/**
+ * add the diff to the new data
+ * */
+function addDiff(
+  oldData: SectionStore | undefined,
+  newData: SectionStore,
+): SectionStore {
+  if (!oldData) {
+    return newData;
+  }
+
+  const sectionsDiff = getSectionsDiff(
+    oldData.sectionsById,
+    newData.sectionsById,
+  );
+
+  return {
+    ...newData,
+    sectionsDiff,
+  };
 }
