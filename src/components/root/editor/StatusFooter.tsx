@@ -7,6 +7,7 @@ import { ReleaseNotes } from "src/components/ReleaseNotes";
 import { FeedbackDialog } from "src/components/root/editor/FeedbackDialog";
 import { getAuth } from "src/integrations/firebase";
 import { useSectionStore } from "src/lib/store/section";
+import { PdfManagerPopup } from "./PdfManagerPopup";
 
 const auth = getAuth();
 
@@ -33,10 +34,7 @@ export function StatusFooter() {
       <div className="flex-1" />
       <FeedbackDialog />
       <ReleaseNotes store={store} />
-      <LittleButton>
-        {store.semester}
-        <span className="hidden md:block"> ({store.filename})</span>
-      </LittleButton>
+      <PdfManagerPopup store={store} />
     </div>
   );
 }
