@@ -17,8 +17,6 @@ type ReleaseNotesProps = {
 export function ReleaseNotes({ store }: ReleaseNotesProps) {
   const { shouldOpen, open, close } = useReleaseNotes();
   const { semester, comments, filename, sectionsDiff, sectionsById } = store;
-  const { sectionsAdded, previousSectionsChanged, sectionsRemoved } =
-    sectionsDiff;
 
   const popupRef = useRef<HTMLDivElement>(null);
   function handleClick(e: MouseEvent) {
@@ -75,69 +73,82 @@ export function ReleaseNotes({ store }: ReleaseNotesProps) {
                   ))}
                 </div>
 
-                <div className="flex shrink-0 flex-col gap-2">
-                  <p>Sections added ({sectionsAdded.length})</p>
-                  {sectionsAdded.length > 0 ? (
-                    <div className="flex flex-wrap gap-2">
-                      {sectionsAdded.map((s) => {
-                        const section = sectionsById.get(s);
-                        if (!section) {
-                          return null;
-                        }
-                        return (
-                          <SectionButton
-                            key={s}
-                            sectionId={section.id}
-                            content={<SectionCard section={section} />}
-                          />
-                        );
-                      })}
-                    </div>
-                  ) : null}
-                </div>
-
-                <div className="flex shrink-0 flex-col gap-2">
-                  <p>Sections removed ({sectionsRemoved.length})</p>
-                  {sectionsRemoved.length > 0 ? (
-                    <div className="flex flex-wrap gap-2">
-                      {sectionsRemoved.map((s) => (
-                        <SectionButton
-                          key={s.id}
-                          sectionId={s.id}
-                          content={<SectionCard section={s} />}
-                        />
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-
-                <div className="flex shrink-0 flex-col gap-2">
-                  <p>Sections changed ({previousSectionsChanged.length})</p>
-                  {previousSectionsChanged.length > 0 ? (
-                    <div className="flex flex-wrap gap-2">
-                      {previousSectionsChanged.map((s) => {
-                        const newSection = sectionsById.get(s.id);
-
-                        return (
-                          <SectionButton
-                            key={s.id}
-                            sectionId={s.id}
-                            content={
-                              newSection ? (
-                                <ChangedSectionPreviewCard
-                                  oldSection={s}
-                                  newSection={newSection}
-                                />
-                              ) : (
-                                <SectionCard section={s} />
-                              )
+                {sectionsDiff ? (
+                  <>
+                    <div className="flex shrink-0 flex-col gap-2">
+                      <p>
+                        Sections added ({sectionsDiff.sectionsAdded.length})
+                      </p>
+                      {sectionsDiff.sectionsAdded.length > 0 ? (
+                        <div className="flex flex-wrap gap-2">
+                          {sectionsDiff.sectionsAdded.map((s) => {
+                            const section = sectionsById.get(s);
+                            if (!section) {
+                              return null;
                             }
-                          />
-                        );
-                      })}
+                            return (
+                              <SectionButton
+                                key={s}
+                                sectionId={section.id}
+                                content={<SectionCard section={section} />}
+                              />
+                            );
+                          })}
+                        </div>
+                      ) : null}
                     </div>
-                  ) : null}
-                </div>
+
+                    <div className="flex shrink-0 flex-col gap-2">
+                      <p>
+                        Sections removed ({sectionsDiff.sectionsRemoved.length})
+                      </p>
+                      {sectionsDiff.sectionsRemoved.length > 0 ? (
+                        <div className="flex flex-wrap gap-2">
+                          {sectionsDiff.sectionsRemoved.map((s) => (
+                            <SectionButton
+                              key={s.id}
+                              sectionId={s.id}
+                              content={<SectionCard section={s} />}
+                            />
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
+
+                    <div className="flex shrink-0 flex-col gap-2">
+                      <p>
+                        Sections changed (
+                        {sectionsDiff.previousSectionsChanged.length})
+                      </p>
+                      {sectionsDiff.previousSectionsChanged.length > 0 ? (
+                        <div className="flex flex-wrap gap-2">
+                          {sectionsDiff.previousSectionsChanged.map((s) => {
+                            const newSection = sectionsById.get(s.id);
+
+                            return (
+                              <SectionButton
+                                key={s.id}
+                                sectionId={s.id}
+                                content={
+                                  newSection ? (
+                                    <ChangedSectionPreviewCard
+                                      oldSection={s}
+                                      newSection={newSection}
+                                    />
+                                  ) : (
+                                    <SectionCard section={s} />
+                                  )
+                                }
+                              />
+                            );
+                          })}
+                        </div>
+                      ) : null}
+                    </div>
+                  </>
+                ) : (
+                  <div>No diff to the last one</div>
+                )}
 
                 <p className="shrink-0 pt-1">
                   (hover on section to see detail)
@@ -147,8 +158,10 @@ export function ReleaseNotes({ store }: ReleaseNotesProps) {
               </div>
 
               <SavedSchedulesDiff
-                sectionsRemoved={sectionsRemoved}
-                previousSectionsChanged={previousSectionsChanged}
+                sectionsRemoved={sectionsDiff?.sectionsRemoved ?? []}
+                previousSectionsChanged={
+                  sectionsDiff?.previousSectionsChanged ?? []
+                }
               />
             </div>
           </motion.div>
