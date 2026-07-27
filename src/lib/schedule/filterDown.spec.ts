@@ -1,5 +1,9 @@
 import { expect } from "bun:test";
-import { dayTimeFrom, leclabFrom, ratingFrom } from "src/lib/test-helpers/schedule";
+import {
+  dayTimeFrom,
+  leclabFrom,
+  ratingFrom,
+} from "src/lib/test-helpers/schedule";
 import type { SectionStore } from "src/types";
 import type { Section } from "src/types/generated";
 import type { SearchSectionParams } from "src/types/schedule";
@@ -114,7 +118,6 @@ const store: SectionStore = {
       .flatMap((section) => section.leclabs.map((leclab) => leclab.prof))
       .filter((prof) => prof.trim() !== ""),
   ),
-  codes: new Set(sections.map((section) => section.code)),
   filename: "",
   sectionsDiff: {
     previousSectionsChanged: [],
