@@ -3,7 +3,7 @@ import { query } from "../_generated/server";
 import { getUserIdFromFirebaseId } from "../user/helpers";
 
 /**
- * Gets the upload of the given uploadId
+ * Gets the upload of the given uploadId, returning
  * */
 export const getUpload = query({
   args: { uploadId: v.id("uploads") },
