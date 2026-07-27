@@ -1,83 +1,163 @@
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import type { SectionByIdSchema, SectionStore } from "src/types";
-import { type DataVersionCommit, LatestVersionCommit } from "src/types/enums";
-import { GlobalAllSections, type SectionsDiff } from "src/types/generated";
+import { convexQuery } from "@convex-dev/react-query";
+import {
+  queryOptions,
+  type UseSuspenseQueryOptions,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { api } from "convex/_generated/api";
+import type { Doc, Id } from "convex/_generated/dataModel";
+import type { SectionStore } from "src/types";
+import { GlobalAllSections, type Section } from "src/types/generated";
+import type { DataSource } from "./data-source";
 
+export const SECTION_STORE_KEY = "section-store";
+
+type SectionStoreQuery = UseSuspenseQueryOptions<
+  // biome-ignore lint/suspicious/noExplicitAny: <why can't it resolve correctly>
+  any,
+  Error,
+  SectionStore,
+  // biome-ignore lint/suspicious/noExplicitAny: <query key type differs>
+  any
+>;
+
+const sharedOptions = {
+  staleTime: Infinity,
+  gcTime: 0,
+  retry: 5,
+  retryDelay: (count: number) => {
+    // exponential backoff + random jitter
+    const baseDelay = 2 ** count;
+    const jitter = (baseDelay * (Math.random() - 0.5)) / 5;
+    return baseDelay + jitter;
+  },
+} as const;
+
+/**
+ * The query options
+ * */
 export const allSectionsQueryOptions = (
-  commit: DataVersionCommit = LatestVersionCommit,
-) =>
-  queryOptions({
-    queryKey: ["section-store", commit],
-    queryFn: () => fetchStore(commit),
-    staleTime: Infinity,
-  });
+  source: DataSource = { type: "latest" },
+): SectionStoreQuery => {
+  if (source.type === "latest") {
+    return queryOptions({
+      queryKey: [SECTION_STORE_KEY, source.type],
+      queryFn: ({ signal }) => fetchStore(signal),
+      ...sharedOptions,
+      select: erase(mapBackendOutput),
+    });
+  }
+
+  return queryFromConvex(source.id);
+};
 
 export function useSectionStore(
-  commit: DataVersionCommit = LatestVersionCommit,
-) {
-  const { data } = useSuspenseQuery(allSectionsQueryOptions(commit));
+  source: DataSource = { type: "latest" },
+): SectionStore {
+  const { data } = useSuspenseQuery(allSectionsQueryOptions(source));
   return data;
 }
 
+/**
+ * Fetch the global all sections from the backend
+ * */
 export async function fetchStore(
-  commit: DataVersionCommit,
-): Promise<SectionStore> {
+  signal: AbortSignal,
+): Promise<GlobalAllSections> {
   const res = await fetch(
-    `https://raw.githubusercontent.com/mingli202/scraper/${commit}/all_sections_final.json`,
+    `${import.meta.env.VITE_BACKEND_URL}/global-all-sections`,
+    { signal },
   );
 
-  let sectionsMap: SectionByIdSchema = {};
-  let semester = "";
-  let filename = "";
-  let sectionsDiff: SectionsDiff = {
-    previousSectionsChanged: [],
-    sectionsAdded: [],
-    sectionsRemoved: [],
-  };
-  let comments: string[] = [];
-
-  if (res.ok) {
-    try {
-      const json = await res.json();
-      const globalAllSections = GlobalAllSections.parse(json);
-
-      semester = globalAllSections.semester;
-      filename = globalAllSections.filename;
-      if (globalAllSections.sectionsDiff !== null) {
-        sectionsDiff = globalAllSections.sectionsDiff;
-      }
-      sectionsMap = globalAllSections.sectionsById;
-      comments = globalAllSections.comments;
-    } catch (e) {
-      console.error("Failed to parse sections data: ", e);
-    }
-  } else {
-    console.error("Failed to fetch from github");
+  if (!res.ok) {
+    throw new Error("Failed to fetch from backend", {
+      cause: res.statusText,
+    });
   }
 
-  const sections = Object.entries(sectionsMap);
+  const json = await res.json();
+  return GlobalAllSections.parse(json);
+}
+
+/**
+ * returns the SectionStore from the given globalAllSections
+ * */
+function mapBackendOutput(globalAllSections: GlobalAllSections): SectionStore {
+  const sections = Object.entries(globalAllSections.sectionsById);
 
   const sectionsById = new Map(sections);
+  const professors = profsFromSections(sections);
 
-  const professors = new Set(
+  return {
+    ...globalAllSections,
+    sectionsDiff: globalAllSections.sectionsDiff,
+    sectionsById,
+    professors,
+  } satisfies SectionStore;
+}
+
+/**
+ * The convex query
+ * */
+function queryFromConvex(uploadId: string) {
+  const convexOptions = convexQuery(api.uploads.queries.getUpload, {
+    uploadId: uploadId as Id<"uploads">,
+  });
+  const fn = convexOptions.queryFn;
+
+  if (!fn) {
+    throw new Error("query function can't be null");
+  }
+
+  return queryOptions({
+    ...convexOptions,
+    ...sharedOptions,
+    queryFn: async (args) => {
+      const data = await fn(args);
+      if (!data) {
+        throw new Error("could not find the upload");
+      }
+
+      return data;
+    },
+    select: mapConvexOutput,
+  });
+}
+
+/**
+ * The select function to convert it into a SectionStore
+ * */
+function mapConvexOutput(upload: Doc<"uploads">): SectionStore {
+  const sectionsById = GlobalAllSections.def.shape.sectionsById.parse(
+    upload.sectionsById,
+  );
+  const sections = Object.entries(sectionsById);
+  const sectionsByIdMap = new Map(sections);
+  const professors = profsFromSections(sections);
+
+  return {
+    semester: upload.semester,
+    comments: [],
+    filename: upload.filename,
+    sectionsDiff: null,
+    sectionsById: sectionsByIdMap,
+    professors: professors,
+  };
+}
+
+/**
+ * returns set of unique profs from the given sections
+ * */
+function profsFromSections(sections: [string, Section][]): Set<string> {
+  return new Set(
     sections
       .flatMap(([_, section]) => section.leclabs.map((leclab) => leclab.prof))
       .filter((prof) => prof.trim() !== ""),
   );
+}
 
-  const codes = new Set(
-    sections
-      .map(([_, section]) => section.code)
-      .filter((code) => code.trim() !== ""),
-  );
-
-  return {
-    semester,
-    filename,
-    sectionsDiff,
-    comments,
-    sectionsById,
-    professors,
-    codes,
-  } satisfies SectionStore;
+function erase<TQueryFnData>(
+  fn: (data: TQueryFnData) => SectionStore,
+): (data: unknown) => SectionStore {
+  return fn as (data: unknown) => SectionStore;
 }

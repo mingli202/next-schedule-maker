@@ -109,7 +109,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     ],
   }),
   loader: ({ context }) => {
-    context.queryClient.ensureQueryData(allSectionsQueryOptions());
+    return context.queryClient.ensureQueryData(allSectionsQueryOptions());
   },
   shellComponent: RootDocument,
 });

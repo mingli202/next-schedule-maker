@@ -17,10 +17,9 @@ export type SectionStore = {
   readonly semester: string;
   readonly filename: string;
   readonly comments: string[];
-  readonly sectionsDiff: SectionsDiff;
+  readonly sectionsDiff: SectionsDiff | null;
   readonly sectionsById: Map<string, Section>;
   readonly professors: Set<string>;
-  readonly codes: Set<string>;
 };
 
 export type DataVersion = {
