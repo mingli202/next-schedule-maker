@@ -1,3 +1,4 @@
+import type { Id } from "convex/_generated/dataModel";
 import { create } from "zustand";
 
 export type DataSource =
@@ -5,8 +6,8 @@ export type DataSource =
       type: "latest";
     }
   | {
-      type: "update";
-      id: string;
+      type: "upload";
+      id: Id<"uploads">;
     };
 
 interface DataSourceStore {

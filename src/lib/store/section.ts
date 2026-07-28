@@ -106,9 +106,9 @@ function mapBackendOutput(globalAllSections: GlobalAllSections): SectionStore {
 /**
  * The convex query
  * */
-function queryFromConvex(uploadId: string) {
+function queryFromConvex(uploadId: Id<"uploads">) {
   const convexOptions = convexQuery(api.uploads.queries.getUpload, {
-    uploadId: uploadId as Id<"uploads">,
+    uploadId: uploadId,
   });
   const fn = convexOptions.queryFn;
 
