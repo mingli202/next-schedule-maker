@@ -1,7 +1,7 @@
 import { api } from "convex/_generated/api";
 import { useQuery } from "convex/react";
 import { LoaderCircle } from "lucide-react";
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { type ChangeEvent, useCallback, useRef, useState } from "react";
 import Button, { ButtonVariant } from "src/components/Button";
 import { LittleButton } from "src/components/LittleButton";
 import {
@@ -21,7 +21,8 @@ import {
   SelectValue,
 } from "src/components/ui/select";
 import { useFormState } from "src/hooks";
-import { type DataSource, useDataSourceStore } from "src/lib/store/data-source";
+import { useDataSourceStore } from "src/lib/store/data-source";
+import { cn } from "src/lib/utils";
 import type { SectionStore } from "src/types";
 import { GlobalAllSections } from "src/types/generated";
 
@@ -31,7 +32,7 @@ type PdfManagerPopupProps = {
 export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
   const [open, setOpen] = useState(true);
 
-  const { dataSource, setSource } = useDataSourceStore();
+  const { dataSource } = useDataSourceStore();
 
   const userUploads = useQuery(api.uploads.queries.getUserUploads) ?? [];
 
@@ -90,22 +91,19 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
 function UploadPdf() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | undefined>();
-  const [isUploading, setIsUploading] = useState(false);
-  const [err, setError] = useState<string>();
 
-  const handleFileInput = useCallback(
-    (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-      setIsUploading(false);
-      const file = e.target.files?.[0];
-      if (!file) {
-        return;
-      }
-      setFile(file);
-    },
-    [],
-  );
+  const {
+    msg: res,
+    handleSubmit,
+    isPending,
+    reset,
+  } = useFormState(async (e) => {
+    if (!file) {
+      return { type: "error", msg: "Select a pdf to parse" } as const;
+    }
 
-  async function handleAction(formData: FormData) {
+    const formData = new FormData(e.target);
+
     const url = `${import.meta.env.VITE_BACKEND_URL}/sections/parse-pdf`;
     const res = await fetch(url, {
       method: "POST",
@@ -113,62 +111,75 @@ function UploadPdf() {
     });
 
     if (!res.ok) {
-      setError(`Upload failed: ${res.statusText}`);
-      return;
+      return {
+        type: "error",
+        msg: `Upload failed: ${res.statusText}`,
+      } as const;
     }
 
     const json = await res.json();
     const globalAllSections = GlobalAllSections.parse(json);
     console.log("globalAllSections:", globalAllSections);
-  }
 
-  useEffect(() => {
-    const f = () => setIsUploading(false);
-    fileInputRef.current?.addEventListener("cancel", f);
+    setFile(undefined);
+    e.target.reset();
+    return { type: "success", msg: "Upload successful" } as const;
+  });
 
-    return () => {
-      fileInputRef.current?.removeEventListener("cancel", f);
-    };
-  }, []);
+  const handleFileInput = useCallback(
+    (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+      reset();
+      const file = e.target.files?.[0];
+      if (!file) {
+        return;
+      }
+      setFile(file);
+    },
+    [reset],
+  );
 
   return (
-    <form
-      className="flex w-full gap-2"
-      action={handleAction}
-      method="POST"
-      encType="multipart/form-data"
-    >
-      <Label
-        htmlFor="pdf-upload"
-        className="flex-1 rounded-md border-2 border-dashed p-4"
-        onClick={() => {
-          if (isUploading) {
-            return;
-          }
-          setIsUploading(true);
-        }}
-      >
-        {isUploading ? (
-          <LoaderCircle className="h-4 w-4 animate-spin" />
-        ) : file ? (
-          file.name
-        ) : (
-          "Upload PDF"
-        )}
-        <input
-          type="file"
-          accept="application/pdf"
-          onClick={() => {}}
-          className="hidden"
-          name="file"
-          id="pdf-upload"
-          onChange={handleFileInput}
-          ref={fileInputRef}
-        />
-      </Label>
-      <Button type="submit" variant={ButtonVariant.Basic}>
-        Submit
-      </Button>
+    <form className="flex w-full flex-col gap-2" onSubmit={handleSubmit}>
+      <p>Upload a pdf to parse</p>
+      <div className="flex w-full gap-2">
+        <Label
+          htmlFor="pdf-upload"
+          className="border-border hover:border-primary/50 flex-1 rounded-md border-2 border-dashed p-4 transition hover:cursor-pointer"
+        >
+          {isPending ? (
+            <LoaderCircle className="h-4 w-4 animate-spin" />
+          ) : file ? (
+            <span className="truncate">{file.name}</span>
+          ) : (
+            "Select PDF"
+          )}
+          <input
+            type="file"
+            accept="application/pdf"
+            className="hidden"
+            name="file"
+            id="pdf-upload"
+            onChange={handleFileInput}
+            ref={fileInputRef}
+          />
+        </Label>
+        <Button
+          type="submit"
+          variant={ButtonVariant.Basic}
+          disabled={isPending}
+        >
+          Submit
+        </Button>
+      </div>
+      {res && (
+        <p
+          className={cn(
+            res.type === "error" ? "text-destructive" : "text-green-500",
+          )}
+        >
+          {res.msg}
+        </p>
+      )}
     </form>
   );
 }
