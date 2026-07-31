@@ -40,7 +40,11 @@ function RouteComponent() {
   const [isSignup, setIsSignup] = useState(false);
   const [type, setType] = useState<"password" | "text">("text");
 
-  const [error, handleSubmit, isPending] = useFormState(async (e) => {
+  const {
+    msg: error,
+    handleSubmit,
+    isPending,
+  } = useFormState(async (e) => {
     const formData = new FormData(e.target);
 
     const email = formData.get("email")?.toString();

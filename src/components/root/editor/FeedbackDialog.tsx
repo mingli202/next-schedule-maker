@@ -42,7 +42,11 @@ export function FeedbackDialog() {
     }
   };
 
-  const [error, handleSubmit, isPending] = useFormState(async (e) => {
+  const {
+    msg: error,
+    handleSubmit,
+    isPending,
+  } = useFormState(async (e) => {
     setIsSent(false);
     const formData = new FormData(e.target);
 
