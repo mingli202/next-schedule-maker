@@ -174,7 +174,7 @@ function UploadPdf() {
       {res && (
         <p
           className={cn(
-            res.type === "error" ? "text-destructive" : "text-green-500",
+            res.type === "error" ? "text-destructive" : "text-green-600",
           )}
         >
           {res.msg}
