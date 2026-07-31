@@ -45,8 +45,8 @@ const schema = defineSchema({
 
   uploads: defineTable({
     semester: v.string(),
-    sectionsById: v.string(),
     filename: v.string(),
+    sectionsById: v.string(),
   }),
 });
 
