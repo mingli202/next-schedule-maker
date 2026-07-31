@@ -10,14 +10,14 @@ import {
  * Custom hook that mimics the behavior of the built-in `useActionState` hook.
  * However, this one is for handling form submissions instead of actions because actions reset the form and it's terrible UX.
  * @param submitHandler - The handler function that handles the form submission. e.preventDefault() is already called.
- * @returns The message returned by the submit handler, the handleSubmit function, and the isPending state.
+ * @returns The message returned by the submit handler, the handleSubmit function, the isPending state, and a reset function that resets the message to nothing
  * */
-export function useFormState(
+export function useFormState<T>(
   submitHandler: (
     e: SubmitEvent<HTMLFormElement>,
-  ) => Promise<string | undefined | null>,
+  ) => Promise<T | undefined | null>,
 ) {
-  const [message, setMessage] = useState<string | undefined | null>();
+  const [message, setMessage] = useState<T | undefined | null>();
   const [isPending, setIsPending] = useState(false);
 
   const _isPending = useRef(false);
@@ -39,5 +39,7 @@ export function useFormState(
     setIsPending(false);
   }, []);
 
-  return [message, handleSubmit, isPending] as const;
+  const reset = useCallback(() => setMessage(undefined), []);
+
+  return { msg: message, handleSubmit, isPending, reset } as const;
 }
