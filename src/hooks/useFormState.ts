@@ -10,7 +10,7 @@ import {
  * Custom hook that mimics the behavior of the built-in `useActionState` hook.
  * However, this one is for handling form submissions instead of actions because actions reset the form and it's terrible UX.
  * @param submitHandler - The handler function that handles the form submission. e.preventDefault() is already called.
- * @returns The error message, the handleSubmit function, and the isPending state.
+ * @returns The message returned by the submit handler, the handleSubmit function, and the isPending state.
  * */
 export function useFormState(
   submitHandler: (
