@@ -10,7 +10,12 @@ export const getUpload = query({
   handler: async (ctx, args) => {
     getUserIdFromFirebaseId(ctx);
 
-    return ctx.db.get("uploads", args.uploadId);
+    const upload = await ctx.db.get("uploads", args.uploadId);
+    if (!upload) {
+      throw new Error(`could not find upload with id ${args.uploadId}`);
+    }
+
+    return upload;
   },
 });
 

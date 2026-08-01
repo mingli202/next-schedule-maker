@@ -110,23 +110,10 @@ function queryFromConvex(uploadId: Id<"uploads">) {
   const convexOptions = convexQuery(api.uploads.queries.getUpload, {
     uploadId: uploadId,
   });
-  const fn = convexOptions.queryFn;
-
-  if (!fn) {
-    throw new Error("query function can't be null");
-  }
 
   return queryOptions({
     ...convexOptions,
     ...sharedOptions,
-    queryFn: async (args) => {
-      const data = await fn(args);
-      if (!data) {
-        throw new Error("could not find the upload");
-      }
-
-      return data;
-    },
     select: mapConvexOutput,
   });
 }
