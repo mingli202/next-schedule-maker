@@ -84,6 +84,6 @@ export type GlobalAllSections = typeof GlobalAllSections.type;
 export const ParsedPdf = v.object({
 	semester: v.string(),
 	sectionsById: v.record(v.string(), Section),
-	filename: v.string(),
+	hash: v.string(),
 });
 export type ParsedPdf = typeof ParsedPdf.type;

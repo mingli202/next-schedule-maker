@@ -6,6 +6,7 @@ const app = defineApp({
     ENV: v.union(v.literal("DEV"), v.literal("PROD")),
     DEV_FIREBASE_PROJECT_ID: v.string(),
     FIREBASE_PROJECT_ID: v.string(),
+    BACKEND_URL: v.string(),
   },
 });
 
