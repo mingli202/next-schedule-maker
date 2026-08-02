@@ -4,6 +4,7 @@ import { ParsedPdf } from "../types.generated";
 import { Doc, Id } from "../_generated/dataModel";
 import { NewUpload } from "../types";
 import { GenericActionCtx } from "convex/server";
+import { corsHeaders } from "../cors";
 
 /**
  * hash the given file
@@ -66,7 +67,13 @@ async function newUserUpload(
     uploadId: upload._id,
   } satisfies NewUpload;
 
-  return Response.json({ newUpload }, { status: 200 });
+  return Response.json(
+    { newUpload },
+    {
+      status: 200,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    },
+  );
 }
 
 /**
@@ -91,13 +98,19 @@ async function newUpload(
   const newUpload = await ctx.runMutation(
     internal.uploads.mutations.newUpload,
     {
-      parsedPdfStr: JSON.stringify(parsedPdf.sectionsById),
+      parsedPdfStr: JSON.stringify(parsedPdf),
       storageId,
       displayName,
     },
   );
 
-  return Response.json({ newUpload }, { status: 200 });
+  return Response.json(
+    { newUpload },
+    {
+      status: 200,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    },
+  );
 }
 
 function toBlob<T>(data: T): Blob {

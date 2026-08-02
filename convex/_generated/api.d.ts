@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as cors from "../cors.js";
 import type * as feedback_mutations from "../feedback/mutations.js";
 import type * as http from "../http.js";
 import type * as schedules_helpers from "../schedules/helpers.js";
@@ -28,6 +29,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  cors: typeof cors;
   "feedback/mutations": typeof feedback_mutations;
   http: typeof http;
   "schedules/helpers": typeof schedules_helpers;

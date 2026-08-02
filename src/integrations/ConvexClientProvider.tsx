@@ -14,7 +14,7 @@ type Props = {
 
 const auth = getAuth(app);
 
-function useAuthFromFirebase() {
+export function useAuthFromFirebase() {
   const [user, loading] = useAuthState(auth);
 
   const fetchAccessToken = useCallback(

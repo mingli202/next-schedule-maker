@@ -7,6 +7,7 @@ const app = defineApp({
     DEV_FIREBASE_PROJECT_ID: v.string(),
     FIREBASE_PROJECT_ID: v.string(),
     BACKEND_URL: v.string(),
+    CLIENT_ORIGIN: v.string(),
   },
 });
 

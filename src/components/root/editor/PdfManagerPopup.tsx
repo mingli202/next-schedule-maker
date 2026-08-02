@@ -1,6 +1,7 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
-import { useQuery } from "convex/react";
+import { useConvexAuth, useQuery } from "convex/react";
 import { NewUpload, type UserUploadData } from "convex/types";
 import { LoaderCircle } from "lucide-react";
 import { type ChangeEvent, useCallback, useRef, useState } from "react";
@@ -23,7 +24,9 @@ import {
   SelectValue,
 } from "src/components/ui/select";
 import { useFormState } from "src/hooks";
+import { useAuthFromFirebase } from "src/integrations/ConvexClientProvider";
 import { type DataSource, useDataSourceStore } from "src/lib/store/data-source";
+import { SECTION_STORE_KEY } from "src/lib/store/section";
 import { cn } from "src/lib/utils";
 import type { SectionStore } from "src/types";
 
@@ -40,7 +43,12 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
 
   const { dataSource, setSource } = useDataSourceStore();
 
-  const userUploads = useQuery(api.uploads.queries.getUserUploads) ?? [];
+  const { isAuthenticated } = useConvexAuth();
+  const userUploads =
+    useQuery(
+      api.uploads.queries.getUserUploads,
+      isAuthenticated ? {} : "skip",
+    ) ?? [];
 
   const items: UserUploadSelectItems = userUploads.reduce((acc, upload) => {
     acc[upload.userUploadId] = {
@@ -49,6 +57,8 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
     };
     return acc;
   }, {} as UserUploadSelectItems);
+
+  const queryClient = useQueryClient();
 
   const handleValueChange = (value: string) => {
     let nextSource: DataSource;
@@ -67,8 +77,11 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
 
     if (JSON.stringify(nextSource) !== JSON.stringify(dataSource)) {
       setSource(nextSource);
+      queryClient.invalidateQueries({ queryKey: [SECTION_STORE_KEY] });
     }
   };
+
+  console.dir(store.filename);
 
   return (
     <>
@@ -118,6 +131,7 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
 function UploadPdf() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | undefined>();
+  const { fetchAccessToken } = useAuthFromFirebase();
 
   const {
     msg: res,
@@ -130,11 +144,13 @@ function UploadPdf() {
     }
 
     const formData = new FormData(e.target);
+    const token = await fetchAccessToken({ forceRefreshToken: false });
 
     const url = `${import.meta.env.VITE_CONVEX_SITE_URL}/sections/parse-pdf`;
     const res = await fetch(url, {
       method: "POST",
       body: formData,
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     if (!res.ok) {
