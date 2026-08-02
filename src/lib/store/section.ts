@@ -9,6 +9,7 @@ import { GlobalAllSections, Section } from "src/types/generated";
 import { z } from "zod";
 import { getSectionsDiff } from "../section-diff";
 import { type DataSource, useDataSourceStore } from "./data-source";
+import { Id } from "convex/_generated/dataModel";
 
 export const SECTION_STORE_KEY = "section-store";
 
@@ -49,7 +50,12 @@ export const allSectionsQueryOptions = (
     });
   }
 
-  return queryFromConvex(source.userUploadData);
+  return queryFromConvex(
+    source.id,
+    source.storageUrl,
+    source.semester,
+    source.displayName,
+  );
 };
 
 /**
@@ -93,6 +99,8 @@ function mapBackendOutput(globalAllSections: GlobalAllSections): SectionStore {
   const professors = profsFromSections(sections);
 
   return {
+    ...globalAllSections,
+    sectionsDiff: globalAllSections.sectionsDiff ?? undefined,
     sectionsById,
     professors,
   } satisfies SectionStore;
@@ -101,13 +109,17 @@ function mapBackendOutput(globalAllSections: GlobalAllSections): SectionStore {
 /**
  * The convex query
  * */
-function queryFromConvex(userUploadData: UserUploadData) {
+function queryFromConvex(
+  userUploadId: Id<"userUploads">,
+  storageUrl: string,
+  semester: string,
+  displayName: string,
+) {
   return queryOptions({
-    queryKey: [SECTION_STORE_KEY, userUploadData.userUploadId],
-    queryFn: ({ signal }) =>
-      fetchFromStorage(userUploadData.storageUrl, signal),
+    queryKey: [SECTION_STORE_KEY, userUploadId],
+    queryFn: ({ signal }) => fetchFromStorage(storageUrl, signal),
     ...sharedOptions,
-    select: mapConvexOutput,
+    select: (d) => mapConvexOutput(d, semester, displayName),
   });
 }
 
@@ -125,12 +137,19 @@ async function fetchFromStorage(
 /**
  * The select function to convert it into a SectionStore
  * */
-function mapConvexOutput(sectionsById: Record<string, Section>): SectionStore {
+function mapConvexOutput(
+  sectionsById: Record<string, Section>,
+  semester: string,
+  displayName: string,
+): SectionStore {
   const sections = Object.entries(sectionsById);
   const sectionsByIdMap = new Map(sections);
   const professors = profsFromSections(sections);
 
   return {
+    semester: semester,
+    comments: [],
+    filename: displayName,
     sectionsById: sectionsByIdMap,
     professors: professors,
   };

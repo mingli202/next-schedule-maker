@@ -1,4 +1,4 @@
-import type { UserUploadData } from "convex/types";
+import type { Id } from "convex/_generated/dataModel";
 import { create } from "zustand";
 
 export type DataSource =
@@ -7,7 +7,11 @@ export type DataSource =
     }
   | {
       type: "upload";
-      userUploadData: UserUploadData;
+      // userUploadData: UserUploadData;
+      id: Id<"userUploads">;
+      storageUrl: string;
+      semester: string;
+      displayName: string;
     };
 
 interface DataSourceStore {

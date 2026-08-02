@@ -17,7 +17,7 @@ export type SectionStore = {
   readonly semester: string;
   readonly filename: string;
   readonly comments: string[];
-  readonly sectionsDiff: SectionsDiff | null;
+  readonly sectionsDiff?: SectionsDiff;
   readonly sectionsById: Map<string, Section>;
   readonly professors: Set<string>;
 };
