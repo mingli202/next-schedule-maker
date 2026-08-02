@@ -34,3 +34,10 @@ export const SavedScheduleInput = v.object({
   ),
 });
 export type SavedScheduleInput = typeof SavedScheduleInput.type;
+
+export const NewUpload = z.object({
+  userUploadId: z.string(),
+  uploadId: z.string(),
+  displayName: z.string(),
+});
+export type NewUpload = z.infer<typeof NewUpload>;

@@ -1,15 +1,56 @@
 import { v } from "convex/values";
-import { mutation } from "../_generated/server";
+import { internalMutation, mutation } from "../_generated/server";
 import { getUserIdFromFirebaseId } from "../user/helpers";
+import { ParsedPdf } from "../types.generated";
+import { internal } from "../_generated/api";
+import { Id } from "../_generated/dataModel";
+import { NewUpload } from "../types";
 
 /**
- *  make a new upload
+ *  make a new upload, returning the user upload id
  * */
-export const newUpload = mutation({
+export const newUpload = internalMutation({
   args: {
-    semester: v.string(),
-    filename: v.string(),
-    sectionsByid: v.string(),
+    parsedPdf: ParsedPdf,
+  },
+  handler: async (ctx, args): Promise<NewUpload> => {
+    const { user } = await getUserIdFromFirebaseId(ctx);
+    if (!user) {
+      throw new Error("user not found");
+    }
+
+    const parsedPdf = args.parsedPdf;
+
+    const uploadId = await ctx.db.insert("uploads", {
+      sectionsById: parsedPdf.sectionsById,
+      hash: parsedPdf.hash,
+      semester: parsedPdf.semester,
+    });
+
+    const displayName = `Upload ${parsedPdf.semester}`;
+    const userUploadId: Id<"userUploads"> = await ctx.runMutation(
+      internal.uploads.mutations.newUserUpload,
+      {
+        uploadId: uploadId,
+        displayName,
+      },
+    );
+
+    return {
+      userUploadId,
+      displayName,
+      uploadId,
+    };
+  },
+});
+
+/**
+ *  make a new user upload, returning the parsed pdf
+ * */
+export const newUserUpload = internalMutation({
+  args: {
+    uploadId: v.id("uploads"),
+    displayName: v.string(),
   },
   handler: async (ctx, args) => {
     const { user } = await getUserIdFromFirebaseId(ctx);
@@ -17,17 +58,26 @@ export const newUpload = mutation({
       throw new Error("user not found");
     }
 
-    const uploadId = await ctx.db.insert("uploads", {
-      semester: args.semester,
-      filename: args.filename,
-      sectionsById: args.sectionsByid,
-    });
-
-    await ctx.db.insert("userUploads", {
+    const userUploadId = await ctx.db.insert("userUploads", {
       userId: user._id,
-      uploadId: uploadId,
+      uploadId: args.uploadId,
+      displayName: args.displayName,
     });
 
-    return uploadId;
+    return userUploadId;
+  },
+});
+
+export const deleteUpload = mutation({
+  args: {
+    uploadId: v.id("uploads"),
+  },
+  handler: async (ctx, args) => {
+    const { user } = await getUserIdFromFirebaseId(ctx);
+    if (!user) {
+      throw new Error("user not found");
+    }
+
+    await ctx.db.delete("uploads", args.uploadId);
   },
 });

@@ -1,6 +1,8 @@
 import { env, httpAction } from "../_generated/server";
 import { internal } from "../_generated/api";
 import { ParsedPdf } from "../types.generated";
+import { Id } from "../_generated/dataModel";
+import { NewUpload } from "../types";
 
 /**
  * hash the given file
@@ -34,21 +36,38 @@ export const postUpload = httpAction(async (ctx, req) => {
     },
   );
 
-  let parsedPdf: ParsedPdf;
   if (upload) {
-    parsedPdf = {
-      hash: upload.hash,
-      sectionsById: upload.sectionsById,
-      semester: upload.semester,
-    } satisfies ParsedPdf;
-  } else {
-    const url = `${env.BACKEND_URL}/sections/parse-pdf`;
-    const res = await fetch(url, {
-      method: "POST",
-      body: formData,
-    });
-    parsedPdf = await res.json();
+    const displayName = `Upload ${upload.semester}`;
+    const userUploadId: Id<"userUploads"> = await ctx.runMutation(
+      internal.uploads.mutations.newUserUpload,
+      {
+        uploadId: upload._id,
+        displayName,
+      },
+    );
+
+    const newUpload = {
+      displayName,
+      userUploadId,
+      uploadId: upload._id,
+    } satisfies NewUpload;
+
+    return Response.json({ newUpload }, { status: 200 });
   }
 
-  return Response.json(parsedPdf, { status: 200 });
+  const url = `${env.BACKEND_URL}/sections/parse-pdf`;
+  const res = await fetch(url, {
+    method: "POST",
+    body: formData,
+  });
+  const parsedPdf = (await res.json()) as ParsedPdf;
+
+  const newUpload = await ctx.runMutation(
+    internal.uploads.mutations.newUpload,
+    {
+      parsedPdf,
+    },
+  );
+
+  return Response.json({ newUpload }, { status: 200 });
 });
