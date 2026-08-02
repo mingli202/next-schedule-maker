@@ -47,7 +47,7 @@ export const getUserUploads = query({
     if (!user) return [];
     return ctx.db
       .query("userUploads")
-      .withIndex("by_userId_uploadId", (q) => q.eq("userId", user._id))
+      .withIndex("by_userId", (q) => q.eq("userId", user._id))
       .collect();
   },
 });
