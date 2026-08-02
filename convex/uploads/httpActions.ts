@@ -42,7 +42,7 @@ export const postUpload = httpAction(async (ctx, req) => {
     return newUserUpload(ctx, upload, file.name);
   }
 
-  return newUpload(ctx, formData, file.name);
+  return newUpload(ctx, formData, file.name, hash);
 });
 
 /**
@@ -84,6 +84,7 @@ async function newUpload(
   ctx: GenericActionCtx<any>,
   formData: FormData,
   displayName: string,
+  hash: string,
 ) {
   const url = `${env.BACKEND_URL}/sections/parse-pdf`;
   const res = await fetch(url, {
@@ -101,6 +102,7 @@ async function newUpload(
       parsedPdfStr: JSON.stringify(parsedPdf),
       storageId,
       displayName,
+      hash,
     },
   );
 

@@ -81,6 +81,5 @@ export type GlobalAllSections = z.infer<typeof GlobalAllSections>;
 export const ParsedPdf = z.object({
 	semester: z.string(),
 	sectionsById: z.record(z.string(), Section),
-	hash: z.string(),
 });
 export type ParsedPdf = z.infer<typeof ParsedPdf>;

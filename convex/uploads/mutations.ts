@@ -14,6 +14,7 @@ export const newUpload = internalMutation({
     parsedPdfStr: v.string(),
     storageId: v.id("_storage"),
     displayName: v.string(),
+    hash: v.string(),
   },
   handler: async (ctx, args): Promise<NewUpload> => {
     const { user } = await getUserIdFromFirebaseId(ctx);
@@ -25,7 +26,7 @@ export const newUpload = internalMutation({
 
     const uploadId = await ctx.db.insert("uploads", {
       storageId: args.storageId,
-      hash: parsedPdf.hash,
+      hash: args.hash,
       semester: parsedPdf.semester,
     });
 
