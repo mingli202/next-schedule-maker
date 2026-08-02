@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { z } from "zod";
+import { Section } from "./types.generated";
 
 export const CollectionPolicy = v.union(
   v.literal("off"),
@@ -41,3 +42,12 @@ export const NewUpload = z.object({
   displayName: z.string(),
 });
 export type NewUpload = z.infer<typeof NewUpload>;
+
+export const UserUploadData = v.object({
+  sectionsById: v.record(v.string(), Section),
+  semester: v.string(),
+  displayName: v.string(),
+  userUploadTime: v.number(),
+  userUploadId: v.id("userUploads"),
+});
+export type UserUploadData = typeof UserUploadData.type;

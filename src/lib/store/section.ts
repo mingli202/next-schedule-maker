@@ -5,7 +5,8 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { api } from "convex/_generated/api";
-import type { Doc, Id } from "convex/_generated/dataModel";
+import type { Id } from "convex/_generated/dataModel";
+import type { UserUploadData } from "convex/types";
 import type { SectionStore } from "src/types";
 import { GlobalAllSections, type Section } from "src/types/generated";
 import { getSectionsDiff } from "../section-diff";
@@ -106,9 +107,9 @@ function mapBackendOutput(globalAllSections: GlobalAllSections): SectionStore {
 /**
  * The convex query
  * */
-function queryFromConvex(uploadId: Id<"uploads">) {
-  const convexOptions = convexQuery(api.uploads.queries.getUpload, {
-    uploadId: uploadId,
+function queryFromConvex(userUploadId: Id<"userUploads">) {
+  const convexOptions = convexQuery(api.uploads.queries.getUserUpload, {
+    userUploadId: userUploadId,
   });
 
   return queryOptions({
@@ -121,18 +122,16 @@ function queryFromConvex(uploadId: Id<"uploads">) {
 /**
  * The select function to convert it into a SectionStore
  * */
-function mapConvexOutput(upload: Doc<"uploads">): SectionStore {
-  const sectionsById = GlobalAllSections.def.shape.sectionsById.parse(
-    upload.sectionsById,
-  );
+function mapConvexOutput(userUploadData: UserUploadData): SectionStore {
+  const sectionsById = userUploadData.sectionsById;
   const sections = Object.entries(sectionsById);
   const sectionsByIdMap = new Map(sections);
   const professors = profsFromSections(sections);
 
   return {
-    semester: upload.semester,
+    semester: userUploadData.semester,
     comments: [],
-    filename: upload.filename,
+    filename: userUploadData.displayName,
     sectionsDiff: null,
     sectionsById: sectionsByIdMap,
     professors: professors,

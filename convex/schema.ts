@@ -41,7 +41,7 @@ const schema = defineSchema({
   userUploads: defineTable({
     userId: v.id("users"),
     uploadId: v.id("uploads"),
-    displayName: v.optional(v.string()),
+    displayName: v.string(),
   }).index("by_userId_uploadId", ["userId", "uploadId"]),
 
   uploads: defineTable(ParsedPdf).index("by_hash", ["hash"]),

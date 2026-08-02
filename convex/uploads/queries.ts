@@ -1,21 +1,40 @@
 import { v } from "convex/values";
 import { internalQuery, query } from "../_generated/server";
 import { getUserIdFromFirebaseId } from "../user/helpers";
+import { UserUploadData } from "../types";
 
 /**
  * Gets the upload of the given uploadId, returning
  * */
-export const getUpload = query({
-  args: { uploadId: v.id("uploads") },
+export const getUserUpload = query({
+  args: { userUploadId: v.id("userUploads") },
   handler: async (ctx, args) => {
-    getUserIdFromFirebaseId(ctx);
+    const { user } = await getUserIdFromFirebaseId(ctx);
 
-    const upload = await ctx.db.get("uploads", args.uploadId);
-    if (!upload) {
-      throw new Error(`could not find upload with id ${args.uploadId}`);
+    if (!user) {
+      throw new Error("could not find user");
     }
 
-    return upload;
+    const userUpload = await ctx.db.get("userUploads", args.userUploadId);
+
+    if (!userUpload) {
+      throw new Error(
+        `could not find user upload with id ${args.userUploadId}`,
+      );
+    }
+
+    const upload = await ctx.db.get("uploads", userUpload.uploadId);
+    if (!upload) {
+      throw new Error(`could not find upload with id ${userUpload.uploadId}`);
+    }
+
+    return {
+      sectionsById: upload.sectionsById,
+      semester: upload.semester,
+      displayName: userUpload.displayName,
+      userUploadTime: userUpload._creationTime,
+      userUploadId: userUpload._id,
+    } satisfies UserUploadData;
   },
 });
 
