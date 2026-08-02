@@ -29,6 +29,7 @@ import { type DataSource, useDataSourceStore } from "src/lib/store/data-source";
 import { SECTION_STORE_KEY } from "src/lib/store/section";
 import { cn } from "src/lib/utils";
 import type { SectionStore } from "src/types";
+import { z } from "zod";
 
 type UserUploadSelectItems = Record<
   Id<"userUploads">,
@@ -161,7 +162,7 @@ function UploadPdf() {
     }
 
     const json = await res.json();
-    const newUpload = NewUpload.parse(json);
+    const newUpload = z.object({ newUpload: NewUpload }).parse(json);
     console.log("newUpload:", newUpload);
 
     setFile(undefined);
