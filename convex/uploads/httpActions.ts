@@ -91,7 +91,7 @@ async function newUpload(
   const newUpload = await ctx.runMutation(
     internal.uploads.mutations.newUpload,
     {
-      parsedPdf,
+      parsedPdfStr: JSON.stringify(parsedPdf.sectionsById),
       storageId,
       displayName,
     },

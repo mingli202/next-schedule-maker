@@ -11,7 +11,7 @@ import { NewUpload } from "../types";
  * */
 export const newUpload = internalMutation({
   args: {
-    parsedPdf: ParsedPdf,
+    parsedPdfStr: v.string(),
     storageId: v.id("_storage"),
     displayName: v.string(),
   },
@@ -21,7 +21,7 @@ export const newUpload = internalMutation({
       throw new Error("user not found");
     }
 
-    const parsedPdf = args.parsedPdf;
+    const parsedPdf: ParsedPdf = JSON.parse(args.parsedPdfStr);
 
     const uploadId = await ctx.db.insert("uploads", {
       storageId: args.storageId,
