@@ -1,5 +1,7 @@
 import { api } from "convex/_generated/api";
+import type { Id } from "convex/_generated/dataModel";
 import { useQuery } from "convex/react";
+import { NewUpload, type UserUploadData } from "convex/types";
 import { LoaderCircle } from "lucide-react";
 import { type ChangeEvent, useCallback, useRef, useState } from "react";
 import Button, { ButtonVariant } from "src/components/Button";
@@ -21,10 +23,14 @@ import {
   SelectValue,
 } from "src/components/ui/select";
 import { useFormState } from "src/hooks";
-import { useDataSourceStore } from "src/lib/store/data-source";
+import { type DataSource, useDataSourceStore } from "src/lib/store/data-source";
 import { cn } from "src/lib/utils";
 import type { SectionStore } from "src/types";
-import { GlobalAllSections } from "src/types/generated";
+
+type UserUploadSelectItems = Record<
+  Id<"userUploads">,
+  { label: string; userUpload: UserUploadData }
+>;
 
 type PdfManagerPopupProps = {
   store: SectionStore;
@@ -32,20 +38,37 @@ type PdfManagerPopupProps = {
 export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
   const [open, setOpen] = useState(true);
 
-  const { dataSource } = useDataSourceStore();
+  const { dataSource, setSource } = useDataSourceStore();
 
   const userUploads = useQuery(api.uploads.queries.getUserUploads) ?? [];
 
-  const items: { label: string; value: string }[] = [
-    { label: "latest", value: "latest" },
-    ...userUploads.map(
-      (upload) =>
-        ({
-          label: `upload ${upload.displayName ?? upload.uploadId.slice(0, 6)}`,
-          value: upload.uploadId,
-        }) as const,
-    ),
-  ];
+  const items: UserUploadSelectItems = userUploads.reduce((acc, upload) => {
+    acc[upload.userUploadId] = {
+      label: upload.displayName,
+      userUpload: upload,
+    };
+    return acc;
+  }, {} as UserUploadSelectItems);
+
+  const handleValueChange = (value: string) => {
+    let nextSource: DataSource;
+    if (value === "latest") {
+      nextSource = { type: "latest" };
+    } else {
+      const userUpload = items[value as Id<"userUploads">].userUpload;
+      nextSource = {
+        type: "upload",
+        id: userUpload.userUploadId,
+        displayName: userUpload.displayName,
+        storageUrl: userUpload.storageUrl,
+        semester: userUpload.semester,
+      };
+    }
+
+    if (JSON.stringify(nextSource) !== JSON.stringify(dataSource)) {
+      setSource(nextSource);
+    }
+  };
 
   return (
     <>
@@ -66,14 +89,16 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
               defaultValue={
                 dataSource.type === "latest" ? "latest" : dataSource.id
               }
+              onValueChange={handleValueChange}
             >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {items.map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
+                  <SelectItem value="latest">latest</SelectItem>
+                  {Object.entries(items).map(([value, item]) => (
+                    <SelectItem key={value} value={value}>
                       {item.label}
                     </SelectItem>
                   ))}
@@ -104,7 +129,7 @@ function UploadPdf() {
 
     const formData = new FormData(e.target);
 
-    const url = `${import.meta.env.VITE_BACKEND_URL}/sections/parse-pdf`;
+    const url = `${import.meta.env.VITE_CONVEX_SITE_URL}/sections/parse-pdf`;
     const res = await fetch(url, {
       method: "POST",
       body: formData,
@@ -118,8 +143,8 @@ function UploadPdf() {
     }
 
     const json = await res.json();
-    const globalAllSections = GlobalAllSections.parse(json);
-    console.log("globalAllSections:", globalAllSections);
+    const newUpload = NewUpload.parse(json);
+    console.log("newUpload:", newUpload);
 
     setFile(undefined);
     e.target.reset();
