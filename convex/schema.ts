@@ -1,7 +1,7 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 import { CollectionPolicy } from "./types";
-import { ParsedPdf, Rating, Section } from "./types.generated";
+import { ParsedPdf, Rating } from "./types.generated";
 
 const schema = defineSchema({
   sectionsBackup: defineTable({
@@ -44,7 +44,11 @@ const schema = defineSchema({
     displayName: v.string(),
   }).index("by_userId", ["userId"]),
 
-  uploads: defineTable(ParsedPdf).index("by_hash", ["hash"]),
+  uploads: defineTable({
+    semester: v.string(),
+    hash: v.string(),
+    storageId: v.id("_storage"),
+  }).index("by_hash", ["hash"]),
 
   ratings: defineTable(Rating).index("by_prof", ["prof"]),
 });

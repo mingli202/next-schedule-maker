@@ -44,7 +44,7 @@ export const NewUpload = z.object({
 export type NewUpload = z.infer<typeof NewUpload>;
 
 export const UserUploadData = v.object({
-  sectionsById: v.record(v.string(), Section),
+  storageUrl: v.string(),
   semester: v.string(),
   displayName: v.string(),
   userUploadTime: v.number(),

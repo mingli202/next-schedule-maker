@@ -1,14 +1,12 @@
-import { convexQuery } from "@convex-dev/react-query";
 import {
   queryOptions,
   type UseSuspenseQueryOptions,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { api } from "convex/_generated/api";
-import type { Id } from "convex/_generated/dataModel";
 import type { UserUploadData } from "convex/types";
 import type { SectionStore } from "src/types";
-import { GlobalAllSections, type Section } from "src/types/generated";
+import { GlobalAllSections, Section } from "src/types/generated";
+import { z } from "zod";
 import { getSectionsDiff } from "../section-diff";
 import { type DataSource, useDataSourceStore } from "./data-source";
 
@@ -45,15 +43,13 @@ export const allSectionsQueryOptions = (
   if (source.type === "latest") {
     return queryOptions({
       queryKey: [SECTION_STORE_KEY, source.type],
-      queryFn: ({ signal }) => {
-        return fetchStore(signal);
-      },
+      queryFn: ({ signal }) => fetchStore(signal),
       ...sharedOptions,
       select: mapBackendOutput,
     });
   }
 
-  return queryFromConvex(source.id);
+  return queryFromConvex(source.userUploadData);
 };
 
 /**
@@ -97,8 +93,6 @@ function mapBackendOutput(globalAllSections: GlobalAllSections): SectionStore {
   const professors = profsFromSections(sections);
 
   return {
-    ...globalAllSections,
-    sectionsDiff: globalAllSections.sectionsDiff,
     sectionsById,
     professors,
   } satisfies SectionStore;
@@ -107,32 +101,36 @@ function mapBackendOutput(globalAllSections: GlobalAllSections): SectionStore {
 /**
  * The convex query
  * */
-function queryFromConvex(userUploadId: Id<"userUploads">) {
-  const convexOptions = convexQuery(api.uploads.queries.getUserUpload, {
-    userUploadId: userUploadId,
-  });
-
+function queryFromConvex(userUploadData: UserUploadData) {
   return queryOptions({
-    ...convexOptions,
+    queryKey: [SECTION_STORE_KEY, userUploadData.userUploadId],
+    queryFn: ({ signal }) =>
+      fetchFromStorage(userUploadData.storageUrl, signal),
     ...sharedOptions,
     select: mapConvexOutput,
   });
 }
 
 /**
+ * fetch the sections from the storage url
+ * */
+async function fetchFromStorage(
+  url: string,
+  signal: AbortSignal,
+): Promise<Record<string, Section>> {
+  const res = await fetch(url, { signal });
+  return z.record(z.string(), Section).parse(await res.json());
+}
+
+/**
  * The select function to convert it into a SectionStore
  * */
-function mapConvexOutput(userUploadData: UserUploadData): SectionStore {
-  const sectionsById = userUploadData.sectionsById;
+function mapConvexOutput(sectionsById: Record<string, Section>): SectionStore {
   const sections = Object.entries(sectionsById);
   const sectionsByIdMap = new Map(sections);
   const professors = profsFromSections(sections);
 
   return {
-    semester: userUploadData.semester,
-    comments: [],
-    filename: userUploadData.displayName,
-    sectionsDiff: null,
     sectionsById: sectionsByIdMap,
     professors: professors,
   };
