@@ -106,18 +106,19 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
               }
               onValueChange={handleValueChange}
             >
-              <SelectTrigger>
-                <SelectValue />
+              <SelectTrigger className="w-full">
+                <SelectValue className="truncate" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent position="popper">
                 <SelectGroup>
                   <SelectItem value="latest">latest</SelectItem>
                   {Object.entries(items).map(([value, item]) => (
                     <SelectItem key={value} value={value} className="group">
                       <div className="flex flex-col gap-1">
-                        <p>{item.displayName}</p>
-                        <div className="text-muted-foreground group-hover:text-accent-foreground/65 flex justify-between">
+                        {item.displayName}
+                        <div className="text-muted-foreground group-focus:text-accent-foreground/65 flex justify-between">
                           <p>{item.semester}</p>
+
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <p>{parseTimestamp(item.userUploadTime)}</p>
