@@ -7,7 +7,7 @@ export type DataSource =
     }
   | {
       type: "upload";
-      id: Id<"uploads">;
+      id: Id<"userUploads">;
     };
 
 interface DataSourceStore {
