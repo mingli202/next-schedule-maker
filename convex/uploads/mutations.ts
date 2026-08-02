@@ -12,6 +12,8 @@ import { NewUpload } from "../types";
 export const newUpload = internalMutation({
   args: {
     parsedPdf: ParsedPdf,
+    storageId: v.id("_storage"),
+    displayName: v.string(),
   },
   handler: async (ctx, args): Promise<NewUpload> => {
     const { user } = await getUserIdFromFirebaseId(ctx);
@@ -22,12 +24,12 @@ export const newUpload = internalMutation({
     const parsedPdf = args.parsedPdf;
 
     const uploadId = await ctx.db.insert("uploads", {
-      sectionsById: parsedPdf.sectionsById,
+      storageId: args.storageId,
       hash: parsedPdf.hash,
       semester: parsedPdf.semester,
     });
 
-    const displayName = `Upload ${parsedPdf.semester}`;
+    const displayName = args.displayName;
     const userUploadId: Id<"userUploads"> = await ctx.runMutation(
       internal.uploads.mutations.newUserUpload,
       {
