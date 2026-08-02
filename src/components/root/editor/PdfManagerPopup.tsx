@@ -23,18 +23,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "src/components/ui/select";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "src/components/ui/tooltip";
 import { useFormState } from "src/hooks";
 import { useAuthFromFirebase } from "src/integrations/ConvexClientProvider";
 import { type DataSource, useDataSourceStore } from "src/lib/store/data-source";
 import { SECTION_STORE_KEY } from "src/lib/store/section";
-import { cn } from "src/lib/utils";
+import parseTimestamp, { cn } from "src/lib/utils";
 import type { SectionStore } from "src/types";
 import { z } from "zod";
 
-type UserUploadSelectItems = Record<
-  Id<"userUploads">,
-  { label: string; userUpload: UserUploadData }
->;
+type UserUploadSelectItems = Record<Id<"userUploads">, UserUploadData>;
 
 type PdfManagerPopupProps = {
   store: SectionStore;
@@ -52,10 +54,7 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
     ) ?? [];
 
   const items: UserUploadSelectItems = userUploads.reduce((acc, upload) => {
-    acc[upload.userUploadId] = {
-      label: upload.displayName,
-      userUpload: upload,
-    };
+    acc[upload.userUploadId] = upload;
     return acc;
   }, {} as UserUploadSelectItems);
 
@@ -66,7 +65,7 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
     if (value === "latest") {
       nextSource = { type: "latest" };
     } else {
-      const userUpload = items[value as Id<"userUploads">].userUpload;
+      const userUpload = items[value as Id<"userUploads">];
       nextSource = {
         type: "upload",
         userUploadId: userUpload.userUploadId,
@@ -114,8 +113,28 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
                 <SelectGroup>
                   <SelectItem value="latest">latest</SelectItem>
                   {Object.entries(items).map(([value, item]) => (
-                    <SelectItem key={value} value={value}>
-                      {item.label}
+                    <SelectItem key={value} value={value} className="group">
+                      <div className="flex flex-col gap-1">
+                        <p>{item.displayName}</p>
+                        <div className="text-muted-foreground group-hover:text-accent-foreground/65 flex justify-between">
+                          <p>{item.semester}</p>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <p>{parseTimestamp(item.userUploadTime)}</p>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              {new Intl.DateTimeFormat(undefined, {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                second: "numeric",
+                              }).format(new Date(item.userUploadTime))}
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectGroup>

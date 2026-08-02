@@ -31,3 +31,37 @@ export function compare<T>(a: T, b: T): number {
   }
   return 0;
 }
+
+/**
+ * returns a pretty string of the given timestamp
+ * */
+export default function parseTimestamp(timestamp: number): string {
+  const nowMs = Date.now();
+
+  const diffS = Math.max(nowMs - timestamp, 0) / 1000;
+
+  // less than a minute ago
+  if (diffS < 60) {
+    return `${Math.floor(diffS)}s ago`;
+  }
+  if (diffS < 60 * 60) {
+    return `${Math.floor(diffS / 60)}min ago`;
+  }
+  if (diffS < 60 * 60 * 24) {
+    return `${Math.floor(diffS / 60 / 60)}hr ago`;
+  }
+  if (diffS < 60 * 60 * 24 * 7) {
+    return `${Math.floor(diffS / 60 / 60 / 24)}d ago`;
+  }
+  if (diffS < 60 * 60 * 24 * 30) {
+    return `${Math.floor(diffS / 60 / 60 / 24 / 7)} weeks ago`;
+  }
+
+  const date = new Date(timestamp);
+
+  return new Intl.DateTimeFormat(undefined, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+}
