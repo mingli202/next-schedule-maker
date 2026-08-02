@@ -1,3 +1,5 @@
+// DO NOT EDIT: THIS FILE WAS GENERATED VIA A SCRIPT
+
 import z from "zod";
 
 export const ViewData = z.array(z.record(z.string(), z.array(z.number())));
@@ -75,3 +77,10 @@ export const GlobalAllSections = z.object({
 	comments: z.array(z.string()),
 });
 export type GlobalAllSections = z.infer<typeof GlobalAllSections>;
+
+export const ParsedPdf = z.object({
+	semester: z.string(),
+	sectionsById: z.record(z.string(), Section),
+	filename: z.string(),
+});
+export type ParsedPdf = z.infer<typeof ParsedPdf>;
