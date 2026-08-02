@@ -8,7 +8,7 @@ export type DataSource =
   | {
       type: "upload";
       // userUploadData: UserUploadData;
-      id: Id<"userUploads">;
+      userUploadId: Id<"userUploads">;
       storageUrl: string;
       semester: string;
       displayName: string;

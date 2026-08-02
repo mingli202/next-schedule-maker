@@ -3,13 +3,12 @@ import {
   type UseSuspenseQueryOptions,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import type { UserUploadData } from "convex/types";
+import type { Id } from "convex/_generated/dataModel";
 import type { SectionStore } from "src/types";
 import { GlobalAllSections, Section } from "src/types/generated";
 import { z } from "zod";
 import { getSectionsDiff } from "../section-diff";
 import { type DataSource, useDataSourceStore } from "./data-source";
-import { Id } from "convex/_generated/dataModel";
 
 export const SECTION_STORE_KEY = "section-store";
 
@@ -51,7 +50,7 @@ export const allSectionsQueryOptions = (
   }
 
   return queryFromConvex(
-    source.id,
+    source.userUploadId,
     source.storageUrl,
     source.semester,
     source.displayName,

@@ -58,7 +58,7 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
       const userUpload = items[value as Id<"userUploads">].userUpload;
       nextSource = {
         type: "upload",
-        id: userUpload.userUploadId,
+        userUploadId: userUpload.userUploadId,
         displayName: userUpload.displayName,
         storageUrl: userUpload.storageUrl,
         semester: userUpload.semester,
@@ -87,7 +87,9 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
           <div className="flex flex-col gap-4">
             <Select
               defaultValue={
-                dataSource.type === "latest" ? "latest" : dataSource.id
+                dataSource.type === "latest"
+                  ? "latest"
+                  : dataSource.userUploadId
               }
               onValueChange={handleValueChange}
             >
