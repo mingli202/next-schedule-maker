@@ -43,7 +43,7 @@ export const allSectionsQueryOptions = (
   if (source.type === "latest") {
     return queryOptions({
       queryKey: [SECTION_STORE_KEY, source.type],
-      queryFn: ({ signal }) => fetchStore(signal),
+      queryFn: ({ signal }) => fetchFromBackend(signal),
       ...sharedOptions,
       select: mapBackendOutput,
     });
@@ -70,7 +70,7 @@ export function useSectionStore(): SectionStore {
 /**
  * Fetch the global all sections from the backend
  * */
-export async function fetchStore(
+export async function fetchFromBackend(
   signal: AbortSignal,
 ): Promise<GlobalAllSections> {
   const res = await fetch(
@@ -97,8 +97,12 @@ function mapBackendOutput(globalAllSections: GlobalAllSections): SectionStore {
   const sectionsById = new Map(sections);
   const professors = profsFromSections(sections);
 
+  console.dir(globalAllSections.sectionsById);
+
   return {
-    ...globalAllSections,
+    semester: globalAllSections.semester,
+    filename: globalAllSections.filename,
+    comments: globalAllSections.comments,
     sectionsDiff: globalAllSections.sectionsDiff ?? undefined,
     sectionsById,
     professors,

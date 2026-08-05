@@ -1,7 +1,7 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 import { CollectionPolicy } from "./types";
-import { ParsedPdf, Rating } from "./types.generated";
+import { Rating } from "./types.generated";
 
 const schema = defineSchema({
   sectionsBackup: defineTable({
