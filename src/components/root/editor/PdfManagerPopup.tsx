@@ -81,8 +81,6 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
     }
   };
 
-  console.dir(store.filename);
-
   return (
     <>
       <LittleButton onClick={() => setOpen(true)}>
