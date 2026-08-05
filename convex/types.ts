@@ -1,6 +1,5 @@
 import { v } from "convex/values";
 import { z } from "zod";
-import { Section } from "./types.generated";
 
 export const CollectionPolicy = v.union(
   v.literal("off"),
