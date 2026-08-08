@@ -5,7 +5,9 @@ import {
   Folder,
   Github,
   Info,
+  Mail,
   Minus,
+  Phone,
   Plus,
   Search,
   Settings,
@@ -127,6 +129,14 @@ function NoResult() {
           <Github className="h-4 w-4 shrink-0" />
           <span className="group-hover:underline">Contribute</span>
         </a>
+        <div className="group flex items-center gap-2">
+          <Phone className="h-4 w-4 shrink-0" />
+          <span className="">(514) 586-1268</span>
+        </div>
+        <div className="group flex items-center gap-2">
+          <Mail className="h-4 w-4 shrink-0" />
+          <span className="">vincentmingli@gmail.com</span>
+        </div>
         <a
           href="https://mingliliu.com"
           className="group flex items-center gap-2"
