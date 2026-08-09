@@ -56,6 +56,7 @@ async function newUserUpload(
   const userUploadId: Id<"userUploads"> = await ctx.runMutation(
     internal.uploads.mutations.newUserUpload,
     {
+      deleteScheduleId: upload.deleteScheduleId,
       uploadId: upload._id,
       displayName,
     },

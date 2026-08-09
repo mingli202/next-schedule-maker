@@ -53,3 +53,12 @@ export const getUploadFromHash = internalQuery({
       .first();
   },
 });
+
+/**
+ * the latest official upload
+ */
+export const getLatestVersionId = query({
+  handler: async (ctx) => {
+    return await ctx.db.query("officialUploads").order("desc").first();
+  },
+});
