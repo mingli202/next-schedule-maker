@@ -20,6 +20,7 @@ import type * as uploads_mutations from "../uploads/mutations.js";
 import type * as uploads_queries from "../uploads/queries.js";
 import type * as user_helpers from "../user/helpers.js";
 import type * as user_mutations from "../user/mutations.js";
+import type * as user_queries from "../user/queries.js";
 import type * as util from "../util.js";
 
 import type {
@@ -41,6 +42,7 @@ declare const fullApi: ApiFromModules<{
   "uploads/queries": typeof uploads_queries;
   "user/helpers": typeof user_helpers;
   "user/mutations": typeof user_mutations;
+  "user/queries": typeof user_queries;
   util: typeof util;
 }>;
 

@@ -19,6 +19,7 @@ const schema = defineSchema({
     firebaseId: v.string(),
     collectionPolicy: CollectionPolicy,
     schedulesVersion: v.number(),
+    role: v.optional(v.union(v.literal("admin"))),
   }).index("by_firebaseId", ["firebaseId"]),
 
   schedules: defineTable({
@@ -42,15 +43,23 @@ const schema = defineSchema({
     userId: v.id("users"),
     uploadId: v.id("uploads"),
     displayName: v.string(),
-  }).index("by_userId", ["userId"]),
+  })
+    .index("by_userId", ["userId"])
+    .index("by_uploadId", ["uploadId"]),
 
   uploads: defineTable({
     semester: v.string(),
     hash: v.string(),
     storageId: v.id("_storage"),
+    deleteScheduleId: v.optional(v.id("_scheduled_functions")),
   }).index("by_hash", ["hash"]),
 
   ratings: defineTable(Rating).index("by_prof", ["prof"]),
+
+  officialUploads: defineTable({
+    comments: v.array(v.string()),
+    uploadId: v.id("uploads"),
+  }).index("by_uploadId", ["uploadId"]),
 });
 
 export default schema;
