@@ -1,63 +1,20 @@
 import { v } from "convex/values";
 import { internalMutation, mutation, MutationCtx } from "../_generated/server";
 import { getUserIdFromFirebaseId } from "../user/helpers";
-import { ParsedPdf } from "../types.generated";
 import { internal } from "../_generated/api";
 import { Id } from "../_generated/dataModel";
-import { NewUpload } from "../types";
 import { DAY } from "../util";
 import schema from "../schema";
 
 /**
- *  make a new upload, returning the user upload id
+ *  makes a new upload, returning the upload object
  * */
 export const newUpload = internalMutation({
   args: {
-    parsedPdfStr: v.string(),
+    semester: v.string(),
     storageId: v.id("_storage"),
     displayName: v.string(),
     hash: v.string(),
-  },
-  handler: async (ctx, args): Promise<NewUpload> => {
-    const { user } = await getUserIdFromFirebaseId(ctx);
-    if (!user) {
-      throw new Error("user not found");
-    }
-
-    const parsedPdf: ParsedPdf = JSON.parse(args.parsedPdfStr);
-
-    const uploadId = await ctx.db.insert("uploads", {
-      storageId: args.storageId,
-      hash: args.hash,
-      semester: parsedPdf.semester,
-    });
-
-    const displayName = args.displayName;
-    const userUploadId: Id<"userUploads"> = await ctx.runMutation(
-      internal.uploads.mutations.newUserUpload,
-      {
-        uploadId: uploadId,
-        displayName,
-      },
-    );
-
-    return {
-      userUploadId,
-      displayName,
-      uploadId,
-    };
-  },
-});
-
-/**
- *  make a new user upload, returning the parsed pdf
- * */
-export const newUserUpload = internalMutation({
-  args: {
-    uploadId: v.id("uploads"),
-
-    deleteScheduleId: v.optional(v.id("_scheduled_functions")),
-    displayName: v.string(),
   },
   handler: async (ctx, args) => {
     const { user } = await getUserIdFromFirebaseId(ctx);
@@ -65,28 +22,60 @@ export const newUserUpload = internalMutation({
       throw new Error("user not found");
     }
 
-    const userUploadId = await ctx.db.insert("userUploads", {
-      userId: user._id,
-      uploadId: args.uploadId,
-      displayName: args.displayName,
-    });
+    const uploadData = {
+      storageId: args.storageId,
+      hash: args.hash,
+      semester: args.semester,
+    } as const;
 
-    const deleteScheduleId = args.deleteScheduleId;
-    if (deleteScheduleId) {
-      await Promise.all([
-        ctx.scheduler.cancel(deleteScheduleId),
-        ctx.db.patch("uploads", args.uploadId, { deleteScheduleId: undefined }),
-      ]);
+    const uploadId = await ctx.db.insert("uploads", uploadData);
+
+    return {
+      ...uploadData,
+      uploadId,
+    } as const;
+  },
+});
+
+/**
+ *  make a new user upload
+ * */
+export const newUserUpload = internalMutation({
+  args: {
+    uploadId: v.id("uploads"),
+    deleteScheduleId: v.optional(v.id("_scheduled_functions")),
+    displayName: v.string(),
+    officialUpload: v.optional(
+      v.object({
+        comments: v.array(v.string()),
+      }),
+    ),
+  },
+  handler: async (ctx, args) => {
+    const { user } = await getUserIdFromFirebaseId(ctx);
+    if (!user) {
+      throw new Error("user not found");
     }
 
-    return userUploadId;
+    if (args.officialUpload && user.role === "admin") {
+      await ctx.db.insert("officialUploads", {
+        uploadId: args.uploadId,
+        comments: args.officialUpload.comments,
+      });
+    } else {
+      await ctx.db.insert("userUploads", {
+        userId: user._id,
+        uploadId: args.uploadId,
+        displayName: args.displayName,
+      });
+    }
   },
 });
 
 /**
  * Delete the user upload with the given userUploadId
  * SIDE EFFECT: schedule a deletion of the upload after 24h,
- *              will get canceled if a new userUpload refers to the upload being deleted
+ *              will get canceled if there is a new upload with the same hash
  */
 export const deleteUserUpload = mutation({
   args: {
@@ -172,5 +161,35 @@ export const deleteUpload = internalMutation({
       ctx.db.delete("uploads", upload._id),
       ctx.storage.delete(upload.storageId),
     ]);
+  },
+});
+
+/**
+ * does the given hash exists, returning the upload if it does
+ * also cancelling the delete scheduled function
+ * */
+export const getUploadFromHash = internalMutation({
+  args: { hash: v.string() },
+  handler: async (ctx, args) => {
+    const upload = await ctx.db
+      .query("uploads")
+      .withIndex("by_hash", (q) => q.eq("hash", args.hash))
+      .first();
+
+    if (!upload) {
+      return;
+    }
+
+    const deleteScheduleId = upload.deleteScheduleId;
+    if (deleteScheduleId) {
+      await Promise.all([
+        ctx.scheduler.cancel(deleteScheduleId),
+        ctx.db.patch("uploads", upload._id, {
+          deleteScheduleId: undefined,
+        }),
+      ]);
+    }
+
+    return upload;
   },
 });
