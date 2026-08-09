@@ -1,5 +1,4 @@
-import { v } from "convex/values";
-import { internalQuery, query } from "../_generated/server";
+import { query } from "../_generated/server";
 import { getUserIdFromFirebaseId } from "../user/helpers";
 import { UserUploadData } from "../types";
 
@@ -38,19 +37,6 @@ export const getUserUploads = query({
         } satisfies UserUploadData;
       }),
     );
-  },
-});
-
-/**
- * does the given hash exists, returning the upload if it does
- * */
-export const getUploadFromHash = internalQuery({
-  args: { hash: v.string() },
-  handler: async (ctx, args) => {
-    return await ctx.db
-      .query("uploads")
-      .withIndex("by_hash", (q) => q.eq("hash", args.hash))
-      .first();
   },
 });
 

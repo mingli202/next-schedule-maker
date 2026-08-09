@@ -5,6 +5,7 @@ import { internal } from "../_generated/api";
 import { Id } from "../_generated/dataModel";
 import { DAY } from "../util";
 import schema from "../schema";
+import { NewUpload } from "../types";
 
 /**
  *  makes a new upload, returning the upload object
@@ -16,7 +17,7 @@ export const newUpload = internalMutation({
     displayName: v.string(),
     hash: v.string(),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<NewUpload> => {
     const { user } = await getUserIdFromFirebaseId(ctx);
     if (!user) {
       throw new Error("user not found");
@@ -31,9 +32,8 @@ export const newUpload = internalMutation({
     const uploadId = await ctx.db.insert("uploads", uploadData);
 
     return {
-      ...uploadData,
       uploadId,
-    } as const;
+    };
   },
 });
 
@@ -43,9 +43,8 @@ export const newUpload = internalMutation({
 export const newUserUpload = internalMutation({
   args: {
     uploadId: v.id("uploads"),
-    deleteScheduleId: v.optional(v.id("_scheduled_functions")),
     displayName: v.string(),
-    officialUpload: v.optional(
+    officialUploadData: v.optional(
       v.object({
         comments: v.array(v.string()),
       }),
@@ -57,10 +56,10 @@ export const newUserUpload = internalMutation({
       throw new Error("user not found");
     }
 
-    if (args.officialUpload && user.role === "admin") {
+    if (args.officialUploadData && user.role === "admin") {
       await ctx.db.insert("officialUploads", {
         uploadId: args.uploadId,
-        comments: args.officialUpload.comments,
+        comments: args.officialUploadData.comments,
       });
     } else {
       await ctx.db.insert("userUploads", {
@@ -170,7 +169,7 @@ export const deleteUpload = internalMutation({
  * */
 export const getUploadFromHash = internalMutation({
   args: { hash: v.string() },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<NewUpload | undefined> => {
     const upload = await ctx.db
       .query("uploads")
       .withIndex("by_hash", (q) => q.eq("hash", args.hash))
@@ -190,6 +189,8 @@ export const getUploadFromHash = internalMutation({
       ]);
     }
 
-    return upload;
+    return {
+      uploadId: upload._id,
+    };
   },
 });

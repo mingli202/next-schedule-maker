@@ -1,8 +1,7 @@
 import { env, httpAction } from "../_generated/server";
 import { internal } from "../_generated/api";
 import { ParsedPdf } from "../types.generated";
-import { Doc, Id } from "../_generated/dataModel";
-import { NewUpload } from "../types";
+import { NewUpload, OfficialUploadData } from "../types";
 import { GenericActionCtx } from "convex/server";
 import { corsHeaders } from "../cors";
 
@@ -31,50 +30,41 @@ export const postUpload = httpAction(async (ctx, req) => {
 
   const hash = await hashFile(file);
 
-  const upload = await ctx.runQuery(
-    internal.uploads.queries.getUploadFromHash,
+  let upload = await ctx.runMutation(
+    internal.uploads.mutations.getUploadFromHash,
     {
       hash,
     },
   );
 
-  if (upload) {
-    return newUserUpload(ctx, upload, file.name);
+  if (!upload) {
+    upload = await newUpload(ctx, formData, file.name, hash);
   }
 
-  return newUpload(ctx, formData, file.name, hash);
+  await newUserOrOfficialUpload(ctx, upload, file.name, formData);
+
+  return new Response(null, {
+    status: 200,
+    headers: { ...corsHeaders },
+  });
 });
 
 /**
  * store in db a new user upload with the given existing upload
  * */
-async function newUserUpload(
+async function newUserOrOfficialUpload(
   ctx: GenericActionCtx<any>,
-  upload: Doc<"uploads">,
+  upload: NewUpload,
   displayName: string,
+  formData: FormData,
 ) {
-  const userUploadId: Id<"userUploads"> = await ctx.runMutation(
-    internal.uploads.mutations.newUserUpload,
-    {
-      deleteScheduleId: upload.deleteScheduleId,
-      uploadId: upload._id,
-      displayName,
-    },
-  );
+  const officialUploadData = getOfficialUploadData(formData);
 
-  const newUpload = {
+  await ctx.runMutation(internal.uploads.mutations.newUserUpload, {
+    uploadId: upload.uploadId,
     displayName,
-    userUploadId,
-    uploadId: upload._id,
-  } satisfies NewUpload;
-
-  return Response.json(
-    { newUpload },
-    {
-      status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    },
-  );
+    officialUploadData,
+  });
 }
 
 /**
@@ -87,36 +77,55 @@ async function newUpload(
   displayName: string,
   hash: string,
 ) {
+  const parsedPdf = await getParsedPdf(formData);
+  const sectionsBlob = toBlob(parsedPdf.sectionsById);
+  const storageId = await ctx.storage.store(sectionsBlob);
+
+  return await ctx.runMutation(internal.uploads.mutations.newUpload, {
+    semester: parsedPdf.semester,
+    storageId,
+    displayName,
+    hash,
+  });
+}
+
+/**
+ *
+ * @param formData containing the file data
+ * @returns the parsed pdf
+ */
+async function getParsedPdf(formData: FormData): Promise<ParsedPdf> {
+  const fileOnlyFormdata = new FormData();
+  fileOnlyFormdata.set("file", formData.get("file")!);
+
   const url = `${env.BACKEND_URL}/sections/parse-pdf`;
   const res = await fetch(url, {
     method: "POST",
     body: formData,
   });
-  const parsedPdf = (await res.json()) as ParsedPdf;
-
-  const sectionsBlob = toBlob(parsedPdf.sectionsById);
-  const storageId = await ctx.storage.store(sectionsBlob);
-
-  const newUpload = await ctx.runMutation(
-    internal.uploads.mutations.newUpload,
-    {
-      parsedPdfStr: JSON.stringify(parsedPdf),
-      storageId,
-      displayName,
-      hash,
-    },
-  );
-
-  return Response.json(
-    { newUpload },
-    {
-      status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    },
-  );
+  return (await res.json()) as ParsedPdf;
 }
 
 function toBlob<T>(data: T): Blob {
   const json = JSON.stringify(data);
   return new Blob([json], { type: "application/json" });
+}
+
+/**
+ * gets the official upload data from the given formData
+ * @param formData
+ * @returns
+ */
+function getOfficialUploadData(
+  formData: FormData,
+): OfficialUploadData | undefined {
+  const officialUploadDataEntry = formData.get("official");
+  if (officialUploadDataEntry) {
+    const parsedDataEntry = OfficialUploadData.safeParse(
+      officialUploadDataEntry,
+    );
+    if (parsedDataEntry.success) {
+      return parsedDataEntry.data;
+    }
+  }
 }

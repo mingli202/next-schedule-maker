@@ -35,12 +35,10 @@ export const SavedScheduleInput = v.object({
 });
 export type SavedScheduleInput = typeof SavedScheduleInput.type;
 
-export const NewUpload = z.object({
-  userUploadId: z.string(),
-  uploadId: z.string(),
-  displayName: z.string(),
+export const NewUpload = v.object({
+  uploadId: v.id("uploads"),
 });
-export type NewUpload = z.infer<typeof NewUpload>;
+export type NewUpload = typeof NewUpload.type;
 
 export const UserUploadData = v.object({
   storageUrl: v.string(),
@@ -50,3 +48,8 @@ export const UserUploadData = v.object({
   userUploadId: v.id("userUploads"),
 });
 export type UserUploadData = typeof UserUploadData.type;
+
+export const OfficialUploadData = z.object({
+  comments: z.array(z.string()),
+});
+export type OfficialUploadData = z.infer<typeof OfficialUploadData>;
