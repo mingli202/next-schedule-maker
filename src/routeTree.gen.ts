@@ -9,25 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LoginRouteRouteImport } from './routes/login/route'
-import { Route as ForgotRouteRouteImport } from './routes/forgot/route'
-import { Route as EditorRouteRouteImport } from './routes/editor/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EditorRouteRouteImport } from './routes/editor/route'
+import { Route as ForgotRouteRouteImport } from './routes/forgot/route'
+import { Route as LoginRouteRouteImport } from './routes/login/route'
 import { Route as EditorIndexRouteImport } from './routes/editor/index'
-import { Route as EditorSettingsRouteImport } from './routes/editor/settings'
-import { Route as EditorSearchRouteImport } from './routes/editor/search'
-import { Route as EditorSavedRouteImport } from './routes/editor/saved'
-import { Route as EditorFilterRouteImport } from './routes/editor/filter'
 import { Route as EditorAutobuildRouteImport } from './routes/editor/autobuild'
+import { Route as EditorFilterRouteImport } from './routes/editor/filter'
+import { Route as EditorSavedRouteImport } from './routes/editor/saved'
+import { Route as EditorSearchRouteImport } from './routes/editor/search'
+import { Route as EditorSettingsRouteImport } from './routes/editor/settings'
 
-const LoginRouteRoute = LoginRouteRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ForgotRouteRoute = ForgotRouteRouteImport.update({
-  id: '/forgot',
-  path: '/forgot',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EditorRouteRoute = EditorRouteRouteImport.update({
@@ -35,9 +30,14 @@ const EditorRouteRoute = EditorRouteRouteImport.update({
   path: '/editor',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ForgotRouteRoute = ForgotRouteRouteImport.update({
+  id: '/forgot',
+  path: '/forgot',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRouteRoute = LoginRouteRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EditorIndexRoute = EditorIndexRouteImport.update({
@@ -45,19 +45,9 @@ const EditorIndexRoute = EditorIndexRouteImport.update({
   path: '/',
   getParentRoute: () => EditorRouteRoute,
 } as any)
-const EditorSettingsRoute = EditorSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => EditorRouteRoute,
-} as any)
-const EditorSearchRoute = EditorSearchRouteImport.update({
-  id: '/search',
-  path: '/search',
-  getParentRoute: () => EditorRouteRoute,
-} as any)
-const EditorSavedRoute = EditorSavedRouteImport.update({
-  id: '/saved',
-  path: '/saved',
+const EditorAutobuildRoute = EditorAutobuildRouteImport.update({
+  id: '/autobuild',
+  path: '/autobuild',
   getParentRoute: () => EditorRouteRoute,
 } as any)
 const EditorFilterRoute = EditorFilterRouteImport.update({
@@ -65,9 +55,19 @@ const EditorFilterRoute = EditorFilterRouteImport.update({
   path: '/filter',
   getParentRoute: () => EditorRouteRoute,
 } as any)
-const EditorAutobuildRoute = EditorAutobuildRouteImport.update({
-  id: '/autobuild',
-  path: '/autobuild',
+const EditorSavedRoute = EditorSavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => EditorRouteRoute,
+} as any)
+const EditorSearchRoute = EditorSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => EditorRouteRoute,
+} as any)
+const EditorSettingsRoute = EditorSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => EditorRouteRoute,
 } as any)
 
@@ -154,18 +154,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/forgot': {
-      id: '/forgot'
-      path: '/forgot'
-      fullPath: '/forgot'
-      preLoaderRoute: typeof ForgotRouteRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/editor': {
@@ -175,11 +168,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EditorRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/forgot': {
+      id: '/forgot'
+      path: '/forgot'
+      fullPath: '/forgot'
+      preLoaderRoute: typeof ForgotRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/editor/': {
@@ -189,25 +189,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EditorIndexRouteImport
       parentRoute: typeof EditorRouteRoute
     }
-    '/editor/settings': {
-      id: '/editor/settings'
-      path: '/settings'
-      fullPath: '/editor/settings'
-      preLoaderRoute: typeof EditorSettingsRouteImport
-      parentRoute: typeof EditorRouteRoute
-    }
-    '/editor/search': {
-      id: '/editor/search'
-      path: '/search'
-      fullPath: '/editor/search'
-      preLoaderRoute: typeof EditorSearchRouteImport
-      parentRoute: typeof EditorRouteRoute
-    }
-    '/editor/saved': {
-      id: '/editor/saved'
-      path: '/saved'
-      fullPath: '/editor/saved'
-      preLoaderRoute: typeof EditorSavedRouteImport
+    '/editor/autobuild': {
+      id: '/editor/autobuild'
+      path: '/autobuild'
+      fullPath: '/editor/autobuild'
+      preLoaderRoute: typeof EditorAutobuildRouteImport
       parentRoute: typeof EditorRouteRoute
     }
     '/editor/filter': {
@@ -217,11 +203,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EditorFilterRouteImport
       parentRoute: typeof EditorRouteRoute
     }
-    '/editor/autobuild': {
-      id: '/editor/autobuild'
-      path: '/autobuild'
-      fullPath: '/editor/autobuild'
-      preLoaderRoute: typeof EditorAutobuildRouteImport
+    '/editor/saved': {
+      id: '/editor/saved'
+      path: '/saved'
+      fullPath: '/editor/saved'
+      preLoaderRoute: typeof EditorSavedRouteImport
+      parentRoute: typeof EditorRouteRoute
+    }
+    '/editor/search': {
+      id: '/editor/search'
+      path: '/search'
+      fullPath: '/editor/search'
+      preLoaderRoute: typeof EditorSearchRouteImport
+      parentRoute: typeof EditorRouteRoute
+    }
+    '/editor/settings': {
+      id: '/editor/settings'
+      path: '/settings'
+      fullPath: '/editor/settings'
+      preLoaderRoute: typeof EditorSettingsRouteImport
       parentRoute: typeof EditorRouteRoute
     }
   }
