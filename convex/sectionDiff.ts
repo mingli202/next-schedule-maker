@@ -1,9 +1,4 @@
-import type {
-  DayTime,
-  LecLab,
-  Section,
-  SectionsDiff,
-} from "src/types/generated";
+import type { DayTime, LecLab, Section, SectionsDiff } from "./types.generated";
 
 /**
  * Gets the diff between the old and new sections_by_id
