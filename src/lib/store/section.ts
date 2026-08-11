@@ -31,7 +31,6 @@ const sharedOptions = {
     const jitter = (baseDelay * (Math.random() - 0.5)) / 5;
     return baseDelay + jitter;
   },
-  structuralSharing: addDiff as (a: unknown, b: unknown) => SectionStore,
 } as const;
 
 /**
@@ -96,8 +95,6 @@ function mapBackendOutput(globalAllSections: GlobalAllSections): SectionStore {
 
   const sectionsById = new Map(sections);
   const professors = profsFromSections(sections);
-
-  console.dir(globalAllSections.sectionsById);
 
   return {
     semester: globalAllSections.semester,
@@ -167,26 +164,4 @@ function profsFromSections(sections: [string, Section][]): Set<string> {
       .flatMap(([_, section]) => section.leclabs.map((leclab) => leclab.prof))
       .filter((prof) => prof.trim() !== ""),
   );
-}
-
-/**
- * add the diff to the new data
- * */
-function addDiff(
-  oldData: SectionStore | undefined,
-  newData: SectionStore,
-): SectionStore {
-  if (!oldData) {
-    return newData;
-  }
-
-  const sectionsDiff = getSectionsDiff(
-    oldData.sectionsById,
-    newData.sectionsById,
-  );
-
-  return {
-    ...newData,
-    sectionsDiff,
-  };
 }
