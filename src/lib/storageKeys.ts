@@ -6,6 +6,7 @@ export const SessionStorageKey = {
 
 export const LocalStorageKey = {
   DISMISS_LOGGEDOUT_NOTICE: "dismiss-loggedout-notice",
+  LAST_SEEN_VERSION: "last-seen-version",
 } as const;
 
 export const IndexedDbKey = {
