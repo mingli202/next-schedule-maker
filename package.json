@@ -4,13 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite dev --port 3000",
+    "dev": "bun --bun vite dev --port 3000",
+    "convex:dev": "bun convex dev",
     "build": "vite build",
     "preview": "vite preview",
     "test": "bun test",
     "lint": "tsc --noEmit && biome lint",
-    "format": "prettier",
-    "check": "prettier --write . && eslint --fix"
+    "format": "prettier"
   },
   "dependencies": {
     "@convex-dev/react-query": "^0.1.0",
