@@ -6,13 +6,11 @@ export const CollectionPolicy = v.union(
   v.literal("on"),
   v.literal("anonymous"),
 );
-export type CollectionPolicy = typeof CollectionPolicy.type;
 
 export const SavedSection = z.object({
   sectionId: z.string(),
   colorIndex: z.number(),
 });
-export type SavedSection = z.infer<typeof SavedSection>;
 
 export const SavedSchedule = z.object({
   id: z.string(),
@@ -21,7 +19,6 @@ export const SavedSchedule = z.object({
   source: z.string(),
   sections: z.array(SavedSection),
 });
-export type SavedSchedule = z.infer<typeof SavedSchedule>;
 
 export const SavedScheduleInput = v.object({
   name: v.string(),
@@ -33,23 +30,39 @@ export const SavedScheduleInput = v.object({
     }),
   ),
 });
-export type SavedScheduleInput = typeof SavedScheduleInput.type;
 
 export const NewUpload = v.object({
   uploadId: v.id("uploads"),
 });
-export type NewUpload = typeof NewUpload.type;
 
-export const UserUploadData = v.object({
+export const UploadData = v.object({
   storageUrl: v.string(),
   semester: v.string(),
   displayName: v.string(),
-  userUploadTime: v.number(),
-  userUploadId: v.id("userUploads"),
 });
-export type UserUploadData = typeof UserUploadData.type;
 
-export const OfficialUploadData = z.object({
+export const UserUploadData = v.object({
+  ...UploadData.fields,
+  userUploadId: v.id("userUploads"),
+  userUploadTime: v.number(),
+});
+
+export const OfficialUploadData = v.object({
+  ...UploadData.fields,
+  officialUploadId: v.id("officialUploads"),
+  officialUploadTime: v.number(),
+});
+
+export const OfficialUploadMetaData = z.object({
   comments: z.array(z.string()),
 });
-export type OfficialUploadData = z.infer<typeof OfficialUploadData>;
+
+export type CollectionPolicy = typeof CollectionPolicy.type;
+export type SavedSection = z.infer<typeof SavedSection>;
+export type SavedSchedule = z.infer<typeof SavedSchedule>;
+export type SavedScheduleInput = typeof SavedScheduleInput.type;
+export type NewUpload = typeof NewUpload.type;
+export type UploadData = typeof UploadData.type;
+export type UserUploadData = typeof UserUploadData.type;
+export type OfficialUploadData = typeof OfficialUploadData.type;
+export type OfficialUploadMetaData = z.infer<typeof OfficialUploadMetaData>;

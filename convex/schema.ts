@@ -1,7 +1,7 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 import { CollectionPolicy } from "./types";
-import { Rating } from "./types.generated";
+import { Rating, SectionsDiff } from "./types.generated";
 
 const schema = defineSchema({
   sectionsBackup: defineTable({
@@ -58,7 +58,9 @@ const schema = defineSchema({
 
   officialUploads: defineTable({
     comments: v.array(v.string()),
+    sectionsDiff: v.optional(SectionsDiff),
     uploadId: v.id("uploads"),
+    displayName: v.string(),
   }).index("by_uploadId", ["uploadId"]),
 });
 
