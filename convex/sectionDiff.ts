@@ -4,15 +4,15 @@ import type { DayTime, LecLab, Section, SectionsDiff } from "./types.generated";
  * Gets the diff between the old and new sections_by_id
  * */
 export function getSectionsDiff(
-  old_sections_by_id: Map<string, Section>,
-  new_sections_by_id: Map<string, Section>,
+  oldSectionsById: Record<string, Section>,
+  newSectionsById: Record<string, Section>,
 ): SectionsDiff {
   const sectionsAdded: string[] = [];
   const sectionsRemoved: Section[] = [];
   const previousSectionsChanged: Section[] = [];
 
-  for (const [id, oldSection] of old_sections_by_id.entries()) {
-    const newSection = new_sections_by_id.get(id);
+  for (const [id, oldSection] of Object.entries(oldSectionsById)) {
+    const newSection = newSectionsById[id];
 
     if (!newSection) {
       sectionsRemoved.push(oldSection);
@@ -21,8 +21,8 @@ export function getSectionsDiff(
     }
   }
 
-  for (const id of new_sections_by_id.keys()) {
-    if (!old_sections_by_id.has(id)) {
+  for (const id of Object.keys(newSectionsById)) {
+    if (!(id in oldSectionsById)) {
       sectionsAdded.push(id);
     }
   }
