@@ -7,7 +7,6 @@ import type { Id } from "convex/_generated/dataModel";
 import type { SectionStore } from "src/types";
 import { GlobalAllSections, Section } from "src/types/generated";
 import { z } from "zod";
-import { getSectionsDiff } from "../section-diff";
 import { type DataSource, useDataSourceStore } from "./data-source";
 
 export const SECTION_STORE_KEY = "section-store";
