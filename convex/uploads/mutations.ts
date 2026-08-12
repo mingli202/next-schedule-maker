@@ -6,6 +6,7 @@ import { Id } from "../_generated/dataModel";
 import { DAY } from "../util";
 import schema from "../schema";
 import { NewUpload } from "../types";
+import { SectionsDiff } from "../types.generated";
 
 /**
  *  makes a new upload, returning the upload object
@@ -44,11 +45,6 @@ export const newUserUpload = internalMutation({
   args: {
     uploadId: v.id("uploads"),
     displayName: v.string(),
-    officialUploadData: v.optional(
-      v.object({
-        comments: v.array(v.string()),
-      }),
-    ),
   },
   handler: async (ctx, args) => {
     const { user } = await getUserIdFromFirebaseId(ctx);
@@ -56,18 +52,34 @@ export const newUserUpload = internalMutation({
       throw new Error("user not found");
     }
 
-    if (args.officialUploadData && user.role === "admin") {
-      await ctx.db.insert("officialUploads", {
-        uploadId: args.uploadId,
-        comments: args.officialUploadData.comments,
-      });
-    } else {
-      await ctx.db.insert("userUploads", {
-        userId: user._id,
-        uploadId: args.uploadId,
-        displayName: args.displayName,
-      });
-    }
+    await ctx.db.insert("userUploads", {
+      userId: user._id,
+      uploadId: args.uploadId,
+      displayName: args.displayName,
+    });
+  },
+});
+
+/**
+ * a new offical upload. will precompute diff with the previous official upload if any
+ * @param ctx
+ * @param uploadId
+ * @param officialUploadData
+ */
+export const newOfficialUpload = internalMutation({
+  args: {
+    uploadId: v.id("uploads"),
+    comments: v.array(v.string()),
+    sectionsDiff: v.optional(SectionsDiff),
+    displayName: v.string(),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.insert("officialUploads", {
+      uploadId: args.uploadId,
+      comments: args.comments,
+      displayName: args.displayName,
+      sectionsDiff: args.sectionsDiff,
+    });
   },
 });
 
