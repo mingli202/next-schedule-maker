@@ -35,7 +35,7 @@ export function compare<T>(a: T, b: T): number {
 /**
  * returns a pretty string of the given timestamp
  * */
-export default function parseTimestamp(timestamp: number): string {
+export function parseTimestamp(timestamp: number): string {
   const nowMs = Date.now();
 
   const diffS = Math.max(nowMs - timestamp, 0) / 1000;
@@ -65,3 +65,13 @@ export default function parseTimestamp(timestamp: number): string {
     year: "numeric",
   }).format(date);
 }
+
+export const formatTimestampFull = (timestamp: number) =>
+  new Intl.DateTimeFormat(undefined, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  }).format(new Date(timestamp));

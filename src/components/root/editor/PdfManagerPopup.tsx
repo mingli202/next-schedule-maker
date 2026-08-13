@@ -32,7 +32,7 @@ import { useFormState } from "src/hooks";
 import { useAuthFromFirebase } from "src/integrations/ConvexClientProvider";
 import { type DataSource, useDataSourceStore } from "src/lib/store/data-source";
 import { SECTION_STORE_KEY } from "src/lib/store/section";
-import parseTimestamp, { cn } from "src/lib/utils";
+import { cn, formatTimestampFull, parseTimestamp } from "src/lib/utils";
 import type { SectionStore } from "src/types";
 import { z } from "zod";
 
@@ -52,6 +52,11 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
       api.uploads.queries.getUserUploads,
       isAuthenticated ? {} : "skip",
     ) ?? [];
+
+  const userRole = useQuery(
+    api.user.queries.getUserRole,
+    isAuthenticated ? {} : "skip",
+  );
 
   const items: UserUploadSelectItems = userUploads.reduce((acc, upload) => {
     acc[upload.userUploadId] = upload;
@@ -122,14 +127,7 @@ export function PdfManagerPopup({ store }: PdfManagerPopupProps) {
                               <p>{parseTimestamp(item.userUploadTime)}</p>
                             </TooltipTrigger>
                             <TooltipContent>
-                              {new Intl.DateTimeFormat(undefined, {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric",
-                                hour: "numeric",
-                                minute: "numeric",
-                                second: "numeric",
-                              }).format(new Date(item.userUploadTime))}
+                              {formatTimestampFull(item.userUploadTime)}
                             </TooltipContent>
                           </Tooltip>
                         </div>
